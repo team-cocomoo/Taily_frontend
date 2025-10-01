@@ -1,0 +1,42 @@
+.footer {
+  width: 100vw;
+  background-color: #fdf9ee;
+  color: #000;
+  font-size: 14px;
+  text-shadow: 0 0 0.5px currentColor;
+  padding: 20px 0;
+  text-align: center;
+}
+
+/* 메뉴: 한 줄 가로 정렬 */
+.footer-menu {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* 링크 사이 간격 */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* 화면 작아지면 줄바꿈 가능 */
+  text-shadow: 0 0 1px currentColor;
+}
+
+.footer-link {
+  color: #000;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: #feb916;
+}
+
+/* 회사 정보 */
+.footer-company {
+  margin-bottom: 20px;
+  line-height: 0.8;
+}
+.footer-company strong{
+    font-size: 43px;
+}
+
+/* 카피라이트 */
+.footer-copyright {
+  font-size: 12px;
+}
