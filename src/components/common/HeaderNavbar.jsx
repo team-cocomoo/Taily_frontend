@@ -25,14 +25,28 @@ const HeaderNavbar = () => {
       {/* 왼쪽: 로고 */}
       <div className="navbar-brand">
         <Link to="/" className="logo-link">
-          <img src={logo} alt="Taily Logo" className="logo-img" />
+          <img
+            src={logo}
+            alt="Taily Logo"
+            className="logo-img"
+            style={{ width: "120px", height: "70px", marginLeft: "80px" }}
+          />
         </Link>
       </div>
 
       {/* 가운데: 네비게이션 탭 */}
       <div className="navbar-links">
+        {/* 펫스토리 */}
         <div className="dropdown">
-          <Link to="/feeds" className={isActive("/feeds")}>
+          <Link
+            to="/feeds"
+            className={
+              location.pathname.startsWith("/feeds") ||
+              location.pathname.startsWith("/chatrooms")
+                ? "nav-link-active"
+                : "nav-link"
+            }
+          >
             펫스토리
           </Link>
           <div className="dropdown-menu">
@@ -45,8 +59,18 @@ const HeaderNavbar = () => {
           </div>
         </div>
 
+        {/* 산책 공간 */}
         <div className="dropdown">
-          <Link to="/diary" className={isActive("/walkPath")}>
+          <Link
+            to="/diary"
+            className={
+              location.pathname.startsWith("/diary") ||
+              location.pathname.startsWith("/taily-friends") ||
+              location.pathname.startsWith("/walk-paths")
+                ? "nav-link-active"
+                : "nav-link"
+            }
+          >
             산책 공간
           </Link>
           <div className="dropdown-menu">
@@ -62,20 +86,45 @@ const HeaderNavbar = () => {
           </div>
         </div>
 
+        {/* 우리동네정보 */}
         <div className="dropdown">
-          <Link to="/facility" className={isActive("/facility")}>
+          <Link
+            to="/facility"
+            className={
+              location.pathname.startsWith("/facility")
+                ? "nav-link-active"
+                : "nav-link"
+            }
+          >
             우리동네정보
           </Link>
         </div>
 
+        {/* 이벤트 */}
         <div className="dropdown">
-          <Link to="/event" className={isActive("/event")}>
+          <Link
+            to="/event"
+            className={
+              location.pathname.startsWith("/event")
+                ? "nav-link-active"
+                : "nav-link"
+            }
+          >
             이벤트
           </Link>
         </div>
 
+        {/* 고객센터 */}
         <div className="dropdown">
-          <Link to="/inquiry" className={isActive("/inquiry")}>
+          <Link
+            to="/inquiry"
+            className={
+              location.pathname.startsWith("/inquiry") ||
+              location.pathname.startsWith("/notices")
+                ? "nav-link-active"
+                : "nav-link"
+            }
+          >
             고객센터
           </Link>
           <div className="dropdown-menu">

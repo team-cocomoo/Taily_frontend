@@ -7,22 +7,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 22px 20px;
   background-color: #fdf9ee;
   color: #000;
   z-index: 1000; /* 다른 요소 위에 표시 */
-}
-/* 로고 이미지 */
-.logo-img {
-  margin-left: 50px;
-  width: 70px;
-  height: 40px;
 }
 
 /* 가운데 메뉴 */
 .navbar-links {
   display: flex;
-  font-size: 12px;
+  font-size: 18px;
   text-shadow: 0 0 0.5px currentColor;
   gap: 20px;
   position: relative;
@@ -37,7 +31,7 @@
 
 /* 링크 스타일 */
 .nav-link {
-  color: #333;
+  color: #000;
   text-decoration: none;
   padding: 5px 8px;
 }
@@ -45,8 +39,15 @@
 .nav-link-active {
   color: #feb916;
   font-weight: bold;
+  text-decoration: none;
+  
 }
 
+.nav-link-active:hover {
+  color: #feb916;
+  font-weight: bold;
+  text-decoration: none;
+}
 .nav-link:hover {
   color: #feb916;
 }
@@ -92,11 +93,11 @@
 
 .btn-signup {
   line-height: 1 !important;
-  border: 1.5px solid #4f1f02 !important;
+  border: 2px solid #4f1f02 !important;
   color: #4f1f02 !important;
-  font-size: 12px !important;
+  font-size: 18px !important;
   font-weight: 500 !important;
-  padding: 0.4rem 1rem !important;
+  padding: 0.8rem 1.5rem !important;
   border-radius: 20px !important;
   text-shadow: 0 0 0.5px currentColor;
 }
@@ -107,12 +108,12 @@
 }
 .btn-login {
   line-height: 1 !important;
-  border: 1.5px solid #feb916 !important;
+  border: 2px solid #feb916 !important;
   background-color: #feb916 !important;
   color: #fff !important;
-  font-size: 12px !important;
+  font-size: 18px !important;
   font-weight: 500 !important;
-  padding: 0.4rem 1rem !important;
+  padding: 0.8rem 1.5rem !important;
   border-radius: 20px !important;
   text-shadow: 0 0 0.5px currentColor;
 }
