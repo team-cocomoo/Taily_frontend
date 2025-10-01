@@ -1,0 +1,123 @@
+/* Navbar 전체 */
+.navbar {
+  position: fixed; /* 상단 고정 */
+  top: 0;
+  left: 0;
+  width: 100%; /* 화면 전체 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fdf9ee;
+  color: #000;
+  z-index: 1000; /* 다른 요소 위에 표시 */
+}
+/* 로고 이미지 */
+.logo-img {
+  margin-left: 50px;
+  width: 70px;
+  height: 40px;
+}
+
+/* 가운데 메뉴 */
+.navbar-links {
+  display: flex;
+  font-size: 12px;
+  text-shadow: 0 0 0.5px currentColor;
+  gap: 20px;
+  position: relative;
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 오른쪽 버튼 */
+.navbar-actions {
+  display: flex;
+  gap: 15px;
+}
+
+/* 링크 스타일 */
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  padding: 5px 8px;
+}
+
+.nav-link-active {
+  color: #feb916;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  color: #feb916;
+}
+
+/* 드롭다운 */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; /* 부모 바로 아래 */
+  left: 0;
+  background-color: #fdf9ee;
+  min-width: 100px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: block;
+  font-size: 12px;
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  color: #feb916;
+  background-color: #fdf9ee;
+}
+
+/* hover 시 드롭다운 표시 */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* 로고 */
+.logo-link img {
+  height: 40px;
+}
+
+.btn-signup {
+  line-height: 1 !important;
+  border: 1.5px solid #4f1f02 !important;
+  color: #4f1f02 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 0.4rem 1rem !important;
+  border-radius: 20px !important;
+  text-shadow: 0 0 0.5px currentColor;
+}
+.btn-signup:hover {
+  border: 1.5px solid #4f1f02 !important;
+  color: #fff !important;
+  background-color: #4f1f02 !important;
+}
+.btn-login {
+  line-height: 1 !important;
+  border: 1.5px solid #feb916 !important;
+  background-color: #feb916 !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 0.4rem 1rem !important;
+  border-radius: 20px !important;
+  text-shadow: 0 0 0.5px currentColor;
+}
+.btn-login:hover {
+  border: 1.5px solid #feb916 !important;
+  color: #fff !important;
+  background-color: #feb916 !important;
+}
