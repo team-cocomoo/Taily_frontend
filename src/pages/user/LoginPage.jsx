@@ -116,7 +116,7 @@ const LoginPage = () => {
               <Button
                 variant="primary"
                 type="submit"
-                className="w-100"
+                className="w-100 btn btn-primary btn-sm me-3 btn-login"
                 disabled={loading}
               >
                 {loading ? "로그인 중..." : "로그인"}
