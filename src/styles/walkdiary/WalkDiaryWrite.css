@@ -1,0 +1,36 @@
+/* 각 컴포넌트 좌우 패딩 값 */
+.diary-box {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* 각 카드 별 헤더 */
+.card-header {
+    font-weight: bold;
+    background-color: rgba(254, 186, 23, 0.5);
+}
+
+/* 오늘의 정보 */
+.weather-icons {
+    border-radius: 50px;
+}
+.weather-selected {
+    border: 2px solid plum; /* 테두리 */
+    box-shadow: 0 0 5px rgba(0,0,0,0.2); /* 그림자 */
+    background-color: transparent;
+    color: #000;
+}
+
+.weather-selected:hover {
+
+}
+
+
+
+/* 오늘의 일기 */
+
+/* 사진 첨부 */
+.add-image {
+    color: #9A9A9A;
+    font-weight: lighter;
+}

@@ -5,7 +5,7 @@ import MyEditor from "../../MyEditor";
 
 const WalkeDiaryContent = () => {
     return (
-        <Card className="mb-4">
+        <Card className="mb-4 diary-box">
         <Card.Header>오늘의 일기</Card.Header>
         <Card.Body>
             <MyEditor placeholder="오늘의 산책을 기록해보세요" />
