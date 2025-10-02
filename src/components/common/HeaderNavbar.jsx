@@ -10,9 +10,9 @@ const HeaderNavbar = () => {
   // const { user, logout } = useContext(AuthContext);
 
   // 현재 경로와 일치하는 링크 스타일 반환
-  const isActive = (path) => {
-    return location.pathname === path ? "nav-link-active" : "nav-link";
-  };
+  // const isActive = (path) => {
+  //   return location.pathname === path ? "nav-link-active" : "nav-link";
+  // };
 
   // // 로그아웃 처리
   // const handleLogout = () => {
