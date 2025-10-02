@@ -10,6 +10,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HeaderNavbar from "./components/common/HeaderNavbar";
 import Footer from "./components/common/Footer";
 
+// 페이지 컴포넌트
+import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,7 +21,8 @@ function App() {
         <HeaderNavbar />
         <Container className="mt-4">
           <Routes>
-            
+            <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
+
           </Routes>
         </Container>
         <Footer />

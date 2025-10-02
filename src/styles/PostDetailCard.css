@@ -1,0 +1,78 @@
+.post-detail-body {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+.post-card {
+  margin-top: 100px;
+  width: 100%;
+  max-width: 1440px;
+  padding: 30px;
+}
+
+.card-header-section {
+  background-color: #fff;
+}
+.card-header-title {
+  font-size: 30px;
+  font-weight: 500;
+}
+.user-profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #4f1f02;
+  border: 1.5px solid #4f1f02;
+  padding: 2px;
+  margin-right: 10px;
+}
+.user-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+.author-name {
+  font-weight: bold;
+}
+.author-date {
+  color: #6c757d; /* Bootstrap text-muted 색상과 동일 */
+}
+.meatballIcon {
+  width: 30px;
+  color: #4f1f02;
+  cursor: pointer;
+}
+.heart {
+  margin-left: 5px;
+}
+
+.like-area {
+  border: 1px solid #4f1f02;
+  border-radius: 20px;
+  padding: 0.25rem 1rem;
+}
+.dropdown-menu {
+  background-color: #fff;
+}
+.dropdown-item:hover {
+  background-color: #fff;
+}
+
+.no-caret::after {
+  display: none !important;
+}
+.no-caret,
+.no-caret:hover,
+.no-caret:active {
+  background-color: #fff;
+  border: none;
+}
