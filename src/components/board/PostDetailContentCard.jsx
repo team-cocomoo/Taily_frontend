@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Dropdown } from "react-bootstrap";
-import "../../styles/PostDetailCard.css";
+import "../../styles/PostDetailContentCard.css";
 
 import userIcon from "../../assets/image/user-icon.png";
 import filledHeart from "../../assets/image/filled-heart.png";

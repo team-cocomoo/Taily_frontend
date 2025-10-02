@@ -38,6 +38,14 @@ const TailyFriendsDetailPage = () => {
             content: "첫 댓글입니다",
             nickname: "김철수",
             createdAt: "2025-10-01T12:10:00",
+            replies: [
+              {
+                id: 11,
+                nickname: "Bob",
+                content: "답글이에요",
+                createdAt: "2025-10-02T11:05:00Z",
+              },
+            ],
           },
           {
             id: 2,
@@ -83,19 +91,18 @@ const TailyFriendsDetailPage = () => {
       <div className="col-md-11">
         {/* 게시글 상세 */}
         <PostDetailContentCard post={post} />
-
-        {/* 댓글 목록 */}
-        <PostCommentCard comments={comments} />
-
         {/* 하단 버튼 */}
-        <div className="d-flex justify-content-start mt-3">
+        <div className="d-flex justify-content-end mt-1 mb-4">
           <Button
-            variant="secondary"
+            variant="outline-primary"
+            size="sm"
             onClick={() => navigate("/taily-friends")}
           >
             목록으로
           </Button>
         </div>
+        {/* 댓글 목록 */}
+        <PostCommentCard comments={comments} />
       </div>
     </div>
   );
