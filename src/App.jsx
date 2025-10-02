@@ -4,7 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Container, Navbar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// Context Provider
+// AuthProvider import
+import AuthProvider from "./contexts/AuthProvider";
 
 // 레이아웃 컴포넌트
 import HeaderNavbar from "./components/common/HeaderNavbar";
@@ -13,23 +14,32 @@ import Footer from "./components/common/Footer";
 
 // 페이지 컴포넌트
 import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
-import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
+import LoginPage from "./pages/user/LoginPage";
+
 
 function App() {
   return (
     <BrowserRouter>
-      {/* <AuthProvider> */}
-      <div className="App">
-        <HeaderNavbar />
-        <Container className="mt-4">
-          <Routes>
-            <Route path="/walk-paths" element={<WalkPathMainPage />} />
-            <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
-          </Routes>
-        </Container>
-        <Footer />
-      </div>
-      {/* </AuthProvider> */}
+
+      <AuthProvider>
+        <div className="App">
+          <HeaderNavbar />
+          <Container className="mt-4">
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              {/* 로그인 페이지 */}
+              <Route path="/login" element={<LoginPage />} />
+
+              <Route
+                path="/taily-friends/:id"
+                element={<TailyFriendsDetailPage />}
+              />
+            </Routes>
+          </Container>
+          <Footer />
+        </div>
+      </AuthProvider>
+
     </BrowserRouter>
   );
 }
