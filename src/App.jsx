@@ -11,13 +11,16 @@ import AuthProvider from "./contexts/AuthProvider";
 import HeaderNavbar from "./components/common/HeaderNavbar";
 import Footer from "./components/common/Footer";
 
+
 // 페이지 컴포넌트
 import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
 import LoginPage from "./pages/user/LoginPage";
 
+
 function App() {
   return (
     <BrowserRouter>
+
       <AuthProvider>
         <div className="App">
           <HeaderNavbar />
@@ -36,6 +39,7 @@ function App() {
           <Footer />
         </div>
       </AuthProvider>
+
     </BrowserRouter>
   );
 }
