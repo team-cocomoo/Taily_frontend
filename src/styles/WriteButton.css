@@ -1,0 +1,14 @@
+.write-button {
+  position: fixed;
+  bottom: 350px;    /* 화면 하단 기준 위치 */
+  right: 100px;     /* 화면 오른쪽 기준 위치 */
+  width: 60px;     /* 버튼 크기 */
+  height: 60px;    /* 버튼 크기 */
+  cursor: pointer; /* 마우스 올리면 손 모양 */
+  z-index: 1000;   /* 다른 요소 위에 표시 */
+  transition: transform 0.2s ease; /* 클릭/호버 효과 */
+}
+
+.write-button:hover {
+  transform: scale(1.1); /* 마우스 올리면 살짝 커짐 */
+}

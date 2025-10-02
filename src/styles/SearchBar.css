@@ -1,0 +1,39 @@
+/* src/styles/SearchBar.css */
+
+/* 검색창 전체 컨테이너 */
+.search-bar {
+  border-radius: 25px; /* 둥글게 */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  max-width: 500px; /* 적당히 길이 제한 */
+  margin: 0 auto;   /* 가운데 정렬 */
+}
+
+/* 입력창 */
+.search-bar input {
+  border: none;
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.search-bar input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* 버튼 (돋보기) */
+.search-button {
+  border: none;
+  background-color: #fff;
+  padding: 0 15px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.search-button:hover {
+  background-color: #f1f1f1;
+}

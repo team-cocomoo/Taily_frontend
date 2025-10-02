@@ -9,9 +9,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // 레이아웃 컴포넌트
 import HeaderNavbar from "./components/common/HeaderNavbar";
 import Footer from "./components/common/Footer";
-// board 컴포넌트
-import WalkPath from "./components/board/WalkPath";
 
+
+// 페이지 컴포넌트
+import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
+import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 
 function App() {
   return (
@@ -21,7 +23,8 @@ function App() {
         <HeaderNavbar />
         <Container className="mt-4">
           <Routes>
-            <Route path="/walk-paths" element={<WalkPath />} />
+            <Route path="/walk-paths" element={<WalkPathMainPage />} />
+            <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
           </Routes>
         </Container>
         <Footer />
