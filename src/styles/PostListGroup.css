@@ -1,0 +1,73 @@
+.page-container {
+  display: flex;
+  justify-content: flex-start; /* 왼쪽부터 배치 */
+  align-items: flex-start;     /* 위로 정렬 */
+}
+
+.post-list-container {
+  width: 100%;       
+  margin-right: 20px;      
+}
+/* 스크롤 가능한 영역 */
+.list-wrapper {
+  max-height: 300px; /* 원하는 높이로 제한 (예: 300px) */
+  overflow-y: auto; /* 세로 스크롤 자동 생성 */
+  overflow-x: hidden; /* 가로 스크롤 숨기기 */
+  padding-right: 8px; /* 스크롤바와 내용 사이 여백 */
+}
+/* 리스트 기본 스타일 */
+.list {
+  border: none;
+  padding: 0;
+}
+
+.list-item {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 16px 20px;
+  background-color: #fff;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: #777;
+  margin-top: 4px;
+}
+/* 작성자 */
+.author {
+  font-size: 0.8rem;
+  background-color: #f7f7f7 !important;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+}
+/* 조회수 */
+.views {
+  font-size: 0.7rem; /* 기본 텍스트보다 살짝 작게 */
+  font-weight: 500; /* 조금만 강조 */
+}
+/* 날짜 */
+.date {
+  font-size: 0.75rem; /* 더 작게 */
+  color: gray; /* 날짜는 회색 */
+}
+/* 스크롤 바 */
+.list-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list-wrapper::-webkit-scrollbar-thumb {
+  background-color: #feb916;
+  border-radius: 10px;
+}
+
+.list-wrapper::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
