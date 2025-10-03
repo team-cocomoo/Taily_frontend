@@ -9,8 +9,53 @@ const WalkTimeSelectBox = ({ item, times, setTimes }) => {
         return `${hour}:${minute}`;
     });
 
+    // 시간 select box 커스텀
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            borderRadius: "10px",
+            borderColor: state.isFocused ? "#FEBA17" : "#ccc",
+            boxShadow: state.isFocused ? "0 0 5px #FEBA17" : "none",
+            "&:hover": {
+                borderColor: "#FEBA17",
+            },
+            width: "16rem", // 너비 추가
+            height: "3rem", // 높이 추가
+        }),
+        placeholder: (provided) => ({
+            ...provided,
+            color: "#999",
+            fontStyle: "italic",
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: "#FEBA17",
+        }),
+        menu: (provided) => ({
+            ...provided,
+            width: "16rem",
+            fontWeight: "500",
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected
+                ? "rgba(254, 186, 23, 0.5)"   // 마우스 오버 색
+                : state.isFocused
+                ? "rgba(254, 186, 23, 0.5)"  // 선택된 색
+                : "white",       // 기본 색
+            color: state.isSelected ? "white" : "black", // 선택 시 글자 색
+            fontWeight: state.isSelected ? "600" : "400",
+            cursor: "pointer",
+            ":active": {
+                backgroundColor: state.isSelected
+                    ? "rgba(254, 186, 23, 0.5)"
+                    : "#FEBA17",
+            },
+        }),
+    };
+
     // react-select 옵션
-    const timeOptions = timeArray.map((t) => ({ value: t, label: t}));
+    const timeOptions = timeArray.map((t) => ({ value: t, label: t }));
 
     const updateTimeState = (name, value) =>
         setTimes((prev) => ({ ...prev, [name]: value }));
@@ -24,10 +69,7 @@ const WalkTimeSelectBox = ({ item, times, setTimes }) => {
                 item.name === "endTime" ? opt.value > times.startTime : true
             )}
             placeholder={item.defaultValue}
-            styles={{
-                control: (provided) => ({ ...provided, width: "16rem", height: "3rem" }),
-                menu: (provided) => ({ ...provided, width: "16rem", fontWeight: "500" }),
-            }}
+            styles={customStyles}
         />
     );
 };
