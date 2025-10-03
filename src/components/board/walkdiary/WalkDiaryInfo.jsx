@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import WalkTimeSelectBox from "../../board/walkdiary/WalkTimeSelectBox";
 
 const WalkDiaryInfo = () => {
+    // 산책 날짜
     const [date, setDate] = useState("");
-
     
     // 산책 날씨
     const [weather, setWeather] = useState("SUNNY");
@@ -22,6 +22,7 @@ const WalkDiaryInfo = () => {
         endTime: ""
     });
 
+    // 반려견 기분
     const [emotion, setEmotion] = useState("LOVE");
     const emotionOptions = [
         { value: "LOVE", label: "😍"},
@@ -31,8 +32,6 @@ const WalkDiaryInfo = () => {
         { value: "ANGRY", label: "😡"}
     ];
 
-
-
     // 산책 일지 작성 처리
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,13 +39,15 @@ const WalkDiaryInfo = () => {
     }
 
     return (
-        <Card className="mb-4">
-            <Card.Header>오늘의 정보</Card.Header>
+        <Card className="mb-4 diary-box">
+            <Card.Header className="card-header">
+                <span>오늘의 정보</span>
+            </Card.Header>
             <Card.Body>
                 {/* 에러 메시지 표시 - ErrorAlert 컴포넌트 */}
 
                 <Form onSubmit={handleSubmit}>
-                    {/* 날짜 */}
+                    {/* 날짜 - 추후 클릭한 달력 일자로 뜨도록 수정 */}
                     <Form.Group as={Row} controlId="date" className="mb-3">
                         <Form.Label column sm={2}>날짜</Form.Label>
                         <Col sm={10}>
@@ -61,23 +62,22 @@ const WalkDiaryInfo = () => {
                     <Form.Group as={Row} controlId="weather" className="mb-3">
                         <Form.Label column sm={2}>날씨</Form.Label>
                         <Col sm={10}>
-                            <ButtonGroup>
+                            <div className="weather-icons">
                                 {weatherOptions.map((w, idx) => (
                                     <ToggleButton
                                         key={idx}
                                         id={`weather-${idx}`}
                                         type="radio"
-                                        variant={weather === w.value ? "primary" : "outline-secondary"}
                                         name="weather"
+                                        variant="outline-light"
                                         value={w.value}
                                         checked={weather === w.value}
                                         onChange={(e) => setWeather(e.currentTarget.value)}
-                                        // style={{ fontSize: "2rem"}}
                                     >
                                         {w.label}
                                     </ToggleButton>
                                 ))}
-                            </ButtonGroup>
+                            </div>
                         </Col>
                     </Form.Group>
 
@@ -105,23 +105,22 @@ const WalkDiaryInfo = () => {
                         {/* 구현 시 뽀삐에 반려 동물 이름 */}
                         <Form.Label column sm={2}>뽀삐의 기분</Form.Label>
                         <Col sm={10}>
-                            <ButtonGroup>
+                            <div className="emotion-icons">
                                 {emotionOptions.map((emo, idx) => (
                                     <ToggleButton 
                                         key={idx}
                                         id={`emotion-${idx}`}
                                         type="radio"
-                                        variant={emotion === emo.value? "primary" : "outline-secondary"}
+                                        variant="outline-light"
                                         name="emotion"
                                         value={emo.value}
                                         checked={emotion === emo.value}
                                         onChange={(e) => setEmotion(e.currentTarget.value)}
-                                        // style={{fontSize: "2rem"}}
                                     >
                                         {emo.label}
                                     </ToggleButton>
                                 ))}
-                            </ButtonGroup>
+                            </div>
                         </Col>
                     </Form.Group>
                 </Form>

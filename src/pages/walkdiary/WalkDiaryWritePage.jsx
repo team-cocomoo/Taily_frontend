@@ -6,6 +6,8 @@ import WalkDiaryInfo from "../../components/board/walkdiary/WalkDiaryInfo";
 import WalkeDiaryContent from "../../components/board/walkdiary/WalkeDiaryContent";
 import ImageBox from "../../components/board/ImageBox";
 
+import "../../styles/walkdiary/WalkDiaryWrite.css"
+
 const WalkDiardWritePage = () => {
     const navigate = useNavigate();
 
