@@ -1,0 +1,17 @@
+.upload-tile {
+    width: 80px;
+    height: 80px;
+    border: 1px dashed #ccc;
+    cursor: pointer;
+    font-size: 2rem;
+    /* color: #ccc; */
+    border-radius: 4px;
+}
+
+.image-preview {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+}

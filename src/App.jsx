@@ -10,7 +10,7 @@ import AuthProvider from "./contexts/AuthProvider";
 // 레이아웃 컴포넌트
 import HeaderNavbar from "./components/common/HeaderNavbar";
 import Footer from "./components/common/Footer";
-import WalkDiaryWritePage from "./pages/walkdiary/WalkDiaryWritePage";
+import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
 
 // 페이지 컴포넌트
 import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
@@ -42,6 +42,7 @@ function App() {
           <Footer />
         </div>
       </AuthProvider>
+
     </BrowserRouter>
   );
 }
