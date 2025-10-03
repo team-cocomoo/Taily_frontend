@@ -2,18 +2,19 @@ import Badge from "react-bootstrap/Badge";
 import ListGroup from "react-bootstrap/ListGroup";
 import "../../styles/PostListGroup.css";
 
-const PostListGroup = ({ items }) => {
+const PostListGroup = ({ items, onItemClick }) => {
   return (
     <div className="page-container">
-      {/* 왼쪽 리스트 영역 */}
       <div className="post-list-container">
         <div className="list-wrapper">
           <ListGroup as="ul" className="list">
-            {items.map((item, idx) => (
+            {items.map((item) => (
               <ListGroup.Item
                 as="li"
-                key={idx}
+                key={item.id}
                 className="list-item d-flex justify-content-between align-items-center"
+                onClick={() => onItemClick(item.id)} 
+                style={{ cursor: "pointer" }}
               >
                 <div className="title">{item.title}</div>
                 <div className="d-flex align-items-center gap-2">
@@ -30,11 +31,7 @@ const PostListGroup = ({ items }) => {
           </ListGroup>
         </div>
       </div>
-
-      {/* 오른쪽 영역 (비워두거나 버튼/광고 자리) */}
-      <div className="right-side">
-        {/* 예: 발자국 버튼 */}
-      </div>
+      <div className="right-side"></div>
     </div>
   );
 };
