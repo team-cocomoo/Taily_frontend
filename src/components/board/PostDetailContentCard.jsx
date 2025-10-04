@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Dropdown } from "react-bootstrap";
-import "../../styles/PostDetailContentCard.css";
+import "../../styles/postDetail/PostDetailContentCard.css";
 
 import userIcon from "../../assets/image/user-icon.png";
 import filledHeart from "../../assets/image/filled-heart.png";
@@ -54,6 +54,7 @@ const PostDetailContentCard = ({ post }) => {
           </div>
         </Card.Header>
         <Card.Body>
+          {/* 나중에 이 부분에 이미지 출력 */}
           <div
             className="post-detail-content"
             style={{ whiteSpace: "pre-wrap", minHeight: "200px" }}
@@ -61,10 +62,10 @@ const PostDetailContentCard = ({ post }) => {
             {post.content}
           </div>
           <div className="post-detail-address">
-            {post.address && <PostDetailMap addresses={[post.address]} />}
+            <hr className="mx-auto w-50 mb-4" />
+            {post.addresses && <PostDetailMap addresses={post.addresses} />}
           </div>
 
-          <div className="mt-2 text-muted">위치: {post.address}</div>
           {/* 나중에 state 이용해서 좋아요 한 상태면 변화하게 */}
           <div className="d-flex justify-content-center align-items-center mt-3">
             <div className="like-area">
