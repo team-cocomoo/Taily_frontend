@@ -24,6 +24,7 @@ function App() {
       <AuthProvider>
         <div className="App">
           <HeaderNavbar />
+
           <Container className="mt-4">
             <Routes>
               <Route path="/" element={<LoginPage />} />
@@ -42,7 +43,6 @@ function App() {
           <Footer />
         </div>
       </AuthProvider>
-
     </BrowserRouter>
   );
 }

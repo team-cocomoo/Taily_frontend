@@ -29,7 +29,7 @@ const TailyFriendsDetailPage = () => {
           createdAt: "2025-10-01T12:00:00",
           view: 120,
           likeCount: 200,
-          address: "혜화역",
+          addresses: ["혜화역","동성고등학교"],
         };
 
         const mockComments = [

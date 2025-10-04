@@ -13,8 +13,10 @@
   padding: 30px;
 }
 
-.card-header-section {
+.post-card .card-header-section {
   background-color: #fff;
+  border: none;
+  border-bottom: 1px solid #000;
 }
 .card-header-title {
   font-size: 30px;
@@ -50,6 +52,9 @@
   width: 30px;
   color: #4f1f02;
   cursor: pointer;
+}
+.address-line {
+  width: 60%;
 }
 .heart {
   margin-left: 5px;
