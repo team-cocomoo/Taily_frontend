@@ -10,13 +10,13 @@ import AuthProvider from "./contexts/AuthProvider";
 // 레이아웃 컴포넌트
 import HeaderNavbar from "./components/common/HeaderNavbar";
 import Footer from "./components/common/Footer";
-import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
 
 // 페이지 컴포넌트
 import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
 import LoginPage from "./pages/user/LoginPage";
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "./pages/walkPath/WalkPathDetailPage";
+import WalkDiaryDetailPage from "./pages/walkDiary/WalkDiaryDetailPage";
 
 function App() {
   return (
@@ -34,6 +34,10 @@ function App() {
               <Route path="/walk-paths" element={<WalkPathMainPage />} />
               {/* 산책 경로 상세 페이지 */}
               <Route path="/walkpath/:id" element={<WalkPathDetailPage />} />
+              {/* 산책 일지 상세 페이지
+              <Route path="/walk-diaries/:id" element={<WalkDiaryDetailPage />} /> */}
+
+              <Route path="/diary" element={<WalkDiaryDetailPage />} />
               {/* <Route path="/login" element={<LoginPage />} /> */}
               <Route
                 path="/taily-friends/:id"
