@@ -10,8 +10,7 @@ import AuthProvider from "./contexts/AuthProvider";
 // 레이아웃 컴포넌트
 import HeaderNavbar from "./components/common/HeaderNavbar";
 import Footer from "./components/common/Footer";
-import WalkDiaryWritePage from "./pages/walkdiary/WalkDiaryWritePage";
-
+import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
 
 // 페이지 컴포넌트
 import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
@@ -29,8 +28,13 @@ function App() {
             <Routes>
               <Route path="/" element={<LoginPage />} /> */}
               {/* 로그인 페이지 */}
-              <Route path="/login" element={<LoginPage />} />
 
+              <Route path="/login" element={<LoginPage />} />
+              {/* 산책경로 페이지 */}
+              <Route path="/walk-paths" element={<WalkPathMainPage />} />
+              {/* 산책 경로 상세 페이지 */}
+              <Route path="/walkpath/:id" element={<WalkPathDetailPage />} />
+              {/* <Route path="/login" element={<LoginPage />} />
               <Route
                 path="/taily-friends/:id"
                 element={<TailyFriendsDetailPage />}
@@ -38,21 +42,21 @@ function App() {
             </Routes>
           </Container>
           <Footer />
+        </div> */}
+        <div className="App">
+          <HeaderNavbar />
+          <Container className="mt-4">
+            <WalkDiaryWritePage />
+            <Routes>
+              
+            </Routes>
+          </Container>
+          <Footer />
         </div>
       </AuthProvider>
-
       {/* <AuthProvider> */}
-      {/* <div className="App">
-        <HeaderNavbar />
-        <Container className="mt-4">
-          <WalkDiaryWritePage />
-          <Routes>
-            
-          </Routes>
-        </Container>
-        <Footer />
-      </div> */}
       {/* </AuthProvider> */}
+
     </BrowserRouter>
   );
 }
