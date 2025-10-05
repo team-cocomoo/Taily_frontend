@@ -34,6 +34,7 @@ function App() {
               <Route path="/walk-paths" element={<WalkPathMainPage />} />
               {/* 산책 경로 상세 페이지 */}
               <Route path="/walkpath/:id" element={<WalkPathDetailPage />} />
+              {/* <Route path="/login" element={<LoginPage />} /> */}
               <Route
                 path="/taily-friends/:id"
                 element={<TailyFriendsDetailPage />}
