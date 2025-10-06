@@ -14,6 +14,7 @@ import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage"
 import LoginPage from "./pages/user/LoginPage";
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "./pages/walkPath/WalkPathDetailPage";
+import WalkPathWritePage from "./pages/walkPath/WalkPathWritePage";
 
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
 
               {/* 산책 경로 관련 */}
               <Route path="/walk-paths" element={<WalkPathMainPage />} />
-              <Route path="/walkpath/:id" element={<WalkPathDetailPage />} />
+              <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
+              <Route path="/walk-paths/write" element={<WalkPathWritePage />} />
 
               {/* 친구 상세 */}
               <Route

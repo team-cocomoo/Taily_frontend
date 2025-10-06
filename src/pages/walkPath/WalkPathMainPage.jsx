@@ -71,9 +71,9 @@ const WalkPathMainPage = () => {
     setPosts(mockPosts);
   }, []);
 
-  // ✅ 상세 페이지로 이동하는 함수
+  // 상세 페이지로 이동하는 함수
   const handleItemClick = (id) => {
-    navigate(`/walkpath/${id}`);
+    navigate(`/walk-paths/${id}`);
   };
 
   return (
@@ -85,7 +85,7 @@ const WalkPathMainPage = () => {
       {/* 게시물을 리스트 형식으로 출력 */}
       <PostListGroup items={posts} onItemClick={handleItemClick} />
       {/* 발자국 버튼 - 작성 페이지로 연결 */}
-      <WriteButton />
+      <WriteButton onClick={() => navigate("/walk-paths/write")}/>  
     </div>
   );
 };
