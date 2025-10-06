@@ -13,6 +13,9 @@ const LoginPage = () => {
   const { login } = useContext(AuthContext);
 
   // 폼 상태 관리
+
+
+   
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -36,7 +39,7 @@ const LoginPage = () => {
     setLoading(true);
     try {
       // 1. 로그인 API 호출
-      const loginResponse = await api.post("/api/auth/login", formData);
+      const loginResponse = await api.post("/api/users/login", formData);
       // 2. JWT 토큰 추출 및 localstorage 에 저장
       const token = loginResponse.headers["authorization"];
       if (token) {
@@ -45,7 +48,7 @@ const LoginPage = () => {
       }
       // 3. 내 정보 조회
       // API Server에서 인증한 회원의 정보를 조회하여 localstorage에 저장
-      const userResponse = await api.get("/api/members/me");
+      const userResponse = await api.get("/api/mypage/me");
       // 4. Context에 사용자 정보(로그인한 회원정보)를 저장 후 홈으로 이동
       if (userResponse.data.success) {
         login(userResponse.data.data); //첫번째 data는 axios 응답 data이고 두번째는
