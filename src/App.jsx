@@ -17,7 +17,7 @@ import LoginPage from "./pages/user/LoginPage";
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "./pages/walkPath/WalkPathDetailPage";
 import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
-import TailyFriendsMainPage from "./pages/tailyFriends/TailyFriendsMainPage";
+import WalkDiaryWritePage from "./pages/walkdiary/WalkDiaryWritePage"
 
 function App() {
   return (
