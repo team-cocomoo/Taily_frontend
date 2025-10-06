@@ -12,8 +12,6 @@ import ErrorAlert from "../../components/common/ErrorAlert";
 const TailyFriendDetailPage = () => {
   const { id } = useParams(); // 게시글 ID
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext); // 로그인 유저 정보
-
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]); // 댓글 리스트
   const [loading, setLoading] = useState(true);

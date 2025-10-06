@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import PostCardGroup from "../../components/board/PostCardGroup";
 import SearchBar from "../../components/common/SearchBar";
 import WriteButton from "../../components/common/WriteButton";
-import { useNavigate } from "react-router-dom";
+import api from "../../config/apiConfig";
 
 const TailyFriendsMainPage = () => {
   const [posts, setPosts] = useState([]);
@@ -12,19 +12,12 @@ const TailyFriendsMainPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // localStorage에서 JWT 토큰 가져오기
-        const token = localStorage.getItem("accessToken");
-
-        const response = await axios.get("/api/taily-friends", {
+        const response = await api.get("/api/taily-friends", {
           params: { page: 1, size: 6 },
-          headers: {
-            Authorization: token ? `Bearer ${token}` : "",
-          },
         });
-        
-        // 안전하게 data 접근
-        const postsData = response.data?.data || [];
-        setPosts(postsData);
+
+        // response.data.data 구조 확인
+        setPosts(response.data?.data || []);
       } catch (error) {
         console.error("게시글 불러오기 실패:", error);
       }
@@ -43,7 +36,7 @@ const TailyFriendsMainPage = () => {
       <SearchBar />
       <br />
       <PostCardGroup items={posts} onItemClick={handleItemClick} />
-      <WriteButton />
+      <WriteButton onClick={() => navigate("/taily-friends/write")}/>  
     </div>
   );
 };
