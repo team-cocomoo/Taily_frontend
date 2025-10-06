@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, ListGroup, Form, Button } from "react-bootstrap";
 import messageIcon from "../../assets/image/message-square.png";
 import userIcon from "../../assets/image/user-icon.png";
-import "../../styles/PostDetailCommentCard.css"
+import "../../styles/postDetail/PostDetailCommentCard.css";
 
 const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
   const [newComment, setNewComment] = useState("");
@@ -36,7 +36,7 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
   };
 
   return (
-    <Card className="shadow-sm mb-5">
+    <Card className="shadow-sm mb-5 post-card">
       {/* 댓글 작성 폼 */}
       <Card.Header className="card-header-section" style={{ border: "none" }}>
         <Form onSubmit={handleSubmit}>
@@ -48,11 +48,11 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               name="comment-section"
-              className="mt-5"
+              className="mt-4"
               style={{ resize: "none" }}
             />
           </Form.Group>
-          <div className="d-flex justify-content-end mt-3">
+          <div className="d-flex justify-content-end mt-3 mb-3">
             <Button type="submit" size="sm" variant="primary">
               <img
                 src={messageIcon}
@@ -87,7 +87,7 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                 <strong className="comment-nickname">{c.nickname}</strong>
 
                 {/* 2줄: 댓글 내용 */}
-                <div >{c.content}</div>
+                <div>{c.content}</div>
 
                 {/* 3줄: 답글 버튼 + 작성일 */}
                 <div className="d-flex justify-content align-items-center mt-1">
@@ -95,7 +95,6 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                     variant="link"
                     size="sm"
                     className="p-0 me-3 reply-button"
-                    
                     onClick={() => toggleReplyForm(c.id)}
                   >
                     답글 달기
