@@ -19,7 +19,8 @@ const WalkDiaryDetailPage = () => {
         endTime,
         totalTime: `${diffMinutes / 60}시간`,
         emotion: "😍",
-        content: "날오늘 날씨가 너무 좋았어요! 🐶\n공원에서 산책하고, 사진도 찍었어요.",
+        petName: "하수",
+        content: "오늘 날씨가 너무 좋았어요! 🐶\n공원에서 산책하고, 사진도 찍었어요.",
     };
 
     return (
