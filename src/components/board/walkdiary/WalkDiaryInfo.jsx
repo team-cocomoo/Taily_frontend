@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Card, Row, Col, ToggleButton, ButtonGroup } from "react-bootstrap";
+import { Form, Card, Row, Col, ToggleButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import WalkTimeSelectBox from "../../board/walkdiary/WalkTimeSelectBox";
 
