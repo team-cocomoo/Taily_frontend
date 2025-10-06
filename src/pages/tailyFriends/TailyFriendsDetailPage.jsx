@@ -1,96 +1,104 @@
-// pages/board/PostDetailPage.jsx
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Row, Col, Button } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import api from "../../config/apiConfig";
-
+import { AuthContext } from "../../contexts/AuthContext";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-import ErrorAlert from "../../components/common/ErrorAlert";
-import PostDetailContentCard from "../../components/board/PostDetailContentCard";
-import PostCommentCard from "../../components/board/PostDetailCommentCard";
 
-const TailyFriendsDetailPage = () => {
-  const { id } = useParams();
+import PostDetailContentCard from "../../components/board/postDetail/PostDetailContentCard";
+import PostDetailCommentCard from "../../components/board/postDetail/PostDetailCommentCard";
+import ErrorAlert from "../../components/common/ErrorAlert";
+
+const TailyFriendDetailPage = () => {
+  const { id } = useParams(); // 게시글 ID
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext); // 로그인 유저 정보
 
   const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]); // 댓글 리스트
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // 게시글 + 댓글 조회
   useEffect(() => {
-    const fetchPostAndComments = async () => {
+    const fetchDetail = async () => {
       try {
-        const mockPost = {
-          id: 1,
-          title: "테스트 게시글",
-          content: "목데이터로 보는 상세 게시글",
-          nickname: "홍길동",
-          createdAt: "2025-10-01T12:00:00",
-          view: 120,
-          likeCount: 200,
-          addresses: ["혜화역","동성고등학교"],
-        };
+        setLoading(true);
+        const [postRes, commentRes] = await Promise.all([
+          api.get(`/api/taily-friends/${id}`),
+          api.get(`/api/taily-friends/${id}/comments`),
+        ]);
 
-        const mockComments = [
-          {
-            id: 1,
-            content: "첫 댓글입니다",
-            nickname: "김철수",
-            createdAt: "2025-10-01T12:10:00",
-            replies: [
-              {
-                id: 11,
-                nickname: "Bob",
-                content: "답글이에요",
-                createdAt: "2025-10-02T11:05:00Z",
-              },
-            ],
-          },
-          {
-            id: 2,
-            content: "두 번째 댓글입니다",
-            nickname: "이영희",
-            createdAt: "2025-10-01T12:20:00",
-          },
-        ];
-
-        setPost(mockPost);
-        setComments(mockComments);
-      } catch (error) {
-        setError("데이터 로딩 실패");
+        if (postRes.data.success) setPost(postRes.data.data);
+        if (commentRes.data.success) setComments(commentRes.data.data);
+      } catch (err) {
+        console.error("게시글 상세 조회 실패:", err);
+        setError("게시글 정보를 불러오지 못했습니다.");
       } finally {
-        setLoading(false); // ✅ 반드시 마지막에 false로 바꿔야 함
+        setLoading(false);
       }
     };
 
-    fetchPostAndComments();
+    fetchDetail();
   }, [id]);
 
-  if (loading) return <LoadingSpinner message="게시글 불러오는 중..." />;
-  if (error)
-    return (
-      <ErrorAlert
-        message={error}
-        variant="danger"
-        onRetry={() => window.location.reload()}
-        onGoBack={() => navigate("/taily-friends")}
-      />
-    );
-  if (!post)
-    return (
-      <ErrorAlert
-        message="게시글이 존재하지 않습니다."
-        variant="warning"
-        onGoBack={() => navigate("/taily-friends")}
-      />
-    );
+  // 댓글 작성
+  const handleAddComment = async (content) => {
+    try {
+      const response = await api.post(`/api/taily-friends/${id}/comments`, {
+        content,
+      });
+      if (response.data.success) {
+        // 새 댓글 추가 후 목록 갱신
+        setComments((prev) => [response.data.data, ...prev]);
+      }
+    } catch (err) {
+      console.error("댓글 작성 실패:", err);
+      alert("댓글 작성 중 오류가 발생했습니다.");
+    }
+  };
 
+  // 답글 작성
+  const handleAddReply = async (commentId, content) => {
+    try {
+      const response = await api.post(
+        `/api/taily-friends/${id}/comments/${commentId}/replies`,
+        { content }
+      );
+      if (response.data.success) {
+        // 해당 댓글의 replies 갱신
+        setComments((prev) =>
+          prev.map((c) =>
+            c.id === commentId
+              ? { ...c, replies: [...(c.replies || []), response.data.data] }
+              : c
+          )
+        );
+      }
+    } catch (err) {
+      console.error("답글 작성 실패:", err);
+      alert("답글 작성 중 오류가 발생했습니다.");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="text-center mt-5">
+        <LoadingSpinner />
+        <div>로딩 중...</div>
+      </div>
+    );
+  }
+
+  if (error) return <ErrorAlert message={error} variant="danger" />;
+
+  if (!post) return <div className="text-center mt-5">게시글이 없습니다.</div>;
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-11">
+    <Row className="justify-content-center mt-4">
+      <Col xs={12} md={10} lg={10}>
         {/* 게시글 상세 */}
         <PostDetailContentCard post={post} />
+
         {/* 하단 버튼 */}
         <div className="d-flex justify-content-end mt-1 mb-4">
           <Button
@@ -101,11 +109,16 @@ const TailyFriendsDetailPage = () => {
             목록으로
           </Button>
         </div>
+
         {/* 댓글 목록 */}
-        <PostCommentCard comments={comments} />
-      </div>
-    </div>
+        <PostDetailCommentCard
+          comments={comments}
+          onAddComment={handleAddComment}
+          onAddReply={handleAddReply}
+        />
+      </Col>
+    </Row>
   );
 };
 
-export default TailyFriendsDetailPage;
+export default TailyFriendDetailPage;

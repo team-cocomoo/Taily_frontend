@@ -1,11 +1,11 @@
 import React from "react";
 import { Card, Dropdown } from "react-bootstrap";
-import "../../styles/postDetail/PostDetailContentCard.css";
+import "../../../styles/postDetail/PostDetailContentCard.css";
 
-import userIcon from "../../assets/image/user-icon.png";
-import filledHeart from "../../assets/image/filled-heart.png";
-import meatballIcon from "../../assets/image/meatball-icon.png";
-import PostDetailMap from "./PostDetailMap";
+import userIcon from "../../../assets/image/user-icon.png";
+import filledHeart from "../../../assets/image/filled-heart.png";
+import meatballIcon from "../../../assets/image/meatball-icon.png";
+import PostDetailMap from "../postDetail/PostDetailMap";
 
 const PostDetailContentCard = ({ post }) => {
   if (!post) return null;
@@ -63,7 +63,7 @@ const PostDetailContentCard = ({ post }) => {
           </div>
           <div className="post-detail-address">
             <hr className="mx-auto w-50 mb-4" />
-            {post.addresses && <PostDetailMap addresses={post.addresses} />}
+            {post.address && <PostDetailMap addresses={post.address} />}
           </div>
 
           {/* 나중에 state 이용해서 좋아요 한 상태면 변화하게 */}

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Card, ListGroup, Form, Button } from "react-bootstrap";
-import messageIcon from "../../assets/image/message-square.png";
-import userIcon from "../../assets/image/user-icon.png";
-import "../../styles/postDetail/PostDetailCommentCard.css";
+import { AuthContext } from "../../../contexts/AuthContext";
+import messageIcon from "../../../assets/image/message-square.png";
+import userIcon from "../../../assets/image/user-icon.png";
+import "../../../styles/postDetail/PostDetailCommentCard.css";
 
 const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
   const [newComment, setNewComment] = useState("");
   const [replyText, setReplyText] = useState({});
   const [showReplyForm, setShowReplyForm] = useState({});
+
+  const { user, loading } = useContext(AuthContext); // 수정: user와 loading 사용
 
   // 새 댓글 작성
   const handleSubmit = (e) => {
@@ -16,6 +19,12 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
     onAddComment(newComment);
     setNewComment("");
   };
+  useEffect(() => {
+    console.log("🔥 로그인 상태 확인:");
+    console.log("user:", user); // 로그인 된 유저 정보
+    console.log("loading:", loading); // 인증 정보 로딩 중 여부
+    console.log("isLoggedIn:", !!user); // true이면 로그인됨
+  }, [user, loading]);
 
   // 답글 작성
   const handleReplySubmit = (e, commentId) => {
@@ -38,32 +47,40 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
   return (
     <Card className="shadow-sm mb-5 post-card">
       {/* 댓글 작성 폼 */}
-      <Card.Header className="card-header-section" style={{ border: "none" }}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-2">
-            <Form.Control
-              as="textarea"
-              rows={3}
-              placeholder="작성할 댓글 내용을 입력해 주세요."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              name="comment-section"
-              className="mt-4"
-              style={{ resize: "none" }}
-            />
-          </Form.Group>
-          <div className="d-flex justify-content-end mt-3 mb-3">
-            <Button type="submit" size="sm" variant="primary">
-              <img
-                src={messageIcon}
-                alt="message"
-                style={{ width: 16, marginRight: 4 }}
+      {loading ? (
+        <div className="text-center text-muted mt-3">로딩 중...</div>
+      ) : user ? (
+        <Card.Header className="card-header-section" style={{ border: "none" }}>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-2">
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="작성할 댓글 내용을 입력해 주세요."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                name="comment-section"
+                className="mt-4"
+                style={{ resize: "none" }}
               />
-              댓글 작성
-            </Button>
-          </div>
-        </Form>
-      </Card.Header>
+            </Form.Group>
+            <div className="d-flex justify-content-end mt-3 mb-3">
+              <Button type="submit" size="sm" variant="primary">
+                <img
+                  src={messageIcon}
+                  alt="message"
+                  style={{ width: 16, marginRight: 4 }}
+                />
+                댓글 작성
+              </Button>
+            </div>
+          </Form>
+        </Card.Header>
+      ) : (
+        <div className="text-center text-muted mt-3">
+          💬 댓글을 작성하려면 로그인하세요.
+        </div>
+      )}
 
       {/* 댓글 리스트 */}
       <ListGroup variant="flush" className="comment-list">
@@ -74,22 +91,10 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
               className="d-flex comment-list"
               style={{ border: "none" }}
             >
-              {/* 작성자 이미지 */}
-              <img
-                src={userIcon} // 작성자 이미지 URL
-                alt={c.nickname}
-                className="user-profile"
-              />
-
-              {/* 댓글 내용 블록 */}
+              <img src={userIcon} alt={c.nickname} className="user-profile" />
               <div className="flex-grow-1 d-flex flex-column">
-                {/* 1줄: 작성자 명 */}
                 <strong className="comment-nickname">{c.nickname}</strong>
-
-                {/* 2줄: 댓글 내용 */}
                 <div>{c.content}</div>
-
-                {/* 3줄: 답글 버튼 + 작성일 */}
                 <div className="d-flex justify-content align-items-center mt-1">
                   <Button
                     variant="link"
@@ -99,13 +104,11 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                   >
                     답글 달기
                   </Button>
-
                   <div className="text-muted small">
                     {new Date(c.createdAt).toLocaleString()}
                   </div>
                 </div>
 
-                {/* 답글 작성폼 (토글) */}
                 {showReplyForm[c.id] && (
                   <Form
                     className="mt-2"
@@ -127,8 +130,6 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                         style={{ resize: "none" }}
                       />
                     </Form.Group>
-
-                    {/* 버튼을 textarea 밑으로 */}
                     <div className="d-flex justify-content-end mt-3">
                       <Button type="submit" size="sm" variant="primary">
                         <img
@@ -142,7 +143,6 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                   </Form>
                 )}
 
-                {/* 답글 리스트 */}
                 {c.replies && c.replies.length > 0 && (
                   <ListGroup variant="flush" className="ms-4 mt-2">
                     {c.replies.map((r) => (
@@ -152,7 +152,7 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                         style={{ border: "none" }}
                       >
                         <img
-                          src={userIcon} // 작성자 이미지 URL
+                          src={userIcon}
                           alt={c.nickname}
                           className="user-profile"
                         />

@@ -6,8 +6,8 @@ import api from "../../config/apiConfig";
 
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorAlert from "../../components/common/ErrorAlert";
-import PostDetailContentCard from "../../components/board/PostDetailContentCard";
-import PostCommentCard from "../../components/board/PostDetailCommentCard";
+import PostDetailContentCard from "../../components/board/postDetail/PostDetailContentCard";
+import PostCommentCard from "../../components/board/postDetail/PostDetailCommentCard";
 
 const TailyFriendsDetailPage = () => {
   const { id } = useParams();
