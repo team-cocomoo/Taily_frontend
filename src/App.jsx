@@ -16,6 +16,7 @@ import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "./pages/walkPath/WalkPathDetailPage";
 import WalkPathWritePage from "./pages/walkPath/WalkPathWritePage";
 import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
+import WalkDiaryWritePage from "./pages/walkdiary/WalkDiaryWritePage"
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
 
               <Route path="/diary" element={<WalkDiaryCalendarPage />} />
               {/* <Route path="/login" element={<LoginPage />} /> */}
+              {/* 테일리프렌즈 페이지 */}
+              <Route path="/taily-friends" element={<TailyFriendsMainPage />} />
+              {/* 테일리프렌즈 상세 페이지 */}
               <Route
                 path="/taily-friends/:id"
                 element={<TailyFriendsDetailPage />}
