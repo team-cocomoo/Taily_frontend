@@ -9,7 +9,7 @@ import ErrorAlert from "../../components/common/ErrorAlert";
 import PostDetailContentCard from "../../components/board/PostDetailContentCard";
 import PostCommentCard from "../../components/board/PostDetailCommentCard";
 
-const TailyFriendsDetailPage = () => {
+const WalkPathsDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -74,7 +74,7 @@ const TailyFriendsDetailPage = () => {
         message={error}
         variant="danger"
         onRetry={() => window.location.reload()}
-        onGoBack={() => navigate("/taily-friends")}
+        onGoBack={() => navigate("/walk-paths")}
       />
     );
   if (!post)
@@ -82,7 +82,7 @@ const TailyFriendsDetailPage = () => {
       <ErrorAlert
         message="게시글이 존재하지 않습니다."
         variant="warning"
-        onGoBack={() => navigate("/taily-friends")}
+        onGoBack={() => navigate("/walk-paths")}
       />
     );
 
@@ -96,7 +96,7 @@ const TailyFriendsDetailPage = () => {
           <Button
             variant="outline-primary"
             size="sm"
-            onClick={() => navigate("/taily-friends")}
+            onClick={() => navigate("/walk-paths")}
           >
             목록으로
           </Button>
@@ -108,4 +108,4 @@ const TailyFriendsDetailPage = () => {
   );
 };
 
-export default TailyFriendsDetailPage;
+export default WalkPathsDetailPage;

@@ -12,6 +12,8 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.4.2",
     "@ckeditor/ckeditor5-react": "^11.0.0",
+    "@esbuild/win32-x64": "^0.25.10",
+    "@rolldown/pluginutils": "^1.0.0-beta.41",
     "axios": "^1.12.2",
     "bootstrap": "^5.3.8",
     "dayjs": "^1.11.18",

@@ -1,0 +1,82 @@
+/* 각 컴포넌트 좌우 패딩 값 */
+.diary-box {
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 각 카드 별 헤더 */
+.card-header:first-child {
+    font-weight: bold;
+    background-color: rgba(254, 186, 23, 0.5);
+    border-bottom: none;
+    border-radius: 14px 14px 0 0;
+    border: 2px solid rgba(254, 186, 23, 0.5);
+}
+
+/* 오늘의 정보 */
+.weather-icons {
+    display: flex;
+    gap: 8px;
+}
+
+/* 날씨 버튼 */
+.weather-icons .btn {
+    border-radius: 50%;       /* 동그라미 */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;               /* 여백 제거 */
+    font-size: 20px;          /* 이모지 크기 */
+    line-height: 1;           /* 세로 정렬 정확히 맞춤 */
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.weather-icons .btn:hover {
+    border: 2px solid #FEBA17;
+}
+
+.weather-icons .btn-check:checked + .btn {
+    filter: brightness(1.1) saturate(1.2); /* 조금 더 밝고 선명하게 */
+    border: 2px solid #FEBA17; 
+}
+
+/* 반려동물 기분 */
+.emotion-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.emotion-icons .btn {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 0;               /* 여백 제거 */
+    font-size: 20px;          /* 이모지 크기 */
+    line-height: 1;   
+}
+
+.emotion-icons .btn:hover {
+    border: 2px solid #FEBA17;
+}
+
+.emotion-icons .btn-check:checked + .btn {
+    filter: brightness(1.1) saturate(1.2); /* 조금 더 밝고 선명하게 */
+    border: 2px solid #FEBA17; 
+}
+
+/* 오늘의 일기 */
+
+/* 사진 첨부 */
+.add-image {
+    color: #9A9A9A;
+    font-weight: lighter;
+}
