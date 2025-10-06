@@ -46,7 +46,7 @@ function App() {
               {/* 산책 경로 상세 페이지 */}
               <Route path="/walkpath/:id" element={<WalkPathDetailPage />} />
 
-              <Route path="/diary" element={<WalkDiaryCalendarPage />} />
+              <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
               {/* <Route path="/login" element={<LoginPage />} /> */}
               <Route path="/taily-friends" element={<TailyFriendsMainPage />} />
               <Route
@@ -60,9 +60,11 @@ function App() {
 
               {/* 산책 일지 작성 */}
               <Route
-                path="/walk-diary/write"
+                path="/walk-diaries/:id"
                 element={<WalkDiaryWritePage />}
               />
+
+
             </Routes>
           </Container>
           <Footer />
