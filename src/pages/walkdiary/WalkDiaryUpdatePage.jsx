@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import WalkDiaryInfo from "../../components/board/walkdiary/WalkDiaryInfo";
@@ -8,7 +8,7 @@ import ImageBox from "../../components/board/ImageBox";
 
 import "../../styles/walkdiary/WalkDiaryWrite.css"
 
-const WalkDiardWritePage = () => {
+const WalkDiardWriteUpdateage = () => {
     const navigate = useNavigate();
 
     return (
@@ -34,4 +34,4 @@ const WalkDiardWritePage = () => {
     );
 };
 
-export default WalkDiardWritePage;
+export default WalkDiardWriteUpdateage;
