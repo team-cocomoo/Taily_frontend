@@ -1,11 +1,10 @@
 import React from 'react';
 import { Card } from "react-bootstrap";
-import SummaryCards from '../../components/board/walkdiary/SummaryCards';
+import SummaryCards from '../../components/board/walkDiary/SummaryCards';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/walkdiary/WalkDiaryStatistics.css"
-import WalkCharts from '../../components/board/walkdiary/WalkCharts';
-import EmotionSummary from '../../components/board/walkdiary/EmotionSummary';
-import ReminderCard from '../../components/board/walkdiary/ReminderCard';
+import WalkCharts from '../../components/board/walkDiary/WalkCharts';
+import ReminderCard from '../../components/board/walkDiary/ReminderCard';
 
 const WalkDiaryStatisticsPage = () => {
     return (
