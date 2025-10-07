@@ -14,6 +14,7 @@ import axios from "axios";
 const api = axios.create({
   baseURL: "http://localhost:8080",
   headers: { "Content-Type": "application/json" },
+  withCredentials: true, // 쿠키/세션도 필요하면 유지
 });
 // 2. request 요청 인터셉터 설정
 /*

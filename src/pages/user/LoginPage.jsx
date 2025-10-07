@@ -49,10 +49,13 @@ const LoginPage = () => {
       // API Server에서 인증한 회원의 정보를 조회하여 localstorage에 저장
       const userResponse = await api.get("/api/mypage/me");
       // 4. Context에 사용자 정보(로그인한 회원정보)를 저장 후 홈으로 이동
-      if (userResponse.data.success) {
-        login(userResponse.data.data); //첫번째 data는 axios 응답 data이고 두번째는
-        // ApiResponseDto의 data(실제 회원 정보)
+      console.log("userResponse:", userResponse);
+      if (userResponse.status === 200 && userResponse.data) {
+        console.log("로그인 성공, 마이페이지 이동합니다");
+        login(userResponse.data); // ← 이미 data가 회원정보임
         navigate("/mypage/main"); // 로그인 성공하면 마이페이지 메인으로 이동
+      } else {
+        throw new Error("회원 정보를 불러오지 못했습니다.");
       }
     } catch (error) {
       console.error("로그인 실패", error);
