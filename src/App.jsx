@@ -33,7 +33,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
 
             {/* 사용자 권한 영역 */}
-        <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
+            <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="/mypage/main" element={<MyPageMainPage />} />
               <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
               <Route path="/walk-diaries/:id" element={<WalkDiaryWritePage />} />

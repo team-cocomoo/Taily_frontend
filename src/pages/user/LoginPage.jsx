@@ -32,6 +32,14 @@ const LoginPage = () => {
       const token = bearerToken.replace("Bearer ", "");
       localStorage.setItem("token", token);
 
+    // 2. 사용자 정보 조회
+    const userRes = await axios.get("http://localhost:8080/api/mypage/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const user = userRes.data.data; // UserProfileResponseDto 구조 확인 필요
+
+
       // 로그인 성공 → 마이페이지 이동
       navigate("/mypage/main");
     } catch (err) {
