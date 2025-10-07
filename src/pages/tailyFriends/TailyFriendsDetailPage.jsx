@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
-import { AuthContext } from "../../contexts/AuthContext";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 import PostDetailContentCard from "../../components/board/postDetail/PostDetailContentCard";

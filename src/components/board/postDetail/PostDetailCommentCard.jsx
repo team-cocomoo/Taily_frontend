@@ -10,7 +10,7 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
   const [replyText, setReplyText] = useState({});
   const [showReplyForm, setShowReplyForm] = useState({});
 
-  const { user, loading } = useContext(AuthContext); // 수정: user와 loading 사용
+  const { user, loading } = useContext(AuthContext); 
 
   // 새 댓글 작성
   const handleSubmit = (e) => {
@@ -20,7 +20,7 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
     setNewComment("");
   };
   useEffect(() => {
-    console.log("🔥 로그인 상태 확인:");
+    console.log("로그인 상태 확인:");
     console.log("user:", user); // 로그인 된 유저 정보
     console.log("loading:", loading); // 인증 정보 로딩 중 여부
     console.log("isLoggedIn:", !!user); // true이면 로그인됨
