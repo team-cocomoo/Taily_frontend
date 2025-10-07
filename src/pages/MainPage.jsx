@@ -10,6 +10,7 @@ import {
   FaDog, FaStar, FaCut, FaAppleAlt 
 } from 'react-icons/fa';
 
+
 const MainPage = () => {
   // 기능 카드 데이터
   const featureData = [

@@ -7,6 +7,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import api from "../../config/apiConfig";
 // 공통 컴포넌트 import
 import ErrorAlert from "../../components/common/ErrorAlert";
+import TailyLogo from "../../assets/image/taily_logo.svg"
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const LoginPage = () => {
   // 폼 상태 관리
 
 
-   
+  
   const [formData, setFormData] = useState({
     username: "",
     password: "",
