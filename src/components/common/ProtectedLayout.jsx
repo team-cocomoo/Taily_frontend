@@ -1,26 +1,24 @@
-import React, { useContext } from "react";
+// src/components/common/ProtectedLayout.jsx
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
+import jwt_decode from "jwt-decode";
 
-const ProtectedLayout = ({ roles }) => {
-  const { user, loading } = useContext(AuthContext);
+const ProtectedLayout = ({ roles = [] }) => {
+  const token = localStorage.getItem("token");
 
-  if (loading) return <div>Loading...</div>; // 초기 로딩 중 처리
+  if (!token) return <Navigate to="/login" />;
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  try {
+    const decoded = jwt_decode(token);
+    const userRole = decoded.role; // JWT에 role 클레임 포함되어 있어야 함
+
+    if (!roles.includes(userRole)) return <Navigate to="/" />;
+
+    return <Outlet />; // 권한 있음 → 자식 컴포넌트 렌더링
+  } catch (err) {
+    console.error("JWT 디코딩 실패:", err);
+    return <Navigate to="/login" />;
   }
-
-  if (roles && !roles.includes(user.role)) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <h2>권한이 없습니다.</h2>
-        <p>해당 페이지에 접근할 수 있는 권한이 없습니다.</p>
-      </div>
-    );
-  }
-
-  return <Outlet />;
 };
 
 export default ProtectedLayout;
