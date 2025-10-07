@@ -20,6 +20,7 @@ import WalkPathWritePage from "./pages/walkPath/WalkPathWritePage";
 import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
 import RegisterPage from "./pages/user/RegisterPage";
 import MainPage from "./pages/MainPage"
+import MyPageMainPage from "./pages/myPage/MyPageMainPage"
 
 function App() {
   return (
@@ -30,16 +31,14 @@ function App() {
 
           <Container className="mt-4">
             <Routes>
-              {/* 메인 페이지 */}
               <Route path="/" element={<MainPage />} />
-
+              {/* 메인 페이지 */}
               <Route path="/login" element={<LoginPage />} />
               {/* 로그인 페이지 */}
-
               <Route path="/register" element={<RegisterPage />} />
-              {/* 로그인 페이지 */}
-
-              <Route path="/login" element={<LoginPage />} />
+              {/* 회원가입 페이지 */}
+              <Route path="/mypage/main" element={<MyPageMainPage />} />
+              {/* 마이페이지 메인 */}
 
               {/* 산책 경로 관련 */}
               <Route path="/walk-paths" element={<WalkPathMainPage />} />

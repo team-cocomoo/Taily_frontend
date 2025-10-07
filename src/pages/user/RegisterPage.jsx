@@ -1,38 +1,150 @@
-import React from "react";
+import React from 'react';
+import { Container, Row, Col, Form, Button, Nav, InputGroup } from 'react-bootstrap';
+// 'LoginPage.css'에 공통 스타일이 있다면 그대로 사용하시면 좋습니다.
+import TailyLogo from "../../assets/image/taily_logo.svg"
 
-const SignUpPage = () => {
+
+const RegisterPage = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // 회원가입 제출 로직 처리
+    console.log('회원가입 완료 시도');
+  };
+
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
-      <div className="w-full max-w-md bg-zinc-900 rounded-2xl p-8 shadow-lg border border-zinc-800">
-        <h2 className="text-2xl font-bold text-center mb-8">회원가입</h2>
-        
-        <form className="space-y-4">
-          <div className="flex space-x-2">
-            <input type="text" placeholder="이름" className="w-1/2 bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-            <input type="text" placeholder="닉네임" className="w-1/2 bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-          </div>
-          <div className="flex space-x-2">
-            <input type="email" placeholder="이메일" className="w-1/2 bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-            <input type="text" placeholder="전화번호" className="w-1/2 bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-          </div>
-          <input type="text" placeholder="아이디" className="w-full bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-          <input type="password" placeholder="비밀번호" className="w-full bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-          <input type="password" placeholder="비밀번호 확인" className="w-full bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-          <div className="flex space-x-2">
-            <input type="text" placeholder="주소" className="w-2/3 bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-            <input type="text" placeholder="상세주소" className="w-1/3 bg-transparent border border-yellow-500 rounded-full px-4 py-2 focus:outline-none" />
-          </div>
+    // 페이지 전체 레이아웃 (로그인 페이지와 동일한 구조)
+    <Container fluid className="min-vh-100 d-flex flex-column" style={{ backgroundColor: '#fdf7f0' }}>
+      
+      {/* 상단 네비게이션 바 (헤더) - 로그인 페이지와 동일 */}
+      <header className="py-3 d-flex justify-content-between align-items-center bg-white shadow-sm">
+        <div className="d-flex align-items-center">
+          <h1 className="h4 mb-0 ms-4" style={{ fontFamily: 'cursive', fontWeight: 'bold' }}>taily☽</h1>
+        </div>
+        <Nav className="me-4">
+          <Nav.Link href="#story" className="text-dark">믹스스토리</Nav.Link>
+          <Nav.Link href="#space" className="text-dark">신박 공간</Nav.Link>
+          <Nav.Link href="#design" className="text-dark">우리동네집사</Nav.Link>
+          <Nav.Link href="#event" className="text-dark">이벤트</Nav.Link>
+          <Nav.Link href="#contact" className="text-dark">고객센터</Nav.Link>
+          <Button variant="outline-dark" size="sm" className="ms-3 rounded-pill">Sign Up</Button>
+          <Button variant="warning" size="sm" className="ms-2 rounded-pill">Login</Button>
+        </Nav>
+      </header>
 
-          <button
-            type="submit"
-            className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 rounded-full transition"
-          >
-            완료
-          </button>
-        </form>
-      </div>
-    </div>
+      {/* 중앙 회원가입 영역 */}
+      <Row className="flex-grow-1 justify-content-center align-items-center py-5">
+        <Col xs={12} sm={10} md={8} lg={6}>
+          <div className="text-center mb-4">
+      {/* 중앙 로고 - SVG 이미지로 변경 */}
+      <img 
+        src={TailyLogo} 
+        alt="Taily Logo" 
+        className="img-fluid" // Bootstrap의 반응형 이미지 클래스
+        style={{ width: '120px', height: 'auto' }} // 원하는 크기로 조정
+      />
+          </div>
+          
+          {/* 회원가입 폼 카드/영역 */}
+          <div className="p-5 border bg-white shadow-sm">
+            <Form onSubmit={handleSubmit}>
+              
+              {/* 1. ID (중복확인 버튼 포함) */}
+              <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Label column sm="3" className="text-end">ID</Form.Label>
+                <Col sm="9">
+                  <InputGroup>
+                    <Form.Control type="text" placeholder="아이디" className="rounded-0" />
+                    <Button variant="outline-secondary" className="rounded-0 border">중복확인</Button>
+                  </InputGroup>
+                </Col>
+              </Form.Group>
+
+              {/* 2. 닉네임 (중복확인 버튼 포함) */}
+              <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Label column sm="3" className="text-end">닉네임</Form.Label>
+                <Col sm="9">
+                  <InputGroup>
+                    <Form.Control type="text" placeholder="닉네임" className="rounded-0" />
+                    <Button variant="outline-secondary" className="rounded-0 border">중복확인</Button>
+                  </InputGroup>
+                </Col>
+              </Form.Group>
+              
+              {/* 3. 비밀번호 */}
+              <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Label column sm="3" className="text-end">비밀번호</Form.Label>
+                <Col sm="9">
+                  <Form.Control type="password" placeholder="비밀번호" className="rounded-0" />
+                </Col>
+              </Form.Group>
+              
+              {/* 4. 비밀번호 확인 */}
+              <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Label column sm="3" className="text-end">비밀번호 확인</Form.Label>
+                <Col sm="9">
+                  <Form.Control type="password" placeholder="비밀번호 확인" className="rounded-0" />
+                </Col>
+              </Form.Group>
+              
+              {/* 5. TEL */}
+              <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Label column sm="3" className="text-end">TEL</Form.Label>
+                <Col sm="9">
+                  <Form.Control type="tel" placeholder="연락처" className="rounded-0" />
+                </Col>
+              </Form.Group>
+
+              {/* 6. Email (중복확인 버튼 포함) */}
+              <Form.Group as={Row} className="mb-3 align-items-center">
+                <Form.Label column sm="3" className="text-end">Email</Form.Label>
+                <Col sm="9">
+                  <InputGroup>
+                    <Form.Control type="email" placeholder="이메일 주소" className="rounded-0" />
+                    <Button variant="outline-secondary" className="rounded-0 border">중복확인</Button>
+                  </InputGroup>
+                </Col>
+              </Form.Group>
+              
+              {/* 7. 주소 */}
+              <Form.Group as={Row} className="mb-4 align-items-center">
+                <Form.Label column sm="3" className="text-end">주소</Form.Label>
+                <Col sm="9">
+                  <Form.Control type="text" placeholder="주소" className="rounded-0" />
+                </Col>
+              </Form.Group>
+
+              {/* 완료 버튼 */}
+              <div className="d-grid gap-2 mt-4">
+                <Button variant="warning" type="submit" className="py-2 fw-bold rounded-0" style={{ fontSize: '1.2rem' }}>
+                  완료
+                </Button>
+              </div>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+
+      {/* 하단 푸터 영역 - 로그인 페이지와 동일 */}
+      <footer className="py-4 mt-auto text-center" style={{ backgroundColor: '#fdf3e8' }}>
+        <Nav className="justify-content-center mb-2">
+          <Nav.Link href="#home" className="text-dark">Home</Nav.Link>
+          <Nav.Link href="#services" className="text-dark">Services</Nav.Link>
+          <Nav.Link href="#blog" className="text-dark">Blog</Nav.Link>
+          <Nav.Link href="#help" className="text-dark">Help Center</Nav.Link>
+          <Nav.Link href="#about" className="text-dark">About</Nav.Link>
+        </Nav>
+        <div className="mb-2">
+          {/* 아이콘 사용을 위해 Bootstrap Icons가 필요합니다. */}
+          <a href="#" className="text-dark mx-2"><i className="bi bi-youtube"></i></a>
+          <a href="#" className="text-dark mx-2"><i className="bi bi-facebook"></i></a>
+          <a href="#" className="text-dark mx-2"><i className="bi bi-twitter"></i></a>
+          <a href="#" className="text-dark mx-2"><i className="bi bi-instagram"></i></a>
+          <a href="#" className="text-dark mx-2"><i className="bi bi-linkedin"></i></a>
+        </div>
+        <p className="text-muted small mb-0">Greenopia &copy; 202X. All rights reserved.</p>
+      </footer>
+    </Container>
   );
-}
+};
 
-export default SignUpPage;
+export default RegisterPage;

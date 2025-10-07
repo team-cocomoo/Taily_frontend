@@ -12,7 +12,7 @@ const WalkPathWritePage = () => {
     return (
         <div className="row justify-content-center">
             {/* 산책 경로 - 지도 API */}
-             
+            
 
             {/*  내용 */}
             <WalkPathContent />

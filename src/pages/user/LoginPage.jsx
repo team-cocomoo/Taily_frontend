@@ -7,15 +7,14 @@ import { AuthContext } from "../../contexts/AuthContext";
 import api from "../../config/apiConfig";
 // 공통 컴포넌트 import
 import ErrorAlert from "../../components/common/ErrorAlert";
+import TailyLogo from "../../assets/image/taily_logo.svg"
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
   // 폼 상태 관리
-
-
-   
+  
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -53,7 +52,7 @@ const LoginPage = () => {
       if (userResponse.data.success) {
         login(userResponse.data.data); //첫번째 data는 axios 응답 data이고 두번째는
         // ApiResponseDto의 data(실제 회원 정보)
-        navigate("/"); //홈으로 이동
+        navigate("/mypage/main"); // 로그인 성공하면 마이페이지 메인으로 이동
       }
     } catch (error) {
       console.error("로그인 실패", error);
