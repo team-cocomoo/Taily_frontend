@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import AuthProvider from "../src/contexts/AuthProvider";
 
 import HeaderNavbar from "./components/common/HeaderNavbar";
 import Footer from "./components/common/Footer";
@@ -23,7 +24,8 @@ import TailyFriendsWritePage from "./pages/tailyFriends/TailyFriendsWritePage";
 
 function App() {
   return (
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <HeaderNavbar />
         <Container className="mt-4">
           <Routes>
@@ -36,13 +38,22 @@ function App() {
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="/mypage/main" element={<MyPageMainPage />} />
               <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
-              <Route path="/walk-diaries/:id" element={<WalkDiaryWritePage />} />
+              <Route
+                path="/walk-diaries/:id"
+                element={<WalkDiaryWritePage />}
+              />
               <Route path="/walk-paths" element={<WalkPathMainPage />} />
               <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
               <Route path="/walk-paths/write" element={<WalkPathWritePage />} />
               <Route path="/taily-friends" element={<TailyFriendsMainPage />} />
-              <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
-              <Route path="/taily-friends/write" element={<TailyFriendsWritePage />} />
+              <Route
+                path="/taily-friends/:id"
+                element={<TailyFriendsDetailPage />}
+              />
+              <Route
+                path="/taily-friends/write"
+                element={<TailyFriendsWritePage />}
+              />
             </Route>
 
             {/* 관리자 권한 영역 */}
@@ -52,7 +63,8 @@ function App() {
           </Routes>
         </Container>
         <Footer />
-      </BrowserRouter>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
