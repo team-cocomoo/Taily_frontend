@@ -58,10 +58,12 @@ const WalkDiaryCalendarPage = () => {
                 navigate(`/api/walk-diaries/${formatted}`);
             } else {
                 // 산책 일지 작성 API 호출
-                const res = await api.post("/api/walk-diaries", {date: formatted}, {
-                    headers: {
-                        Authorization: token ? `Bearer ${token}` : ""
-                    }
+                const res = await api.post(`/api/walk-diaries/write/${formatted}`, 
+                    {date: formatted}, 
+                    {
+                        headers: {
+                            Authorization: token ? `Bearer ${token}` : ""
+                        }
                 });
 
                 if (res.data.success) {

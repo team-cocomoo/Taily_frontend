@@ -1,39 +1,79 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, ListGroup, Form, Button } from "react-bootstrap";
-import { AuthContext } from "../../../contexts/AuthContext";
 import messageIcon from "../../../assets/image/message-square.png";
 import userIcon from "../../../assets/image/user-icon.png";
 import "../../../styles/postDetail/PostDetailCommentCard.css";
 
-const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
+const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
   const [newComment, setNewComment] = useState("");
   const [replyText, setReplyText] = useState({});
   const [showReplyForm, setShowReplyForm] = useState({});
 
-  const { user, loading } = useContext(AuthContext); 
+  // 로그인 토큰 확인
+  const token = localStorage.getItem("accessToken");
+  console.log("토큰: " + token);
+  const isLoggedIn = !!token;
 
   // 새 댓글 작성
-  const handleSubmit = (e) => {
+  const handleAddComment = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-    onAddComment(newComment);
-    setNewComment("");
+
+    if (!isLoggedIn) {
+      alert("로그인 후 댓글 작성이 가능합니다.");
+      return;
+    }
+
+    try {
+      const res = await api.post(
+        `/api/taily-friends/${postId}/comments`,
+        { content: newComment },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (res.data.success) {
+        setComments((prev) => [res.data.data, ...prev]);
+        setNewComment("");
+      }
+    } catch (err) {
+      console.error("댓글 작성 실패:", err);
+      alert("댓글 작성 중 오류가 발생했습니다.");
+    }
   };
-  useEffect(() => {
-    console.log("로그인 상태 확인:");
-    console.log("user:", user); // 로그인 된 유저 정보
-    console.log("loading:", loading); // 인증 정보 로딩 중 여부
-    console.log("isLoggedIn:", !!user); // true이면 로그인됨
-  }, [user, loading]);
 
   // 답글 작성
-  const handleReplySubmit = (e, commentId) => {
+  const handleAddReply = async (e, commentId) => {
     e.preventDefault();
     const text = replyText[commentId]?.trim();
     if (!text) return;
-    onAddReply(commentId, text);
-    setReplyText((prev) => ({ ...prev, [commentId]: "" }));
-    setShowReplyForm((prev) => ({ ...prev, [commentId]: false })); // 제출 후 폼 숨김
+
+    if (!isLoggedIn) {
+      alert("로그인 후 답글 작성이 가능합니다.");
+      return;
+    }
+
+    try {
+      const res = await api.post(
+        `/api/taily-friends/${postId}/comments/${commentId}/replies`,
+        { content: text },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (res.data.success) {
+        setComments((prev) =>
+          prev.map((c) =>
+            c.id === commentId
+              ? { ...c, replies: [...(c.replies || []), res.data.data] }
+              : c
+          )
+        );
+        setReplyText((prev) => ({ ...prev, [commentId]: "" }));
+        setShowReplyForm((prev) => ({ ...prev, [commentId]: false }));
+      }
+    } catch (err) {
+      console.error("답글 작성 실패:", err);
+      alert("답글 작성 중 오류가 발생했습니다.");
+    }
   };
 
   // 답글 폼 토글
@@ -47,11 +87,9 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
   return (
     <Card className="shadow-sm mb-5 post-card">
       {/* 댓글 작성 폼 */}
-      {loading ? (
-        <div className="text-center text-muted mt-3">로딩 중...</div>
-      ) : user ? (
+      {isLoggedIn ? (
         <Card.Header className="card-header-section" style={{ border: "none" }}>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleAddComment}>
             <Form.Group className="mb-2">
               <Form.Control
                 as="textarea"
@@ -112,7 +150,7 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                 {showReplyForm[c.id] && (
                   <Form
                     className="mt-2"
-                    onSubmit={(e) => handleReplySubmit(e, c.id)}
+                    onSubmit={(e) => handleAddReply(e, c.id)}
                   >
                     <Form.Group className="mb-2">
                       <Form.Control

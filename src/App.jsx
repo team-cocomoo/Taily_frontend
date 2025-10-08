@@ -13,8 +13,11 @@ import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/user/LoginPage";
 import RegisterPage from "./pages/user/RegisterPage";
 import MyPageUserInfo from "./pages/myPage/MyPageUserInfo";
+
 import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
 import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
+import WalkDiaryDetailPage from './pages/walkDiary/WalkDiaryDetailPage';
+
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "./pages/walkPath/WalkPathDetailPage";
 import WalkPathWritePage from "./pages/walkPath/WalkPathWritePage";
@@ -38,10 +41,9 @@ function App() {
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="/mypage/main" element={<MyPageUserInfo />} />
               <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
-              <Route
-                path="/walk-diaries/:id"
-                element={<WalkDiaryWritePage />}
-              />
+              <Route path="/walk-diaries/:id" element={<WalkDiaryWritePage />} />
+              <Route path="/walk-diaries/:date" element={<WalkDiaryDetailPage />} />
+
               <Route path="/walk-paths" element={<WalkPathMainPage />} />
               <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
               <Route path="/walk-paths/write" element={<WalkPathWritePage />} />
