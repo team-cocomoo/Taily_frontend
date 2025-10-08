@@ -15,7 +15,7 @@ const MyEditor = ({ initialData = "", onChange, placeholder = "" }) => {
             onChange={(event, editor) => {
                 const data = editor.getData();
                 setContent(data);
-                if (onChange) onchange(data);   // 부모로 데이터 전달
+                if (onChange) onChange(data);   // 부모로 데이터 전달
                 console.log("CKEditor Data:", data);
             }}
             config={{
