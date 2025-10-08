@@ -12,7 +12,7 @@ import ProtectedLayout from "./components/common/ProtectedLayout";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/user/LoginPage";
 import RegisterPage from "./pages/user/RegisterPage";
-import MyPageMainPage from "./pages/myPage/MyPageMainPage";
+import MyPageUserInfo from "./pages/myPage/MyPageUserInfo";
 import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
 import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
@@ -36,7 +36,7 @@ function App() {
 
             {/* 사용자 권한 영역 */}
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
-              <Route path="/mypage/main" element={<MyPageMainPage />} />
+              <Route path="/mypage/main" element={<MyPageUserInfo />} />
               <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
               <Route
                 path="/walk-diaries/:id"

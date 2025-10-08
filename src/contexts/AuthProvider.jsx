@@ -1,7 +1,7 @@
 // src/contexts/AuthContext.jsx
 import React, { useState, useEffect } from "react";
 import api from "../config/apiConfig";
-import { AuthContext } from "./AuthContext"; // ✅ import 추가
+import { AuthContext } from "./AuthContext"; // import 추가
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
         return;
       }
       try {
-        const res = await api.get("/users/me");
+        const res = await api.get("/api/users/me");
         setUser(res.data);
       } catch (err) {
         console.error("유저 정보 가져오기 실패:", err);
