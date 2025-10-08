@@ -66,7 +66,7 @@ const HeaderNavbar = () => {
           <Link
             to="/diary"
             className={
-              location.pathname.startsWith("/diary") ||
+              location.pathname.startsWith("/walk-diaries") ||
               location.pathname.startsWith("/taily-friends") ||
               location.pathname.startsWith("/walk-paths")
                 ? "nav-link-active"
@@ -76,7 +76,7 @@ const HeaderNavbar = () => {
             산책 공간
           </Link>
           <div className="dropdown-menu">
-            <Link to="/diary" className="dropdown-item">
+            <Link to="/walk-diaries" className="dropdown-item">
               산책일지
             </Link>
             <Link to="/taily-friends" className="dropdown-item">
