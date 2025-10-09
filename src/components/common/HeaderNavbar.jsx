@@ -1,24 +1,26 @@
-import "../../styles/HeaderNavbar.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import logo from "../../assets/image/taily_logo.png";
+import "../../styles/HeaderNavbar.css";
 
 const HeaderNavbar = () => {
   const location = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext);
 
   // 나중에 유저 로그인 인증 추가 후 추가
-  // const { user, logout } = useContext(AuthContext);
 
   // 현재 경로와 일치하는 링크 스타일 반환
   // const isActive = (path) => {
   //   return location.pathname === path ? "nav-link-active" : "nav-link";
   // };
 
-  // // 로그아웃 처리
-  // const handleLogout = () => {
-  //   logout();
-  //   navigate("/");
-  // };
+  // 로그아웃 처리
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <nav className="navbar fixed-top">
@@ -64,7 +66,7 @@ const HeaderNavbar = () => {
           <Link
             to="/diary"
             className={
-              location.pathname.startsWith("/diary") ||
+              location.pathname.startsWith("/walk-diaries") ||
               location.pathname.startsWith("/taily-friends") ||
               location.pathname.startsWith("/walk-paths")
                 ? "nav-link-active"
@@ -74,7 +76,7 @@ const HeaderNavbar = () => {
             산책 공간
           </Link>
           <div className="dropdown-menu">
-            <Link to="/diary" className="dropdown-item">
+            <Link to="/walk-diaries" className="dropdown-item">
               산책일지
             </Link>
             <Link to="/taily-friends" className="dropdown-item">
@@ -138,29 +140,34 @@ const HeaderNavbar = () => {
         </div>
       </div>
 
-      {/* 오른쪽: 버튼 영역 */}
+      {/* 오른쪽 버튼 영역 */}
       <div className="navbar-actions">
-        {/* {user ? (
+        {user ? (
           <>
-            <span className="welcome-text">{user.name}님 환영합니다!</span>
-            <button className="btn-logout" onClick={handleLogout}>
-              로그아웃
+            <span className="welcome-text">{user.nickname}님 환영합니다!</span>
+            <Link to="/mypage/main">
+              <button className="btn btn-outline-primary btn-sm me-3 btn-signup">
+                My Page
+              </button>
+            </Link>
+            <button className="btn btn-primary btn-sm me-3 btn-login" onClick={handleLogout}>
+              Logout
             </button>
           </>
-        ) : ( */}
-        <>
-          <Link to="/register">
-            <button className="btn btn-outline-primary btn-sm me-3 btn-signup">
-              Sign Up
-            </button>
-          </Link>
-          <Link to="/login">
-            <button className="btn btn-primary btn-sm me-3 btn-login">
-              Login
-            </button>
-          </Link>
-        </>
-        {/* )} */}
+        ) : (
+          <>
+            <Link to="/register">
+              <button className="btn btn-outline-primary btn-sm me-3 btn-signup">
+                Sign Up
+              </button>
+            </Link>
+            <Link to="/login">
+              <button className="btn btn-primary btn-sm me-3 btn-login">
+                Login
+              </button>
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

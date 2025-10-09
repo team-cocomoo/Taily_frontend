@@ -1,30 +1,79 @@
 import React, { useState } from "react";
 import { Card, ListGroup, Form, Button } from "react-bootstrap";
-import messageIcon from "../../assets/image/message-square.png";
-import userIcon from "../../assets/image/user-icon.png";
-import "../../styles/postDetail/PostDetailCommentCard.css";
+import messageIcon from "../../../assets/image/message-square.png";
+import userIcon from "../../../assets/image/user-icon.png";
+import "../../../styles/postDetail/PostDetailCommentCard.css";
 
-const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
+const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
   const [newComment, setNewComment] = useState("");
   const [replyText, setReplyText] = useState({});
   const [showReplyForm, setShowReplyForm] = useState({});
 
+  // 로그인 토큰 확인
+  const token = localStorage.getItem("accessToken");
+  console.log("토큰: " + token);
+  const isLoggedIn = !!token;
+
   // 새 댓글 작성
-  const handleSubmit = (e) => {
+  const handleAddComment = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-    onAddComment(newComment);
-    setNewComment("");
+
+    if (!isLoggedIn) {
+      alert("로그인 후 댓글 작성이 가능합니다.");
+      return;
+    }
+
+    try {
+      const res = await api.post(
+        `/api/taily-friends/${postId}/comments`,
+        { content: newComment },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (res.data.success) {
+        setComments((prev) => [res.data.data, ...prev]);
+        setNewComment("");
+      }
+    } catch (err) {
+      console.error("댓글 작성 실패:", err);
+      alert("댓글 작성 중 오류가 발생했습니다.");
+    }
   };
 
   // 답글 작성
-  const handleReplySubmit = (e, commentId) => {
+  const handleAddReply = async (e, commentId) => {
     e.preventDefault();
     const text = replyText[commentId]?.trim();
     if (!text) return;
-    onAddReply(commentId, text);
-    setReplyText((prev) => ({ ...prev, [commentId]: "" }));
-    setShowReplyForm((prev) => ({ ...prev, [commentId]: false })); // 제출 후 폼 숨김
+
+    if (!isLoggedIn) {
+      alert("로그인 후 답글 작성이 가능합니다.");
+      return;
+    }
+
+    try {
+      const res = await api.post(
+        `/api/taily-friends/${postId}/comments/${commentId}/replies`,
+        { content: text },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (res.data.success) {
+        setComments((prev) =>
+          prev.map((c) =>
+            c.id === commentId
+              ? { ...c, replies: [...(c.replies || []), res.data.data] }
+              : c
+          )
+        );
+        setReplyText((prev) => ({ ...prev, [commentId]: "" }));
+        setShowReplyForm((prev) => ({ ...prev, [commentId]: false }));
+      }
+    } catch (err) {
+      console.error("답글 작성 실패:", err);
+      alert("답글 작성 중 오류가 발생했습니다.");
+    }
   };
 
   // 답글 폼 토글
@@ -38,32 +87,38 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
   return (
     <Card className="shadow-sm mb-5 post-card">
       {/* 댓글 작성 폼 */}
-      <Card.Header className="card-header-section" style={{ border: "none" }}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-2">
-            <Form.Control
-              as="textarea"
-              rows={3}
-              placeholder="작성할 댓글 내용을 입력해 주세요."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              name="comment-section"
-              className="mt-4"
-              style={{ resize: "none" }}
-            />
-          </Form.Group>
-          <div className="d-flex justify-content-end mt-3 mb-3">
-            <Button type="submit" size="sm" variant="primary">
-              <img
-                src={messageIcon}
-                alt="message"
-                style={{ width: 16, marginRight: 4 }}
+      {isLoggedIn ? (
+        <Card.Header className="card-header-section" style={{ border: "none" }}>
+          <Form onSubmit={handleAddComment}>
+            <Form.Group className="mb-2">
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="작성할 댓글 내용을 입력해 주세요."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                name="comment-section"
+                className="mt-4"
+                style={{ resize: "none" }}
               />
-              댓글 작성
-            </Button>
-          </div>
-        </Form>
-      </Card.Header>
+            </Form.Group>
+            <div className="d-flex justify-content-end mt-3 mb-3">
+              <Button type="submit" size="sm" variant="primary">
+                <img
+                  src={messageIcon}
+                  alt="message"
+                  style={{ width: 16, marginRight: 4 }}
+                />
+                댓글 작성
+              </Button>
+            </div>
+          </Form>
+        </Card.Header>
+      ) : (
+        <div className="text-center text-muted mt-3">
+          💬 댓글을 작성하려면 로그인하세요.
+        </div>
+      )}
 
       {/* 댓글 리스트 */}
       <ListGroup variant="flush" className="comment-list">
@@ -74,22 +129,10 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
               className="d-flex comment-list"
               style={{ border: "none" }}
             >
-              {/* 작성자 이미지 */}
-              <img
-                src={userIcon} // 작성자 이미지 URL
-                alt={c.nickname}
-                className="user-profile"
-              />
-
-              {/* 댓글 내용 블록 */}
+              <img src={userIcon} alt={c.nickname} className="user-profile" />
               <div className="flex-grow-1 d-flex flex-column">
-                {/* 1줄: 작성자 명 */}
                 <strong className="comment-nickname">{c.nickname}</strong>
-
-                {/* 2줄: 댓글 내용 */}
                 <div>{c.content}</div>
-
-                {/* 3줄: 답글 버튼 + 작성일 */}
                 <div className="d-flex justify-content align-items-center mt-1">
                   <Button
                     variant="link"
@@ -99,17 +142,15 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                   >
                     답글 달기
                   </Button>
-
                   <div className="text-muted small">
                     {new Date(c.createdAt).toLocaleString()}
                   </div>
                 </div>
 
-                {/* 답글 작성폼 (토글) */}
                 {showReplyForm[c.id] && (
                   <Form
                     className="mt-2"
-                    onSubmit={(e) => handleReplySubmit(e, c.id)}
+                    onSubmit={(e) => handleAddReply(e, c.id)}
                   >
                     <Form.Group className="mb-2">
                       <Form.Control
@@ -127,8 +168,6 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                         style={{ resize: "none" }}
                       />
                     </Form.Group>
-
-                    {/* 버튼을 textarea 밑으로 */}
                     <div className="d-flex justify-content-end mt-3">
                       <Button type="submit" size="sm" variant="primary">
                         <img
@@ -142,7 +181,6 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                   </Form>
                 )}
 
-                {/* 답글 리스트 */}
                 {c.replies && c.replies.length > 0 && (
                   <ListGroup variant="flush" className="ms-4 mt-2">
                     {c.replies.map((r) => (
@@ -152,7 +190,7 @@ const PostDetailCommentCard = ({ comments, onAddComment, onAddReply }) => {
                         style={{ border: "none" }}
                       >
                         <img
-                          src={userIcon} // 작성자 이미지 URL
+                          src={userIcon}
                           alt={c.nickname}
                           className="user-profile"
                         />

@@ -14,9 +14,9 @@
 }
 
 .post-card .card-header-section {
-  background-color: #fff;
-  border: none;
-  border-bottom: 1px solid #000;
+  background-color: #fff !important;
+  border: none !important;
+  border-bottom: 1px solid #000 !important;
 }
 .card-header-title {
   font-size: 30px;

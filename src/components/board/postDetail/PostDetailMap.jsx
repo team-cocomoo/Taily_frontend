@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../../styles/postDetail/PostDetailMap.css";
+import "../../../styles/postDetail/PostDetailMap.css";
 
 const PostDetailMap = ({ addresses }) => {
   const mapContainer = useRef(null);
   const [kakaoLoaded, setKakaoLoaded] = useState(false);
 
-  // 1️⃣ Kakao SDK 동적 로딩
+  // Kakao SDK 동적 로딩
   useEffect(() => {
     if (!addresses || addresses.length === 0) return;
 
@@ -31,7 +31,7 @@ const PostDetailMap = ({ addresses }) => {
     script.onload = () => {
       if (window.kakao && window.kakao.maps) {
         window.kakao.maps.load(() => {
-          console.log("✅ Kakao 지도 SDK 로드 성공 및 수동 초기화 준비 완료");
+          console.log("Kakao 지도 SDK 로드 성공 및 수동 초기화 준비 완료");
           setKakaoLoaded(true);
         });
       } else {
