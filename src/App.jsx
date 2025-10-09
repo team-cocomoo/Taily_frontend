@@ -14,7 +14,7 @@ import LoginPage from "./pages/user/LoginPage";
 import RegisterPage from "./pages/user/RegisterPage";
 import MyPageMainPage from "./pages/myPage/MyPageMainPage";
 
-import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
+import WalkDiaryCalendarPage from "./pages/walkdiary/WalkDiaryCalendarPage";
 import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
 import WalkDiaryDetailPage from './pages/walkDiary/WalkDiaryDetailPage';
 
@@ -43,7 +43,7 @@ function App() {
 
               {/* 산책 일지 */}
               <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
-              <Route path="/walk-diaries/:id" element={<WalkDiaryWritePage />} />
+              <Route path="/walk-diaries/write/:date" element={<WalkDiaryWritePage />} />
               <Route path="/walk-diaries/:date" element={<WalkDiaryDetailPage />} />
 
               <Route path="/walk-paths" element={<WalkPathMainPage />} />
