@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ImageBox from "../../components/board/ImageBox";
 import WalkPathContent from "../../components/board/walkPath/WalkPathContent";
-import "../../styles/walkdiary/WalkDiaryWrite.css"
+import "../../styles/walkPath/WalkPathWrite.css"
 
 const WalkPathWritePage = () => {
     const navigate = useNavigate();
