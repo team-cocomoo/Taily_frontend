@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Dropdown } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../../contexts/AuthContext";
 import "../../../styles/postDetail/PostDetailContentCard.css";
 
 import userIcon from "../../../assets/image/user-icon.png";
@@ -8,7 +11,29 @@ import meatballIcon from "../../../assets/image/meatball-icon.png";
 import PostDetailMap from "../postDetail/PostDetailMap";
 
 const PostDetailContentCard = ({ post }) => {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext); // 로그인한 사용자 정보
+
   if (!post) return null;
+
+  const isAuthor = user && user.nickname === post.nickname;
+
+  const handleDelete = async () => {
+    if (!window.confirm("정말 게시글을 삭제하시겠습니까?")) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:8080/api/taily-friends/${post.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      alert("게시글 삭제 완료!");
+      navigate("/taily-friends");
+    } catch (err) {
+      console.error(err);
+      alert("게시글 삭제 실패");
+    }
+  };
+
   return (
     <div className="post-detail-body d-flex justify-content-center align-items-center">
       <Card className="mb-4 shadow-sm post-card">
@@ -21,7 +46,7 @@ const PostDetailContentCard = ({ post }) => {
 
             <div className="user-text">
               <div className="author-info">
-                <span className="author-name">{post.nickname}</span>
+                <span className="author-name">{post.username}</span>
                 <small className="author-date">
                   {new Date(post.createdAt).toLocaleString()} 조회수:{" "}
                   {post.view}
@@ -37,24 +62,39 @@ const PostDetailContentCard = ({ post }) => {
                 >
                   <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
                 </Dropdown.Toggle>
-                {/* 나중에 로그인 했을때는 수정,삭제가 뜨게 */}
                 <Dropdown.Menu className="dropdown-menu">
-                  <Dropdown.Item
-                    onClick={() => alert("신고")}
-                    className="dropdown-item"
-                  >
-                    신고하기
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => alert("공유")}>
-                    공유하기
-                  </Dropdown.Item>
+                  {isAuthor ? (
+                    <>
+                      <Dropdown.Item
+                        onClick={() =>
+                          navigate(`/taily-friends/edit/${post.id}`)
+                        }
+                      >
+                        수정하기
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={handleDelete}>
+                        삭제하기
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => alert("공유")}>
+                        공유하기
+                      </Dropdown.Item>
+                    </>
+                  ) : (
+                    <>
+                      <Dropdown.Item onClick={() => alert("신고")}>
+                        신고하기
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => alert("공유")}>
+                        공유하기
+                      </Dropdown.Item>
+                    </>
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
             </div>
           </div>
         </Card.Header>
         <Card.Body>
-          {/* 나중에 이 부분에 이미지 출력 */}
           <div
             className="post-detail-content"
             style={{ whiteSpace: "pre-wrap", minHeight: "200px" }}
@@ -65,7 +105,6 @@ const PostDetailContentCard = ({ post }) => {
             {post.address && <PostDetailMap addresses={post.address} />}
           </div>
 
-          {/* 나중에 state 이용해서 좋아요 한 상태면 변화하게 */}
           <div className="d-flex justify-content-center align-items-center mt-3">
             <div className="like-area">
               좋아요 {post.likeCount}{" "}
