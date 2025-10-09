@@ -17,6 +17,11 @@ const TailyFriendsWritePage = () => {
   const [images, setImages] = useState([]); // 이미지 파일 리스트
 
   const handleSubmit = async () => {
+    if (!title.trim() || !address.trim() || !content.trim()) {
+      alert("제목, 주소, 내용은 반드시 입력해야 합니다.");
+      return;
+    }
+    
     const token = localStorage.getItem("token"); // 로그인 시 저장된 토큰
     console.log("토큰: " + token);
     const formData = new FormData();
@@ -71,7 +76,6 @@ const TailyFriendsWritePage = () => {
       </div>
     </div>
   );
-
 };
 
 export default TailyFriendsWritePage;

@@ -44,6 +44,11 @@ const TailyFriendsEditPage = () => {
 
   // 수정 완료
   const handleUpdate = async () => {
+    if (!title.trim() || !address.trim() || !content.trim()) {
+      alert("제목, 주소, 내용은 반드시 입력해야 합니다.");
+      return;
+    }
+
     const token = localStorage.getItem("token");
     try {
       await axios.patch(
