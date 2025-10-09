@@ -39,45 +39,6 @@ const TailyFriendDetailPage = () => {
     fetchDetail();
   }, [id]);
 
-  // 댓글 작성
-  const handleAddComment = async (content) => {
-    try {
-      const response = await api.post(`/api/taily-friends/${id}/comments`, {
-        content,
-      });
-      if (response.data.success) {
-        // 새 댓글 추가 후 목록 갱신
-        setComments((prev) => [response.data.data, ...prev]);
-      }
-    } catch (err) {
-      console.error("댓글 작성 실패:", err);
-      alert("댓글 작성 중 오류가 발생했습니다.");
-    }
-  };
-
-  // 답글 작성
-  const handleAddReply = async (commentId, content) => {
-    try {
-      const response = await api.post(
-        `/api/taily-friends/${id}/comments/${commentId}/replies`,
-        { content }
-      );
-      if (response.data.success) {
-        // 해당 댓글의 replies 갱신
-        setComments((prev) =>
-          prev.map((c) =>
-            c.id === commentId
-              ? { ...c, replies: [...(c.replies || []), response.data.data] }
-              : c
-          )
-        );
-      }
-    } catch (err) {
-      console.error("답글 작성 실패:", err);
-      alert("답글 작성 중 오류가 발생했습니다.");
-    }
-  };
-
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -109,9 +70,9 @@ const TailyFriendDetailPage = () => {
 
         {/* 댓글 목록 */}
         <PostDetailCommentCard
+          postId={id}
           comments={comments}
-          onAddComment={handleAddComment}
-          onAddReply={handleAddReply}
+          setComments={setComments}
         />
       </Col>
     </Row>

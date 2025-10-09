@@ -1,28 +1,20 @@
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import React, { useState } from 'react';
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import React from "react";
+import "../styles/MyEditor.css";
 
-import '../styles/MyEditor.css'
-
-
-const MyEditor = ({ initialData = "", onChange, placeholder = "" }) => {
-    const [content, setContent] = useState(initialData);
-
-    return (
-        <CKEditor 
-            editor={ClassicEditor}
-            data={content}
-            onChange={(event, editor) => {
-                const data = editor.getData();
-                setContent(data);
-                if (onChange) onChange(data);   // 부모로 데이터 전달
-                console.log("CKEditor Data:", data);
-            }}
-            config={{
-                placeholder: placeholder,
-            }}
-        />
-    );
+const MyEditor = ({ value = "", onChange, placeholder = "" }) => {
+  return (
+    <CKEditor
+      editor={ClassicEditor}
+      data={value} // 항상 부모 state 기준
+      onChange={(event, editor) => {
+        const data = editor.getData();
+        if (onChange) onChange(data);
+      }}
+      config={{ placeholder }}
+    />
+  );
 };
 
 export default MyEditor;

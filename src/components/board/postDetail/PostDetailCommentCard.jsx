@@ -3,15 +3,15 @@ import { Card, ListGroup, Form, Button } from "react-bootstrap";
 import messageIcon from "../../../assets/image/message-square.png";
 import userIcon from "../../../assets/image/user-icon.png";
 import "../../../styles/postDetail/PostDetailCommentCard.css";
+import api from "../../../config/apiConfig"; // ✅ 공통 axios 설정 import
 
-const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
+const PostDetailCommentCard = ({ postId, comments, setComments }) => {
   const [newComment, setNewComment] = useState("");
   const [replyText, setReplyText] = useState({});
   const [showReplyForm, setShowReplyForm] = useState({});
 
-  // 로그인 토큰 확인
-  const token = localStorage.getItem("accessToken");
-  console.log("토큰: " + token);
+  // 로그인 여부 확인
+  const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
 
   // 새 댓글 작성
@@ -25,15 +25,17 @@ const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
     }
 
     try {
-      const res = await api.post(
-        `/api/taily-friends/${postId}/comments`,
-        { content: newComment },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.post(`/api/taily-friends/${postId}/comments`, {
+        content: newComment,
+      });
 
-      if (res.data.success) {
+      console.log("댓글 작성 응답:", res.data);
+
+      if (res.data.success || res.data.status === "success") {
         setComments((prev) => [res.data.data, ...prev]);
         setNewComment("");
+      } else {
+        alert("댓글 작성에 실패했습니다.");
       }
     } catch (err) {
       console.error("댓글 작성 실패:", err);
@@ -54,12 +56,13 @@ const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
 
     try {
       const res = await api.post(
-        `/api/taily-friends/${postId}/comments/${commentId}/replies`,
-        { content: text },
-        { headers: { Authorization: `Bearer ${token}` } }
+        `/api/taily-friends/${postId}/comments/${commentId}/reply`,
+        { content: text }
       );
 
-      if (res.data.success) {
+      console.log("답글 작성 응답:", res.data);
+
+      if (res.data.success || res.data.status === "success") {
         setComments((prev) =>
           prev.map((c) =>
             c.id === commentId
@@ -69,6 +72,8 @@ const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
         );
         setReplyText((prev) => ({ ...prev, [commentId]: "" }));
         setShowReplyForm((prev) => ({ ...prev, [commentId]: false }));
+      } else {
+        alert("답글 작성에 실패했습니다.");
       }
     } catch (err) {
       console.error("답글 작성 실패:", err);
@@ -76,7 +81,7 @@ const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
     }
   };
 
-  // 답글 폼 토글
+  // ✅ 답글 폼 토글
   const toggleReplyForm = (commentId) => {
     setShowReplyForm((prev) => ({
       ...prev,
@@ -147,6 +152,7 @@ const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
                   </div>
                 </div>
 
+                {/* 답글 폼 */}
                 {showReplyForm[c.id] && (
                   <Form
                     className="mt-2"
@@ -181,6 +187,7 @@ const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
                   </Form>
                 )}
 
+                {/* 답글 리스트 */}
                 {c.replies && c.replies.length > 0 && (
                   <ListGroup variant="flush" className="ms-4 mt-2">
                     {c.replies.map((r) => (
@@ -191,7 +198,7 @@ const PostDetailCommentCard = ({ postId, comments, setComments, api }) => {
                       >
                         <img
                           src={userIcon}
-                          alt={c.nickname}
+                          alt={r.nickname}
                           className="user-profile"
                         />
                         <div className="flex-grow-1 d-flex flex-column">

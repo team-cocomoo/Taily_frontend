@@ -24,6 +24,7 @@ import WalkPathWritePage from "./pages/walkPath/WalkPathWritePage";
 import TailyFriendsMainPage from "./pages/tailyFriends/TailyFriendsMainPage";
 import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
 import TailyFriendsWritePage from "./pages/tailyFriends/TailyFriendsWritePage";
+import TailyFriendsEditPage from "./pages/tailyFriends/TailyFriendsEditPage";
 
 import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
 
@@ -59,6 +60,7 @@ function App() {
                 path="/taily-friends/write"
                 element={<TailyFriendsWritePage />}
               />
+              <Route path="/taily-friends/edit/:id" element={<TailyFriendsEditPage />} />
             </Route>
 
             {/* 관리자 권한 영역 */}
