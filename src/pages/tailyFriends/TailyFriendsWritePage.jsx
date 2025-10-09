@@ -71,6 +71,7 @@ const TailyFriendsWritePage = () => {
       </div>
     </div>
   );
+
 };
 
 export default TailyFriendsWritePage;

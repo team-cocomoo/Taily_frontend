@@ -58,9 +58,8 @@ const PostDetailContentCard = ({ post }) => {
           <div
             className="post-detail-content"
             style={{ whiteSpace: "pre-wrap", minHeight: "200px" }}
-          >
-            {post.content}
-          </div>
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          ></div>
           <div className="post-detail-address">
             <hr className="mx-auto w-50 mb-4" />
             {post.address && <PostDetailMap addresses={post.address} />}

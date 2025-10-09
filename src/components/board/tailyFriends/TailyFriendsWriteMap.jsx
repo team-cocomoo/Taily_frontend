@@ -4,8 +4,7 @@ import MapIcon from "../../../assets/image/map-search-icon.png";
 
 const { kakao } = window;
 
-const TailyFriendsWriteMap = () => {
-  const [address, setAddress] = useState("");
+const TailyFriendsWriteMap = ({ address, setAddress }) => {
   const mapRef = useRef(null);
   const markerRef = useRef(null);
   const overlayRef = useRef(null);
@@ -21,33 +20,45 @@ const TailyFriendsWriteMap = () => {
     setMap(mapInstance);
   }, []);
 
-  // 주소 입력 시 마커 + CustomOverlay 업데이트
+  // map 생성 후 초기 주소가 있으면 마커 표시
   useEffect(() => {
     if (!map || !address) return;
 
     const geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(address, (result, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        const position = new kakao.maps.LatLng(result[0].y, result[0].x);
+        updateMarkerAndOverlay(position, address);
+        map.setCenter(position);
+      }
+    });
+  }, [map, address]);
+
+  // 주소 입력 시 마커 + CustomOverlay 업데이트
+  useEffect(() => {
+    if (!map || !setAddress) return; // setAddress가 없으면 입력 무시
+
+    if (!address) return; // 작성용일 경우
+
+    const geocoder = new kakao.maps.services.Geocoder();
     const ps = new kakao.maps.services.Places();
 
-    // 주소 검색 시도
     geocoder.addressSearch(address, (result, status) => {
       if (status === kakao.maps.services.Status.OK) {
         const position = new kakao.maps.LatLng(result[0].y, result[0].x);
         updateMarkerAndOverlay(position, address);
         map.setCenter(position);
       } else {
-        // 주소 검색 실패 시 키워드 검색
         ps.keywordSearch(address, (data, status) => {
           if (status === kakao.maps.services.Status.OK) {
             const position = new kakao.maps.LatLng(data[0].y, data[0].x);
             updateMarkerAndOverlay(position, data[0].place_name);
             map.setCenter(position);
-          } else {
-            console.error("검색 실패:", address, status);
           }
         });
       }
     });
-  }, [address, map]);
+  }, [map, address]);
 
   // 마커 + CustomOverlay 생성/업데이트 함수
   const updateMarkerAndOverlay = (position, label) => {
@@ -94,21 +105,13 @@ const TailyFriendsWriteMap = () => {
     }
   };
 
-  // 제출 처리 (주소만 서버로 전송)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("폼 제출!");
-    console.log("주소:", address);
-    // axios.post("/api/diary", { address }) 등으로 전송 가능
-  };
-
   return (
     <Card className="mb-4 diary-box">
       <Card.Header className="card-header">
         <span>모임 장소</span>
       </Card.Header>
       <Card.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Form.Group className="mb-3" controlId="diaryAddress">
             <InputGroup>
               <InputGroup.Text>
