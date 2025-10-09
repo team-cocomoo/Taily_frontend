@@ -25,6 +25,8 @@ import TailyFriendsMainPage from "./pages/tailyFriends/TailyFriendsMainPage";
 import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
 import TailyFriendsWritePage from "./pages/tailyFriends/TailyFriendsWritePage";
 
+import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -48,6 +50,7 @@ function App() {
               <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
               <Route path="/walk-paths/write" element={<WalkPathWritePage />} />
               <Route path="/taily-friends" element={<TailyFriendsMainPage />} />
+              <Route path="/facilities" element={<FacilityMainPage />} />
               <Route
                 path="/taily-friends/:id"
                 element={<TailyFriendsDetailPage />}
