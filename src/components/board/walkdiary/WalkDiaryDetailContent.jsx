@@ -4,9 +4,22 @@ import "../../../styles/walkdiary/WalkDiaryDetail.css";
 
 import meatballIcon from "../../../assets/image/meatball-icon.png";
 
-const WalkDiaryDetailContent = ({ post }) => {
-  if (!post) return null;
+const WalkDiaryDetailContent = ({ walkDiary }) => {
+    const weatherIcons = {
+      SUNNY: "☀️",
+      CLOUDY: "☁️",
+      RAINY: "🌧️",
+      SNOWY: "❄️",
+    };
 
+  const emotionIcons = {
+    LOVE: "😍",
+    SMILE: "🙂",
+    NEUTRAL: "😐",
+    SAD: "😟",
+    ANGRY: "😡",
+  };
+  if (!walkDiary) return null;
 
   return (
     <Card className="mb-4 detail-box">
@@ -44,35 +57,53 @@ const WalkDiaryDetailContent = ({ post }) => {
       <Card.Body className="m-3">
         <Row className="mb-2">
           <Col sm={2}>날짜</Col>
-          <Col sm={10}>{post.date}</Col>
+          <Col sm={10}>{walkDiary.date}</Col>
         </Row>
         <Row className="mb-2">
           <Col sm={2}>날씨</Col>
-          <Col sm={10}>{post.weather}</Col>
+          <Col sm={10}>
+            {weatherIcons[walkDiary.walkDiaryWeather]}
+          </Col>
         </Row>
         <Row className="mb-2">
           <Col sm={2}>산책 시간</Col>
-          <Col sm={10}>{post.startTime} ~ {post.endTime} ({post.totalTime})</Col>
+          <Col sm={10}>
+            {walkDiary.beginTime} ~ {walkDiary.endTime} ({walkDiary.totalTime})
+          </Col>
         </Row>
         <Row className="mb-2">
-          <Col sm={2}>{post.petName}의 기분</Col>
-          <Col sm={10}>{post.emotion}</Col>
+          <Col sm={2}>테일리의 기분</Col>
+          <Col sm={10}>
+            {emotionIcons[walkDiary.walkDiaryEmotion]}
+          </Col>
         </Row>
 
         <hr className="mx-auto w-50 mb-4" />
 
         {/* 이미지 */}
-        <div className="d-flex justify-content-center mb-4">
-          <div className="images">사진</div>
-        </div>
-
+        {walkDiary.images && walkDiary.images.length > 0 ? (
+          <div className="d-flex justify-content-center flex-wrap mb-4 gap-3">
+            {walkDiary.images.map((img, idx) => (
+              <div key={idx} className="image-wrapper">
+                <img
+                  src={img.imageUrl || img.url || img.imagePath}
+                  alt={`산책일지-${idx}`}
+                  className="detail-image"
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-muted mb-4">
+            <em>첨부된 사진이 없습니다.</em>
+          </div>
+        )}
 
         <div
           className="post-detail-content"
           style={{ whiteSpace: "pre-wrap", minHeight: "200px" }}
-        >
-          {post.content}
-        </div>
+          dangerouslySetInnerHTML={{ __html: walkDiary.content }}
+        />
 
 
       </Card.Body>

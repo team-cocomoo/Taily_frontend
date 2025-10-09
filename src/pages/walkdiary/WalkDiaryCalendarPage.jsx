@@ -43,7 +43,8 @@ const WalkDiaryCalendarPage = () => {
     }, [activeYear, activeMonth]);
 
     const handleClickDate = async (date) => {
-        const formatted = dayjs(date).format('YYYY-MM-DD');
+        // const formatted = dayjs(date).format('YYYY-MM-DD');
+        const formatted = date.format ? date.format('YYYY-MM-DD') : dayjs(date).format('YYYY-MM-DD');
         const token = localStorage.getItem("accessToken"); // 토큰 가져오기
 
         try {
@@ -55,20 +56,10 @@ const WalkDiaryCalendarPage = () => {
             });
 
             if (response.data.exists) {
-                navigate(`/api/walk-diaries/${formatted}`);
+                navigate(`/walk-diaries/${formatted}`);
             } else {
                 // 산책 일지 작성 API 호출
-                const res = await api.post(`/api/walk-diaries/write/${formatted}`, 
-                    {date: formatted}, 
-                    {
-                        headers: {
-                            Authorization: token ? `Bearer ${token}` : ""
-                        }
-                });
-
-                if (res.data.success) {
-                    navigate(`/api/walk-diaries/${formatted}`);
-                }
+                navigate(`/walk-diaries/write/${formatted}`);
             }
         } catch (error) {
             console.error(error);
