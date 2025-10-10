@@ -9,6 +9,7 @@ import userIcon from "../../../assets/image/user-icon.png";
 import filledHeart from "../../../assets/image/filled-heart.png";
 import meatballIcon from "../../../assets/image/meatball-icon.png";
 import PostDetailMap from "../postDetail/PostDetailMap";
+import UserPopover from "../../common/UserPopover";
 
 const PostDetailContentCard = ({ post }) => {
   const navigate = useNavigate();
@@ -33,7 +34,6 @@ const PostDetailContentCard = ({ post }) => {
       alert("게시글 삭제 실패");
     }
   };
-
   return (
     <div className="post-detail-body d-flex justify-content-center align-items-center">
       <Card className="mb-4 shadow-sm post-card">
@@ -46,7 +46,9 @@ const PostDetailContentCard = ({ post }) => {
 
             <div className="user-text">
               <div className="author-info">
-                <span className="author-name">{post.username}</span>
+                <UserPopover userId={post.userId} nickname={post.nickname}>
+                  {post.nickname}
+                </UserPopover>
                 <small className="author-date">
                   {new Date(post.createdAt).toLocaleString()} 조회수:{" "}
                   {post.view}

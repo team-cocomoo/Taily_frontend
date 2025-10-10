@@ -1,0 +1,33 @@
+.user-popover {
+  max-width: 250px; /* 최대 폭 */
+  padding: 5px 10px; /* 안쪽 여백 */
+  font-size: 14px; /* 글자 크기 */
+  border: 1.5px solid #4f1f02;
+}
+.user-popover .popover-header {
+  font-size: 20px;
+  font-weight: 600;
+  color: #4f1f02;
+  background-color: #fff;
+  border-bottom: 1.5px solid #4f1f02;
+  line-height: 0;
+}
+
+.user-popover .popover-body {
+  color: #a5a5a5;
+  font-size: 13px;
+  line-height: 0.5;
+}
+
+.user-popover .btn {
+  font-size: 13px;
+  padding: 4px 6px;
+}
+.user-img {
+  width: 60px;
+  height: 60px;
+  border: 1.5px solid #4f1f02;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
