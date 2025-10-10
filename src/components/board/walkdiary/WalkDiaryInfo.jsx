@@ -68,7 +68,8 @@ const WalkDiaryInfo = ({ values, onChange, onSubmit }) => {
                     variant="outline-light"
                     value={w.value}
                     checked={values.walkDiaryWeather === w.value}
-                    onChange={() => onChange({ target: {name: "walkDiaryWeather", value: w.value}})}
+                    /*onChange={() => onChange({ target: {name: "walkDiaryWeather", value: w.value}})}*/
+                    onChange={(e) => onChange(e)}
                   >
                     {w.label}
                   </ToggleButton>
@@ -115,7 +116,7 @@ const WalkDiaryInfo = ({ values, onChange, onSubmit }) => {
                     name="walkDiaryEmotion"
                     value={emo.value}
                     checked={values.walkDiaryEmotion === emo.value}
-                    onChange={() => onChange({ target: { name: "walkDiaryEmotion", value: emo.value } })}
+                    onChange={(e) => onChange(e)}
                   >
                     {emo.label}
                   </ToggleButton>

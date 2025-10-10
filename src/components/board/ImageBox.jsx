@@ -20,30 +20,25 @@ const ImageBox = ({ onImageChange }) => {
         const newPreviews = files.map(file => URL.createObjectURL(file));
         setPreviews(prev => [...prev, ...newPreviews].slice(0, 3));
 
-        // 이미지 dto 생성을 위한 설정
-        const newImages = files.map((file) => ({
-            uuid: "",   // 백엔드에서 생성
-            filePath: URL.createObjectURL(file),    // 미리 보기 용
-            fileSize: file.size.toString()
-        }));
+        // File 객체 자체를 저장
+        const newImages = [...images, ...files].slice(0, 3);
+        setImages(newImages);
 
-        const combined = [...images, ...newImages].slice(0,3);
-        setImages(combined);
-
-        if (onImageChange) onImageChange(combined);
+        // 부모로 File 배열 전달
+        if (onImageChange) onImageChange(newImages);
     };
 
     // 미리보기 사진 클릭 시 특정 인덱스 삭제
     const handleRemove = (index) => {
         setPreviews(prev => prev.filter((_, i) => i !== index));
-        const updatedDto = images.filter((_, i) => i !== index);
-        setImages(updatedDto);
-        if (onImageChange) onImageChange(updatedDto);
+        const updatedFiles = images.filter((_, i) => i !== index);
+        setImages(updatedFiles);
+        if (onImageChange) onImageChange(updatedFiles);
     };
 
     return (
         <Card className="mb-4 diary-box">
-            <Card.Header>사진 첨부 <small className='text-muted px-2' >산책하는 순간을 기록하세요</small></Card.Header>
+            <Card.Header>사진 첨부{" "}<small className='text-muted px-2' >산책하는 순간을 기록하세요</small></Card.Header>
             <Card.Body className='d-flex align-items-center gap-2'>
                 <Form.Label
                     htmlFor='photo'
@@ -66,6 +61,7 @@ const ImageBox = ({ onImageChange }) => {
                     type="file" 
                     id='photo'
                     accept='image/*'
+                    multiple
                     className='d-none'
                     onChange={handleFileChange}
                 />
