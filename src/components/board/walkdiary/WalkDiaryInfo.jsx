@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Card, Row, Col, ToggleButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import WalkTimeSelectBox from "./WalkTimeSelectBox";
+import { useParams } from "react-router-dom";
 
-const WalkDiaryInfo = () => {
+const WalkDiaryInfo = ({ values, onChange, onSubmit }) => {
   // 산책 날짜
-  const [date, setDate] = useState("");
+  const {date} = useParams();
 
   // 산책 날씨
-  const [weather, setWeather] = useState("SUNNY");
+  // const [weather, setWeather] = useState("SUNNY");
   const weatherOptions = [
     { value: "SUNNY", label: "☀️" },
     { value: "CLOUDY", label: "⛅" },
@@ -16,14 +17,8 @@ const WalkDiaryInfo = () => {
     { value: "SNOWY", label: "❄️" },
   ];
 
-  // 산책 시간
-  const [times, setTimes] = useState({
-    startTime: "",
-    endTime: "",
-  });
-
   // 반려견 기분
-  const [emotion, setEmotion] = useState("LOVE");
+  // const [emotion, setEmotion] = useState("LOVE");
   const emotionOptions = [
     { value: "LOVE", label: "😍" },
     { value: "SMILE", label: "🙂" },
@@ -33,9 +28,10 @@ const WalkDiaryInfo = () => {
   ];
 
   // 산책 일지 작성 처리
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("폼 제출!", times);
+    console.log("폼 제출!");
+    onSubmit(values); // 부모에서 서버 요청
   };
 
   return (
@@ -53,11 +49,7 @@ const WalkDiaryInfo = () => {
               날짜
             </Form.Label>
             <Col sm={10}>
-              <Form.Control
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
+              {date}
             </Col>
           </Form.Group>
 
@@ -72,11 +64,11 @@ const WalkDiaryInfo = () => {
                     key={idx}
                     id={`weather-${idx}`}
                     type="radio"
-                    name="weather"
+                    name="walkDiaryWeather"
                     variant="outline-light"
                     value={w.value}
-                    checked={weather === w.value}
-                    onChange={(e) => setWeather(e.currentTarget.value)}
+                    checked={values.walkDiaryWeather === w.value}
+                    onChange={() => onChange({ target: {name: "walkDiaryWeather", value: w.value}})}
                   >
                     {w.label}
                   </ToggleButton>
@@ -92,25 +84,25 @@ const WalkDiaryInfo = () => {
             </Form.Label>
             <Col sm={4}>
               <WalkTimeSelectBox
-                item={{ name: "startTime", defaultValue: "시작 시간" }}
-                times={times}
-                setTimes={setTimes}
+                  item={{ name: "beginTime", defaultValue: "시작 시간" }}
+                  value={values.beginTime}
+    onChange={(val) => onChange({ target: { name: "beginTime", value: val } })}
               />
             </Col>
 
             <Col sm={4}>
               <WalkTimeSelectBox
-                item={{ name: "endTime", defaultValue: "끝 시간" }}
-                times={times}
-                setTimes={setTimes}
+                  item={{ name: "endTime", defaultValue: "끝 시간" }}
+                  value={values.endTime}
+    onChange={(val) => onChange({ target: { name: "endTime", value: val } })}
+    parentStartTime={values.beginTime} // startTime 전달
               />
             </Col>
           </Form.Group>
 
           <Form.Group as={Row} controlId="mood" className="mb-3">
-            {/* 구현 시 뽀삐에 반려 동물 이름 */}
             <Form.Label column sm={2}>
-              뽀삐의 기분
+              테일리의 기분
             </Form.Label>
             <Col sm={10}>
               <div className="emotion-icons">
@@ -120,10 +112,10 @@ const WalkDiaryInfo = () => {
                     id={`emotion-${idx}`}
                     type="radio"
                     variant="outline-light"
-                    name="emotion"
+                    name="walkDiaryEmotion"
                     value={emo.value}
-                    checked={emotion === emo.value}
-                    onChange={(e) => setEmotion(e.currentTarget.value)}
+                    checked={values.walkDiaryEmotion === emo.value}
+                    onChange={() => onChange({ target: { name: "walkDiaryEmotion", value: emo.value } })}
                   >
                     {emo.label}
                   </ToggleButton>
