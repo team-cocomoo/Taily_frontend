@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { InputGroup, Form, Card } from "react-bootstrap";
 import MapIcon from "../../../assets/image/map-search-icon.png";
+import "../../../styles/facility/facilityMap.css"
 
 const { kakao } = window;
 
-const TailyFriendsWriteMap = ({ address, setAddress }) => {
+const FacilityMap = ({ address, setAddress }) => {
   const mapRef = useRef(null);  
   const markerRef = useRef(null);
   const overlayRef = useRef(null);
@@ -64,7 +65,7 @@ const TailyFriendsWriteMap = ({ address, setAddress }) => {
   const updateMarkerAndOverlay = (position, label) => {
     const markerImageSrc =
       "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-    const markerImageSize = new kakao.maps.Size(24, 35);
+    const markerImageSize = new kakao.maps.Size(14, 25);
     const markerImageOptions = { offset: new kakao.maps.Point(12, 35) };
     const markerImage = new kakao.maps.MarkerImage(
       markerImageSrc,
@@ -107,9 +108,9 @@ const TailyFriendsWriteMap = ({ address, setAddress }) => {
 
   return (
     <Card className="mb-4 diary-box">
-      <Card.Header className="card-header">
-        <span>모임 장소</span>
-      </Card.Header>
+      {/* <Card.Header className="card-header">
+        <span>동물 관련 시설</span>
+      </Card.Header> */}
       <Card.Body>
         <Form>
           <Form.Group className="mb-3" controlId="diaryAddress">
@@ -117,7 +118,7 @@ const TailyFriendsWriteMap = ({ address, setAddress }) => {
               <InputGroup.Text>
                 <img
                   src={MapIcon}
-                  alt="지도 아이콘"
+                  alt="지도 아이콘" 
                   style={{ width: 12, height: 16 }}
                 />
               </InputGroup.Text>
@@ -130,11 +131,11 @@ const TailyFriendsWriteMap = ({ address, setAddress }) => {
             </InputGroup>
           </Form.Group>
 
-          <div ref={mapRef} style={{ width: "100%", height: "400px" }} />
+          <div ref={mapRef} className="map-container" />
         </Form>
       </Card.Body>
     </Card>
   );
 };
 
-export default TailyFriendsWriteMap;
+export default FacilityMap;

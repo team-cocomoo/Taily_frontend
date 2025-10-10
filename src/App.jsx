@@ -26,7 +26,7 @@ import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage"
 import TailyFriendsWritePage from "./pages/tailyFriends/TailyFriendsWritePage";
 import TailyFriendsEditPage from "./pages/tailyFriends/TailyFriendsEditPage";
 
-import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
+import FacilityMainPage from "./pages/facilities/facilitiesMainPage";
 
 function App() {
   return (

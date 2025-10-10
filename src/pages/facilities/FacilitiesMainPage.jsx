@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import FacilityPostCard from "../../components/board/facility/facilityPostCard";
 import SearchBar from "../../components/common/SearchBar";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
+import FacilityMap from "../../components/board/facility/facilityMap";  
 
 const FacilityMainPage = () => {
   const [posts, setPosts] = useState([]);
@@ -14,7 +15,7 @@ const FacilityMainPage = () => {
       try {
         setLoading(true);
 
-        // ▶ 두 번째 시안에 맞춘 더미 데이터
+        // 더미 데이터
         const dummyPosts = [
           {
             id: 1,
@@ -106,7 +107,9 @@ const FacilityMainPage = () => {
 
   return (
     <div className="mt-4" style={{ paddingTop: "160px" }}>
-      <h2 className="page-title">동관시 게시판</h2>
+      <h2 className="page-title">우리 동네 정보</h2>
+      <FacilityMap />
+      <br />
       <SearchBar />
       <br />
       <FacilityPostCard items={posts} onItemClick={handleItemClick} />
