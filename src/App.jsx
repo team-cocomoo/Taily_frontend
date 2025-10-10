@@ -15,7 +15,7 @@ import RegisterPage from "./pages/user/RegisterPage";
 import MyPageUserInfo from "./pages/myPage/MyPageUserInfo";
 
 import WalkDiaryCalendarPage from "./pages/walkdiary/WalkDiaryCalendarPage";
-import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
+import WalkDiaryWritePage from "./pages/walkdiary/WalkDiaryWritePage";
 import WalkDiaryDetailPage from "./pages/walkDiary/WalkDiaryDetailPage";
 
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";

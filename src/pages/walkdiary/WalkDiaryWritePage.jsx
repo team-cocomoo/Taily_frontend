@@ -33,13 +33,25 @@ const WalkDiardWritePage = () => {
 
   // 입력 변경 처리
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    // 입력 시 에러 메시지 초기화
-    if (error) setError("");
-  };
+  let name, value;
+
+  if (e.target) {
+    // 실제 이벤트 객체인 경우
+    name = e.target.name;
+    value = e.target.value;
+  } else {
+    // 직접 만든 객체인 경우
+    name = e.name || e.target?.name;
+    value = e.value || e.target?.value;
+  }
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value || "",
+  }));
+
+  if (error) setError("");
+};
 
   // 작성 처리
   const handleSubmit = async (e) => {
@@ -50,12 +62,29 @@ const WalkDiardWritePage = () => {
     const token = localStorage.getItem("accessToken");
 
     try {
-      const payload = { ...formData, images }; // images는 JSON DTO 배열
+      // FormData 객체 생성
+      const formDataToSend = new FormData();
+
+      // 일반 필드 추가
+      formDataToSend.append("date", formData.date);
+      formDataToSend.append("walkDiaryWeather", formData.walkDiaryWeather || "SUNNY");
+      formDataToSend.append("beginTime", formData.beginTime);
+      formDataToSend.append("endTime", formData.endTime);
+      formDataToSend.append("walkDiaryEmotion", formData.walkDiaryEmotion || "LOVE");
+      formDataToSend.append("content", formData.content || "");
+
+      // 이미지 파일 추가
+      images.forEach((file) => {
+        formDataToSend.append("images", file);
+      });
+
+      // 요청 보내기
       const response = await api.post(`/api/walk-diaries/write/${date}`, 
-          payload, 
+          formDataToSend, 
           {
               headers: {
-                  Authorization: token ? `Bearer ${token}` : ""
+                  Authorization: token ? `Bearer ${token}` : "",
+                  "Content-Type": undefined // axios가 자동으로 multipart/form-data 지정
               }
       });
 
