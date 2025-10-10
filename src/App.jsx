@@ -26,6 +26,7 @@ import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage"
 import TailyFriendsWritePage from "./pages/tailyFriends/TailyFriendsWritePage";
 import TailyFriendsEditPage from "./pages/tailyFriends/TailyFriendsEditPage";
 import ChatRoomMainPage from "./pages/chatroom/ChatRoomMainPage";
+import ChatRoomDetailPage from "./pages/chatroom/ChatRoomDetailPage";
 import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
                 element={<TailyFriendsEditPage />}
               />
               <Route path="/chats" element={<ChatRoomMainPage />} />
+              <Route path="/chats/:id" element={<ChatRoomDetailPage />} />
             </Route>
 
             {/* 관리자 권한 영역 */}

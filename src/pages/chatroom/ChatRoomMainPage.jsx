@@ -41,8 +41,10 @@ const ChatRoomMainPage = () => {
     }
   };
 
-  const handleRoomClick = (roomId, otherUsername) => {
-    navigate(`/chats/${roomId}`, { state: { otherUsername } });
+  const handleRoomClick = (room) => {
+    navigate(`/chats/${room.roomId}`, {
+      state: { otherUsername: room.otherUsername },
+    });
   };
 
   if (authLoading || loading) {
@@ -66,7 +68,7 @@ const ChatRoomMainPage = () => {
               <ListGroup.Item
                 key={room.roomId}
                 className="chat-room-item"
-                onClick={() => handleRoomClick(room.roomId, room.otherUsername)}
+                onClick={() => handleRoomClick(room)}
               >
                 <Image
                   src={room.otherProfileImage || userIcon}
