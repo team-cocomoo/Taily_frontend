@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ImageBox from "../../components/board/ImageBox";
 import WalkPathContent from "../../components/board/walkPath/WalkPathContent";
 import WalkPathTitle from "../../components/board/walkPath/WalkPathTitle";
+import WalkPathMap from "../../components/board/walkPath/WalkPathMap";
 import "../../styles/walkPath/WalkPathWrite.css";
 
 const WalkPathWritePage = () => {
@@ -20,6 +21,7 @@ const WalkPathWritePage = () => {
           <WalkPathTitle value={title} onChange={setTitle} />
 
           {/* 산책 경로 - 지도 API */}
+          <WalkPathMap />
 
           {/*  내용 */}
           <WalkPathContent />
