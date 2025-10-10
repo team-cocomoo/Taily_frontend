@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PostCardGroup from "../../components/board/PostCardGroup";
+import FacilityPostCard from "../../components/board/facility/facilityPostCard";
 import SearchBar from "../../components/common/SearchBar";
-import api from "../../config/apiConfig";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-
 
 const FacilityMainPage = () => {
   const [posts, setPosts] = useState([]);
@@ -12,27 +10,89 @@ const FacilityMainPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchDummyPosts = async () => {
       try {
         setLoading(true);
-        const response = await api.get("/api/taily-friends", {
-          params: { page: 1, size: 6 },
-        });
 
-        // response.data.data 구조 확인
-        setPosts(response.data?.data || []);
-      } catch (error) {
-        console.error("게시글 불러오기 실패:", error);
+        // ▶ 두 번째 시안에 맞춘 더미 데이터
+        const dummyPosts = [
+          {
+            id: 1,
+            title: "산내 동물 병원",
+            phone: "02-xxx-xxx",
+            address: "서울 성북구 xxx xxx",
+            status: "진료 중",
+            distanceKm: 2,
+          },
+          {
+            id: 2,
+            title: "마음 동물 병원",
+            phone: "02-xxx-xxx",
+            address: "서울 성북구 xxx xxx",
+            status: "진료 중",
+            distanceKm: 2,
+          },
+          {
+            id: 3,
+            title: "박원장 동물 병원",
+            phone: "02-xxx-xxx",
+            address: "서울 성북구 xxx xxx",
+            status: "진료 중",
+            distanceKm: 2,
+          },
+          {
+            id: 4,
+            title: "국민 동물 병원",
+            phone: "02-xxx-xxx",
+            address: "서울 성북구 xxx xxx",
+            status: "진료 중",
+            distanceKm: 2,
+          },
+          {
+            id: 5,
+            title: "운내 동물 병원",
+            phone: "02-xxx-xxx",
+            address: "서울 성북구 xxx xxx",
+            status: "진료 중",
+            distanceKm: 2,
+          },
+          {
+            id: 6,
+            title: "응응 동물 병원",
+            phone: "02-xxx-xxx",
+            address: "서울 성북구 xxx xxx",
+            status: "진료 중",
+            distanceKm: 2,
+          },
+          {
+            id: 7,
+            title: "내새끼 동물 병원",
+            phone: "02-xxx-xxx",
+            address: "서울 성북구 xxx xxx",
+            status: "진료 중",
+            distanceKm: 2,
+          },
+          {
+            id: 8,
+            title: "시립 동물 병원",
+            phone: "02-xxx-xxx",
+            address: "서울 성북구 xxx xxx",
+            status: "진료 중",
+            distanceKm: 2,
+          },
+        ];
+
+        setPosts(dummyPosts);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPosts();
+    fetchDummyPosts();
   }, []);
 
   const handleItemClick = (id) => {
-    navigate(`/taily-friends/${id}`);
+    navigate(`/facilities/${id}`);
   };
 
   if (loading) {
@@ -49,7 +109,7 @@ const FacilityMainPage = () => {
       <h2 className="page-title">동관시 게시판</h2>
       <SearchBar />
       <br />
-      <PostCardGroup items={posts} onItemClick={handleItemClick} />
+      <FacilityPostCard items={posts} onItemClick={handleItemClick} />
     </div>
   );
 };

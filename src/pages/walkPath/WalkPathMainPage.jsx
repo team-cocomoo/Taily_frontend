@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import PostListGroup from "../../components/board/PostListGroup";
 import SearchBar from "../../components/common/SearchBar";
 import WriteButton from "../../components/common/WriteButton";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 const WalkPathMainPage = () => {
   const [posts, setPosts] = useState([]);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 여기는 나중에 API로 바뀔 부분
@@ -85,7 +85,7 @@ const WalkPathMainPage = () => {
       {/* 게시물을 리스트 형식으로 출력 */}
       <PostListGroup items={posts} onItemClick={handleItemClick} />
       {/* 발자국 버튼 - 작성 페이지로 연결 */}
-      <WriteButton onClick={() => navigate("/walk-paths/write")}/>  
+      <WriteButton onClick={() => navigate("/walk-paths/write")} />
     </div>
   );
 };
