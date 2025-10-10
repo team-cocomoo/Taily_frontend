@@ -81,7 +81,7 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
     }
   };
 
-  // ✅ 답글 폼 토글
+  // 답글 폼 토글
   const toggleReplyForm = (commentId) => {
     setShowReplyForm((prev) => ({
       ...prev,
@@ -136,7 +136,7 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
             >
               <img src={userIcon} alt={c.nickname} className="user-profile" />
               <div className="flex-grow-1 d-flex flex-column">
-                <strong className="comment-nickname">{c.nickname}</strong>
+                <strong className="comment-nickname">{c.username}</strong>
                 <div>{c.content}</div>
                 <div className="d-flex justify-content align-items-center mt-1">
                   <Button
