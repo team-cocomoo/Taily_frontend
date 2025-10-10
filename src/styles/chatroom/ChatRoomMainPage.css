@@ -1,0 +1,54 @@
+.chat-room-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 140px;
+  margin-bottom: 80px;
+}
+
+.chat-room-list h2 {
+  margin-bottom: 20px;
+}
+
+/* 고정 높이에 스크롤 적용 */
+.chat-room-list .list-wrapper {
+  min-height: 300px;
+  max-height: 700px; /* 원하는 고정 높이 */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #faf9f6;
+}
+
+/* 채팅방 아이템 */
+.chat-room-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #faf9f6;
+}
+
+.chatroom-image {
+  width: 50px;
+  height: 50px;
+  border: 1.5px solid #4f1f02;
+  margin-right: 15px;
+}
+
+.chat-room-item .info {
+  flex: 1;
+}
+
+.chat-room-item .info .username {
+  font-weight: bold;
+}
+
+.chat-room-item .info .last-message {
+  color: #555;
+}
+
+.chat-room-item .time {
+  font-size: 0.8rem;
+  color: #999;
+}

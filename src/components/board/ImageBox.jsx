@@ -4,8 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../../styles/ImageBox.css";
 
-const ImageBox = () => {
+const ImageBox = ({ onImageChange }) => {
     const [previews, setPreviews] = useState([]);   // 이미지 미리보기 상태
+    const [images, setImages] = useState([]);   // 부모로 보낼 이미지
 
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
@@ -16,24 +17,28 @@ const ImageBox = () => {
             return;
         }
 
-        const newPreviews = files.map((file) => {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    resolve(reader.result);
-                };
-                reader.readAsDataURL(file);
-            });
-        });
+        const newPreviews = files.map(file => URL.createObjectURL(file));
+        setPreviews(prev => [...prev, ...newPreviews].slice(0, 3));
 
-        Promise.all(newPreviews).then((images) => {
-            setPreviews((prev) => [...prev, ...images].slice(0, 3));    // 3장 제한
-        });
+        // 이미지 dto 생성을 위한 설정
+        const newImages = files.map((file) => ({
+            uuid: "",   // 백엔드에서 생성
+            filePath: URL.createObjectURL(file),    // 미리 보기 용
+            fileSize: file.size.toString()
+        }));
+
+        const combined = [...images, ...newImages].slice(0,3);
+        setImages(combined);
+
+        if (onImageChange) onImageChange(combined);
     };
 
     // 미리보기 사진 클릭 시 특정 인덱스 삭제
     const handleRemove = (index) => {
-        setPreviews((prev) => prev.filter((_, i) => i !== index));
+        setPreviews(prev => prev.filter((_, i) => i !== index));
+        const updatedDto = images.filter((_, i) => i !== index);
+        setImages(updatedDto);
+        if (onImageChange) onImageChange(updatedDto);
     };
 
     return (

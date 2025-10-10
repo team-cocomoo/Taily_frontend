@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 
-const WalkTimeSelectBox = ({ item, times, setTimes }) => {
+const WalkTimeSelectBox = ({ item, value, onChange, parentStartTime }) => {
     // 30분 단위 시간 배열 생성 (00:00 ~ 23:30)
     const timeArray = Array.from({ length: 24 * 2 }, (_, i) => {
         const hour = String(Math.floor(i / 2)).padStart(2, "0");
@@ -57,17 +57,19 @@ const WalkTimeSelectBox = ({ item, times, setTimes }) => {
     // react-select 옵션
     const timeOptions = timeArray.map((t) => ({ value: t, label: t }));
 
-    const updateTimeState = (name, value) =>
-        setTimes((prev) => ({ ...prev, [name]: value }));
+    // value와 onChange 연결
+    // const selectedOption = timeOptions.find((opt) => opt.value === value) || null;
 
     return (
         <Select
             name={item.name}
-            value={timeOptions.find((opt) => opt.value === times[item.name])}
-            onChange={(opt) => updateTimeState(item.name, opt?.value ?? "")}
-            options={timeOptions.filter((opt) =>
-                item.name === "endTime" ? opt.value > times.startTime : true
-            )}
+            value={timeOptions.find((opt) => opt.value === value) || null}
+            onChange={(opt) => onChange(opt?.value ?? "")}
+            options={
+                item.name === "endTime" && parentStartTime
+                    ? timeOptions.filter((opt) => opt.value > parentStartTime)
+                    : timeOptions
+            }
             placeholder={item.defaultValue}
             styles={customStyles}
         />

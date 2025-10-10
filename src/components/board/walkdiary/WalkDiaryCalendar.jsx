@@ -6,7 +6,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import pawImg from '../../../assets/image/calendar-paw.png';
 
-const WalkDiaryCalendar = ({ onClickDate, dayList = []}, onMonthChange ) => {
+const WalkDiaryCalendar = ({ onClickDate, dayList = [], onMonthChange }) => {
     const [ value, setValue ] = useState(new Date());   // 클릭한 날짜 (초기값으로 현재 날짜 넣어줌
 
     const handleClickDay = (date) => {
@@ -19,7 +19,7 @@ const WalkDiaryCalendar = ({ onClickDate, dayList = []}, onMonthChange ) => {
     // 각 날짜 타일에 컨텐츠 추가
     const addContent = ({ date }) => {
         const formatted = dayjs(date).format('YYYY-MM-DD');
-        const hasDiary = dayList.includes(formatted);
+        const hasDiary = dayList?.includes(formatted);
 
         return hasDiary ? (
             <img 
