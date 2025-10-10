@@ -44,7 +44,7 @@ const HeaderNavbar = () => {
             to="/feeds"
             className={
               location.pathname.startsWith("/feeds") ||
-              location.pathname.startsWith("/chatrooms")
+              location.pathname.startsWith("/chats")
                 ? "nav-link-active"
                 : "nav-link"
             }
@@ -55,7 +55,7 @@ const HeaderNavbar = () => {
             <Link to="/feeds" className="dropdown-item">
               피드
             </Link>
-            <Link to="/chatrooms" className="dropdown-item">
+            <Link to="/chats" className="dropdown-item">
               대화방
             </Link>
           </div>
@@ -150,7 +150,10 @@ const HeaderNavbar = () => {
                 My Page
               </button>
             </Link>
-            <button className="btn btn-primary btn-sm me-3 btn-login" onClick={handleLogout}>
+            <button
+              className="btn btn-primary btn-sm me-3 btn-login"
+              onClick={handleLogout}
+            >
               Logout
             </button>
           </>
