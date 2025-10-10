@@ -91,9 +91,9 @@ const HeaderNavbar = () => {
         {/* 우리동네정보 */}
         <div className="dropdown">
           <Link
-            to="/facility"
+            to="/facilities"
             className={
-              location.pathname.startsWith("/facility")
+              location.pathname.startsWith("/facilities")
                 ? "nav-link-active"
                 : "nav-link"
             }
