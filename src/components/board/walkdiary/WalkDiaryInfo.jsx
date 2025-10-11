@@ -2,12 +2,8 @@ import React from "react";
 import { Form, Card, Row, Col, ToggleButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import WalkTimeSelectBox from "./WalkTimeSelectBox";
-import { useParams } from "react-router-dom";
 
 const WalkDiaryInfo = ({ values, onChange, onSubmit }) => {
-  // 산책 날짜
-  const {date} = useParams();
-
   // 산책 날씨
   // const [weather, setWeather] = useState("SUNNY");
   const weatherOptions = [
@@ -49,7 +45,7 @@ const WalkDiaryInfo = ({ values, onChange, onSubmit }) => {
               날짜
             </Form.Label>
             <Col sm={10}>
-              {date}
+              {values.date}
             </Col>
           </Form.Group>
 

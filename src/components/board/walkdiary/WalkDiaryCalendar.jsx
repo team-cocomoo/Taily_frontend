@@ -19,7 +19,7 @@ const WalkDiaryCalendar = ({ onClickDate, dayList = [], onMonthChange }) => {
     // 각 날짜 타일에 컨텐츠 추가
     const addContent = ({ date }) => {
         const formatted = dayjs(date).format('YYYY-MM-DD');
-        const hasDiary = dayList?.includes(formatted);
+        const hasDiary = dayList?.some(d => d.date === formatted); 
 
         return hasDiary ? (
             <img 

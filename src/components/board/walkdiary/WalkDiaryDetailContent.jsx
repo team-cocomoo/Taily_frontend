@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Dropdown, Row, Col } from "react-bootstrap";
-import "../../../styles/walkdiary/WalkDiaryDetail.css";
-
+import "../../../styles/walkDiary/WalkDiaryDetail.css";
+import { AuthContext } from "../../../contexts/AuthContext"
 import meatballIcon from "../../../assets/image/meatball-icon.png";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../../../config/apiConfig";
 
 const WalkDiaryDetailContent = ({ walkDiary }) => {
-    const weatherIcons = {
-      SUNNY: "☀️",
-      CLOUDY: "☁️",
-      RAINY: "🌧️",
-      SNOWY: "❄️",
-    };
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { user } = useContext(AuthContext);
+
+  // 로그인 + 작성자 본인일 경우만 수정/삭제 노출
+  const isOwner = user && user.username === walkDiary.username;
+  
+  const handleDelete = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (!window.confirm("정말 삭제하시겠습니까?")) return; // 확인창
+
+    try {
+      await api.delete(`/api/walk-diaries/${id}`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      alert("삭제 완료");
+      navigate("/walk-diaries"); // 삭제 후 목록으로 이동
+    } catch (error) {
+      console.error("삭제 실패:", error);
+      alert("삭제에 실패했습니다.");
+    }
+  };
+  
+  const weatherIcons = {
+    SUNNY: "☀️",
+    CLOUDY: "☁️",
+    RAINY: "🌧️",
+    SNOWY: "❄️",
+  };
 
   const emotionIcons = {
     LOVE: "😍",
@@ -40,15 +67,34 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
               </Dropdown.Toggle>
               {/* 나중에 로그인 했을때는 수정,삭제가 뜨게 */}
               <Dropdown.Menu className="dropdown-menu">
-                <Dropdown.Item
-                  onClick={() => alert("신고")}
-                  className="dropdown-item"
-                >
-                  신고하기
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => alert("공유")}>
-                  공유하기
-                </Dropdown.Item>
+                {isOwner ? (
+                  <>
+                    <Dropdown.Item
+                    onClick={() => 
+                      navigate(`/walk-diaries/edit/${id}`, { state: { clickedDate: walkDiary.date } })
+                    }
+                    className="dropdown-item"
+                    >
+                    수정
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={handleDelete}>
+                      삭제
+                    </Dropdown.Item>
+                  </>
+                ) : (
+                  <>
+                    <Dropdown.Item
+                      onClick={() => alert("신고")}
+                      className="dropdown-item"
+                    >
+                      신고
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => alert("공유")}>
+                      공유
+                    </Dropdown.Item>
+                  </>
+                )}
+                
               </Dropdown.Menu>
             </Dropdown>
           </Col>

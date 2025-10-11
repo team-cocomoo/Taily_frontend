@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import WalkDiaryDetailContent from "../../components/board/walkdiary/WalkDiaryDetailContent";
+import WalkDiaryDetailContent from "../../components/board/walkDiary/WalkDiaryDetailContent";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import api from "../../config/apiConfig";
@@ -7,7 +7,7 @@ import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 const WalkDiaryDetailPage = () => {
     const navigate = useNavigate();
-    const { date } = useParams();
+    const { id } = useParams();
     const [walkDiary, setWalkDiary] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -19,7 +19,7 @@ const WalkDiaryDetailPage = () => {
         const token = localStorage.getItem("accessToken");
         // setLoading(true);
         try {
-            const response = await api.get(`/api/walk-diaries/${date}`, {
+            const response = await api.get(`/api/walk-diaries/${id}`, {
                 headers: {
                     Authorization: token ? `Bearer ${token}` : "",
                 },
@@ -31,6 +31,7 @@ const WalkDiaryDetailPage = () => {
 
             // 🧠 서버 DTO에 맞게 필드명 변환
             const formatted = {
+                walkDiaryId: data.walkDiaryId,
                 date: data.date,
                 walkDiaryWeather: data.walkDiaryWeather,
                 beginTime: formatTime(data.beginTime),
@@ -38,7 +39,7 @@ const WalkDiaryDetailPage = () => {
                 totalTime: getDiffTime(data.beginTime, data.endTime),
                 walkDiaryEmotion: data.walkDiaryEmotion,
                 content: data.content,
-                petName: data.petName ?? "테일리", // 없으면 기본값
+                username: data.username,
                 images: data.images ?? [],
             };
 
@@ -52,7 +53,7 @@ const WalkDiaryDetailPage = () => {
         };
 
         fetchDiaryDetail();
-    }, [date]);
+    }, [id]);
 
     const getDiffTime = (start, end) => {
         if (!start || !end) return "";
@@ -79,7 +80,7 @@ const WalkDiaryDetailPage = () => {
         <div className="row justify-content-center">
         <div className="col-md-11">
             {/* 게시글 상세 */}
-            <WalkDiaryDetailContent walkDiary={walkDiary} />
+            <WalkDiaryDetailContent walkDiary={walkDiary} walkDiaryId={id} />
 
             {/* 하단 버튼 */}
             <div className="d-flex justify-content-end mt-1 mb-4">
