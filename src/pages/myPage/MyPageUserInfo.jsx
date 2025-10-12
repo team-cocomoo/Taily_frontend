@@ -1,5 +1,5 @@
 // src/pages/MyPageUserInfo.js
-import React from 'react';
+import React, { useState } from 'react';
 import { 
     Container, 
     Row, 
@@ -13,6 +13,7 @@ import { PencilFill } from 'react-bootstrap-icons';
 // 분리된 컴포넌트 임포트
 import MyPageSidebarNav from '../../components/mypage/MyPageSidebarNav';
 import UserInfoDisplay from '../../components/mypage/UserInfoDisplay';
+import MyPetInfoCard from '../../components/myPage/MyPetInfoCard';
 
 // 사용자 정보 (실제로는 부모 컴포넌트에서 prop으로 전달되거나 Context/Redux를 통해 관리됩니다)
 const userInfo = {
@@ -26,6 +27,7 @@ const userInfo = {
 };
 
 const MyPageUserInfo = () => {
+  const [selectedMenu, setSelectedMenu] = useState('me'); // 기본 '내정보'
 
     return (
         // 헤더와 푸터 사이에 들어갈 주 콘텐츠 영역.
@@ -65,12 +67,16 @@ const MyPageUserInfo = () => {
                         <Row>
                             {/* 2-1. 사이드바 (메뉴) 영역: 3/12 너비 */}
                             <Col md={3} className="border-end pe-4">
-                                <MyPageSidebarNav />
+                                <MyPageSidebarNav
+                                    selectedMenu={selectedMenu}
+                                    setSelectedMenu={setSelectedMenu}
+                                />
                             </Col>
 
                             {/* 2-2. 사용자 정보 표시 영역: 9/12 너비 */}
                             <Col md={9} className="ps-4">
-                                <UserInfoDisplay userInfo={userInfo} />
+                                {selectedMenu === 'me' && <UserInfoDisplay userInfo={userInfo} />}
+                                {selectedMenu === 'my-pets' && <MyPetInfoCard />}
                             </Col>
                         </Row>
                     </Card>
