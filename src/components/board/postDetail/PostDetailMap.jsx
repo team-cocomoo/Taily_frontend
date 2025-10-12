@@ -127,7 +127,7 @@ const PostDetailMap = ({ addresses }) => {
     });
   }, [addresses, kakaoLoaded]);
 
-  return <div ref={mapContainer} className="map-container" />;
+  return <div ref={mapContainer} className="post-detail-map-container" />;
 };
 
 export default PostDetailMap;
