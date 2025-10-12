@@ -4,7 +4,7 @@ import "../../styles/PostCardGroup.css";
 
 const PostCardGroup = ({ items, onItemClick }) => {
   return (
-    <div className="page-card-container">
+    <div className="tailyfriend-card-container">
       <Row className="justify-content-start g-4">
         {items.map((item) => (
           <Col
