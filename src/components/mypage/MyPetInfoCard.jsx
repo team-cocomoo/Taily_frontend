@@ -7,100 +7,144 @@ import MyPetWriteInfoModal from "../../components/mypage/MyPetWriteInfoModal";
 
 import "../../styles/myPage/MyPetInfo.css";
 
-const MyPetInfoCard = () => {
+const MyPetInfoCard = ({ setSelectedMenu }) => {
     const [petList, setPetList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false); // 모달 상태 추가
+    const [selectedPet, setSelectedPet] = useState(null); // 모달용 선택 반려동물
 
     useEffect(() => {
         const fetchMyPets = async () => {
-        try {
-            const response = await api.get("/api/mypage/mypet");
-            if (response.data.success) {
-            setPetList(response.data.data);
+            try {
+                const response = await api.get("/api/mypage/mypet");
+                if (response.data.success) {
+                    setPetList(response.data.data);
+                }
+            } catch (err) {
+                console.error("반려동물 리스트 조회 실패:", err);
+            } finally {
+                setLoading(false);
             }
-        } catch (err) {
-            console.error("반려동물 리스트 조회 실패:", err);
-        } finally {
-            setLoading(false);
-        }
         };
         fetchMyPets();
     }, []);
 
-    const handleModalOpen = () => setShowModal(true);
-    const handleModalClose = () => setShowModal(false);
+    const handleModalClose = () => {
+        setShowModal(false);
+        setSelectedPet(null);
+    };
+
+    // 프로필 삭제
+    const handleDelete = async (petId) => {
+        const token = localStorage.getItem("accessToken");
+        if(!window.confirm("정말 마이 펫 프로필을 삭제하시겠습니까?")) return;
+
+        try {
+            await api.delete(`/api/mypage/mypet/${petId}`, {
+                headers: {
+                    Authorization: token ? `Bearer ${token}` : "",
+                },
+            });
+            alert("삭제 완료");
+            // 삭제 후 리스트에서 제거
+            setPetList(prev => prev.filter(p => p.petId !== petId));
+
+        } catch (error) {
+            console.error("삭제 실패:", error);
+            alert("삭제에 실패했습니다.");
+        }
+    }
 
     if (loading) return <p>반려동물 정보를 불러오는 중...</p>;
 
-    if (!petList || petList.length === 0) {
-        return (
-        <div className="text-center mt-5">
-            <p>아직 내 반려동물 프로필이 없어요.</p>
-            <Button variant="warning" onClick={handleModalOpen}>
-            등록하기
-            </Button>
-            {/* 모달 컴포넌트 */}
-            <MyPetWriteInfoModal show={showModal} handleClose={handleModalClose} />
-        </div>
-        );
-    }
-
     return (
         <>
-        {petList.map((pet, index) => (
-            <Card
-            key={index}
-            className="profile-box mt-4 p-3"
-            style={{ maxWidth: "600px", margin: "auto" }}
+        {/* 등록 버튼: 항상 표시 */}
+        <div className="text-center mt-3 mb-3">
+            <Button
+            variant="warning"
+            onClick={() => {
+                setSelectedPet(null); // 새 작성 모드
+                setShowModal(true);
+            }}
             >
-            <Row>
+            새로운 프로필 추가
+            </Button>
+        </div>
+
+        {/* 모달: 등록/수정 통합 */}
+        <MyPetWriteInfoModal
+            show={showModal}
+            handleClose={handleModalClose}
+            setSelectedMenu={setSelectedMenu}
+            pet={selectedPet} // null이면 등록, 객체면 수정
+            onSuccess={(updatedPet, petId) => {
+                // petId가 있으면 수정, 없으면 새로 추가
+                setPetList(prev => {
+                if (petId) {
+                    return prev.map(p => (p.petId === petId ? updatedPet : p));
+                } else {
+                    return [...prev, updatedPet];
+                }
+                });
+            }}
+        />
+
+        <div className="profile-list-container">
+        {/* 프로필 리스트 */}
+        {petList.length === 0 ? (
+            <p className="text-center">아직 내 반려동물 프로필이 없어요.</p>
+        ) : (
+            petList.map((pet, index) => (
+            <Card key={index} className="profile-box mt-4 p-3" style={{ maxWidth: "600px", margin: "auto" }}>
+                <Row>
                 <Col sm={4} className="d-flex justify-content-center align-items-center">
-                <img
-                    src={profileImage}
-                    alt="pet"
-                    style={{ width: "100%", borderRadius: "10px" }}
-                />
+                    <img src={profileImage} alt="pet" style={{ width: "100%", borderRadius: "10px" }} />
                 </Col>
                 <Col sm={8} style={{ position: "relative" }}>
-                <Dropdown className="profile-dropdown mx-4" style={{ position: "absolute", top: 0, right: 0 }}>
+                    <Dropdown className="profile-dropdown mx-4" style={{ position: "absolute", top: 0, right: 0 }}>
                     <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm" className="no-caret">
-                    <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
+                        <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => alert("수정")}>수정</Dropdown.Item>
-                    <Dropdown.Item onClick={() => alert("삭제")}>삭제</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {
+                            setSelectedPet(pet); // 수정할 반려동물 선택
+                            setShowModal(true);  // 모달 열기
+                        }}>수정</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleDelete(pet.petId)}>삭제</Dropdown.Item>
                     </Dropdown.Menu>
-                </Dropdown>
+                    </Dropdown>
 
-                <Table borderless>
+                    <Table borderless>
                     <tbody>
-                    <tr>
+                        <tr>
                         <td><strong>이름</strong></td>
                         <td>{pet.name || "-"}</td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td><strong>성별</strong></td>
                         <td>{pet.gender || "-"}</td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td><strong>나이</strong></td>
                         <td>{pet.age || "-"}</td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td><strong>취향</strong></td>
-                        <td>{pet.preference?.join(", ") || "-"}</td>
-                    </tr>
-                    <tr>
+                        <td>{Array.isArray(pet.preference) ? pet.preference.join(", ") : pet.preference || "-"}</td>
+                        </tr>
+                        <tr>
                         <td><strong>소개글</strong></td>
                         <td>{pet.introduction || "-"}</td>
-                    </tr>
+                        </tr>
                     </tbody>
-                </Table>
+                    </Table>
                 </Col>
-            </Row>
+                </Row>
             </Card>
-        ))}
+            ))
+        )}
+        </div>
         </>
     );
 };
