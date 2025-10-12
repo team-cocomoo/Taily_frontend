@@ -1,0 +1,39 @@
+.other-user-pet-card,
+.other-user-feed-card {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.other-user-container {
+  padding-top: 150px;
+}
+.other-user-count {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.other-user-introduction {
+  background-color: #faf9f6;
+  border-radius: 8px;
+  min-height: 80px;
+  padding-left: 8px;
+  padding-top: 8px;
+  font-size: 0.85rem;
+}
+.follow-btn {
+  background-color: #0d6efd; /* 파란색 */
+  color: white;
+  border: none;
+}
+
+.follow-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.following-btn {
+  background-color: #6c757d; /* 회색 */
+  color: white;
+  border: none;
+}
+
+.following-btn:hover {
+  background-color: #5c636a;
+}
