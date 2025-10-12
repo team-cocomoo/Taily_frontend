@@ -32,6 +32,11 @@ import ChatRoomDetailPage from "./pages/chatroom/ChatRoomDetailPage";
 import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
 import OtherUserProfilePage from "./pages/user/OtherUserProfilePage";
 
+// 관리자
+import AdminMainPage from './pages/admin/AdminMainPage';
+import AdminProtectedLayout from "./components/common/AdminProtectedLayout";
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -91,8 +96,11 @@ function App() {
             </Route>
 
             {/* 관리자 권한 영역 */}
-            <Route element={<ProtectedLayout roles={["ROLE_ADMIN"]} />}>
-              {/* <Route path="/admin/main" element={<AdminMainPage />} /> */}
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+
+            {/* 관리자 페이지 (로그인 후 접근) */}
+            <Route element={<AdminProtectedLayout roles={["ROLE_USER"]} />}>
+              <Route path="/admin/main" element={<AdminMainPage />} />
             </Route>
           </Routes>
         </Container>
