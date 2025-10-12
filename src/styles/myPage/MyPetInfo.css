@@ -2,3 +2,16 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
 }
+
+.profile-list-container {
+  max-height: 600px;       /* 리스트 최대 높이 */
+  overflow-y: auto;        /* 스크롤 가능 */
+  padding-right: 8px;      /* 스크롤바와 내용 여유 */
+  /* Firefox */
+    scrollbar-width: none;   
+}
+
+/* Chrome, Edge, Safari */
+.profile-list-container::-webkit-scrollbar {
+    display: none;
+}

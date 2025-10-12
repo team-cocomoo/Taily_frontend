@@ -1,13 +1,14 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import pawImg from '../../../assets/image/calendar-paw.png';
 
 const WalkDiaryCalendar = ({ onClickDate, dayList = [], onMonthChange }) => {
     const [ value, setValue ] = useState(new Date());   // 클릭한 날짜 (초기값으로 현재 날짜 넣어줌
+    const navigate = useNavigate();
 
     const handleClickDay = (date) => {
         setValue(date);
@@ -57,7 +58,7 @@ const WalkDiaryCalendar = ({ onClickDate, dayList = [], onMonthChange }) => {
             <Card.Body>
                 <div className='d-flex justify-content-end gap-2 mb-3 check-btn'>
                     <Link to="/walk-diaries/stats">
-                        <Button className='stat-btn'>통계 확인</Button>
+                        <Button className='stat-btn' onClick={() => navigate('/walk-diaries/stats')} >통계 확인</Button>
                     </Link>
                     <Button className='health-btn'  onClick={() => alert('AI 건강 체크는 현재 구현 중입니다.')}>AI 건강 체크</Button>
                 </div>

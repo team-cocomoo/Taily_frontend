@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AuthProvider from "../src/contexts/AuthProvider";  
+import AuthProvider from "../src/contexts/AuthProvider";
 
 import HeaderNavbar from "./components/common/HeaderNavbar";
 import Footer from "./components/common/Footer";
@@ -18,6 +18,7 @@ import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
 import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
 import WalkDiaryDetailPage from "./pages/walkDiary/WalkDiaryDetailPage";
 import WalkDiaryUpdatePage from "./pages/walkDiary/WalkDiaryUpdatePage";
+import WalkDiaryStatisticsPage from "./pages/walkDiary/WalkDiaryStatisticsPage";
 
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "./pages/walkPath/WalkPathDetailPage";
@@ -29,6 +30,7 @@ import TailyFriendsEditPage from "./pages/tailyFriends/TailyFriendsEditPage";
 import ChatRoomMainPage from "./pages/chatroom/ChatRoomMainPage";
 import ChatRoomDetailPage from "./pages/chatroom/ChatRoomDetailPage";
 import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
+import OtherUserProfilePage from "./pages/user/OtherUserProfilePage";
 
 function App() {
   return (
@@ -46,9 +48,22 @@ function App() {
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="/mypage/main" element={<MyPageUserInfo />} />
               <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
-              <Route path="/walk-diaries/write/:date" element={<WalkDiaryWritePage />} />
-              <Route path="/walk-diaries/:id" element={<WalkDiaryDetailPage />} />
-              <Route path="/walk-diaries/edit/:id" element={<WalkDiaryUpdatePage />} />
+              <Route
+                path="/walk-diaries/write/:date"
+                element={<WalkDiaryWritePage />}
+              />
+              <Route
+                path="/walk-diaries/:id"
+                element={<WalkDiaryDetailPage />}
+              />
+              <Route
+                path="/walk-diaries/edit/:id"
+                element={<WalkDiaryUpdatePage />}
+              />
+              <Route
+                path="/walk-diaries/stats"
+                element={<WalkDiaryStatisticsPage />}
+              />
 
               <Route path="/walk-paths" element={<WalkPathMainPage />} />
               <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
@@ -69,6 +84,10 @@ function App() {
               />
               <Route path="/chats" element={<ChatRoomMainPage />} />
               <Route path="/chats/:id" element={<ChatRoomDetailPage />} />
+              <Route
+                path="/user-profile/:id/profile"
+                element={<OtherUserProfilePage />}
+              />
             </Route>
 
             {/* 관리자 권한 영역 */}
