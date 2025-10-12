@@ -13,7 +13,6 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
     const [showModal, setShowModal] = useState(false); // 모달 상태 추가
     const [selectedPet, setSelectedPet] = useState(null); // 모달용 선택 반려동물
 
-    console.log(petList);
     useEffect(() => {
         const fetchMyPets = async () => {
             try {
@@ -34,6 +33,27 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
         setShowModal(false);
         setSelectedPet(null);
     };
+
+    // 프로필 삭제
+    const handleDelete = async (petId) => {
+        const token = localStorage.getItem("accessToken");
+        if(!window.confirm("정말 마이 펫 프로필을 삭제하시겠습니까?")) return;
+
+        try {
+            await api.delete(`/api/mypage/mypet/${petId}`, {
+                headers: {
+                    Authorization: token ? `Bearer ${token}` : "",
+                },
+            });
+            alert("삭제 완료");
+            // 삭제 후 리스트에서 제거
+            setPetList(prev => prev.filter(p => p.petId !== petId));
+
+        } catch (error) {
+            console.error("삭제 실패:", error);
+            alert("삭제에 실패했습니다.");
+        }
+    }
 
     if (loading) return <p>반려동물 정보를 불러오는 중...</p>;
 
@@ -70,6 +90,7 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
             }}
         />
 
+        <div className="profile-list-container">
         {/* 프로필 리스트 */}
         {petList.length === 0 ? (
             <p className="text-center">아직 내 반려동물 프로필이 없어요.</p>
@@ -90,7 +111,7 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
                             setSelectedPet(pet); // 수정할 반려동물 선택
                             setShowModal(true);  // 모달 열기
                         }}>수정</Dropdown.Item>
-                        <Dropdown.Item onClick={() => alert("삭제")}>삭제</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleDelete(pet.petId)}>삭제</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
 
@@ -123,6 +144,7 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
             </Card>
             ))
         )}
+        </div>
         </>
     );
 };
