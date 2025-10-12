@@ -7,7 +7,7 @@ import MyPetWriteInfoModal from "../../components/mypage/MyPetWriteInfoModal";
 
 import "../../styles/myPage/MyPetInfo.css";
 
-const MyPetInfoCard = () => {
+const MyPetInfoCard = ({ setSelectedMenu }) => {
     const [petList, setPetList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false); // 모달 상태 추가
@@ -41,7 +41,7 @@ const MyPetInfoCard = () => {
             등록하기
             </Button>
             {/* 모달 컴포넌트 */}
-            <MyPetWriteInfoModal show={showModal} handleClose={handleModalClose} />
+            <MyPetWriteInfoModal show={showModal} handleClose={handleModalClose} setSelectedMenu={setSelectedMenu} />
         </div>
         );
     }
@@ -89,7 +89,9 @@ const MyPetInfoCard = () => {
                     </tr>
                     <tr>
                         <td><strong>취향</strong></td>
-                        <td>{pet.preference?.join(", ") || "-"}</td>
+                        <td>
+                            {Array.isArray(pet.preference) ? pet.preference.join(", ") : pet.preference || "-"}
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>소개글</strong></td>

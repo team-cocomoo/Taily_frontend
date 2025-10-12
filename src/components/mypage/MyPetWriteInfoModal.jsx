@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import "../../styles/myPage/MyPetInfo.css";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import api from '../../config/apiConfig';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
-const MyPetWriteInfoModal = ({ show, handleClose }) => {
+const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [file, setFile] = useState(null);
-    const [gender, setGender] = useState("여자");
-    const navigate = useNavigate();
+    const [gender, setGender] = useState("FEMALE");
+    // const navigate = useNavigate();
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -32,16 +32,17 @@ const MyPetWriteInfoModal = ({ show, handleClose }) => {
         try {
             const formData = new FormData();
             formData.append("name", e.target.name.value);
-            formData.append("gender", gender);
+            formData.append("gender", e.target.gender.value);
             formData.append("age", e.target.age.value);
             formData.append("preference", e.target.preference.value);
             formData.append("introduction", e.target.introduction.value);
-            if (file) formData.append("file", file);
+            if (file) formData.append("profile", file);
     
-            console.log("작성 데이터:", formData);
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
     
-            const response = await api.post(`/api/mypage/mypet`, {
-                formData,
+            const response = await api.post(`/api/mypage/mypet`, formData, {
                 headers: {
                     Authorization: token ? `Bearer ${token}` : "",
                 }
@@ -50,7 +51,7 @@ const MyPetWriteInfoModal = ({ show, handleClose }) => {
             if (response.data.success) {
                 alert("프로필이 등록되었습니다!");
                 handleClose();
-                navigate(`/api/mypage/mypet`);
+                if (setSelectedMenu) setSelectedMenu("my-pets");
             } else {
                 setError("등록에 실패했습니다.");
             }
@@ -68,66 +69,69 @@ const MyPetWriteInfoModal = ({ show, handleClose }) => {
                 <Modal.Title>작성 페이지</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                     {/* 이름 */}
-                    <div className="mb-3">
-                        <label className="form-label">이름</label>
-                        <input type="text" name="name" className="form-control" placeholder="이름 입력" required />
-                    </div>
+                    <Form.Group className="mb-3" controlId="petName">
+                        <Form.Label>이름</Form.Label>
+                        <Form.Control type="text" name="name" placeholder="이름 입력" required />
+                    </Form.Group>
 
                     {/* 성별 */}
-                    <div className="mb-3">
-                        <label className="form-label">성별</label>
+                    <Form.Group className="mb-3">
+                        <Form.Label>성별</Form.Label>
                         <div>
-                            <div className="form-check form-check-inline">
-                                <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="gender"
-                                    value="암컷"
-                                    checked={gender === "FEMALE"}
-                                    onChange={handleGenderChange}
-                                />
-                                <label className="form-check-label">여자</label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                                <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="gender"
-                                    value="수컷"
-                                    checked={gender === "MALE"}
-                                    onChange={handleGenderChange}
-                                />
-                                <label className="form-check-label">남자</label>
-                            </div>
+                            <Form.Check
+                                inline
+                                label="여자"
+                                name="gender"
+                                type="radio"
+                                id="FEMALE"
+                                value="FEMALE"
+                                checked={gender === "FEMALE"}
+                                onChange={handleGenderChange}
+                            />
+                            <Form.Check
+                                inline
+                                label="남자"
+                                name="gender"
+                                type="radio"
+                                id="MALE"
+                                value="MALE"
+                                checked={gender === "MALE"}
+                                onChange={handleGenderChange}
+                            />
                         </div>
-                    </div>
+                    </Form.Group>
 
                     {/* 나이 */}
-                    <div className="mb-3">
-                        <label className="form-label">나이</label>
-                        <input type="text" name="age" className="form-control" placeholder="예: 2살" required />
-                    </div>
+                    <Form.Group className="mb-3" controlId="petAge">
+                        <Form.Label>나이</Form.Label>
+                        <Form.Control type="text" name="age" placeholder="예: 2살" required />
+                    </Form.Group>
 
                     {/* 취향 */}
-                    <div className="mb-3">
-                        <label className="form-label">취향</label>
-                        <input type="text" name="preference" className="form-control" placeholder="예: 개껌, 산책, 공놀이" />
-                        <small className="form-text text-muted">쉼표(,)로 구분하여 입력</small>
-                    </div>
+                    <Form.Group className="mb-3" controlId="petPreference">
+                        <Form.Label>취향</Form.Label>
+                        <Form.Control type="text" name="preference" placeholder="예: 개껌, 산책, 공놀이" />
+                        <Form.Text className="form-text text-muted">쉼표(,)로 구분하여 입력</Form.Text>
+                    </Form.Group>
 
                     {/* 소개글 */}
-                    <div className="mb-3">
-                        <label className="form-label">소개글</label>
-                        <textarea name="introduction" className="form-control" rows="3" placeholder="소개글 입력"></textarea>
-                    </div>
+                    <Form.Group className="mb-3" controlId="petIntroduction">
+                        <Form.Label>소개글</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            name="introduction"
+                            rows={3}
+                            placeholder="소개글 입력"
+                        />
+                    </Form.Group>
 
                     {/* 이미지 업로드 */}
-                    <div className="mb-3">
-                        <label className="form-label">이미지 업로드</label>
-                        <input type="file" className="form-control" accept="image/*" onChange={handleFileChange} />
-                    </div>
+                    <Form.Group className="mb-3" controlId="petImage">
+                        <Form.Label>이미지 업로드</Form.Label>
+                        <Form.Control type="file" accept="image/*" onChange={handleFileChange} />
+                    </Form.Group>
 
                     {/* 미리보기 */}
                     {file && (
@@ -138,9 +142,9 @@ const MyPetWriteInfoModal = ({ show, handleClose }) => {
                     {error && <p className="text-danger text-center mt-2">{error}</p>}
                     {/* 제출 버튼 */}
                     <Button variant="success" type="submit" disabled={loading}>
-                        {loading ? <Spinner animation="border" size="sm" /> : "작성 완료"}
+                        {loading ? "작성 중..." : "작성완료"}
                     </Button>
-                </form>
+                </Form>
             </Modal.Body>
         </Modal>
     );
