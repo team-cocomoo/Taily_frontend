@@ -18,6 +18,7 @@ import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
 import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
 import WalkDiaryDetailPage from "./pages/walkDiary/WalkDiaryDetailPage";
 import WalkDiaryUpdatePage from "./pages/walkDiary/WalkDiaryUpdatePage";
+import WalkDiaryStatisticsPage from './pages/walkDiary/WalkDiaryStatisticsPage';
 
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "./pages/walkPath/WalkPathDetailPage";
@@ -49,6 +50,8 @@ function App() {
               <Route path="/walk-diaries/write/:date" element={<WalkDiaryWritePage />} />
               <Route path="/walk-diaries/:id" element={<WalkDiaryDetailPage />} />
               <Route path="/walk-diaries/edit/:id" element={<WalkDiaryUpdatePage />} />
+              <Route path="/walk-diaries/stats" element={<WalkDiaryStatisticsPage />} />
+
 
               <Route path="/walk-paths" element={<WalkPathMainPage />} />
               <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
