@@ -1,138 +1,91 @@
-import React, { useState, useEffect, useRef } from "react";
-import { InputGroup, Form, Card } from "react-bootstrap";
-import MapIcon from "../../../assets/image/map-search-icon.png";
-import "../../../styles/facility/facilityMap.css"
+import React, { useEffect, useRef, useState } from "react";
+import { Card } from "react-bootstrap";
+import "../../../styles/facility/facilityMap.css";
 
 const { kakao } = window;
 
-const FacilityMap = ({ address, setAddress }) => {
-  const mapRef = useRef(null);  
-  const markerRef = useRef(null);
-  const overlayRef = useRef(null);
+const FacilityMap = ({ facilities = [] }) => {
+  const mapRef = useRef(null);
+  const markersRef = useRef([]);
   const [map, setMap] = useState(null);
 
-  // 지도 초기화
+  // ✅ 지도 초기화
   useEffect(() => {
     const container = mapRef.current;
-    const mapInstance = new kakao.maps.Map(container, {
-      center: new kakao.maps.LatLng(37.566826, 126.9786567), // 서울 시청
-      level: 3,
-    });
+    const options = {
+      center: new kakao.maps.LatLng(37.566826, 126.9786567), // 서울 시청 좌표
+      level: 7,
+    };
+    const mapInstance = new kakao.maps.Map(container, options);
     setMap(mapInstance);
   }, []);
 
-  // map 생성 후 초기 주소가 있으면 마커 표시
+  // 시설 목록이 변경될 때마다 마커 표시
   useEffect(() => {
-    if (!map || !address) return;
+    if (!map || facilities.length === 0) return;
 
     const geocoder = new kakao.maps.services.Geocoder();
-    geocoder.addressSearch(address, (result, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const position = new kakao.maps.LatLng(result[0].y, result[0].x);
-        updateMarkerAndOverlay(position, address);
-        map.setCenter(position);
-      }
-    });
-  }, [map, address]);
+    const bounds = new kakao.maps.LatLngBounds();
 
-  // 주소 입력 시 마커 + CustomOverlay 업데이트
-  useEffect(() => {
-    if (!map || !setAddress) return; // setAddress가 없으면 입력 무시
+    // 기존 마커 제거
+    markersRef.current.forEach((marker) => marker.setMap(null));
+    markersRef.current = [];
 
-    if (!address) return; // 작성용일 경우
+    // 시설 데이터 반복
+    facilities.forEach((item) => {
+      if (!item.address || item.address === "주소 없음") return;
 
-    const geocoder = new kakao.maps.services.Geocoder();
-    const ps = new kakao.maps.services.Places();
+      geocoder.addressSearch(item.address, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          const position = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-    geocoder.addressSearch(address, (result, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const position = new kakao.maps.LatLng(result[0].y, result[0].x);
-        updateMarkerAndOverlay(position, address);
-        map.setCenter(position);
-      } else {
-        ps.keywordSearch(address, (data, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            const position = new kakao.maps.LatLng(data[0].y, data[0].x);
-            updateMarkerAndOverlay(position, data[0].place_name);
-            map.setCenter(position);
-          }
-        });
-      }
-    });
-  }, [map, address]);
+          // ✅ 마커 생성
+          const marker = new kakao.maps.Marker({
+            map,
+            position,
+            title: item.title,
+          });
+          markersRef.current.push(marker);
 
-  // 마커 + CustomOverlay 생성/업데이트 함수
-  const updateMarkerAndOverlay = (position, label) => {
-    const markerImageSrc =
-      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-    const markerImageSize = new kakao.maps.Size(14, 25);
-    const markerImageOptions = { offset: new kakao.maps.Point(12, 35) };
-    const markerImage = new kakao.maps.MarkerImage(
-      markerImageSrc,
-      markerImageSize,
-      markerImageOptions
-    );
+          // ✅ 인포윈도우 (시설명 표시)
+          const infowindow = new kakao.maps.InfoWindow({
+            content: `
+              <div style="
+                padding:5px 10px;
+                font-size:13px;
+                color:#333;
+                font-weight:bold;
+              ">
+                ${item.title}
+              </div>
+            `,
+          });
 
-    if (markerRef.current) {
-      markerRef.current.setPosition(position);
-    } else {
-      markerRef.current = new kakao.maps.Marker({
-        map,
-        position,
-        image: markerImage,
+          kakao.maps.event.addListener(marker, "click", () => {
+            infowindow.open(map, marker);
+          });
+
+          // 지도 범위 확장
+          bounds.extend(position);
+          map.setBounds(bounds);
+        }
       });
-    }
-
-    const overlayDiv = document.createElement("div");
-    overlayDiv.style.padding = "5px 10px";
-    overlayDiv.style.backgroundColor = "#FEB916";
-    overlayDiv.style.color = "#fff";
-    overlayDiv.style.fontWeight = "bold";
-    overlayDiv.style.fontSize = "12px";
-    overlayDiv.style.borderRadius = "6px";
-    overlayDiv.style.boxShadow = "2px 2px 5px rgba(0,0,0,0.3)";
-    overlayDiv.innerText = label;
-
-    if (overlayRef.current) {
-      overlayRef.current.setPosition(position);
-      overlayRef.current.setContent(overlayDiv);
-    } else {
-      overlayRef.current = new kakao.maps.CustomOverlay({
-        position,
-        content: overlayDiv,
-        yAnchor: 2.4,
-      });
-      overlayRef.current.setMap(map);
-    }
-  };
+    });
+  }, [map, facilities]);
 
   return (
     <Card className="mb-4 diary-box">
-      {/* <Card.Header className="card-header">
-        <span>동물 관련 시설</span>
-      </Card.Header> */}
       <Card.Body>
-        <Form>
-          <Form.Group className="mb-3" controlId="diaryAddress">
-            <InputGroup>
-              <InputGroup.Text>
-                <img
-                  src={MapIcon}
-                  alt="지도 아이콘" 
-                  style={{ width: 12, height: 16 }}
-                />
-              </InputGroup.Text>
-              <Form.Control
-                type="text"
-                placeholder="주소를 입력하세요"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </InputGroup>
-          </Form.Group>
-
-          <div ref={mapRef} className="map-container" />
-        </Form>
+        <div
+          ref={mapRef}
+          className="map-container"
+          style={{
+            width: "100%",
+            height: "400px",
+            borderRadius: "10px",
+            boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+          }}
+        />
       </Card.Body>
     </Card>
   );

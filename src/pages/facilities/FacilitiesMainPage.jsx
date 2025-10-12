@@ -3,99 +3,52 @@ import { useNavigate } from "react-router-dom";
 import FacilityPostCard from "../../components/board/facility/facilityPostCard";
 import SearchBar from "../../components/common/SearchBar";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-import FacilityMap from "../../components/board/facility/facilityMap";  
+import FacilityMap from "../../components/board/facility/facilityMap";
+import { getFacilityData } from "../../api/FacilityService"; 
 
 const FacilityMainPage = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]); // 시설 데이터 저장
+  const [loading, setLoading] = useState(true); // 로딩 상태
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
 
+  //  컴포넌트가 처음 렌더링될 때 API 호출
   useEffect(() => {
-    const fetchDummyPosts = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
 
-        // 더미 데이터
-        const dummyPosts = [
-          {
-            id: 1,
-            title: "산내 동물 병원",
-            phone: "02-xxx-xxx",
-            address: "서울 성북구 xxx xxx",
-            status: "진료 중",
-            distanceKm: 2,
-          },
-          {
-            id: 2,
-            title: "마음 동물 병원",
-            phone: "02-xxx-xxx",
-            address: "서울 성북구 xxx xxx",
-            status: "진료 중",
-            distanceKm: 2,
-          },
-          {
-            id: 3,
-            title: "박원장 동물 병원",
-            phone: "02-xxx-xxx",
-            address: "서울 성북구 xxx xxx",
-            status: "진료 중",
-            distanceKm: 2,
-          },
-          {
-            id: 4,
-            title: "국민 동물 병원",
-            phone: "02-xxx-xxx",
-            address: "서울 성북구 xxx xxx",
-            status: "진료 중",
-            distanceKm: 2,
-          },
-          {
-            id: 5,
-            title: "운내 동물 병원",
-            phone: "02-xxx-xxx",
-            address: "서울 성북구 xxx xxx",
-            status: "진료 중",
-            distanceKm: 2,
-          },
-          {
-            id: 6,
-            title: "응응 동물 병원",
-            phone: "02-xxx-xxx",
-            address: "서울 성북구 xxx xxx",
-            status: "진료 중",
-            distanceKm: 2,
-          },
-          {
-            id: 7,
-            title: "내새끼 동물 병원",
-            phone: "02-xxx-xxx",
-            address: "서울 성북구 xxx xxx",
-            status: "진료 중",
-            distanceKm: 2,
-          },
-          {
-            id: 8,
-            title: "시립 동물 병원",
-            phone: "02-xxx-xxx",
-            address: "서울 성북구 xxx xxx",
-            status: "진료 중",
-            distanceKm: 2,
-          },
-        ];
+        // API 호출
+        const facilities = await getFacilityData();
+        console.log("API 데이터:", facilities); 
 
-        setPosts(dummyPosts);
+        // 변환된 데이터 구조를 React 카드 형식에 맞게 가공
+        const formatted = facilities.map((item, index) => ({
+          id: index + 1,
+          title: item.title || "이름 없음",
+          address: item.address || "주소 없음",
+          phone: item.phone || "전화번호 없음",
+          status: "진료 중",
+          distanceKm: Math.floor(Math.random() * 5) + 1, // 예시용 랜덤 거리
+        }));
+
+        // 상태 업데이트
+        setPosts(formatted);
+      } catch (error) {
+        console.error("API 불러오기 실패:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDummyPosts();
+    fetchData(); //  함수 실제 호출
   }, []);
 
+  //  카드 클릭 시 이동
   const handleItemClick = (id) => {
     navigate(`/facilities/${id}`);
   };
 
+  //  로딩 중일 때
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -105,13 +58,22 @@ const FacilityMainPage = () => {
     );
   }
 
+  //  메인 렌더링
   return (
     <div className="mt-4" style={{ paddingTop: "160px" }}>
       <h2 className="page-title">우리 동네 정보</h2>
-      <FacilityMap />
+
+      {/* 지도 */}
+      <FacilityMap facilities={posts}/>
+
       <br />
+
+      {/* 검색바 */}
       <SearchBar />
+
       <br />
+
+      {/* 시설 카드 목록 */}
       <FacilityPostCard items={posts} onItemClick={handleItemClick} />
     </div>
   );
