@@ -53,7 +53,7 @@ const TailyFriendsWritePage = () => {
   };
 
   return (
-    <div className="row justify-content-center" style={{ marginTop: "250px" }}>
+    <div className="row justify-content-center">
       {/* 제목 입력 */}
       <TailyFriendsTitle title={title} setTitle={setTitle} />
 

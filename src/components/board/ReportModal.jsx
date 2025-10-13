@@ -63,10 +63,10 @@ const ReportModal = ({ show, handleClose, reportedId, path }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="outline-primary" onClick={handleClose}>
           취소
         </Button>
-        <Button variant="danger" onClick={handleSubmit}>
+        <Button variant="primary" onClick={handleSubmit}>
           신고
         </Button>
       </Modal.Footer>

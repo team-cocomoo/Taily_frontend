@@ -16,6 +16,9 @@ const PostDetailContentCard = ({ post }) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext); // 로그인한 사용자 정보
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const handleOpenShareModal = () => setShowShareModal(true);
+  const handleCloseShareModal = () => setShowShareModal(false);
   const handleOpenReportModal = () => setShowReportModal(true);
   const handleCloseReportModal = () => setShowReportModal(false);
   if (!post) return null;
@@ -89,7 +92,7 @@ const PostDetailContentCard = ({ post }) => {
                       <Dropdown.Item onClick={handleOpenReportModal}>
                         신고하기
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => alert("공유")}>
+                      <Dropdown.Item onClick={handleOpenShareModal}>
                         공유하기
                       </Dropdown.Item>
                     </>
@@ -100,6 +103,12 @@ const PostDetailContentCard = ({ post }) => {
                   handleClose={handleCloseReportModal}
                   reportedId={post.userId}
                   path={window.location.href} // 현재 URL 또는 post.path
+                />
+                <ShareModal
+                  show={showShareModal}
+                  handleClose={handleCloseShareModal}
+                  postTitle={post.title}
+                  postUrl={window.location.href}
                 />
               </Dropdown>
             </div>
@@ -120,8 +129,8 @@ const PostDetailContentCard = ({ post }) => {
             <LikeButton
               postId={post.id}
               initialLikeCount={post.likeCount}
-              tableTypeId={6} 
-              initialLiked={post.liked} 
+              tableTypeId={6}
+              initialLiked={post.liked}
             />
           </div>
         </Card.Body>
