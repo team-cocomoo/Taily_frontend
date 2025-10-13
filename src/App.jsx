@@ -4,9 +4,13 @@ import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AuthProvider from "../src/contexts/AuthProvider";
 
-import HeaderNavbar from "./components/common/HeaderNavbar";
-import Footer from "./components/common/Footer";
+// import HeaderNavbar from "./components/common/HeaderNavbar";
+// import Footer from "./components/common/Footer";
+import UserLayout from "./layouts/UserLayout";
+import AdminLayout from "./layouts/AdminLayout";
+
 import ProtectedLayout from "./components/common/ProtectedLayout";
+import AdminProtectedLayout from "./components/common/AdminProtectedLayout";
 
 // 페이지 컴포넌트
 import MainPage from "./pages/MainPage";
@@ -33,78 +37,82 @@ import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
 import OtherUserProfilePage from "./pages/user/OtherUserProfilePage";
 
 // 관리자
-import AdminMainPage from './pages/admin/AdminMainPage';
-import AdminProtectedLayout from "./components/common/AdminProtectedLayout";
+
+import AdminMainPage from "./pages/admin/AdminMainPage";
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import FeedMainPage from "./pages/feed/FeedMainPage";
+import FeedDetailPage from "./pages/feed/FeedDetailPage";
+import FeedWritePage from "./pages/feed/FeedWritePage";
+import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <HeaderNavbar />
-        <Container className="mt-4">
-          <Routes>
+        {/* <Container className="mt-4"> */}
+        <Routes>
+          {/* 일반 사용자 레이아웃 */}
+          <Route element={<UserLayout />}>
             {/* 공용 페이지 */}
             <Route path="/" element={<MainPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
 
-            {/* 사용자 권한 영역 */}
+            {/* 사용자 권한 필요 페이지 */}
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
-              <Route path="/mypage/main" element={<MyPageUserInfo />} />
-              <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
+              <Route path="mypage/main" element={<MyPageUserInfo />} />
+              <Route path="walk-diaries" element={<WalkDiaryCalendarPage />} />
               <Route
-                path="/walk-diaries/write/:date"
+                path="walk-diaries/write/:date"
                 element={<WalkDiaryWritePage />}
               />
               <Route
-                path="/walk-diaries/:id"
+                path="walk-diaries/:id"
                 element={<WalkDiaryDetailPage />}
               />
               <Route
-                path="/walk-diaries/edit/:id"
+                path="walk-diaries/edit/:id"
                 element={<WalkDiaryUpdatePage />}
               />
               <Route
-                path="/walk-diaries/stats"
+                path="walk-diaries/stats"
                 element={<WalkDiaryStatisticsPage />}
               />
-
-              <Route path="/walk-paths" element={<WalkPathMainPage />} />
-              <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
-              <Route path="/walk-paths/write" element={<WalkPathWritePage />} />
-              <Route path="/taily-friends" element={<TailyFriendsMainPage />} />
-              <Route path="/facilities" element={<FacilityMainPage />} />
+              <Route path="walk-paths" element={<WalkPathMainPage />} />
+              <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
+              <Route path="walk-paths/write" element={<WalkPathWritePage />} />
+              <Route path="taily-friends" element={<TailyFriendsMainPage />} />
+              <Route path="facilities" element={<FacilityMainPage />} />
               <Route
-                path="/taily-friends/:id"
+                path="taily-friends/:id"
                 element={<TailyFriendsDetailPage />}
               />
               <Route
-                path="/taily-friends/write"
+                path="taily-friends/write"
                 element={<TailyFriendsWritePage />}
               />
               <Route
-                path="/taily-friends/edit/:id"
+                path="taily-friends/edit/:id"
                 element={<TailyFriendsEditPage />}
               />
-              <Route path="/chats" element={<ChatRoomMainPage />} />
-              <Route path="/chats/:id" element={<ChatRoomDetailPage />} />
+              <Route path="chats" element={<ChatRoomMainPage />} />
+              <Route path="chats/:id" element={<ChatRoomDetailPage />} />
               <Route
-                path="/user-profile/:id/profile"
+                path="user-profile/:id/profile"
                 element={<OtherUserProfilePage />}
               />
             </Route>
+          </Route>
 
-            {/* 관리자 권한 영역 */}
-            <Route path="/admin/login" element={<AdminLoginPage />} />
-
-            {/* 관리자 페이지 (로그인 후 접근) */}
-            <Route element={<AdminProtectedLayout roles={["ROLE_USER"]} />}>
-              <Route path="/admin/main" element={<AdminMainPage />} />
+          {/* 관리자 레이아웃 */}
+          <Route path="admin" element={<AdminLayout />}>
+            <Route path="login" element={<AdminLoginPage />} />
+            <Route element={<AdminProtectedLayout />}>
+              <Route path="main" element={<AdminMainPage />} />
             </Route>
-          </Routes>
-        </Container>
-        <Footer />
+          </Route>
+        </Routes>
+        {/* </Container> */}
       </AuthProvider>
     </BrowserRouter>
   );

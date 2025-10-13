@@ -23,7 +23,7 @@ const HeaderNavbar = () => {
   };
 
   return (
-    <nav className="navbar fixed-top">
+    <nav className="navbar">
       {/* 왼쪽: 로고 */}
       <div className="navbar-brand">
         <Link to="/" className="logo-link">
@@ -41,9 +41,9 @@ const HeaderNavbar = () => {
         {/* 펫스토리 */}
         <div className="dropdown">
           <Link
-            to="/feeds"
+            to="/petstory/feed"
             className={
-              location.pathname.startsWith("/feeds") ||
+              location.pathname.startsWith("/petstory/feed") ||
               location.pathname.startsWith("/chats")
                 ? "nav-link-active"
                 : "nav-link"
@@ -52,7 +52,7 @@ const HeaderNavbar = () => {
             펫스토리
           </Link>
           <div className="dropdown-menu">
-            <Link to="/feeds" className="dropdown-item">
+            <Link to="/petstory/feed" className="dropdown-item">
               피드
             </Link>
             <Link to="/chats" className="dropdown-item">

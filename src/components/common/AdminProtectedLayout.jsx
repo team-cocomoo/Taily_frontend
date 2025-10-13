@@ -2,15 +2,11 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 
-const AdminProtectedLayout = ({ skipAuth = false }) => {
+const AdminProtectedLayout = () => {
     const token = localStorage.getItem("token");
 
-    if (skipAuth) {
-        // 로그인 전 화면, Header/Footer 없음
-        return <Outlet />;
-    }
 
-    if (!token) return <Navigate to="/admin/login" />;
+    if (!token) return <Navigate to="/admin/login" replace />;
 
     try {
         const decoded = jwt_decode(token);
