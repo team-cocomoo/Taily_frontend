@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Card, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,11 +10,14 @@ import meatballIcon from "../../../assets/image/meatball-icon.png";
 import PostDetailMap from "../postDetail/PostDetailMap";
 import UserPopover from "../../common/UserPopover";
 import LikeButton from "../LikeButton";
+import ReportModal from "../ReportModal";
 
 const PostDetailContentCard = ({ post }) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext); // 로그인한 사용자 정보
-
+  const [showReportModal, setShowReportModal] = useState(false);
+  const handleOpenReportModal = () => setShowReportModal(true);
+  const handleCloseReportModal = () => setShowReportModal(false);
   if (!post) return null;
 
   const isAuthor = user && user.nickname === post.nickname;
@@ -83,7 +86,7 @@ const PostDetailContentCard = ({ post }) => {
                     </>
                   ) : (
                     <>
-                      <Dropdown.Item onClick={() => alert("신고")}>
+                      <Dropdown.Item onClick={handleOpenReportModal}>
                         신고하기
                       </Dropdown.Item>
                       <Dropdown.Item onClick={() => alert("공유")}>
@@ -92,6 +95,12 @@ const PostDetailContentCard = ({ post }) => {
                     </>
                   )}
                 </Dropdown.Menu>
+                <ReportModal
+                  show={showReportModal}
+                  handleClose={handleCloseReportModal}
+                  reportedId={post.userId}
+                  path={window.location.href} // 현재 URL 또는 post.path
+                />
               </Dropdown>
             </div>
           </div>
@@ -111,8 +120,8 @@ const PostDetailContentCard = ({ post }) => {
             <LikeButton
               postId={post.id}
               initialLikeCount={post.likeCount}
-              tableTypeId={5} // TailyFriend TableTypeId
-              initialLiked={post.liked} // 서버에서 내려주는 좋아요 상태
+              tableTypeId={6} 
+              initialLiked={post.liked} 
             />
           </div>
         </Card.Body>
