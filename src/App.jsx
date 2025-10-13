@@ -33,9 +33,13 @@ import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
 import OtherUserProfilePage from "./pages/user/OtherUserProfilePage";
 
 // 관리자
-import AdminMainPage from './pages/admin/AdminMainPage';
+import AdminMainPage from "./pages/admin/AdminMainPage";
 import AdminProtectedLayout from "./components/common/AdminProtectedLayout";
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import FeedMainPage from "./pages/feed/FeedMainPage";
+import FeedDetailPage from "./pages/feed/FeedDetailPage";
+import FeedWritePage from "./pages/feed/FeedWritePage";
+import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 
 function App() {
   return (
@@ -52,6 +56,13 @@ function App() {
             {/* 사용자 권한 영역 */}
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="/mypage/main" element={<MyPageUserInfo />} />
+              <Route path="/petstory/feed" element={<FeedMainPage />} />
+              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
+              <Route
+                path="/petstory/feed/edit/:id"
+                element={<FeedEdtiPage />}
+              />
+              <Route path="/petstory/feed/write" element={<FeedWritePage />} />
               <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
               <Route
                 path="/walk-diaries/write/:date"
