@@ -11,7 +11,7 @@ import PostDetailMap from "../postDetail/PostDetailMap";
 import UserPopover from "../../common/UserPopover";
 import LikeButton from "../LikeButton";
 
-const PostDetailContentCard = ({ post }) => {
+const TailyFriendsDetailContent = ({ post }) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext); // 로그인한 사용자 정보
 
@@ -110,9 +110,9 @@ const PostDetailContentCard = ({ post }) => {
           <div className="d-flex justify-content-center align-items-center mt-3">
             <LikeButton
               postId={post.id}
+              tableTypeId={5} // TailyFriend = 5
               initialLikeCount={post.likeCount}
-              tableTypeId={5} // TailyFriend TableTypeId
-              initialLiked={post.liked} // 서버에서 내려주는 좋아요 상태
+              initialLiked={post.liked}
             />
           </div>
         </Card.Body>
@@ -121,4 +121,4 @@ const PostDetailContentCard = ({ post }) => {
   );
 };
 
-export default PostDetailContentCard;
+export default TailyFriendsDetailContent;
