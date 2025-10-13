@@ -61,6 +61,17 @@ function App() {
             {/* 사용자 권한 필요 페이지 */}
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="mypage/main" element={<MyPageUserInfo />} />
+
+              {/* 펫스토리 페이지 */}
+              <Route path="/mypage/main" element={<MyPageUserInfo />} />
+              <Route path="/petstory/feed" element={<FeedMainPage />} />
+              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
+              <Route
+                path="/petstory/feed/edit/:id"
+                element={<FeedEdtiPage />}
+              />
+
+              <Route path="/petstory/feed/write" element={<FeedWritePage />} />
               <Route path="walk-diaries" element={<WalkDiaryCalendarPage />} />
               <Route
                 path="walk-diaries/write/:date"
