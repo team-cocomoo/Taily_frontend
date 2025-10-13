@@ -67,7 +67,7 @@ const TailyFriendsEditPage = () => {
   };
 
   return (
-    <div className="row justify-content-center" style={{ marginTop: "250px" }}>
+    <div className="row justify-content-center">
       <TailyFriendsTitle title={title} setTitle={setTitle} />
       <TailyFriendsWriteMap address={address} setAddress={setAddress} />
       <TailyFriendsContent content={content} setContent={setContent} />

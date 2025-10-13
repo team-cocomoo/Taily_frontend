@@ -1,16 +1,32 @@
-import React from 'react';
-import { Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import AdminSidebar from "../../components/admin/AdminSidebar"; 
+import Users from '../../components/admin/Users';
 
-const adminPage = () => {
-    // const [selectedMenu, setSelectedMenu] = useState('searchUser'); // 기본 '회원 관리'
+const AdminMainPage = () => {
+    const [selectedMenu, setSelectedMenu] = useState(() => 'users'); // 기본 '회원 관리'
+    console.log("selectedMenu:", selectedMenu);
+
     
     return (
         <div>
-            <Header>Taily Admin Service</Header>
-            <h1>관리자 테스트 페이지</h1>
-            <p>여기는 로그인 없이 URL로 접근 가능한 임시 관리자 페이지입니다.</p>
+            <Row>
+                <Col>
+                    <div>Taily Admin Service</div>
+                    <AdminSidebar
+                        selectedMenu={selectedMenu}
+                        setSelectedMenu={setSelectedMenu}
+                    />    
+                </Col>
+                <Col>
+                    <h1>관리자 테스트 페이지</h1>
+                    {selectedMenu === 'users' && <Users />}
+                    {/* {selectedMenu === 'notices' && <MyPetInfoCard setSelectedMenu={setSelectedMenu} />} */}
+                
+                </Col>
+            </Row>
         </div>
     );
 };
 
-export default adminPage;
+export default AdminMainPage;
