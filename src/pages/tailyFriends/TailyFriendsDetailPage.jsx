@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
-import PostDetailContentCard from "../../components/board/postDetail/PostDetailContentCard";
+import TailyFriendsDetailContent from "../../components/board/tailyFriends/TailyFriendsDetailContent";
 import PostDetailCommentCard from "../../components/board/postDetail/PostDetailCommentCard";
 import ErrorAlert from "../../components/common/ErrorAlert";
 
@@ -55,7 +55,7 @@ const TailyFriendDetailPage = () => {
     <Row className="justify-content-center mt-4">
       <Col xs={12} md={10} lg={10}>
         {/* 게시글 상세 */}
-        <PostDetailContentCard post={post} />
+        <TailyFriendsDetailContent post={post} />
 
         {/* 하단 버튼 */}
         <div className="d-flex justify-content-end mt-1 mb-4">
