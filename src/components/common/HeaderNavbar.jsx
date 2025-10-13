@@ -82,7 +82,7 @@ const HeaderNavbar = () => {
         {/* 산책 공간 */}
         <div className="dropdown">
           <Link
-            to="/diary"
+            to="/walk-diaries"
             className={
               location.pathname.startsWith("/walk-diaries") ||
               location.pathname.startsWith("/taily-friends") ||
@@ -140,7 +140,8 @@ const HeaderNavbar = () => {
             to="/inquiry"
             className={
               location.pathname.startsWith("/inquiry") ||
-              location.pathname.startsWith("/notices")
+              location.pathname.startsWith("/notices") ||
+              location.pathname.startsWith("/faqs") 
                 ? "nav-link-active"
                 : "nav-link"
             }
@@ -150,6 +151,9 @@ const HeaderNavbar = () => {
           <div className="dropdown-menu">
             <Link to="/notices" className="dropdown-item">
               공지사항
+            </Link>
+            <Link to="/faqs" className="dropdown-item">
+              FAQ
             </Link>
             <Link to="/inquiry" className="dropdown-item">
               문의하기

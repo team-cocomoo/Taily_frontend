@@ -1,0 +1,109 @@
+.faq-title {
+    color: #4F1F02;
+    font-weight: bold;
+}
+
+/* 전체 아코디언 항목 여백 */
+.accordion-item {
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.accordion-item:first-child {
+    border-radius: 20px 20px 0 0;
+}
+.accordion-item:last-child {
+    border-radius: 0 0 20px 20px;
+}
+
+/* 아코디언 헤더 버튼 스타일 */
+.accordion-button {
+    background-color: #fff !important;
+    color: #000 !important;
+    font-weight: 500;
+    border: none;
+    box-shadow: none !important;
+    padding: 12px 16px;
+}
+
+/* 열릴 때(활성화된) 헤더 스타일 */
+.accordion-button:not(.collapsed) {
+    color: #000 !important;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+/* 화살표 색상 변경 */
+.accordion-button::after {
+    filter: brightness(0); /* 검정색으로 변경 */
+}
+
+/* 아코디언 바디 스타일 */
+.accordion-body {
+    background-color: #FFC107;
+    color: #fff;
+    padding: 12px 16px;
+    border-top: 1px solid #ddd;
+}
+
+/* hover 시 배경 살짝 회색 */
+.accordion-button:hover {
+    background-color: #f8f9fa !important;
+}
+
+.custom-pagination .page-item .page-link {
+  color: #444444; /* 글자 색상 */
+  background-color: white; /* 배경색 */
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #FEB916; /* 클릭/활성화 시 배경색 */
+  border-color: #FEB916; /* 활성화 테두리 색상 */
+}
+
+.custom-pagination .page-item:hover .page-link {
+    background-color: rgba(254, 186, 23, 0.5); /* 마우스 오버 배경 */
+    border-color: rgba(254, 186, 23, 0.5);
+    color: #4F1F02;
+}
+
+.inquiries-card {
+    border-radius: 20px;        /* 모서리 둥글게 */
+    background-color: #D1E2FA;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;                  /* 이미지와 텍스트 사이 공간 */
+    margin: auto;  
+    border: none;
+}
+
+.inquiries-card h5 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.inquiry-btn {
+    background-color: transparent; /* 버튼 흰색 */
+    border: 1px solid #4F1F02;
+    border-radius: 20px;
+    color: #000;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.inquiry-btn:hover {
+    background-color: #4a2107d4;
+    color: white;
+    border-color: #4a2107d4;
+}
+
+.inquiries-card img {
+    width: 80px; /* 이미지 크기 */
+    height: auto;
+    display: block;
+    margin-left: auto; /* 오른쪽 정렬 */
+}
