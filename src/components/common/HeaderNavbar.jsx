@@ -23,7 +23,7 @@ const HeaderNavbar = () => {
   };
 
   return (
-    <nav className="navbar fixed-top">
+    <nav className="navbar">
       {/* 왼쪽: 로고 */}
       <div className="navbar-brand">
         <Link to="/" className="logo-link">
