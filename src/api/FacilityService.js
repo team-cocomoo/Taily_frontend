@@ -31,7 +31,7 @@ function xmlToJson(xml) {
 }
 
 export async function getFacilityData() {
-  const url = `https://api.kcisa.kr/openapi/service/rest/convergence2019/getConver03?serviceKey=${API_KEY}&numOfRows=10&pageNo=1&keyword=동물병원&where=서울`;
+  const url = `https://api.kcisa.kr/openapi/service/rest/convergence2019/getConver03?serviceKey=${API_KEY}&numOfRows=30&pageNo=1&keyword=동물병원&where=서울`;
   const response = await fetch(url);
   const text = await response.text();
 
