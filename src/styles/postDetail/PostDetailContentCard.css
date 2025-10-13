@@ -1,13 +1,11 @@
 .post-detail-body {
-  margin-top: 40px;
   width: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
   overflow-x: auto;
 }
-.post-card {
-  margin-top: 100px;
+.post-card {  
   width: 100%;
   max-width: 1440px;
   padding: 30px;

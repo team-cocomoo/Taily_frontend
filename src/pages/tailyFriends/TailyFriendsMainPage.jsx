@@ -66,7 +66,7 @@ const TailyFriendsMainPage = () => {
   }
 
   return (
-    <div className="mt-4" style={{ paddingTop: "160px" }}>
+    <div className="mt-4">
       <h2 className="page-title">테일리 프렌즈 게시판</h2>
       <SearchBar />
       <br />
