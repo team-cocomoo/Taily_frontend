@@ -44,6 +44,7 @@ import FeedMainPage from "./pages/feed/FeedMainPage";
 import FeedDetailPage from "./pages/feed/FeedDetailPage";
 import FeedWritePage from "./pages/feed/FeedWritePage";
 import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
+import FaqPage from "./pages/cs/FaqPage";
 
 function App() {
   return (
@@ -112,6 +113,9 @@ function App() {
                 path="user-profile/:id/profile"
                 element={<OtherUserProfilePage />}
               />
+
+              <Route path="faqs" element={<FaqPage />} />
+
             </Route>
           </Route>
 
