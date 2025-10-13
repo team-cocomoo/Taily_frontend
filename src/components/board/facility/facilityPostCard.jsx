@@ -12,14 +12,14 @@ const FacilityPostCard = ({ items, onItemClick }) => {
             <Col xs={12} md={6} lg={6} key={item.id}>
               <Card
                 className="facility-card h-100"
-                onClick={() => onItemClick(item.id)}
+                onClick={() => onItemClick(item)}
                 role="button"
-                tabIndex={0}
+                // tabIndex={0}
               >
                 <Card.Body>
                   <h5 className="facility-name">{item.title}</h5>
                   <ul className="facility-meta">
-                    <li><span className="label">전화번호</span> : {item.phone}</li>
+                    {/* <li><span className="label">전화번호</span> : {item.phone}</li> */}
                     <li><span className="label">주소</span> : {item.address}</li>
                     <li><span className="label">진료</span> : {item.status}</li>
                     <li className="distance">{item.distanceKm} km</li>
