@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import logo from "../../assets/image/taily_logo.png";
 import "../../styles/HeaderNavbar.css";
@@ -8,6 +8,8 @@ const HeaderNavbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   // 나중에 유저 로그인 인증 추가 후 추가
 
@@ -22,8 +24,24 @@ const HeaderNavbar = () => {
     navigate("/");
   };
 
+  const handleScroll = () => {
+    if (window.scrollY > lastScrollY) {
+      // 아래로 스크롤 → 헤더 숨기기
+      setShowHeader(false);
+    } else {
+      // 위로 스크롤 → 헤더 보이기
+      setShowHeader(true);
+    }
+    setLastScrollY(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   return (
-    <nav className="navbar fixed-top">
+    <nav className={`navbar header ${showHeader ? "visible" : "hidden"}`}>
       {/* 왼쪽: 로고 */}
       <div className="navbar-brand">
         <Link to="/" className="logo-link">
