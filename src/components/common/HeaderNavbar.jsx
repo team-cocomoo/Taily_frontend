@@ -41,11 +41,7 @@ const HeaderNavbar = () => {
   }, [lastScrollY]);
 
   return (
-<<<<<<< HEAD
     <nav className={`navbar header ${showHeader ? "visible" : "hidden"}`}>
-=======
-    <nav className="navbar">
->>>>>>> develop
       {/* 왼쪽: 로고 */}
       <div className="navbar-brand">
         <Link to="/" className="logo-link">
