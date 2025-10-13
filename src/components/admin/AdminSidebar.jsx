@@ -1,4 +1,5 @@
 import React from 'react';
+import { Nav } from 'react-bootstrap';
 
 const navItems = [
     { key: 'user', lable: '회원 관리', active: true },
