@@ -37,16 +37,21 @@ import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
 import OtherUserProfilePage from "./pages/user/OtherUserProfilePage";
 
 // 관리자
-import AdminMainPage from './pages/admin/AdminMainPage';
+
+import AdminMainPage from "./pages/admin/AdminMainPage";
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import FeedMainPage from "./pages/feed/FeedMainPage";
+import FeedDetailPage from "./pages/feed/FeedDetailPage";
+import FeedWritePage from "./pages/feed/FeedWritePage";
+import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         {/* <Container className="mt-4"> */}
-          <Routes>
-            {/* 일반 사용자 레이아웃 */}
+        <Routes>
+          {/* 일반 사용자 레이아웃 */}
           <Route element={<UserLayout />}>
             {/* 공용 페이지 */}
             <Route path="/" element={<MainPage />} />
@@ -57,21 +62,45 @@ function App() {
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="mypage/main" element={<MyPageUserInfo />} />
               <Route path="walk-diaries" element={<WalkDiaryCalendarPage />} />
-              <Route path="walk-diaries/write/:date" element={<WalkDiaryWritePage />} />
-              <Route path="walk-diaries/:id" element={<WalkDiaryDetailPage />} />
-              <Route path="walk-diaries/edit/:id" element={<WalkDiaryUpdatePage />} />
-              <Route path="walk-diaries/stats" element={<WalkDiaryStatisticsPage />} />
+              <Route
+                path="walk-diaries/write/:date"
+                element={<WalkDiaryWritePage />}
+              />
+              <Route
+                path="walk-diaries/:id"
+                element={<WalkDiaryDetailPage />}
+              />
+              <Route
+                path="walk-diaries/edit/:id"
+                element={<WalkDiaryUpdatePage />}
+              />
+              <Route
+                path="walk-diaries/stats"
+                element={<WalkDiaryStatisticsPage />}
+              />
               <Route path="walk-paths" element={<WalkPathMainPage />} />
               <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
               <Route path="walk-paths/write" element={<WalkPathWritePage />} />
               <Route path="taily-friends" element={<TailyFriendsMainPage />} />
               <Route path="facilities" element={<FacilityMainPage />} />
-              <Route path="taily-friends/:id" element={<TailyFriendsDetailPage />} />
-              <Route path="taily-friends/write" element={<TailyFriendsWritePage />} />
-              <Route path="taily-friends/edit/:id" element={<TailyFriendsEditPage />} />
+              <Route
+                path="taily-friends/:id"
+                element={<TailyFriendsDetailPage />}
+              />
+              <Route
+                path="taily-friends/write"
+                element={<TailyFriendsWritePage />}
+              />
+              <Route
+                path="taily-friends/edit/:id"
+                element={<TailyFriendsEditPage />}
+              />
               <Route path="chats" element={<ChatRoomMainPage />} />
               <Route path="chats/:id" element={<ChatRoomDetailPage />} />
-              <Route path="user-profile/:id/profile" element={<OtherUserProfilePage />} />
+              <Route
+                path="user-profile/:id/profile"
+                element={<OtherUserProfilePage />}
+              />
             </Route>
           </Route>
 
@@ -82,8 +111,7 @@ function App() {
               <Route path="main" element={<AdminMainPage />} />
             </Route>
           </Route>
-
-          </Routes>
+        </Routes>
         {/* </Container> */}
       </AuthProvider>
     </BrowserRouter>
