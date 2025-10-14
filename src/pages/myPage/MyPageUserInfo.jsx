@@ -8,6 +8,7 @@ import MyPageSidebarNav from "../../components/mypage/MyPageSidebarNav";
 import UserInfoDisplay from "../../components/mypage/UserInfoDisplay";
 import MyPetInfoCard from "../../components/mypage/MyPetInfoCard";
 import MyTailyFriendsList from "../../components/mypage/MyTailyFriendsList";
+import MyFollowFollowingList from "../../components/mypage/MyFollowFollowingList";
 
 // 사용자 정보 (실제로는 부모 컴포넌트에서 prop으로 전달되거나 Context/Redux를 통해 관리됩니다)
 const userInfo = {
@@ -81,6 +82,9 @@ const MyPageUserInfo = () => {
                 )}
                 {selectedMenu === "my-taily-friends" && (
                   <MyTailyFriendsList setSelectedMenu={setSelectedMenu} />
+                )}
+                {selectedMenu === "my-follow-following" && (
+                  <MyFollowFollowingList setSelectedMenu={setSelectedMenu} />
                 )}
               </Col>
             </Row>
