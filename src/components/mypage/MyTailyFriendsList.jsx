@@ -41,6 +41,7 @@ const MyTailyFriendsList = () => {
     <div className="d-flex justify-content-center mt-4">
       <Pagination className="custom-pagination">
         <Pagination.Prev
+          key={"Prev"}
           disabled={page === 1}
           onClick={() => handlePageChange(page - 1)}
         />

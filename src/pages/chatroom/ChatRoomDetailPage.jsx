@@ -9,7 +9,7 @@ import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
 const ChatRoomDetailPage = () => {
-  const { id: roomId } = useParams(); // URL param
+  const { id: roomId } = useParams();
   const { state } = useLocation();
   const { user } = useContext(AuthContext);
 
@@ -22,7 +22,7 @@ const ChatRoomDetailPage = () => {
 
   const token = localStorage.getItem("token");
 
-  // 1️⃣ 메시지 불러오기
+  // 메시지 불러오기
   useEffect(() => {
     if (!user) return;
 
@@ -42,11 +42,11 @@ const ChatRoomDetailPage = () => {
     fetchMessages();
   }, [user, roomId, token]);
 
-  // 2️⃣ WebSocket 연결
+  // WebSocket 연결
   useEffect(() => {
     if (!user) return;
 
-    const socket = new SockJS("/ws"); // 서버 WebSocket 엔드포인트
+    const socket = new SockJS("/ws");
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -71,12 +71,12 @@ const ChatRoomDetailPage = () => {
     };
   }, [user, roomId, token]);
 
-  // 3️⃣ 스크롤 맨 아래 이동
+  // 스크롤 맨 아래 이동
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 4️⃣ 메시지 전송
+  // 메시지 전송
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -84,7 +84,7 @@ const ChatRoomDetailPage = () => {
     try {
       const payload = {
         roomId: Number(roomId),
-        senderId: user.id, // senderId 포함
+        senderId: user.id,
         content: newMessage,
       };
 
@@ -106,6 +106,22 @@ const ChatRoomDetailPage = () => {
     } catch (err) {
       console.error("메시지 전송 실패:", err);
     }
+  };
+
+  // 날짜 포맷 함수
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const ampm = hours < 12 ? "오전" : "오후";
+    hours = hours % 12;
+    hours = hours === 0 ? 12 : hours;
+
+    return `${year}.${month}.${day} ${ampm} ${hours}:${minutes}`;
   };
 
   if (loading) return <LoadingSpinner />;
@@ -141,12 +157,7 @@ const ChatRoomDetailPage = () => {
                   <div className="message-nickname">{msg.senderName}</div>
                 )}
                 <div className="message-body">{msg.content}</div>
-                <div className="message-time">
-                  {new Date(msg.createdAt).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </div>
+                <div className="message-time">{formatDate(msg.createdAt)}</div>
               </div>
             </div>
           );
