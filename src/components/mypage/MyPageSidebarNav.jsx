@@ -8,9 +8,9 @@ const navItems = [
     { key: 'my-pets', label: '내 반려 동물'}, 
     { key: 'my-feed', label: '내 피드' },
     { key: 'my-likes', label: '내 좋아요' },
-    { key: 'follow', label: '내 팔로워/팔로잉' },
+    { key: 'my-follow-following', label: '내 팔로워/팔로잉' },
     { key: 'my-album', label: '내 산책 앨범' },
-    { key: 'friends', label: '내 테일리 프렌즈' },
+    { key: 'my-taily-friends', label: '내 테일리 프렌즈' },
     { key: 'qna', label: '내 1:1 문의 내역' },
 ];
 

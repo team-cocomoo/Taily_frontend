@@ -84,7 +84,7 @@ const TailyFriendsDetailContent = ({ post }) => {
                       <Dropdown.Item onClick={handleDelete}>
                         삭제하기
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => alert("공유")}>
+                      <Dropdown.Item onClick={handleOpenShareModal}>
                         공유하기
                       </Dropdown.Item>
                     </>
@@ -104,7 +104,7 @@ const TailyFriendsDetailContent = ({ post }) => {
                   show={showReportModal}
                   handleClose={handleCloseReportModal}
                   reportedId={post.userId}
-                  path={window.location.href} // 현재 URL 또는 post.path
+                  path={window.location.href} 
                 />
                 <ShareModal
                   show={showShareModal}
