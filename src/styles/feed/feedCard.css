@@ -1,0 +1,9 @@
+/* src/index.css 또는 App.css 내에 추가 */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #facc15; /* 노란색 */
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #facc15;
+}
