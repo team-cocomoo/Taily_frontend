@@ -1,11 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Card } from "react-bootstrap";
 
+/**
+ * Kakao Map 기반 시설 지도
+ *
+ * props:
+ * - facilities: 표시할 시설 배열 (lat, lng 포함)
+ * - selectedFacility: 클릭된 시설 정보
+ * - userLocation: 사용자 위치 {lat, lng}
+ */
 const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
   const mapRef = useRef(null);
   const [kakaoLoaded, setKakaoLoaded] = useState(false);
-  const markersRef = useRef([]);
   const [map, setMap] = useState(null);
+  const markersRef = useRef([]);
 
   // ✅ Kakao SDK 로드
   useEffect(() => {
@@ -33,7 +41,6 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
   // ✅ 지도 초기화 (유저 위치 중심)
   useEffect(() => {
     if (!kakaoLoaded || !window.kakao || !userLocation) return;
-
     const { kakao } = window;
     const container = mapRef.current;
     const options = {
@@ -49,14 +56,14 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
       new kakao.maps.Size(30, 45)
     );
 
-    const userMarker = new kakao.maps.Marker({
+    new kakao.maps.Marker({
       position: new kakao.maps.LatLng(userLocation.lat, userLocation.lng),
       map: mapInstance,
       image: userMarkerImage,
       title: "내 위치",
     });
 
-    // ✅ 내 위치 텍스트 라벨 추가
+    // ✅ 내 위치 라벨
     const userOverlay = new kakao.maps.CustomOverlay({
       position: new kakao.maps.LatLng(userLocation.lat, userLocation.lng),
       content: `
@@ -76,12 +83,10 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
     userOverlay.setMap(mapInstance);
   }, [kakaoLoaded, userLocation]);
 
-  // ✅ 병원 마커 표시
+  // ✅ 병원 마커 표시 (lat/lng 기반)
   useEffect(() => {
     if (!map || facilities.length === 0) return;
-
     const { kakao } = window;
-    const geocoder = new kakao.maps.services.Geocoder();
     const bounds = new kakao.maps.LatLngBounds();
 
     // 기존 마커 제거
@@ -92,54 +97,42 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
     markersRef.current = [];
 
     facilities.forEach((item) => {
-      const address =
-        typeof item.address === "object" ? item.address["#text"] : item.address;
-      if (!address || address === "주소 없음") return;
+      if (!item.lat || !item.lng) return;
+      const coords = new kakao.maps.LatLng(item.lat, item.lng);
 
-      geocoder.addressSearch(address, (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-          // ✅ 마커 생성
-          const marker = new kakao.maps.Marker({
-            map,
-            position: coords,
-            title: item.title,
-          });
-
-          // ✅ 병원 이름 라벨
-          const overlay = new kakao.maps.CustomOverlay({
-            position: coords,
-            content: `
-              <div style="
-                background: #FEB916;
-                color: white;
-                font-weight: bold;
-                padding: 3px 8px;
-                border-radius: 6px;
-                font-size: 12px;
-                box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-                white-space: nowrap;
-              ">
-                ${item.title}
-              </div>
-            `,
-            yAnchor: 2.2,
-          });
-          overlay.setMap(map);
-
-          kakao.maps.event.addListener(marker, "click", () => {
-            map.panTo(coords);
-            map.setLevel(3);
-          });
-
-          markersRef.current.push({ marker, overlay });
-          bounds.extend(coords);
-        }
+      const marker = new kakao.maps.Marker({
+        map,
+        position: coords,
+        title: item.title,
       });
+
+      const overlay = new kakao.maps.CustomOverlay({
+        position: coords,
+        content: `
+          <div style="
+            background: #FEB916;
+            color: white;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            white-space: nowrap;
+          ">${item.title}</div>
+        `,
+        yAnchor: 2.2,
+      });
+      overlay.setMap(map);
+
+      kakao.maps.event.addListener(marker, "click", () => {
+        map.panTo(coords);
+        map.setLevel(3);
+      });
+
+      markersRef.current.push({ marker, overlay });
+      bounds.extend(coords);
     });
 
-    // ✅ 지도 범위 확장 (내 위치 + 병원 포함)
     if (userLocation) {
       bounds.extend(new kakao.maps.LatLng(userLocation.lat, userLocation.lng));
     }
@@ -149,16 +142,12 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
   // ✅ 카드 클릭 시 해당 시설로 이동
   useEffect(() => {
     if (!selectedFacility || !map) return;
-    const { kakao } = window;
-    const geocoder = new kakao.maps.services.Geocoder();
-
-    geocoder.addressSearch(selectedFacility.address, (result, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        map.panTo(coords);
-        map.setLevel(3);
-      }
-    });
+    const { lat, lng } = selectedFacility;
+    if (lat && lng) {
+      const coords = new window.kakao.maps.LatLng(lat, lng);
+      map.panTo(coords);
+      map.setLevel(3);
+    }
   }, [selectedFacility, map]);
 
   return (

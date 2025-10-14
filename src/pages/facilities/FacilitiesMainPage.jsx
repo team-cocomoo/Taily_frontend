@@ -134,7 +134,7 @@ const FacilityMainPage = () => {
     );
   }
 
-  //  5단계: 실제 렌더링
+  // ✅ 5단계: 실제 렌더링
   return (
     <div className="mt-4" style={{ paddingTop: "160px" }}>
       <h2 className="page-title">우리 동네 정보</h2>
