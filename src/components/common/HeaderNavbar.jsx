@@ -155,9 +155,6 @@ const HeaderNavbar = () => {
             <Link to="/faqs" className="dropdown-item">
               FAQ
             </Link>
-            <Link to="/inquiry" className="dropdown-item">
-              문의하기
-            </Link>
           </div>
         </div>
       </div>
