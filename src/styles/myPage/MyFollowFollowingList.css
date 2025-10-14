@@ -1,0 +1,45 @@
+.follow-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.follow-tabs button {
+  width: 45%;
+  font-weight: bold;
+}
+
+.follow-list {
+  min-height: 400px; /* 기존 최소 높이 */
+  max-height: 500px; /* 최대 높이, 스크롤 발생 */
+  overflow-y: auto; /* 내용 많으면 스크롤 */
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+/* Webkit 브라우저 스크롤 디자인 */
+.follow-list::-webkit-scrollbar {
+  width: 8px; /* 스크롤 바 두께 */
+}
+
+.follow-list::-webkit-scrollbar-track {
+  background: #f0f0f0; /* 스크롤 트랙 색상 */
+  border-radius: 4px;
+}
+
+.follow-list::-webkit-scrollbar-thumb {
+  background-color: #ffd700; /* 스크롤 막대 색상 */
+  border-radius: 4px;
+  border: 2px solid #ffd700; /* 트랙과 경계 */
+}
+
+.follow-img {
+  width: 45px;
+  height: 45px;
+  margin-left: 30px;
+  margin-right: 60px;
+}
+.follow-searchbar {
+  max-width: 600px;
+}

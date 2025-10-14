@@ -11,6 +11,7 @@ import PostDetailMap from "../postDetail/PostDetailMap";
 import UserPopover from "../../common/UserPopover";
 import LikeButton from "../LikeButton";
 import ReportModal from "../ReportModal";
+import ShareModal from "../ShareModal";
 
 const PostDetailContentCard = ({ post }) => {
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ const PostDetailContentCard = ({ post }) => {
                       <Dropdown.Item onClick={handleDelete}>
                         삭제하기
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => alert("공유")}>
+                      <Dropdown.Item onClick={handleOpenShareModal}>
                         공유하기
                       </Dropdown.Item>
                     </>
