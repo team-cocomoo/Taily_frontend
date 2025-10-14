@@ -5,7 +5,7 @@ import api from "../../config/apiConfig";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 import TailyFriendsDetailContent from "../../components/board/tailyFriends/TailyFriendsDetailContent";
-import PostDetailCommentCard from "../../components/board/postDetail/PostDetailCommentCard";
+import TailyFriendsDetailCommentCard from "../../components/board/tailyFriends/TailyFriendsDetailCommentCard";
 import ErrorAlert from "../../components/common/ErrorAlert";
 
 const TailyFriendDetailPage = () => {
@@ -69,7 +69,7 @@ const TailyFriendDetailPage = () => {
         </div>
 
         {/* 댓글 목록 */}
-        <PostDetailCommentCard
+        <TailyFriendsDetailCommentCard
           postId={id}
           comments={comments}
           setComments={setComments}

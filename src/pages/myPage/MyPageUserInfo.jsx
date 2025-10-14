@@ -7,6 +7,7 @@ import { PencilFill } from "react-bootstrap-icons";
 import MyPageSidebarNav from "../../components/mypage/MyPageSidebarNav";
 import UserInfoDisplay from "../../components/mypage/UserInfoDisplay";
 import MyPetInfoCard from "../../components/mypage/MyPetInfoCard";
+import MyTailyFriendsList from "../../components/mypage/MyTailyFriendsList";
 
 // 사용자 정보 (실제로는 부모 컴포넌트에서 prop으로 전달되거나 Context/Redux를 통해 관리됩니다)
 const userInfo = {
@@ -77,6 +78,9 @@ const MyPageUserInfo = () => {
                 )}
                 {selectedMenu === "my-pets" && (
                   <MyPetInfoCard setSelectedMenu={setSelectedMenu} />
+                )}
+                {selectedMenu === "my-taily-friends" && (
+                  <MyTailyFriendsList setSelectedMenu={setSelectedMenu} />
                 )}
               </Col>
             </Row>
