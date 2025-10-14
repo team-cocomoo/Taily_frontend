@@ -20,3 +20,19 @@
   font-weight: 600;
   text-shadow: 0 0 0.3px currentColor;
 }
+/* src/styles/postDetail/PostDetailCommentCard.css */
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #feb916; /* 원하는 배경색 */
+  border-color: #feb916; /* 경계선 색상 */
+  color: white; /* 글자 색상 */
+}
+
+.custom-pagination .page-link {
+  color: #333; /* 비활성 글자 색상 */
+}
+
+.custom-pagination .page-link:hover {
+  background-color: #feb916; /* 호버 시 색상 */
+  color: white;
+}

@@ -1,24 +1,50 @@
-import React, { useState } from "react";
-import { Card, ListGroup, Form, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Card, ListGroup, Form, Button, Pagination } from "react-bootstrap";
 import messageIcon from "../../../assets/image/message-square.png";
 import userIcon from "../../../assets/image/user-icon.png";
 import "../../../styles/postDetail/PostDetailCommentCard.css";
-import api from "../../../config/apiConfig"; // ✅ 공통 axios 설정 import
+import api from "../../../config/apiConfig";
 
-const PostDetailCommentCard = ({ postId, comments, setComments }) => {
+const PostDetailCommentCard = ({ postId }) => {
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [replyText, setReplyText] = useState({});
   const [showReplyForm, setShowReplyForm] = useState({});
+  const [page, setPage] = useState(1); // ✅ 현재 페이지
+  const [totalPages, setTotalPages] = useState(1); // ✅ 전체 페이지 수
 
-  // 로그인 여부 확인
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
 
-  // 새 댓글 작성
+  // 댓글 목록 가져오기
+  const fetchComments = async (pageNum = 1) => {
+    try {
+      const res = await api.get(
+        `/api/taily-friends/${postId}/comments?page=${pageNum}&size=5`
+      );
+
+      const data = res.data?.data;
+
+      // data 안에 content, page, totalPages가 들어 있음
+      if (res.data.success && data) {
+        setComments(data.content || []);
+        setPage(data.page || 1);
+        setTotalPages(data.totalPages || 1);
+      }
+    } catch (err) {
+      console.error("댓글 조회 실패:", err);
+    }
+  };
+
+  // 페이지 변경 시 댓글 다시 불러오기
+  useEffect(() => {
+    fetchComments(page);
+  }, [page, postId]);
+
+  // 댓글 작성
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-
     if (!isLoggedIn) {
       alert("로그인 후 댓글 작성이 가능합니다.");
       return;
@@ -29,13 +55,10 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
         content: newComment,
       });
 
-      console.log("댓글 작성 응답:", res.data);
-
       if (res.data.success || res.data.status === "success") {
-        setComments((prev) => [res.data.data, ...prev]);
         setNewComment("");
-      } else {
-        alert("댓글 작성에 실패했습니다.");
+        setPage(1); // ✅ 첫 페이지로 리프레시
+        fetchComments(1);
       }
     } catch (err) {
       console.error("댓글 작성 실패:", err);
@@ -60,8 +83,6 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
         { content: text }
       );
 
-      console.log("답글 작성 응답:", res.data);
-
       if (res.data.success || res.data.status === "success") {
         setComments((prev) =>
           prev.map((c) =>
@@ -72,22 +93,48 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
         );
         setReplyText((prev) => ({ ...prev, [commentId]: "" }));
         setShowReplyForm((prev) => ({ ...prev, [commentId]: false }));
-      } else {
-        alert("답글 작성에 실패했습니다.");
       }
     } catch (err) {
       console.error("답글 작성 실패:", err);
-      alert("답글 작성 중 오류가 발생했습니다.");
     }
   };
 
-  // 답글 폼 토글
   const toggleReplyForm = (commentId) => {
     setShowReplyForm((prev) => ({
       ...prev,
       [commentId]: !prev[commentId],
     }));
   };
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPage(newPage);
+    }
+  };
+
+  // 페이지네이션 버튼 렌더링
+  const renderPagination = () => (
+    <div className="d-flex justify-content-center mt-4">
+      <Pagination className="custom-pagination">
+        <Pagination.Prev
+          disabled={page === 1}
+          onClick={() => handlePageChange(page - 1)}
+        />
+        {Array.from({ length: totalPages }, (_, idx) => (
+          <Pagination.Item
+            key={idx + 1}
+            active={page === idx + 1}
+            onClick={() => handlePageChange(idx + 1)}
+          >
+            {idx + 1}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          disabled={page >= totalPages}
+          onClick={() => handlePageChange(page + 1)}
+        />
+      </Pagination>
+    </div>
+  );
 
   return (
     <Card className="shadow-sm mb-5 post-card">
@@ -102,7 +149,6 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
                 placeholder="작성할 댓글 내용을 입력해 주세요."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                name="comment-section"
                 className="mt-4"
                 style={{ resize: "none" }}
               />
@@ -136,9 +182,9 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
             >
               <img src={userIcon} alt={c.nickname} className="user-profile" />
               <div className="flex-grow-1 d-flex flex-column">
-                <strong className="comment-nickname">{c.username}</strong>
+                <strong className="comment-nickname">{c.nickname}</strong>
                 <div>{c.content}</div>
-                <div className="d-flex justify-content align-items-center mt-1">
+                <div className="d-flex justify-content-between align-items-center mt-1">
                   <Button
                     variant="link"
                     size="sm"
@@ -162,7 +208,7 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
                       <Form.Control
                         as="textarea"
                         rows={2}
-                        placeholder="작성할 댓글 내용을 입력해 주세요."
+                        placeholder="답글을 입력하세요."
                         value={replyText[c.id] || ""}
                         onChange={(e) =>
                           setReplyText((prev) => ({
@@ -181,7 +227,7 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
                           alt="message"
                           style={{ width: 16, marginRight: 4 }}
                         />
-                        댓글 작성
+                        답글 작성
                       </Button>
                     </div>
                   </Form>
@@ -219,6 +265,9 @@ const PostDetailCommentCard = ({ postId, comments, setComments }) => {
           <ListGroup.Item>아직 댓글이 없습니다.</ListGroup.Item>
         )}
       </ListGroup>
+
+      {/* ✅ 페이지네이션 */}
+      {renderPagination()}
     </Card>
   );
 };

@@ -6,7 +6,6 @@
   max-width: 600px; /* 중앙 정렬 최대 폭 */
   margin: 0 auto;
   padding: 10px;
-  padding-top: 140px;
   margin-bottom: 80px;
 }
 
@@ -49,7 +48,7 @@
 }
 
 .my-message .message-body {
-  background-color: #ffd700;
+  background-color: #FEB916;
   padding: 8px 12px;
   border-radius: 12px;
   word-wrap: break-word;
