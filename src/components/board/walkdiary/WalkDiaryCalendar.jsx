@@ -75,6 +75,14 @@ const WalkDiaryCalendar = ({ onClickDate, dayList = [], onMonthChange }) => {
                     onActiveStartDateChange={(args) => {
                         if (args?.activeStartDate) getActiveMonth(args.activeStartDate);
                     }}
+                    // 오늘 이후의 날짜 비활성화 처리
+                    tileDisabled={({ date, view }) => {
+                        if (view === "month") {
+                            // 오늘 이후면 true => 비활성화
+                            return dayjs(date).isAfter(dayjs(), "day");
+                        }
+                        return false;
+                    }}
                 />
             </Card.Body>
         </Card>
