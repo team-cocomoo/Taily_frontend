@@ -104,7 +104,11 @@ const LoginPage = () => {
               {/* 로그인, 소셜 로그인 버튼 */}
               <Row className="mb-4 justify-content-center ">
                 <Col xs="auto" className="p-0 me-5">
-                  <Button type="submit" className="loginbutton">
+                  <Button
+                    type="submit"
+                    variant="warning"
+                    className="loginbutton"
+                  >
                     로그인
                   </Button>
                 </Col>
