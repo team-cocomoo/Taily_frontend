@@ -3,6 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import AdminSidebar from "../../components/admin/AdminSidebar"; 
 import Users from '../../components/admin/Users';
 import Reports from '../../components/admin/Reports';
+import AdminFaqPage from './faq/AdminFaqPage';
 import "../../styles/admin/Admin.css"; 
 
 const AdminMainPage = () => {
@@ -25,6 +26,7 @@ const AdminMainPage = () => {
                 <Col xs={10} className="p-4">
                     {selectedMenu === 'users' && <Users />}
                     {selectedMenu === 'reports' && <Reports />}
+                    {selectedMenu === 'faqs' && <AdminFaqPage />}
                     {/* {selectedMenu === 'notices' && <MyPetInfoCard setSelectedMenu={setSelectedMenu} />} */}
                 
                 </Col>
