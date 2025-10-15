@@ -6,6 +6,7 @@ const navItems = [
     { key: 'notices', label: '공지사항 관리' },
     { key: 'faqs', label: 'FAQ 관리' },
     { key: 'inquiries', label: '1대1 문의 관리' },
+    { key: 'reports', label: '신고 관리' },
     { key: 'events', label: '이벤트 관리' },
 ]
 
