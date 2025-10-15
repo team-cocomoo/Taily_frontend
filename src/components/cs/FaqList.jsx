@@ -30,7 +30,6 @@ const FaqList = () => {
 
     useEffect(() => {
         fetchFaqs(currentPage);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
     const totalPages = Math.ceil(totalCount / itemsPerPage);
