@@ -26,4 +26,9 @@ export default defineConfig({
       },
     },
   },
+  test: {
+    globals: true,
+    environment: "jsdom", // DOM 테스트용
+    setupFiles: "./src/tests/setupTests.js",
+  },
 });
