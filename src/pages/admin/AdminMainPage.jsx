@@ -3,11 +3,14 @@ import { Col, Container, Row } from 'react-bootstrap';
 import AdminSidebar from "../../components/admin/AdminSidebar"; 
 import Users from '../../components/admin/Users';
 import Reports from '../../components/admin/Reports';
+import AdminFaqPage from './faq/AdminFaqPage';
 import "../../styles/admin/Admin.css"; 
+import { Route } from 'react-router-dom';
+import AdminFaqDetailPage from './faq/AdminFaqDetailPage';
 
 const AdminMainPage = () => {
-    const [selectedMenu, setSelectedMenu] = useState(() => 'users'); // 기본 '회원 관리'
-    console.log("selectedMenu:", selectedMenu);
+    const [selectedMenu, setSelectedMenu] = useState(() => 'users');
+    const [selectedFaqId, setSelectedFaqId] = useState(null);
 
     
     return (
@@ -25,6 +28,11 @@ const AdminMainPage = () => {
                 <Col xs={10} className="p-4">
                     {selectedMenu === 'users' && <Users />}
                     {selectedMenu === 'reports' && <Reports />}
+                    {selectedMenu === 'faqs' && (
+                        selectedFaqId
+                            ? <AdminFaqDetailPage id={selectedFaqId} onBack={() => setSelectedFaqId(null)} />
+                            : <AdminFaqPage onSelectFaq={(id) => setSelectedFaqId(id)} />
+                    )}
                     {/* {selectedMenu === 'notices' && <MyPetInfoCard setSelectedMenu={setSelectedMenu} />} */}
                 
                 </Col>
