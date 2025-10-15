@@ -152,7 +152,7 @@ const OtherUserProfilePage = () => {
               roundedCircle
               width={100}
               height={100}
-              className="me-3"
+              className="me-3 other-user-profile-img"
             />
             <div>
               <h4>{profile.nickname}</h4>

@@ -37,3 +37,9 @@
 .following-btn:hover {
   background-color: #5c636a;
 }
+.other-user-profile-img {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #4f1f02;
+  padding: 2px;
+}

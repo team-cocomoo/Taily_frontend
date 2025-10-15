@@ -1,37 +1,45 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+
 import logo from "../../assets/image/tailylogo.png";
+import hamburgerIcon from "../../assets/image/hamburger-menu-icon.png";
+
 import "../../styles/HeaderNavbar.css";
 
 const HeaderNavbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
+
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openDropdowns, setOpenDropdowns] = useState({});
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
 
-  // 나중에 유저 로그인 인증 추가 후 추가
+  // 화면 크기 체크
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 992);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  // 현재 경로와 일치하는 링크 스타일 반환
-  // const isActive = (path) => {
-  //   return location.pathname === path ? "nav-link-active" : "nav-link";
-  // };
+  useEffect(() => {
+    if (!isMobile) {
+      setMenuOpen(false);
+      setOpenDropdowns({});
+    }
+  }, [isMobile]);
 
-  // 로그아웃 처리
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
   const handleScroll = () => {
-    if (window.scrollY > lastScrollY) {
-      // 아래로 스크롤 → 헤더 숨기기
-      setShowHeader(false);
-    } else {
-      // 위로 스크롤 → 헤더 보이기
-      setShowHeader(true);
-    }
+    if (window.scrollY > lastScrollY) setShowHeader(false);
+    else setShowHeader(true);
     setLastScrollY(window.scrollY);
   };
 
@@ -40,160 +48,135 @@ const HeaderNavbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
+  const toggleDropdown = (name) => {
+    setOpenDropdowns((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
+
+  const MenuLinks = () => (
+    <>
+      <div className="dropdown">
+        <span className="nav-link" onClick={() => toggleDropdown("petstory")}>
+          펫스토리
+        </span>
+        <div
+          className={`dropdown-menu ${openDropdowns["petstory"] ? "open" : ""}`}
+        >
+          <Link to="/petstory/feed" className="dropdown-item">
+            피드
+          </Link>
+          <Link to="/chats" className="dropdown-item">
+            대화방
+          </Link>
+        </div>
+      </div>
+
+      <div className="dropdown">
+        <span className="nav-link" onClick={() => toggleDropdown("walk")}>
+          산책 공간
+        </span>
+        <div className={`dropdown-menu ${openDropdowns["walk"] ? "open" : ""}`}>
+          <Link to="/walk-diaries" className="dropdown-item">
+            산책일지
+          </Link>
+          <Link to="/taily-friends" className="dropdown-item">
+            테일리프렌즈
+          </Link>
+          <Link to="/walk-paths" className="dropdown-item">
+            다함께산책
+          </Link>
+        </div>
+      </div>
+
+      <div className="dropdown">
+        <span className="nav-link" onClick={() => toggleDropdown("center")}>
+          고객센터
+        </span>
+        <div
+          className={`dropdown-menu ${openDropdowns["center"] ? "open" : ""}`}
+        >
+          <Link to="/notices" className="dropdown-item">
+            공지사항
+          </Link>
+          <Link to="/faqs" className="dropdown-item">
+            FAQ
+          </Link>
+        </div>
+      </div>
+
+      <Link to="/facilities" className="nav-link">
+        우리동네정보
+      </Link>
+      <Link to="/event" className="nav-link">
+        이벤트
+      </Link>
+    </>
+  );
+
+  const UserActions = () => (
+    <div className="navbar-actions">
+      {user ? (
+        <>
+          <span className="welcome-text">{user.nickname}님 환영합니다!</span>
+          <Link to="/mypage/main">
+            <button className="btn btn-outline-primary btn-sm btn-signup">
+              My Page
+            </button>
+          </Link>
+          <button
+            className="btn btn-primary btn-sm btn-login"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <Link to="/register">
+            <button className="btn btn-outline-primary btn-sm btn-signup">
+              Sign Up
+            </button>
+          </Link>
+          <Link to="/login">
+            <button className="btn btn-primary btn-sm btn-login">Login</button>
+          </Link>
+        </>
+      )}
+    </div>
+  );
+
   return (
     <nav className={`navbar header ${showHeader ? "visible" : "hidden"}`}>
-      {/* 왼쪽: 로고 */}
       <div className="navbar-brand">
         <Link to="/" className="logo-link">
-          <img
-            src={logo}
-            alt="Taily Logo"
-            className="logo-img"
-            style={{ width: "120px", height: "70px", marginLeft: "80px" }}
-          />
+          <img src={logo} alt="Taily Logo" />
         </Link>
       </div>
 
-      {/* 가운데: 네비게이션 탭 */}
-      <div className="navbar-links">
-        {/* 펫스토리 */}
-        <div className="dropdown">
-          <Link
-            to="/petstory/feed"
-            className={
-              location.pathname.startsWith("/petstory/feed") ||
-              location.pathname.startsWith("/chats")
-                ? "nav-link-active"
-                : "nav-link"
-            }
-          >
-            펫스토리
-          </Link>
-          <div className="dropdown-menu">
-            <Link to="/petstory/feed" className="dropdown-item">
-              피드
-            </Link>
-            <Link to="/chats" className="dropdown-item">
-              대화방
-            </Link>
+      {isMobile ? (
+        <>
+          <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+            <img src={hamburgerIcon} alt="Menu" className="hamburger-icon" />
           </div>
-        </div>
 
-        {/* 산책 공간 */}
-        <div className="dropdown">
-          <Link
-            to="/walk-diaries"
-            className={
-              location.pathname.startsWith("/walk-diaries") ||
-              location.pathname.startsWith("/taily-friends") ||
-              location.pathname.startsWith("/walk-paths")
-                ? "nav-link-active"
-                : "nav-link"
-            }
-          >
-            산책 공간
-          </Link>
-          <div className="dropdown-menu">
-            <Link to="/walk-diaries" className="dropdown-item">
-              산책일지
-            </Link>
-            <Link to="/taily-friends" className="dropdown-item">
-              테일리프렌즈
-            </Link>
-            <Link to="/walk-paths" className="dropdown-item">
-              다함께산책
-            </Link>
+          {menuOpen && (
+            <div className="mobile-menu">
+              <MenuLinks />
+              <UserActions />
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          <div className="navbar-links">
+            <MenuLinks />
           </div>
-        </div>
+          <UserActions />
+        </>
+      )}
 
-        {/* 우리동네정보 */}
-        <div className="dropdown">
-          <Link
-            to="/facilities"
-            className={
-              location.pathname.startsWith("/facilities")
-                ? "nav-link-active"
-                : "nav-link"
-            }
-          >
-            우리동네정보
-          </Link>
-        </div>
-
-        {/* 이벤트 */}
-        <div className="dropdown">
-          <Link
-            to="/event"
-            className={
-              location.pathname.startsWith("/event")
-                ? "nav-link-active"
-                : "nav-link"
-            }
-          >
-            이벤트
-          </Link>
-        </div>
-
-        {/* 고객센터 */}
-        <div className="dropdown">
-          <Link
-            to="/inquiry"
-            className={
-              location.pathname.startsWith("/inquiry") ||
-              location.pathname.startsWith("/notices") ||
-              location.pathname.startsWith("/faqs")
-                ? "nav-link-active"
-                : "nav-link"
-            }
-          >
-            고객센터
-          </Link>
-          <div className="dropdown-menu">
-            <Link to="/notices" className="dropdown-item">
-              공지사항
-            </Link>
-            <Link to="/faqs" className="dropdown-item">
-              FAQ
-            </Link>
-            <Link to="/inquiry" className="dropdown-item">
-              문의하기
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* 오른쪽 버튼 영역 */}
-      <div className="navbar-actions">
-        {user ? (
-          <>
-            <span className="welcome-text">{user.nickname}님 환영합니다!</span>
-            <Link to="/mypage/main">
-              <button className="btn btn-outline-primary btn-sm me-3 btn-signup">
-                My Page
-              </button>
-            </Link>
-            <button
-              className="btn btn-primary btn-sm me-3 btn-login"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/register">
-              <button className="btn btn-outline-primary btn-sm me-3 btn-signup">
-                Sign Up
-              </button>
-            </Link>
-            <Link to="/login">
-              <button className="btn btn-primary btn-sm me-3 btn-login">
-                Login
-              </button>
-            </Link>
-          </>
-        )}
-      </div>
     </nav>
   );
 };

@@ -66,7 +66,7 @@ function App() {
               {/* 펫스토리 페이지 */}
               <Route path="/mypage/main" element={<MyPageUserInfo />} />
               <Route path="/petstory/feed" element={<FeedMainPage />} />
-              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
+
               <Route
                 path="/petstory/feed/edit/:id"
                 element={<FeedEdtiPage />}
@@ -91,22 +91,21 @@ function App() {
                 element={<WalkDiaryStatisticsPage />}
               />
               <Route path="walk-paths" element={<WalkPathMainPage />} />
-              <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
+
               <Route path="walk-paths/write" element={<WalkPathWritePage />} />
-              <Route path="taily-friends" element={<TailyFriendsMainPage />} />
+
               <Route path="facilities" element={<FacilityMainPage />} />
+
+              <Route path="taily-friends" element={<TailyFriendsMainPage />} />
               <Route
-                path="taily-friends/:id"
-                element={<TailyFriendsDetailPage />}
-              />
-              <Route
-                path="taily-friends/write"
+                path="taily-friends/write/"
                 element={<TailyFriendsWritePage />}
               />
               <Route
                 path="taily-friends/edit/:id"
                 element={<TailyFriendsEditPage />}
               />
+
               <Route path="chats" element={<ChatRoomMainPage />} />
               <Route path="chats/:id" element={<ChatRoomDetailPage />} />
               <Route
@@ -115,6 +114,16 @@ function App() {
               />
 
               <Route path="faqs" element={<FaqPage />} />
+            </Route>
+            <Route
+              element={<ProtectedLayout roles={["ROLE_USER", "ROLE_ADMIN"]} />}
+            >
+              <Route
+                path="taily-friends/:id"
+                element={<TailyFriendsDetailPage />}
+              />
+              <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
+              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
             </Route>
           </Route>
 
