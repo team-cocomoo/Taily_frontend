@@ -37,7 +37,6 @@ import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
 import OtherUserProfilePage from "./pages/user/OtherUserProfilePage";
 
 // 관리자
-
 import AdminMainPage from "./pages/admin/AdminMainPage";
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
 import FeedMainPage from "./pages/feed/FeedMainPage";
@@ -115,7 +114,6 @@ function App() {
               />
 
               <Route path="faqs" element={<FaqPage />} />
-
             </Route>
           </Route>
 

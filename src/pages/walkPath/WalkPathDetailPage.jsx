@@ -6,13 +6,12 @@ import api from "../../config/apiConfig";
 
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorAlert from "../../components/common/ErrorAlert";
-import PostDetailContentCard from "../../components/board/postDetail/PostDetailContentCard";
+import WalkPathDetailContent from "../../components/board/walkPath/WalkPathDetailContent";
 import PostCommentCard from "../../components/board/postDetail/PostDetailCommentCard";
 
 const WalkPathsDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,46 +20,19 @@ const WalkPathsDetailPage = () => {
   useEffect(() => {
     const fetchPostAndComments = async () => {
       try {
-        const mockPost = {
-          id: 1,
-          title: "테스트 게시글",
-          content: "목데이터로 보는 상세 게시글",
-          nickname: "홍길동",
-          createdAt: "2025-10-01T12:00:00",
-          view: 120,
-          likeCount: 200,
-          address: "혜화역",
-        };
+        setLoading(true);
+        const [postRes, commentRes] = await Promise.all([
+          api.get(`/api/taily-friends/${id}`),
+          api.get(`/api/taily-friends/${id}/comments`),
+        ]);
 
-        const mockComments = [
-          {
-            id: 1,
-            content: "첫 댓글입니다",
-            nickname: "김철수",
-            createdAt: "2025-10-01T12:10:00",
-            replies: [
-              {
-                id: 11,
-                nickname: "Bob",
-                content: "답글이에요",
-                createdAt: "2025-10-02T11:05:00Z",
-              },
-            ],
-          },
-          {
-            id: 2,
-            content: "두 번째 댓글입니다",
-            nickname: "이영희",
-            createdAt: "2025-10-01T12:20:00",
-          },
-        ];
-
-        setPost(mockPost);
-        setComments(mockComments);
+        if (postRes.data.success) setPost(postRes.data.data);
+        if (commentRes.data.success) setComments(commentRes.data.data);
       } catch (error) {
-        setError("데이터 로딩 실패");
+        console.error("게시글 상세 조회 실패:", err);
+        setError("게시글 정보를 불러오지 못했습니다.");
       } finally {
-        setLoading(false); // ✅ 반드시 마지막에 false로 바꿔야 함
+        setLoading(false);
       }
     };
 
@@ -87,24 +59,30 @@ const WalkPathsDetailPage = () => {
     );
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-11">
+    <Row className="justify-content-center mt-4">
+      <Col xs={12} md={10} lg={10}>
         {/* 게시글 상세 */}
-        <PostDetailContentCard post={post} />
+        <TailyFriendsDetailContent post={post} />
+
         {/* 하단 버튼 */}
         <div className="d-flex justify-content-end mt-1 mb-4">
           <Button
             variant="outline-primary"
             size="sm"
-            onClick={() => navigate("/walk-paths")}
+            onClick={() => navigate("/taily-friends")}
           >
             목록으로
           </Button>
         </div>
+
         {/* 댓글 목록 */}
-        <PostCommentCard comments={comments} />
-      </div>
-    </div>
+        <PostDetailCommentCard
+          postId={id}
+          comments={comments}
+          setComments={setComments}
+        />
+      </Col>
+    </Row>  
   );
 };
 

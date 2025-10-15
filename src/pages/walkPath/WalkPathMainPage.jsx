@@ -3,78 +3,68 @@ import PostListGroup from "../../components/board/PostListGroup";
 import SearchBar from "../../components/common/SearchBar";
 import WriteButton from "../../components/common/WriteButton";
 import { useNavigate } from "react-router-dom";
+import api from "../../config/apiConfig";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
+import { Button } from "react-bootstrap";
 
 const WalkPathMainPage = () => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false); // 더보기 버튼 표시
+  const [totalCount, setTotalCount] = useState(0); //전체 게시글 수
+  const size = 6; // 한 페이지 게시글 수
+
+  const fetchPosts = async (pageNum = 1) => {
+    try {
+      setLoading(true);
+      const response = await api.get("/api/walk-paths", {
+        params: { page: pageNum, size },
+      });
+
+      // 백엔드에서 totalCount와 data를 같이 내려줌
+      const data = response.data?.data?.data || [];
+      const total = response.data?.data?.totalCount || 0;
+
+      if (pageNum === 1) {
+        setPosts(data);
+      } else {
+        setPosts((prev) => [...prev, ...data]);
+      }
+
+      setTotalCount(total);
+      setHasMore((pageNum - 1) * size + data.length < total);
+    } catch (error) {
+      console.error("게시글 불러오기 실패:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // 여기는 나중에 API로 바뀔 부분
-    const mockPosts = [
-      {
-        id: 1,
-        title: "여기 좋아요",
-        author: "작성자",
-        views: 17,
-        date: "2025/09/22",
-      },
-      {
-        id: 2,
-        title: "강아지가 좋아해요",
-        author: "작성자",
-        views: 30,
-        date: "2025/09/21",
-      },
-      {
-        id: 3,
-        title: "강아지가 좋아해요",
-        author: "작성자",
-        views: 30,
-        date: "2025/09/21",
-      },
-      {
-        id: 4,
-        title: "강아지가 좋아해요",
-        author: "작성자",
-        views: 30,
-        date: "2025/09/21",
-      },
-      {
-        id: 5,
-        title: "강아지가 좋아해요",
-        author: "작성자",
-        views: 30,
-        date: "2025/09/21",
-      },
-      {
-        id: 6,
-        title: "강아지가 좋아해요",
-        author: "작성자",
-        views: 30,
-        date: "2025/09/21",
-      },
-      {
-        id: 7,
-        title: "강아지가 좋아해요",
-        author: "작성자",
-        views: 30,
-        date: "2025/09/21",
-      },
-      {
-        id: 8,
-        title: "강아지가 좋아해요",
-        author: "작성자",
-        views: 30,
-        date: "2025/09/21",
-      },
-    ];
-    setPosts(mockPosts);
+    fetchPosts(1);
   }, []);
 
   // 상세 페이지로 이동하는 함수
   const handleItemClick = (id) => {
     navigate(`/walk-paths/${id}`);
   };
+
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    fetchPosts(nextPage);
+    setPage(nextPage);
+  };
+
+  if (loading && page === 1) {
+    return (
+      <div className="text-center mt-5">
+        <LoadingSpinner />
+        <div>로딩 중...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-4">
@@ -84,6 +74,11 @@ const WalkPathMainPage = () => {
       <br />
       {/* 게시물을 리스트 형식으로 출력 */}
       <PostListGroup items={posts} onItemClick={handleItemClick} />
+      {hasMore && (
+        <div className="text-center my-4">
+          <Button onClick={handleLoadMore}>더보기</Button>
+        </div>
+      )}
       {/* 발자국 버튼 - 작성 페이지로 연결 */}
       <WriteButton onClick={() => navigate("/walk-paths/write")} />
     </div>
