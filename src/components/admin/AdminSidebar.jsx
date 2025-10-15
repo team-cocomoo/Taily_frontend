@@ -14,7 +14,7 @@ const AdminSidebar = ({ selectedMenu, setSelectedMenu }) => {
     console.log("selectedMenu 현재값:", selectedMenu);
 
     return (
-        <Nav className="flex-column">
+        <Nav className="flex-column admin-sidebar">
             {navItems.map((item) => (
                 <Nav.Link 
                     key={item.key}
