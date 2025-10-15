@@ -34,6 +34,7 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
     markersRef.current = [];
 
     const bounds = new kakao.maps.LatLngBounds();
+    let completed=0;
 
     markersData.forEach((item, idx) => {
       if (!item.address || item.address.trim() === "") return;
@@ -43,7 +44,6 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
           const lat = parseFloat(result[0].y);
           const lng = parseFloat(result[0].x);
           const position = new kakao.maps.LatLng(lat, lng);
-
           const marker = new kakao.maps.Marker({ map, position });
           const overlay = new kakao.maps.CustomOverlay({
             position,
@@ -62,10 +62,13 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
             yAnchor: 2.2,
           });
           overlay.setMap(map);
-
           markersRef.current.push(marker);
           bounds.extend(position);
-          map.setBounds(bounds);
+        }
+        // 모든 검색이 끝난 뒤 한번만 setBounds 실행
+        completed++;
+        if(completed === markersData.length){
+          if(!bounds.isEmpty())map.setBounds(bounds);
         }
       });
     });

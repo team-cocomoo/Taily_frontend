@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import { Button } from "react-bootstrap";
+import BaseMapInput from "../../components/common/Basemap";
 
 const WalkPathMainPage = () => {
   const [posts, setPosts] = useState([]);
@@ -69,6 +70,9 @@ const WalkPathMainPage = () => {
   return (
     <div className="container mt-4">
       <h2>산책 경로 게시판</h2>
+      {/* 지도 모듈 표시 */}
+      <BaseMapInput />
+      <br />
       {/* 검색창 출력 */}
       <SearchBar />
       <br />

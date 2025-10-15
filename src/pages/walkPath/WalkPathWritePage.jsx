@@ -13,44 +13,52 @@ import "../../styles/walkPath/WalkPathWrite.css";
 const WalkPathWritePage = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [address, setAddress] = useState("");
+  const [routes, setRoutes] = useState([]);
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]); // 이미지 파일 리스트
 
-  const handleSubmit = async() => {
-    if(!title.trim() || !address.trim() || !content.trim()){
+  const handleSubmit = async () => {
+    console.log("현재 routes 상태:", routes);
+    if (!title.trim() || !routes.length === 0 || !content.trim()) {
       alert("제목, 주소, 내용은 반드시 입력해야합니다");
       return;
     }
-    const token = localStorage.getItem("token");// 로그인 시 저장된 토큰
-    console.log("토큰:"+token);
+    const token = localStorage.getItem("token"); // 로그인 시 저장된 토큰
+    console.log("토큰:" + token);
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("address", address);
-    formData.append("content", content);
-    images.forEach((file, idx) => formData.append(`images[${idx}]`, file));
+
+    //JSON 형태로 묶어서 Blob 반환
+    const walkPathData = {
+      title,
+      content,
+      routes: routes.map((addr, idx) => ({
+        address: addr,
+        orderNo: idx + 1,
+      })),
+    };
+
+    formData.append(
+      "walkPathData",
+      new Blob([JSON.stringify(walkPathData)], { type: "application/json" })
+    );
+
+    //이미지 추가
+    images.forEach((file) => formData.append("images", file));
 
     try {
-      axios.post(
-        "http://localhost:8080/api/walk-paths",
-        {
-          title,
-          address,
-          content,
+      await axios.post("http://localhost:8080/api/walk-paths", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      });
       alert("작성 완료!");
       navigate("/walk-paths");
     } catch (err) {
       console.error(err);
       alert("작성 실패");
     }
-  }
+  };
 
   return (
     <div className="container main-content">
@@ -60,19 +68,21 @@ const WalkPathWritePage = () => {
           <WalkPathTitle title={title} onChange={setTitle} />
 
           {/* 산책 경로 - 지도 API */}
-          <WalkPathMap address={address} onChange={setAddress}/>
+          <WalkPathMap onChange={setRoutes} />
 
           {/*  내용 */}
-          <WalkPathContent content={content} setContent={setContent} />
+          <WalkPathContent content={content} onChange={setContent} />
 
           {/* 사진 첨부 */}
-          <ImageBox images={images} setImages={setImages}/>
+          <ImageBox images={images} setImages={setImages} />
 
           <div className="d-flex justify-content-center gap-2 mt-3">
-            <Button variant="secondary" onClick={() => navigate("/")}>
+            <Button variant="secondary" onClick={() => navigate("/walk-paths")}>
               목록
             </Button>
-            <Button variant="primary" onClick={handleSubmit}>완료</Button>
+            <Button variant="primary" onClick={handleSubmit}>
+              완료
+            </Button>
           </div>
         </div>
       </div>
