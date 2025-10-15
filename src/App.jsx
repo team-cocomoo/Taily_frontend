@@ -45,6 +45,9 @@ import FeedWritePage from "./pages/feed/FeedWritePage";
 import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 import FaqPage from "./pages/cs/FaqPage";
 
+// 테스트 페이지
+import LoginPageTest1 from "./pages/user/LoginPageTest1";
+
 function App() {
   return (
     <BrowserRouter>
@@ -55,8 +58,10 @@ function App() {
           <Route element={<UserLayout />}>
             {/* 공용 페이지 */}
             <Route path="/" element={<MainPage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            {/* 테스트 페이지 */}
+            <Route path="/loginTest1" element={<LoginPageTest1 />} />
 
             {/* 사용자 권한 필요 페이지 */}
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>

@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 // 'LoginPage.css'에 공통 스타일이 있다면 그대로 사용하시면 좋습니다.
 import axios from "axios";
-import TailyLogo from "../../assets/image/taily_logo.svg";
+import TailyLogo from "../../assets/image/tailylogo.svg";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({

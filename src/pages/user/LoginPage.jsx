@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../../styles/user/LoginPage.css";
+import tailylogo from "../../assets/image/tailylogo.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ const LoginPage = () => {
       const user = userRes.data.data; // UserProfileResponseDto 구조 확인 필요
 
       // 로그인 성공 → 마이페이지 이동
-      navigate("/mypage/main");
+      navigate("/");
     } catch (err) {
       console.error("로그인 실패:", err);
       setError(
@@ -52,43 +54,108 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6">
-        <Card>
+    <div className="login-page-container">
+      <div className="text-center mb-4">
+        {/* 중앙 로고 - SVG 이미지로 변경 */}
+        <img
+          src={tailylogo}
+          alt="Taily Logo"
+          className="img-fluid" // Bootstrap의 반응형 이미지 클래스
+          style={{ width: "250px", height: "auto" }} // 원하는 크기로 조정
+        />
+      </div>
+      <div className="text-center">
+        <Card className="loginformbox">
           <Card.Body>
-            <h3 className="text-center mb-4">로그인</h3>
             {error && <div className="alert alert-danger">{error}</div>}
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Label>아이디</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  required
-                />
+              <Form.Group as={Row} className="mb-3 justify-content-center">
+                <Form.Label column sm={2}>
+                  아이디
+                </Form.Label>
+                <Col sm={5}>
+                  <Form.Control
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                    className="logininputfield"
+                  />
+                </Col>
               </Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>비밀번호</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
+              <Form.Group as={Row} className="mb-3 justify-content-center">
+                <Form.Label column sm={2}>
+                  비밀번호
+                </Form.Label>
+                <Col sm={5}>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    className="logininputfield"
+                  />
+                </Col>
               </Form.Group>
 
-              <Button
+              {/* 로그인, 소셜 로그인 버튼 */}
+              <Row className="mb-4 justify-content-center ">
+                <Col xs="auto" className="p-0 me-5">
+                  <Button type="submit" className="loginbutton">
+                    로그인
+                  </Button>
+                </Col>
+                <Col xs="auto" className="p-0">
+                  <Button
+                    variant="warning"
+                    className="loginbutton"
+                    onClick={() => navigate("/oauth2/authorization/kakao")}
+                  >
+                    소셜 로그인
+                  </Button>
+                </Col>
+              </Row>
+              <Row className="mb-4 justify-content-center">
+                <Col xs="auto" className="p-0 me-5">
+                  <Button
+                    variant="warning"
+                    className="findbutton"
+                    onClick={() => navigate("/findid")}
+                  >
+                    아이디 찾기
+                  </Button>
+                </Col>
+                <Col xs="auto" className="p-0 me-5">
+                  <Button
+                    variant="warning"
+                    className="findbutton"
+                    onClick={() => navigate("/findpassword")}
+                  >
+                    비밀번호 찾기
+                  </Button>
+                </Col>
+                <Col xs="auto" className="p-0">
+                  <Button
+                    variant="warning"
+                    className="findbutton"
+                    onClick={() => navigate("/register")}
+                  >
+                    회원가입
+                  </Button>
+                </Col>
+              </Row>
+
+              {/* <Button
                 variant="primary"
                 type="submit"
                 className="w-100"
                 disabled={loading}
               >
                 {loading ? "로그인 중..." : "로그인"}
-              </Button>
+              </Button> */}
             </Form>
           </Card.Body>
         </Card>

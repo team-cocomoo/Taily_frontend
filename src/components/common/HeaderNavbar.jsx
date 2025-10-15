@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import logo from "../../assets/image/taily_logo.png";
+import logo from "../../assets/image/tailylogo.png";
 import "../../styles/HeaderNavbar.css";
 
 const HeaderNavbar = () => {
@@ -141,7 +141,7 @@ const HeaderNavbar = () => {
             className={
               location.pathname.startsWith("/inquiry") ||
               location.pathname.startsWith("/notices") ||
-              location.pathname.startsWith("/faqs") 
+              location.pathname.startsWith("/faqs")
                 ? "nav-link-active"
                 : "nav-link"
             }
