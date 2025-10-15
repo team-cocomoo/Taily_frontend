@@ -11,3 +11,12 @@
     background-color: rgba(254, 186, 23, 0.5);
     color: #fff;
 }
+
+.clickable {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.clickable:hover {
+    background-color: #f8f9fa;
+}
