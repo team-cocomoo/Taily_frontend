@@ -1,24 +1,27 @@
-// ---------------------------WalkPathMap.jsx------------------------
+
 import React, { useState } from "react";
 import { InputGroup, Form, Card, Button } from "react-bootstrap";
 import MapIcon from "../../../assets/image/map-search-icon.png";
 import "../../../styles/facility/facilityMap.css"; // 기존 지도 스타일 재사용
 import BaseMap from "../../common/Basemap.jsx"; // 기본 지도 공통 로직 재사용 (default export: BaseMapInput)
+import { useEffect } from "react";
 
 // Kakao SDK 전역 사용은 BaseMap 내부에서 처리하므로 이 파일에선 불필요
 // const { kakao } = window;
 
-const WalkPathMap = () => {
+const WalkPathMap = ({onChange}) => {
   // 산책 장소 목록 (최대 7개) — 기존 로직 유지
   const [places, setPlaces] = useState([""]);
 
+  useEffect(() => {
+    onChange(places);
+  }, [places]); // ✅ places가 바뀔 때마다 상위 전달
+
   // 입력 값 변경 핸들러 — 기존 로직 유지
   const handlePlaceChange = (index, value) => {
-    setPlaces((prev) => {
-      const updated = [...prev];
-      updated[index] = value;
-      return updated;
-    });
+    const updated = [...places];
+    updated[index] = value;
+    setPlaces(updated);
   };
 
   // 장소 추가 (최대 7개) — 기존 로직 유지
