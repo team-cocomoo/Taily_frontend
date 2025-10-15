@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../config/apiConfig';
-import { useNavigate } from 'react-router-dom';
 import { Pagination, Table } from 'react-bootstrap';
 
-const AdminFaqList = () => {
-    const navigate = useNavigate();
-
+const AdminFaqList = ({ onSelectFaq }) => {
     const [faqList, setFaqList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +14,7 @@ const AdminFaqList = () => {
     const fetchFaqs = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await api.get("/api/faq", {
+            const response = await api.get("/api/faqs", {
                 params: { page, size: itemsPerPage } // param → params로 수정
             });
             const data = response.data?.data;
@@ -36,14 +33,15 @@ const AdminFaqList = () => {
         }
     };
 
-
-    // 최초 렌더링
+    // 최초 렌더링 및 페이지 변경 시 호출
     useEffect(() => {
         fetchFaqs(currentPage);
     }, [currentPage]);
 
     const handleFaqClick = (id) => {
-        navigate(`/admin/faqs/${id}`); // 상세 페이지로 이동
+        if (onSelectFaq) {
+            onSelectFaq(id); // 부모(AdminMainPage)로 선택된 ID 전달
+        }
     };
 
     const handlePageChange = (pageNumber) => {
@@ -72,8 +70,7 @@ const AdminFaqList = () => {
                             <td
                                 className="text-primary"
                                 style={{ cursor: "pointer" }}
-                                onClick={() => handleFaqClick(faq.id)}
-                            >
+                                onClick={() => handleFaqClick(faq.id)}                            >
                                 {faq.title}
                             </td>
                             <td>{new Date(faq.createdAt).toLocaleDateString()}</td>
