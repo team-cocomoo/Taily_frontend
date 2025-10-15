@@ -24,6 +24,7 @@
     border: none;
     box-shadow: none !important;
     padding: 12px 16px;
+    height: 60px;
 }
 
 /* 열릴 때(활성화된) 헤더 스타일 */
@@ -43,7 +44,9 @@
     background-color: #FFC107;
     color: #fff;
     padding: 12px 16px;
+    height: 100px;
     border-top: 1px solid #ddd;
+    font-weight: bold;
 }
 
 /* hover 시 배경 살짝 회색 */
@@ -66,27 +69,28 @@
     border-color: rgba(254, 186, 23, 0.5);
     color: #4F1F02;
 }
-
 .inquiries-card {
-    border-radius: 20px;        /* 모서리 둥글게 */
+    border-radius: 20px;
     background-color: #D1E2FA;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;                  /* 이미지와 텍스트 사이 공간 */
-    margin: auto;  
+    gap: 40px; /* 텍스트와 이미지 사이 간격 */
     border: none;
 }
 
 .inquiries-card h5 {
     font-size: 32px;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 10px;
+    white-space: nowrap; /* 한 줄로 */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .inquiry-btn {
-    background-color: transparent; /* 버튼 흰색 */
+    background-color: transparent;
     border: 1px solid #4F1F02;
     border-radius: 20px;
     color: #000;
@@ -101,9 +105,13 @@
     border-color: #4a2107d4;
 }
 
-.inquiries-card img {
-    width: 80px; /* 이미지 크기 */
+.image-area {
+    width: 150px;
     height: auto;
     display: block;
-    margin-left: auto; /* 오른쪽 정렬 */
 }
+
+.contents-card {
+    gap: 10rem;
+}
+
