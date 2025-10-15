@@ -1,16 +1,19 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import AdminHeaderbar from "../components/admin/AdminHeaderbar";
-import "../styles/layout/AdminLayout.css"
-
-// import "../styles/admin.css"; // 선택
+import "../styles/layout/AdminLayout.css";
 
 const AdminLayout = () => {
+  const location = useLocation();
+
+  // 로그인 페이지인지 확인
+  const isLoginPage = location.pathname === "/admin/login";
+
   return (
     <div className="admin-layout">
-      <AdminHeaderbar />
-      <main className="container py-4 admin-container">
-        <Outlet /> {/* 여기서 하위 라우트 렌더링 */}
+      {isLoginPage && <AdminHeaderbar />}
+      <main className="container admin-container">
+        <Outlet /> {/* 하위 라우트 렌더링 */}
       </main>
     </div>
   );

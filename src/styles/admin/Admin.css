@@ -1,5 +1,6 @@
 /* body/html 기본 flex 제거 */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -7,36 +8,64 @@ html, body {
 }
 
 /* 헤더 */
-
-
-.admin-login-wrapper {
-  min-height: 100vh;
-  background-color: #f8f9fa; /* 연한 배경 */
-}
-
-.login-card {
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-}
-
-.login-card .card-title {
-  font-size: 20px;
+.admin-header {
+  background-color: #1e40af; /* 파란색 배경 */
+  color: white;
+  padding: 1rem 2rem; /* 상하 1rem, 좌우 2rem */
+  text-align: left; /* 왼쪽 정렬 */
   font-weight: 600;
+  font-size: 1.25rem;
 }
 
-.login-card .form-control {
-  border: 1px solid #3f51b5;
-  border-radius: 4px;
+.admin-header-title {
+  margin: 0; /* 기본 여백 제거 */
 }
 
-.login-card .btn-primary {
-  background-color: #3f51b5;
-  border-color: #3f51b5;
+.admin-login-page-container {
+  display: flex;
+  justify-content: center; /* 수평 중앙 */
+  background-color: #fff;
+  margin-top: 180px;
 }
 
-.login-card .btn-primary:hover {
-  background-color: #303f9f;
-  border-color: #303f9f;
+.admin-loginformbox {
+  width: 1000px; /* 폼 가로 길이 */
+  padding: 10px 10px;
+  border: none;
+}
+
+.admin-login-form-vertical .form-group {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.admin-logininputfield {
+  height: 40px;
+  border: 2px solid #586fc0;
+  border-radius: 20px;
+  padding: 0 15px;
+  font-size: 16px;
+}
+
+.admin-loginbutton {
+  background-color: #fff;
+  border: 2px solid #586fc0;
+  border-radius: 20px;
+  color: #000;
+  padding: 8px 0px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  width: 550px;
+  display: block;
+  margin: 30px auto 0 auto;
+}
+
+.admin-loginbutton:hover {
+  background-color: #586fc0;
+  color: #fff;
 }
 
 /* 어드민 사이드 바 */
@@ -45,29 +74,28 @@ html, body {
 } */
 
 .admin-sidebar {
-    width: 200px;
-    background-color: #2036b3; /* 파란색 */
-    height: 100vh;
-    padding-top: 20px;
+  width: 200px;
+  background-color: #2036b3; /* 파란색 */
+  height: 100vh;
+  padding-top: 20px;
 }
 
 .sidebar-link {
-    color: white;
-    padding: 12px 20px;
-    margin: 5px 0;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
+  color: white;
+  padding: 12px 20px;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .sidebar-link:hover {
-    background-color: #1a2a8c;
-    color: #fff;
+  background-color: #1a2a8c;
+  color: #fff;
 }
 
 .active-menu {
-    background-color: #ffc107; /* Bootstrap warning 색상 */
-    color: #000 !important;
-    font-weight: bold;
+  background-color: #ffc107; /* Bootstrap warning 색상 */
+  color: #000 !important;
+  font-weight: bold;
 }
-
