@@ -1,0 +1,46 @@
+/* 전체 페이지를 flex 컨테이너로 만들어 수직/수평 가운데 */
+.login-page-container {
+  display: flex;
+  flex-direction: column; /* 로고+폼을 세로로 배치 */
+  justify-content: center; /* 수직 가운데 */
+  align-items: center; /* 수평 가운데 */
+  padding: 20px; /* 화면이 작은 경우 여백 */
+  background-color: #fff; /* 필요시 배경색 */
+}
+
+.loginformbox {
+  margin: 0px;
+  min-height: 300px;
+  width: 900px;
+  padding: 50px;
+  border: 1px solid #000;
+  border-radius: 20px;
+}
+
+.loginbutton {
+  width: 300px;
+  background-color: #feb916;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+}
+
+.findbutton {
+  width: 185px;
+  background-color: #ffffff;
+  border: 2px solid #4f1f02;
+  border-radius: 20px;
+  color: #4f1f02;
+  font-weight: 700; /* 글씨 굵게 */
+}
+
+.card-body-bordered {
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.logininputfield {
+  border: 2px solid #4f1f02;
+  border-radius: 20px;
+}
