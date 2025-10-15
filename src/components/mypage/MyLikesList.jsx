@@ -1,5 +1,5 @@
 import { Heart } from 'lucide-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Stack, Badge, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/myPage/myLikes.css';
@@ -7,110 +7,113 @@ import api from '../../config/apiConfig';
 import { useNavigate } from 'react-router-dom';
 
 const MyLikesList = () => {
-    const [likes, setLikes] = useState([]);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
+  const [likes, setLikes] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    const PAGE_SIZE = 5; // 서버 요청 size와 맞추기
+  const containerRef = useRef(null);
+  const observerRef = useRef(null);
+  const navigate = useNavigate();
+  const PAGE_SIZE = 5;
 
-    // 무한 스크롤
-    const fetchMyLikes = useCallback(async (pageToFetch) => {
-    if (loading || !hasMore) return; // 조건 체크는 여기서만
+  const loadingRef = useRef(loading);
+  const hasMoreRef = useRef(hasMore);
+  useEffect(() => { loadingRef.current = loading; }, [loading]);
+  useEffect(() => { hasMoreRef.current = hasMore; }, [hasMore]);
 
+  // 데이터 fetch
+  const fetchMyLikes = useCallback(async (pageToFetch) => {
+    if (loadingRef.current || !hasMoreRef.current) return;
     setLoading(true);
     try {
-        const response = await api.get(`/api/mypage/myLikes?page=${pageToFetch}&size=5`);
-        console.log("서버 응답:", response.data);
+      const res = await api.get(`/api/mypage/myLikes?page=${pageToFetch}&size=${PAGE_SIZE}`);
+      const newLikes = res.data.data.myLikeList || [];
+      console.log("newLikes : ", newLikes);
+      
 
-        const newLikes = response.data.data.myLikeList || [];
-        setLikes(prev => [...prev, ...newLikes]);
-        // hasMore 판단: 받아온 데이터가 PAGE_SIZE보다 작으면 마지막 페이지
-            setHasMore(newLikes.length === PAGE_SIZE);
+      setLikes(prev => {
+        const existingIds = new Set(prev.map(like => like.postId));
+        const filteredNew = newLikes.filter(like => !existingIds.has(like.postId));
+        return [...prev, ...filteredNew];
+      });
 
-    } catch (error) {
-        console.error("내가 좋아요한 게시글 리스트 조회 실패:", error);
+      setHasMore(!res.data.data.isLast);
+    } catch (err) {
+      console.error('좋아요 리스트 조회 실패:', err);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-    // 의존성 제거
-}, []); 
+  }, []);
 
-// 페이지 변경될 때 호출
-useEffect(() => {
+  // 초기 fetch
+  useEffect(() => { fetchMyLikes(1); }, [fetchMyLikes]);
+
+  // 페이지 변경 시 fetch
+  useEffect(() => {
+    if (page === 1) return; // 초기 fetch와 중복 방지
     fetchMyLikes(page);
-}, [page]);
+  }, [page, fetchMyLikes]);
 
-    useEffect(() => {
-    const handleScroll = () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 &&
-            !loading && hasMore) {
-            setPage(prev => prev + 1);
-        }
+  // IntersectionObserver 무한 스크롤
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const sentinel = document.createElement('div');
+    sentinel.className = 'scroll-sentinel';
+    container.appendChild(sentinel);
+
+    const options = { root: container, rootMargin: '0px', threshold: 1.0 };
+    observerRef.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMoreRef.current && !loadingRef.current) {
+        setPage(prev => prev + 1);
+      }
+    }, options);
+
+    observerRef.current.observe(sentinel);
+
+    return () => {
+      if (observerRef.current) observerRef.current.disconnect();
+      container.removeChild(sentinel);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-}, [loading, hasMore]);
+  }, []);
 
-    const handleClick = (like) => {
-        const { postId, tableTypeCategory } = like;
+  const handleClick = like => {
+    const { postId, tableTypeCategory } = like;
+    if (tableTypeCategory === '테일리프렌즈') navigate(`/taily-friends/${postId}`);
+    else if (tableTypeCategory === '피드') navigate(`/feeds/${postId}`);
+    else if (tableTypeCategory === '산책경로') navigate(`/walk-paths/${postId}`);
+  };
 
-        if (tableTypeCategory === "테일리프렌즈") {
-            navigate(`/taily-friends/${postId}`);
-        } else if (tableTypeCategory === "피드") {
-            navigate(`/feeds/${postId}`);
-        } else if (tableTypeCategory === "산책경로") {
-            navigate(`/walk-paths/${postId}`);
-        } else {
-            console.warn("Unknown category:", tableTypeCategory);
-        }
-    };
+  return (
+    <div
+      className='likes-list-container'
+      ref={containerRef}
+      style={{ maxHeight: '500px', overflowY: 'auto' }}
+    >
+      {likes.length === 0 && !loading && <p className='text-center'>아직 좋아요를 하지 않았어요</p>}
 
-    return (
-        <>
-            <div className='likes-list-container'>
-                {likes.length === 0 && !loading && (
-                <p className="text-center">아직 좋아요를 하지 않았어요</p>
-            )}
-
-                {likes.slice().reverse().map((like, index) => (
-                    <Stack key={index} gap={3} className='mt-2'>
-                        <Stack
-                            direction='horizontal'
-                            gap={3}
-                            className='p-3 border message-box bg-light align-items-center hover-effect'
-                        >
-                            <div className="d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style={{ width: 45, height: 45 }}>
-                                <Heart size={22} color='#ff4d6d' fill='#ff4d6d' />
-                            </div>
-
-                            <div className='flex-grow-1 clickable' onClick={() => handleClick(like)}>
-                                <div>
-                                    <strong>{like.targetName}</strong>님의 {" "}
-                                    <span className="fw-semibold">게시글에 좋아요를 눌렀습니다.</span>
-                                </div>
-                            </div>
-                            <Badge className='table-type-category' bg="outline-primary">
-                                {like.tableTypeCategory}
-                            </Badge>
-                        </Stack>
-                    </Stack>
-                ))}
-
-                {loading && (
-                                <div className="text-center mt-3">
-                                    <Spinner animation="border" size="sm" /> 나의 좋아요 리스트 정보를 불러오는 중...
-                                </div>
-                            )}
-
-                {!hasMore && !loading && (
-                    <p className='text-center mt-3 text-muted'>모든 좋아요를 불러왔어요.</p>
-                )}
-
+      {likes.map(like => (
+        <Stack key={like.postId} gap={3} className='mt-2'>
+          <Stack direction='horizontal' gap={3} className='p-3 border message-box bg-light align-items-center hover-effect'>
+            <div className='d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm' style={{ width: 45, height: 45 }}>
+              <Heart size={22} color='#ff4d6d' fill='#ff4d6d' />
             </div>
-        </>
-    );
+            <div className='flex-grow-1 clickable' onClick={() => handleClick(like)}>
+              <div>
+                <strong>{like.targetName}</strong>님의 <span className='fw-semibold'>게시글에 좋아요를 눌렀습니다.</span>
+              </div>
+            </div>
+            <Badge className='table-type-category' bg='outline-primary'>{like.tableTypeCategory}</Badge>
+          </Stack>
+        </Stack>
+      ))}
+
+      {loading && <div className='text-center mt-3'><Spinner animation='border' size='sm' /> 나의 좋아요 리스트 정보를 불러오는 중...</div>}
+      {!hasMore && likes.length > 0 && !loading && <p className='text-center mt-3 text-muted'>모든 좋아요를 불러왔어요.</p>}
+    </div>
+  );
 };
 
 export default MyLikesList;
