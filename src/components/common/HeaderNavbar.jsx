@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
-import logo from "../../assets/image/taily_logo.png";
+import logo from "../../assets/image/tailylogo.png";
 import hamburgerIcon from "../../assets/image/hamburger-menu-icon.png";
 
 import "../../styles/HeaderNavbar.css";
