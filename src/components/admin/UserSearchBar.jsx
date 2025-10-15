@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { InputGroup, Form, Button } from "react-bootstrap";
-import "../../styles/SearchBar.css"; 
+import "../../styles/admin/Admin.css"; 
 
 const UserSearchBar = ({ value = "", onSearch }) => {
     const [keyword, setKeyword] = useState(value);
