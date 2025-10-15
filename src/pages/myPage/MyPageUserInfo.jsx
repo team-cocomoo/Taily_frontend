@@ -9,6 +9,7 @@ import UserInfoDisplay from "../../components/mypage/UserInfoDisplay";
 import MyPetInfoCard from "../../components/mypage/MyPetInfoCard";
 import MyTailyFriendsList from "../../components/mypage/MyTailyFriendsList";
 import MyFollowFollowingList from "../../components/mypage/MyFollowFollowingList";
+import MyLikesList from "../../components/mypage/MyLikesList";
 
 // 사용자 정보 (실제로는 부모 컴포넌트에서 prop으로 전달되거나 Context/Redux를 통해 관리됩니다)
 const userInfo = {
@@ -85,6 +86,9 @@ const MyPageUserInfo = () => {
                 )}
                 {selectedMenu === "my-follow-following" && (
                   <MyFollowFollowingList setSelectedMenu={setSelectedMenu} />
+                )}
+                {selectedMenu === "my-likes" && (
+                  <MyLikesList setSelectedMenu={setSelectedMenu} />
                 )}
               </Col>
             </Row>
