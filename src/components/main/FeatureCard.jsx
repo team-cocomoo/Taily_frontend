@@ -1,34 +1,58 @@
-// src/components/FeatureCard.jsx
+import React from "react";
+import { Card } from "react-bootstrap";
+import { FaPaw } from "react-icons/fa";
+import "../../styles/MainPage.css";
 
-import React from 'react';
-import { Card } from 'react-bootstrap';
-// 예시: react-icons 라이브러리 사용 가정 (추가 설치 필요)
-import { FaPaw, FaInstagram, FaCalendarAlt, FaHome, FaMapMarkerAlt } from 'react-icons/fa';
-
-/**
- * 기능 카드 컴포넌트
- * @param {object} props
- * @param {React.ComponentType} props.Icon - 기능 아이콘 (예: FaInstagram)
- * @param {string} props.title - 기능 제목
- */
-const FeatureCard = ({ Icon, title }) => {
+const FeatureCard = ({ Icon, title, description }) => {
   return (
-    <Card 
-      className="text-center shadow-sm border-0 h-100" 
-      style={{ backgroundColor: '#FEB916', borderRadius: '10px' }}
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        maxWidth: "250px",
+        margin: "0 auto",
+      }}
     >
-      <Card.Body className="d-flex flex-column justify-content-center align-items-center p-3 p-md-4">
-        {/* 상단 기능 아이콘 */}
-        <Icon size={40} className="mb-2 text-dark" />
-        
-        {/* 발바닥 아이콘 (이미지에 있는 디자인 요소) */}
-        <FaPaw size={50} className="text-dark my-2" /> 
+      {/* 카드 위 아이콘 */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-100px", // 카드 위로 25px 돌출
+          left: "50%",
+          transform: "translateX(-50%)",
+          backgroundColor: "rgba(254, 185, 22, 0.7)", // 아이콘 배경 필요하면
+          borderRadius: "50%",
+          padding: "10px",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Icon size={50} className="text-dark" />
+      </div>
 
-        <Card.Text className="mt-2 fw-bold text-dark fs-6">
-          {title}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+      <Card
+        className="text-center shadow-sm border-0 h-100"
+        style={{
+          backgroundColor: "#FFEDC3",
+          borderRadius: "50px",
+        }}
+      >
+        <Card.Body className="d-flex flex-column justify-content-center align-items-center p-3 p-md-4">
+          {/* 발바닥 아이콘은 카드 중간 */}
+          <FaPaw size={50} className="text-dark my-2" />
+
+          {/* 카드 제목 */}
+          <Card.Text
+            className="mt-2 main-card-title"
+          >
+            {title}
+          </Card.Text>
+
+          {/* 카드 설명 */}
+          <Card.Text className="text-dark mt-1 main-card-description">{description}</Card.Text>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 
