@@ -17,10 +17,10 @@ const FeatureCard = ({ Icon, title, description }) => {
       <div
         style={{
           position: "absolute",
-          top: "-80px", // 카드 위로 25px 돌출
+          top: "-100px", // 카드 위로 25px 돌출
           left: "50%",
           transform: "translateX(-50%)",
-          backgroundColor: "#FEB916", // 아이콘 배경 필요하면
+          backgroundColor: "rgba(254, 185, 22, 0.7)", // 아이콘 배경 필요하면
           borderRadius: "50%",
           padding: "10px",
           justifyContent: "center",
@@ -33,8 +33,8 @@ const FeatureCard = ({ Icon, title, description }) => {
       <Card
         className="text-center shadow-sm border-0 h-100"
         style={{
-          backgroundColor: "rgba(254, 185, 22, 0.7)",
-          borderRadius: "10px",
+          backgroundColor: "#FFEDC3",
+          borderRadius: "50px",
         }}
       >
         <Card.Body className="d-flex flex-column justify-content-center align-items-center p-3 p-md-4">
