@@ -8,7 +8,7 @@ const TailyFriendsContent = ({ content, setContent }) => {
       <Card.Header>테일리프렌즈 구하기</Card.Header>
       <Card.Body>
         <MyEditor
-          value={content} 
+          value={content}
           onChange={setContent}
           placeholder="내용을 작성해 테일리프렌즈를 구해보세요."
         />
