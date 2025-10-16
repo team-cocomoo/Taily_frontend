@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toggleLike } from "@/api/FeedService";
+import SecureImage from "./SecureImage"; // SecureImage import
 
 export default function FeedCard({ feed, onLikeToggle }) {
   const [liked, setLiked] = useState(feed.liked || false);
@@ -22,11 +23,10 @@ export default function FeedCard({ feed, onLikeToggle }) {
       <p>{feed.content}</p>
       <div className="feed-images my-2">
         {feed.images?.map((img, i) => (
-          <img
+          <SecureImage
             key={i}
             src={img}
             alt={`feed-${i}`}
-            className="rounded mb-1"
             style={{ maxWidth: "100%" }}
           />
         ))}

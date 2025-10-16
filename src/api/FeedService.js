@@ -1,5 +1,10 @@
 import api from "@/config/apiConfig"; // axios 인스턴스 사용
 
+/**
+ * API 호출 전용
+ * Axios 기반으로 서버와 통신 담당
+ * CRUD, 좋아요, 페이징 등 모든 API 함수 모음
+ */
 const API_BASE = "/api/feeds";
 /**
  * 피드 전체 목록 조회 (무한 스크롤용)
