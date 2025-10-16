@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Col, Modal, Row } from "react-bootstrap";
+import paw from '../../assets/image/calendar-paw.png';
 
 const UserInfoModal = ({ show, user, handleClose }) => {
     if (!user) return null;
@@ -10,24 +11,36 @@ const UserInfoModal = ({ show, user, handleClose }) => {
                 <Modal.Title>회원 상세 정보</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>
-                <strong>아이디:</strong> {user.username}
-                </p>
-                <p>
-                <strong>닉네임:</strong> {user.nickname}
-                </p>
-                <p>
-                <strong>이메일:</strong> {user.email}
-                </p>
-                <p>
-                <strong>가입일:</strong> {user.createdAt}
-                </p>
-                <p>
-                <strong>상태:</strong> {user.state}
-                </p>
-                <p>
-                <strong>제재 횟수:</strong> {user.sanctionCount}
-                </p>
+                <Row>
+                    <Col>
+                        <img
+                            src={paw}
+                            alt="프로필"
+                            style={{ maxWidth: "100%" }}
+                        />
+                    </Col>
+                    <Col>
+                        <p>
+                        <strong>아이디:</strong> {user.username}
+                        </p>
+                        <p>
+                        <strong>닉네임:</strong> {user.nickname}
+                        </p>
+                        <p>
+                        <strong>이메일:</strong> {user.email}
+                        </p>
+                        <p>
+                        <strong>가입일:</strong> {user.createdAt}
+                        </p>
+                        <p>
+                        <strong>상태:</strong> {user.state}
+                        </p>
+                        <p>
+                        <strong>제재 횟수:</strong> {user.sanctionCount}
+                        </p>
+
+                    </Col>
+                </Row>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
