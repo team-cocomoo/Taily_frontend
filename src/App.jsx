@@ -44,7 +44,13 @@ import FeedDetailPage from "./pages/feed/FeedDetailPage";
 import FeedWritePage from "./pages/feed/FeedWritePage";
 import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 import FaqPage from "./pages/cs/FaqPage";
+import AdminFaqPage from "./pages/admin/faq/AdminFaqPage";
+import AdminFaqDetailPage from "./pages/admin/faq/AdminFaqDetailPage";
+import { Users } from "lucide-react";
+import Reports from "./components/admin/Reports";
 
+// 테스트
+import SingleFeedUploader from "./tests/pages/SingleFeedUploader";
 
 function App() {
   return (
@@ -58,6 +64,12 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+
+            {/* 테스트 */}
+            <Route
+              path="/SingleFeedUploader"
+              element={<SingleFeedUploader />}
+            />
 
             {/* 사용자 권한 필요 페이지 */}
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
@@ -131,7 +143,7 @@ function App() {
           <Route path="admin" element={<AdminLayout />}>
             <Route path="login" element={<AdminLoginPage />} />
             <Route element={<AdminProtectedLayout />}>
-              <Route path="main" element={<AdminMainPage />} />
+              <Route path="main/*" element={<AdminMainPage />} />
             </Route>
           </Route>
         </Routes>

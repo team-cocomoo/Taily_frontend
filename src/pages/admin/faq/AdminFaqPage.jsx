@@ -1,11 +1,13 @@
-import React from 'react';
+import AdminFaqList from '../../../components/admin/AdminFaqList';
+import { Container } from 'react-bootstrap';
 
 const AdminFaqPage = () => {
     return (
         <Container style={{ marginTop: "120px" }}>
-            <h1 className='faq-title mb-3'>자주 묻는 질문</h1>
-            <FaqList />
-            <Inquiries />
+            <div className="mt-5 p-4">
+                <h4 style={{fontWeight:"bold"}}>FAQ</h4>
+            </div>
+            <AdminFaqList />
         </Container>
     );
 };

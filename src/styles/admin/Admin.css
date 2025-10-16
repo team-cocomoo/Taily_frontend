@@ -73,29 +73,45 @@ body {
   background-color: #AEAEAE;
 } */
 
-.admin-sidebar {
-  width: 200px;
-  background-color: #2036b3; /* 파란색 */
+.admin-sidebar-navbar {
+  width: 220px;
   height: 100vh;
-  padding-top: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
-.sidebar-link {
-  color: white;
-  padding: 12px 20px;
-  margin: 5px 0;
-  border-radius: 5px;
+.admin-nav-list {
+  background-color: #2036b3;
+  height: calc(100vh - 80px);
+  padding-top: 10px;
+}
+
+.admin-nav-list .nav-link {
+  color: white !important;
   cursor: pointer;
-  font-weight: 500;
 }
 
-.sidebar-link:hover {
+.admin-nav-list .nav-link:hover {
   background-color: #1a2a8c;
-  color: #fff;
+  color: #fff !important;
 }
 
-.active-menu {
-  background-color: #ffc107; /* Bootstrap warning 색상 */
-  color: #000 !important;
+.admin-logo {
+  width: 120px;
+}
+
+.admin-offcanvas .offcanvas-body {
+  background-color: #2036b3;
+}
+
+.admin-offcanvas .nav-link {
+  color: white !important;
+}
+
+.admin-offcanvas .nav-link.active {
+  background-color: #ffc107;
+  color: black !important;
   font-weight: bold;
 }
+
