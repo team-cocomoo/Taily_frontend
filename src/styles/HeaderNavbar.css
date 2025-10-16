@@ -16,7 +16,8 @@
 .navbar-links {
   margin-left: 250px;
   display: flex;
-  font-size: 18px;
+  font-size: 16px;
+  text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2);
   gap: 20px;
   position: relative;
 }
@@ -54,6 +55,7 @@
   min-width: 120px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   flex-direction: column;
+  font-size: 14px;
 }
 .dropdown-menu.open {
   background-color: #fdf9ee !important;
@@ -84,7 +86,7 @@
   line-height: 1;
   border: 2px solid #4f1f02;
   color: #4f1f02;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   padding: 0.8rem 1.5rem;
   border-radius: 20px;
@@ -100,7 +102,7 @@
   border: 2px solid #feb916;
   background-color: #feb916;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   padding: 0.8rem 1.5rem;
   border-radius: 20px;
@@ -130,7 +132,7 @@
 @media screen and (max-width: 992px) {
   .navbar {
     justify-content: center;
-    position: fixed; /* ✅ relative → fixed 로 변경 */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
@@ -155,7 +157,7 @@
     top: 70px; /* navbar 높이만큼 아래 */
     left: 0; /* 왼쪽 끝부터 시작 */
     width: 100%; /* ✅ 전체 너비 차지 */
-    background-color: #fdf9ee; /* ✅ 전체 배경색 */
+    background-color: #fdf9ee; 
     padding: 15px 0; /* 위아래 여백 */
     border-radius: 0; /* 혹시 둥근 모서리 제거 */
     gap: 10px;

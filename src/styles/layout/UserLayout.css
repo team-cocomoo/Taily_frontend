@@ -13,3 +13,7 @@
   padding: 20px;
   margin-top: 150px;
 }
+.no-margin-top {
+  flex: 1; /* 남은 공간 모두 차지 */
+  margin-top: 0 !important;
+}
