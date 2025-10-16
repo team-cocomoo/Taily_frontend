@@ -10,6 +10,8 @@ const AdminFaqWriteAndEditPgae = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const isEditMode = !!id;
+
     // 수정 모드일 때만 기존 데이터 불러오기
     useEffect(() => {
         if (!id) {
@@ -30,7 +32,7 @@ const AdminFaqWriteAndEditPgae = () => {
             }
         };
         fetchFaq();
-    }, [id]);
+    }, [id, isEditMode]);
     
     if (loading) return <p>"faq 기존 데이터 불러오는 중..."</p>;
 
@@ -42,7 +44,7 @@ const AdminFaqWriteAndEditPgae = () => {
             <FaqWriteForm
                 initialData={faqDetail}
                 isEditMode={!!id}
-                onSuccess={() => navigate(`/admin/main/faqs/${id}`)}
+                onSuccess={(savedFaq) => navigate(`/admin/main/faqs/${savedFaq.id}`)}
             />
         </Container>
     );

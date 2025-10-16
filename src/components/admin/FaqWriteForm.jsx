@@ -35,7 +35,7 @@ const FaqWriteForm = ({ initialData, isEditMode, onSuccess }) => {
         const token = localStorage.getItem("accessToken");
         try {
             let response;
-            if (isEditMode) {
+            if (isEditMode && initialData?.id) {
                 // 수정
                 response = await api.put(`/api/faqs/${initialData.id}`, form, {
                 headers: { Authorization: token ? `Bearer ${token}` : "" },
@@ -49,7 +49,7 @@ const FaqWriteForm = ({ initialData, isEditMode, onSuccess }) => {
 
             if (response.status === 200 || response.status === 201) {
                 alert(`FAQ가 ${isEditMode ? "수정" : "등록"}되었습니다!`);
-                onSuccess?.(response.data);
+                onSuccess?.(response.data.data);
                 // navigate("/admin/faqs");
             } else {
                 setError("FAQ 저장에 실패했습니다.");
