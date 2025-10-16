@@ -27,8 +27,8 @@ const AdminFaqDetailPage = () => {
         fetchFaq();
     }, [id]);
 
-    const handleEdit = (id) => {
-        navigate(`/admin/main/faqs/edit/${id}`);
+    const handleEdit = (faq) => {
+        navigate(`/admin/main/faqs/edit/${faq.id}`);
     }
 
     const handleDelete = async () => {
@@ -55,7 +55,7 @@ const AdminFaqDetailPage = () => {
                     <img src={meatballIcon} alt="메뉴" style={{ width: 20 }} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => handleEdit(faq.id)}>수정</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleEdit(faq)}>수정</Dropdown.Item>
                     <Dropdown.Item onClick={handleDelete}>삭제</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
