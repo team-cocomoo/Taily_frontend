@@ -16,6 +16,12 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
   withCredentials: true, // 쿠키/세션도 필요하면 유지
 });
+/* 모든 API 호출은 이 인스턴스를 통해서 이루어진다.
+baseURL를 설정해서 매번 전체 URL를 적지않아도 된다.
+기본 요청 타입을 JSON으로 한다.
+쿠키나 세션 사용이 필요하면 자동 전송한다.
+*/
+
 // 2. request 요청 인터셉터 설정
 /*
     요청 인터셉터 - API 호출 직전에 가로채서 공통 로직(JWT 토큰 추가)을 추가합니다.
