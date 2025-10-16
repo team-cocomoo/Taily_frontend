@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../config/apiConfig';
-import { Pagination, Table } from 'react-bootstrap';
+import { Button, Pagination, Table } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { PencilFill } from 'react-bootstrap-icons';
 
-const AdminFaqList = ({ onSelectFaq }) => {
+const AdminFaqList = () => {
+    const navigate = useNavigate();
     const [faqList, setFaqList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -39,9 +42,7 @@ const AdminFaqList = ({ onSelectFaq }) => {
     }, [currentPage]);
 
     const handleFaqClick = (id) => {
-        if (onSelectFaq) {
-            onSelectFaq(id); // 부모(AdminMainPage)로 선택된 ID 전달
-        }
+        navigate(`/admin/main/faqs/${id}`);
     };
 
     const handlePageChange = (pageNumber) => {
@@ -79,6 +80,10 @@ const AdminFaqList = ({ onSelectFaq }) => {
                     ))}
                 </tbody>
             </Table>
+
+            <Button onClick={() => navigate("/admin/main/faqs/write")} variant="link" className="text-dark ms-2">
+                <PencilFill size={16} />
+            </Button>
 
             {totalPages > 1 && (
                 <Pagination className="justify-content-center mt-3">
