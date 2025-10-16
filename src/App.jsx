@@ -41,7 +41,7 @@ import AdminMainPage from "./pages/admin/AdminMainPage";
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
 import FeedMainPage from "./pages/feed/FeedMainPage";
 import FeedDetailPage from "./pages/feed/FeedDetailPage";
-import FeedWritePage from "./pages/feed/FeedWritePage";
+//import FeedWritePage from "./pages/feed/FeedWritePage";
 import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 import FaqPage from "./pages/cs/FaqPage";
 import AdminFaqPage from "./pages/admin/faq/AdminFaqPage";
@@ -84,7 +84,7 @@ function App() {
                 element={<FeedEdtiPage />}
               />
 
-              <Route path="/petstory/feed/write" element={<FeedWritePage />} />
+              {/* <Route path="/petstory/feed/write" element={<FeedWritePage />} /> */}
               <Route path="walk-diaries" element={<WalkDiaryCalendarPage />} />
               <Route
                 path="walk-diaries/write/:date"
