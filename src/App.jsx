@@ -36,13 +36,16 @@ import ChatRoomDetailPage from "./pages/chatroom/ChatRoomDetailPage";
 import FacilityMainPage from "./pages/facilities/FacilitiesMainPage";
 import OtherUserProfilePage from "./pages/user/OtherUserProfilePage";
 
+import FeedMainPage from "./pages/feed/FeedMainPage";
+import FeedDetailPage from "./pages/feed/FeedDetailPage";
+import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
+import FeedWritePage from "./pages/feed/FeedWritePage";
+
+
 // 관리자
 import AdminMainPage from "./pages/admin/AdminMainPage";
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
-import FeedMainPage from "./pages/feed/FeedMainPage";
-import FeedDetailPage from "./pages/feed/FeedDetailPage";
 //import FeedWritePage from "./pages/feed/FeedWritePage";
-import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 import FaqPage from "./pages/cs/FaqPage";
 import AdminFaqPage from "./pages/admin/faq/AdminFaqPage";
 import AdminFaqDetailPage from "./pages/admin/faq/AdminFaqDetailPage";
@@ -78,13 +81,13 @@ function App() {
               {/* 펫스토리 페이지 */}
               <Route path="/mypage/main" element={<MyPageUserInfo />} />
               <Route path="/petstory/feed" element={<FeedMainPage />} />
-
+              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
+              <Route path="/petstory/feed/write" element={<FeedWritePage />} />
               <Route
                 path="/petstory/feed/edit/:id"
                 element={<FeedEdtiPage />}
               />
 
-              {/* <Route path="/petstory/feed/write" element={<FeedWritePage />} /> */}
               <Route path="walk-diaries" element={<WalkDiaryCalendarPage />} />
               <Route
                 path="walk-diaries/write/:date"
@@ -135,7 +138,7 @@ function App() {
                 element={<TailyFriendsDetailPage />}
               />
               <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
-              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
+
             </Route>
           </Route>
 

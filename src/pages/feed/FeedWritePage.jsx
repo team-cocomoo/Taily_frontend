@@ -1,99 +1,122 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import ImageBox from "../../components/board/ImageBox";
-// import FeedContent from "../../components/feed/FeedContent.jsx";
-// import { createFeed } from "@/api/feedService";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Form, Button, Card } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-// const FeedWritePage = () => {
-//   const navigate = useNavigate();
-//   const [values, setValues] = useState({
-//     content: "",
-//     images: [],
-//     tags: [],
-//   });
+import ImageBox from "../../components/board/ImageBox";
+import FeedContent from "../../components/feed/FeedContent.jsx"; // 에디터 or 텍스트박스 컴포넌트
+// import "../../styles/feed/FeedWritePage.css"; // (선택)
 
-//   // content 변경
-//   const handleContentChange = (val) =>
-//     setValues((prev) => ({ ...prev, content: val }));
+const FeedWritePage = () => {
+  const navigate = useNavigate();
 
-//   // 이미지 변경
-//   const handleImagesChange = (files) =>
-//     setValues((prev) => ({ ...prev, images: files }));
+  // 상태 관리
+  const [content, setContent] = useState("");
+  const [images, setImages] = useState([]);
+  const [tags, setTags] = useState("");
 
-//   // 태그 입력
-//   const handleTagsChange = (e) => {
-//     const tagArray = e.target.value
-//       .split(",")
-//       .map((tag) => tag.trim())
-//       .filter(Boolean);
-//     setValues((prev) => ({ ...prev, tags: tagArray }));
-//   };
+  // 태그 입력 처리
+  const handleTagsChange = (e) => setTags(e.target.value);
 
-//   const handleUpload = async () => {
-//     if (!values.content.trim()) return alert("내용을 입력해주세요.");
+  // 업로드 핸들러
+  const handleSubmit = async () => {
+    if (!content.trim()) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
 
-//     try {
-//       const formData = new FormData();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
 
-//       const feedData = {
-//         content: values.content,
-//         tableTypeId: 3,
-//         tags: values.tags,
-//       };
+    try {
+      const formData = new FormData();
 
-//       formData.append(
-//         "feed",
-//         new Blob([JSON.stringify(feedData)], { type: "application/json" })
-//       );
+      // 태그 문자열을 배열로 변환
+      const tagArray = tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean);
 
-//       values.images.forEach((file) => formData.append("images", file));
+      // JSON 데이터 구성
+      const feedData = {
+        content: content,
+        tableTypeId: 3, // Feed 테이블 유형 ID
+        tags: tagArray,
+      };
 
-//       await createFeed(formData);
-//       alert("피드 업로드 완료!");
-//       navigate("/feeds");
-//     } catch (err) {
-//       console.error("업로드 실패:", err);
-//       alert("업로드 실패");
-//     }
-//   };
+      // JSON -> Blob 변환 후 FormData에 추가
+      formData.append(
+        "feed",
+        new Blob([JSON.stringify(feedData)], { type: "application/json" })
+      );
 
-//   return (
-//     <div className="container main-content">
-//       <div className="feed-card border p-3 mb-3 rounded shadow-sm">
-//         <h4 className="mb-3">피드 업로드</h4>
+      // 이미지 파일 추가
+      images.forEach((file) => formData.append("images", file));
 
-//         {/* 내용 입력 */}
-//         <FeedContent
-//           content={values.content}
-//           setContent={handleContentChange}
-//         />
+      // 업로드 요청
+      await axios.post("http://localhost:8080/api/feeds", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-//         {/* 이미지 업로드 */}
-//         <ImageBox images={values.images} setImages={handleImagesChange} />
+      alert("피드 업로드 완료!");
+      navigate("/petstory/feed");
+    } catch (err) {
+      console.error(err);
+      alert("업로드 실패");
+    }
+  };
 
-//         {/* 태그 입력 */}
-//         <input
-//           type="text"
-//           placeholder="태그를 ,로 구분하여 입력하세요"
-//           value={values.tags.join(",")}
-//           onChange={handleTagsChange}
-//           className="form-control mb-3"
-//         />
+  return (
+    <div className="container main-content">
+      <div className="row justify-content-center">
+        <div className="col-12 col-lg-8">
+          {/* 업로드 카드 */}
+          <Card className="shadow-sm mb-4">
+            <Card.Header>피드 작성</Card.Header>
+            <Card.Body>
+              {/* 내용 입력 */}
+              <FeedContent content={content} setContent={setContent} />
 
-//         <div className="d-flex justify-content-end gap-2">
-//           <button
-//             className="btn btn-secondary"
-//             onClick={() => navigate("/feeds")}
-//           >
-//             목록
-//           </button>
-//           <button className="btn btn-primary" onClick={handleUpload}>
-//             업로드
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+              {/* 이미지 업로드 */}
+              <ImageBox images={images} setImages={setImages} />
 
-// export default FeedWritePage;
+              {/* 태그 입력 */}
+              <Form.Group className="mt-3">
+                <Form.Label>태그</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="태그를 ,로 구분하여 입력하세요"
+                  value={tags}
+                  onChange={handleTagsChange}
+                />
+              </Form.Group>
+
+              {/* 버튼 */}
+              <div className="d-flex justify-content-center gap-2 mt-4">
+                <Button
+                  variant="secondary"
+                  onClick={() => navigate("/feeds")}
+                >
+                  목록
+                </Button>
+                <Button variant="primary" onClick={handleSubmit}>
+                  업로드
+                </Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FeedWritePage;
