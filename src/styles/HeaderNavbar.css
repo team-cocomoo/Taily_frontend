@@ -96,6 +96,10 @@
   color: #fff;
   border-color: #4f1f02;
 }
+.btn-signup:active {
+  background-color: #4f1f02 !important;
+  border-color: #4f1f02 !important;
+}
 
 .btn-login {
   line-height: 1;
@@ -111,6 +115,10 @@
   background-color: #feb916;
   color: #fff;
   border-color: #feb916;
+}
+.btn-login:active {
+  background-color: #feb916 !important;
+  border-color: #feb916 !important;
 }
 
 .header.visible {
@@ -132,7 +140,7 @@
 @media screen and (max-width: 992px) {
   .navbar {
     justify-content: center;
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -157,7 +165,7 @@
     top: 70px; /* navbar 높이만큼 아래 */
     left: 0; /* 왼쪽 끝부터 시작 */
     width: 100%; /* ✅ 전체 너비 차지 */
-    background-color: #fdf9ee; 
+    background-color: #fdf9ee;
     padding: 15px 0; /* 위아래 여백 */
     border-radius: 0; /* 혹시 둥근 모서리 제거 */
     gap: 10px;
