@@ -7,7 +7,7 @@ import "../../../styles/postDetail/PostDetailContentCard.css";
 
 import userIcon from "../../../assets/image/user-icon.png";
 import meatballIcon from "../../../assets/image/meatball-icon.png";
-import PostDetailMap from "../postDetail/PostDetailMap";
+import PostDetailMap from "../postDetail/PostDetailMap";  
 import UserPopover from "../../common/UserPopover";
 import LikeButton from "../LikeButton";
 import ReportModal from "../ReportModal";
