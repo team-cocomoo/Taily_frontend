@@ -1,0 +1,129 @@
+/* ================================
+   공통 카드 스타일
+================================ */
+.diary-box,
+.card {
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+/* 카드 헤더 스타일 */
+.card-header:first-child {
+  background-color: rgba(254, 186, 23, 0.5);
+  font-weight: bold;
+  border-bottom: none;
+  border-radius: 14px 14px 0 0;
+  border: 2px solid rgba(254, 186, 23, 0.5);
+  color: #4f1f02;
+  text-align: center;
+}
+
+/* 카드 본문 */
+.card-body {
+  background-color: #fffef9;
+  border-radius: 0 0 15px 15px;
+}
+
+/* ================================
+   텍스트 입력 영역
+================================ */
+textarea,
+.ql-editor {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e2e2;
+  padding: 15px;
+  transition: all 0.2s ease-in-out;
+}
+
+textarea:focus,
+.ql-editor:focus {
+  outline: none;
+  border-color: #feba17;
+  box-shadow: 0 0 4px rgba(254, 186, 23, 0.5);
+}
+
+/* ================================
+   태그 입력 및 뱃지
+================================ */
+.badge {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: rgba(254, 186, 23, 0.7) !important;
+  color: #4f1f02 !important;
+}
+
+.badge:hover {
+  background-color: rgba(254, 186, 23, 1) !important;
+  transform: scale(1.05);
+}
+
+/* 태그 입력 필드 */
+input.form-control {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+input.form-control:focus {
+  border-color: #feba17;
+  box-shadow: 0 0 4px rgba(254, 186, 23, 0.5);
+}
+
+/* ================================
+   이미지 업로드
+================================ */
+.add-image {
+  color: #9a9a9a;
+  font-weight: lighter;
+  font-size: 14px;
+}
+
+.image-preview {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   등록 버튼
+================================ */
+button[type="submit"] {
+  background-color: #feba17 !important;
+  border: none !important;
+  color: #4f1f02 !important;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(254, 186, 23, 0.4);
+  transition: all 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #ffd45b !important;
+  transform: translateY(-2px);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+/* ================================
+   전체 컨테이너
+================================ */
+.container {
+  max-width: 800px;
+}
+
+h3 {
+  color: #4f1f02;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+  button[type="submit"] {
+    width: 100%;
+  }
+}
