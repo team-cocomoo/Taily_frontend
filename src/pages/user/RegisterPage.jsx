@@ -1,9 +1,14 @@
+// src/pages/user/RegisterPage.jsx
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import api from "@/config/apiConfig"; // ✅ axios 인스턴스 사용
 import TailyLogo from "../../assets/image/tailylogo.svg";
 import "../../styles/user/RegisterPage.css";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     nickname: "",
@@ -14,13 +19,46 @@ const RegisterPage = () => {
     address: "",
   });
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 제출 로직
+
+    if (formData.password !== formData.passwordConfirm) {
+      setError("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    try {
+      setError("");
+      setSuccess("");
+
+      const response = await api.post("/api/users/register", {
+        username: formData.username,
+        nickname: formData.nickname,
+        password: formData.password,
+        tel: formData.tel,
+        email: formData.email,
+        address: formData.address,
+      });
+
+      if (response.data?.success) {
+        setSuccess("회원가입이 완료되었습니다! 로그인 페이지로 이동합니다.");
+        setTimeout(() => navigate("/login"), 1500);
+      } else {
+        setError("회원가입 실패: 서버 응답이 올바르지 않습니다.");
+      }
+    } catch (err) {
+      console.error("회원가입 실패:", err);
+      const message =
+        err.response?.data?.message || "회원가입 중 오류가 발생했습니다.";
+      setError(message);
+    }
   };
 
   return (

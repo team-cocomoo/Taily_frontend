@@ -1,122 +1,93 @@
+// pages/feed/FeedWritePage.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Form, Button, Card } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Form, Button, Card, Spinner } from "react-bootstrap";
+import { createFeed } from "@/api/FeedService";
+import FeedTextInput from "@/components/feed/FeedTextInput";
+import FeedTagInput from "@/components/feed/FeedTagInput";
+import ImageBox from "@/components/board/ImageBox.jsx";
+import "@/styles/feed/FeedWritePage.css";
 
-import ImageBox from "../../components/board/ImageBox";
-import FeedContent from "../../components/feed/FeedContent.jsx"; // 에디터 or 텍스트박스 컴포넌트
-// import "../../styles/feed/FeedWritePage.css"; // (선택)
-
-const FeedWritePage = () => {
-  const navigate = useNavigate();
-
-  // 상태 관리
+export default function FeedWritePage() {
   const [content, setContent] = useState("");
+  const [tags, setTags] = useState([]);
   const [images, setImages] = useState([]);
-  const [tags, setTags] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // 태그 입력 처리
-  const handleTagsChange = (e) => setTags(e.target.value);
+  const handleAddTag = (newTag) => setTags((prev) => [...prev, newTag]);
+  const handleRemoveTag = (tag) =>
+    setTags((prev) => prev.filter((t) => t !== tag));
+  const handleImageChange = (imgList) => setImages(imgList);
 
-  // 업로드 핸들러
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!content.trim()) {
-      alert("내용을 입력해주세요.");
+      alert("내용을 입력해주세요!");
       return;
     }
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-      return;
-    }
+    // ✅ 백엔드 @RequestPart("feed")에 맞춰 JSON 파트를 Blob으로 추가
+    const feedData = { content, tags };
+
+    const formData = new FormData();
+    formData.append(
+      "feed",
+      new Blob([JSON.stringify(feedData)], { type: "application/json" })
+    );
+
+    // 파일 파트(여러 장) 그대로 추가 (@RequestPart(value="images"))
+    images.forEach((img) => {
+      if (img.type === "file") {
+        formData.append("images", img.data);
+      }
+    });
 
     try {
-      const formData = new FormData();
-
-      // 태그 문자열을 배열로 변환
-      const tagArray = tags
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter(Boolean);
-
-      // JSON 데이터 구성
-      const feedData = {
-        content: content,
-        tableTypeId: 3, // Feed 테이블 유형 ID
-        tags: tagArray,
-      };
-
-      // JSON -> Blob 변환 후 FormData에 추가
-      formData.append(
-        "feed",
-        new Blob([JSON.stringify(feedData)], { type: "application/json" })
-      );
-
-      // 이미지 파일 추가
-      images.forEach((file) => formData.append("images", file));
-
-      // 업로드 요청
-      await axios.post("http://localhost:8080/api/feeds", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      alert("피드 업로드 완료!");
-      navigate("/petstory/feed");
+      setLoading(true);
+      await createFeed(formData); // axios가 boundary 포함 헤더를 자동 설정
+      alert("피드가 등록되었습니다!");
+      window.location.href = "/";
     } catch (err) {
-      console.error(err);
-      alert("업로드 실패");
+      console.error("피드 등록 실패:", err);
+      alert("등록 실패: 다시 시도해주세요.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container main-content">
-      <div className="row justify-content-center">
-        <div className="col-12 col-lg-8">
-          {/* 업로드 카드 */}
-          <Card className="shadow-sm mb-4">
-            <Card.Header>피드 작성</Card.Header>
-            <Card.Body>
-              {/* 내용 입력 */}
-              <FeedContent content={content} setContent={setContent} />
+    <Container className="mt-4 mb-5">
+      <h3 className="mb-4 text-center">오늘의 일상 기록</h3>
 
-              {/* 이미지 업로드 */}
-              <ImageBox images={images} setImages={setImages} />
+      <Card className="p-3 shadow-sm">
+        <Form onSubmit={handleSubmit}>
+          <FeedTextInput content={content} onChange={setContent} />
+          <FeedTagInput
+            tags={tags}
+            onAddTag={handleAddTag}
+            onRemoveTag={handleRemoveTag}
+          />
+          <ImageBox images={[]} onImageChange={handleImageChange} />
 
-              {/* 태그 입력 */}
-              <Form.Group className="mt-3">
-                <Form.Label>태그</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="태그를 ,로 구분하여 입력하세요"
-                  value={tags}
-                  onChange={handleTagsChange}
-                />
-              </Form.Group>
-
-              {/* 버튼 */}
-              <div className="d-flex justify-content-center gap-2 mt-4">
-                <Button
-                  variant="secondary"
-                  onClick={() => navigate("/feeds")}
-                >
-                  목록
-                </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                  업로드
-                </Button>
-              </div>
-            </Card.Body>
-          </Card>
-        </div>
-      </div>
-    </div>
+          <div className="text-center mt-4">
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              disabled={loading}
+              className="px-5 rounded-pill"
+            >
+              {loading ? (
+                <>
+                  <Spinner animation="border" size="sm" className="me-2" />
+                  등록 중...
+                </>
+              ) : (
+                "등록하기"
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Card>
+    </Container>
   );
-};
-
-export default FeedWritePage;
+}
