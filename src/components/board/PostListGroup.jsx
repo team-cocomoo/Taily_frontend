@@ -19,11 +19,11 @@ const PostListGroup = ({ items, onItemClick }) => {
                 <div className="title">{item.title}</div>
                 <div className="d-flex align-items-center gap-2">
                   <Badge bg="light" text="dark" pill className="author">
-                    {item.author}
+                    {item.nickname}
                   </Badge>
                   <div className="d-flex flex-column text-end">
-                    <div className="views">조회수 {item.views}</div>
-                    <div className="date">{item.date}</div>
+                    <div className="views">조회수 {item.view}</div>
+                    <div className="date">{new Date(item.createdAt).toLocaleDateString("ko-KR")}</div>
                   </div>
                 </div>
               </ListGroup.Item>

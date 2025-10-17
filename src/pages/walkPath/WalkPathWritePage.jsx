@@ -38,7 +38,7 @@ const WalkPathWritePage = () => {
     };
 
     formData.append(
-      "walkPathData",
+      "walkpath",
       new Blob([JSON.stringify(walkPathData)], { type: "application/json" })
     );
 

@@ -17,19 +17,20 @@ const WalkPathsDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  //게시글 + 댓글 조회
   useEffect(() => {
     const fetchPostAndComments = async () => {
       try {
         setLoading(true);
         const [postRes, commentRes] = await Promise.all([
-          api.get(`/api/taily-friends/${id}`),
-          api.get(`/api/taily-friends/${id}/comments`),
+          api.get(`/api/walk-paths/${id}`),
+          api.get(`/api/walk-paths/${id}/comments`),
         ]);
 
         if (postRes.data.success) setPost(postRes.data.data);
         if (commentRes.data.success) setComments(commentRes.data.data);
       } catch (error) {
-        console.error("게시글 상세 조회 실패:", err);
+        console.error("게시글 상세 조회 실패:", error);
         setError("게시글 정보를 불러오지 못했습니다.");
       } finally {
         setLoading(false);
