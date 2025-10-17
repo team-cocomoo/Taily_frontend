@@ -64,10 +64,18 @@ const HeaderNavbar = () => {
         <div
           className={`dropdown-menu ${openDropdowns["petstory"] ? "open" : ""}`}
         >
-          <Link to="/petstory/feed" className="dropdown-item">
+          <Link
+            to="/petstory/feed"
+            className="dropdown-item"
+            onClick={() => setMenuOpen(false)}
+          >
             피드
           </Link>
-          <Link to="/chats" className="dropdown-item">
+          <Link
+            to="/chats"
+            className="dropdown-item"
+            onClick={() => setMenuOpen(false)}
+          >
             대화방
           </Link>
         </div>
@@ -78,13 +86,25 @@ const HeaderNavbar = () => {
           산책 공간
         </span>
         <div className={`dropdown-menu ${openDropdowns["walk"] ? "open" : ""}`}>
-          <Link to="/walk-diaries" className="dropdown-item">
+          <Link
+            to="/walk-diaries"
+            className="dropdown-item"
+            onClick={() => setMenuOpen(false)}
+          >
             산책일지
           </Link>
-          <Link to="/taily-friends" className="dropdown-item">
+          <Link
+            to="/taily-friends"
+            className="dropdown-item"
+            onClick={() => setMenuOpen(false)}
+          >
             테일리프렌즈
           </Link>
-          <Link to="/walk-paths" className="dropdown-item">
+          <Link
+            to="/walk-paths"
+            className="dropdown-item"
+            onClick={() => setMenuOpen(false)}
+          >
             다함께산책
           </Link>
         </div>
@@ -97,19 +117,31 @@ const HeaderNavbar = () => {
         <div
           className={`dropdown-menu ${openDropdowns["center"] ? "open" : ""}`}
         >
-          <Link to="/notices" className="dropdown-item">
+          <Link
+            to="/notices"
+            className="dropdown-item"
+            onClick={() => setMenuOpen(false)}
+          >
             공지사항
           </Link>
-          <Link to="/faqs" className="dropdown-item">
+          <Link
+            to="/faqs"
+            className="dropdown-item"
+            onClick={() => setMenuOpen(false)}
+          >
             FAQ
           </Link>
         </div>
       </div>
 
-      <Link to="/facilities" className="nav-link">
+      <Link
+        to="/facilities"
+        className="nav-link"
+        onClick={() => setMenuOpen(false)}
+      >
         우리동네정보
       </Link>
-      <Link to="/event" className="nav-link">
+      <Link to="/event" className="nav-link" onClick={() => setMenuOpen(false)}>
         이벤트
       </Link>
     </>
@@ -120,26 +152,29 @@ const HeaderNavbar = () => {
       {user ? (
         <>
           <span className="welcome-text">{user.nickname}님 환영합니다!</span>
-          <Link to="/mypage/main">
+          <Link to="/mypage/main" onClick={() => setMenuOpen(false)}>
             <button className="btn btn-outline-primary btn-sm btn-signup">
               My Page
             </button>
           </Link>
           <button
             className="btn btn-primary btn-sm btn-login"
-            onClick={handleLogout}
+            onClick={() => {
+              handleLogout();
+              setMenuOpen(false);
+            }}
           >
             Logout
           </button>
         </>
       ) : (
         <>
-          <Link to="/register">
+          <Link to="/register" onClick={() => setMenuOpen(false)}>
             <button className="btn btn-outline-primary btn-sm btn-signup">
               Sign Up
             </button>
           </Link>
-          <Link to="/login">
+          <Link to="/login" onClick={() => setMenuOpen(false)}>
             <button className="btn btn-primary btn-sm btn-login">Login</button>
           </Link>
         </>
@@ -176,7 +211,6 @@ const HeaderNavbar = () => {
           <UserActions />
         </>
       )}
-
     </nav>
   );
 };
