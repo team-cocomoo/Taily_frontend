@@ -1,9 +1,90 @@
-/* src/index.css 또는 App.css 내에 추가 */
-.swiper-button-next,
-.swiper-button-prev {
-  color: #facc15; /* 노란색 */
+/* ==============================
+   FeedMainPage + FeedCard Layout
+   ============================== */
+
+/* 전체 피드 페이지 */
+.feed-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ✅ 카드들을 화면 중앙 정렬 */
+  gap: 30px;
+  padding-top: 40px;
+  padding-bottom: 80px;
+  background-color: #fffdf9;
 }
 
-.swiper-pagination-bullet-active {
-  background-color: #facc15;
+/* ==============================
+   FeedCard
+   ============================== */
+
+/* 개별 피드 카드 */
+.feed-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.feed-card {
+  width: 600px; /* ✅ 고정 가로 폭 */
+  max-width: 90vw; /* ✅ 모바일 대응 */
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* ==============================
+   이미지 관련
+   ============================== */
+
+.feed-image-wrapper {
+  width: 100%;
+  background-color: #f4f4f4; /* ✅ 여백색 (레터박스 효과용) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ✅ 핵심 이미지 스타일 */
+.feed-image {
+  width: 100%;
+  height: auto; /* ✅ 비율 유지 */
+  object-fit: contain; /* ✅ 여백 포함 비율 유지 */
+  display: block;
+  background-color: #f4f4f4;
+
+  /* ✅ 너무 납작하거나 너무 긴 사진 방지 */
+  min-height: 300px; /* 세로 최소 300px */
+  max-height: 700px; /* 세로 최대 700px */
+  border-radius: 4px;
+}
+
+/* ==============================
+   Feed 본문, 좋아요 등
+   ============================== */
+
+.feed-card .card-body {
+  padding: 16px 20px;
+  color: #333;
+}
+
+.feed-card .card-body p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ==============================
+   반응형 처리
+   ============================== */
+
+@media (max-width: 768px) {
+  .feed-card {
+    width: 90vw;
+  }
+  .feed-image {
+    min-height: 220px;
+    max-height: 500px;
+  }
 }
