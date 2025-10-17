@@ -1,60 +1,71 @@
-import React, { useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { useFeeds } from "@/hook/useFeeds";
-import FeedCard from "../../components/feed/FeedCard.jsx";
-import WriteButton from "../../components/common/WriteButton.jsx";
-import nofeed from "../../assets/image/nofeed.png";
+// pages/feed/FeedMainPage.jsx
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Spinner, Button } from "react-bootstrap";
+import FeedCard from "@/components/feed/FeedCard";
+import api from "@/config/apiConfig";
+import nofeed from "@/assets/image/nofeed.png";
+import WriteButton from "../../components/common/WriteButton";
 
-const FeedMainPage = () => {
-  const { feeds, loading, hasNext, loadFeeds } = useFeeds(10);
-  const observer = useRef();
-  const navigate = useNavigate();
+export default function FeedMainPage() {
+  const [feeds, setFeeds] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const lastFeedRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
+  // 피드 데이터 불러오기
+  useEffect(() => {
+    const fetchFeeds = async () => {
+      try {
+        const res = await api.get("/api/feeds");
+        setFeeds(res.data.content);
+      } catch (err) {
+        console.error("피드 로드 실패:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasNext) {
-          loadFeeds();
-        }
-      });
+    fetchFeeds();
+  }, []);
 
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasNext, loadFeeds]
-  );
-
-  // 버튼 클릭 시 이동할 함수
-  const handleWriteClick = () => {
-    navigate("/petstory/feed/write"); // 피드 작성 페이지로 이동
+  // 좋아요 등 상태 변경 시 feed 업데이트
+  const handleUpdateFeed = (id, updatedFeed) => {
+    setFeeds((prev) => prev.map((f) => (f.id === id ? updatedFeed : f)));
   };
 
+  if (loading) {
+    return (
+      <div className="text-center mt-5">
+        <Spinner animation="border" />
+      </div>
+    );
+  }
+
   return (
-    <div className="feed-list">
-      {feeds.length === 0 && !loading && (
-        <div style={{textAlign: "center",margin:"50px"}}>
-        <img src={nofeed} alt="등록된 피드 없음" style={{width: "200px", height : "auto", opacity : 0.8, marginBottom: "20px"}} />
+    <Container className="mt-4">
+      <Row className="justify-content-center">
+        {feeds.length > 0 ? (
+          feeds.map((feed) => (
+            <Col md={6} key={feed.id}>
+              <FeedCard feedData={feed} onUpdate={handleUpdateFeed} />
+            </Col>
+          ))
+        ) : (
+          <div className="text-center mt-5">
+            <img
+              src={nofeed}
+              alt="등록된 피드 없음"
+              style={{ width: "200px", opacity: 0.7 }}
+            />
+            <p className="text-muted mt-3">아직 등록된 피드가 없습니다.</p>
+          </div>
+        )}
+      </Row>
 
-        <p className="text-center">"피드를 등록하고 우리 아이의 멋진 이야기를 시작해 주세요."</p>
-        </div>
-      )}
-
-      {feeds.map((feed, index) => {
-        if (index === feeds.length - 1) {
-          return <FeedCard key={feed.id} feed={feed} ref={lastFeedRef} />;
-        } else {
-          return <FeedCard key={feed.id} feed={feed} />;
-        }
-      })}
-
-      {loading && <p>로딩 중...</p>}
-      {!hasNext && <p>더 이상 피드가 없습니다.</p>}
-
-      <WriteButton onClick={handleWriteClick} />
-    </div>
+      {/* 글쓰기 버튼 */}
+      <div className="text-center mt-5 mb-5">
+        <WriteButton
+          onClick={() => (window.location.href = "/petstory/feed/write")}
+        />
+      </div>
+    </Container>
   );
-};
-
-export default FeedMainPage;
+}

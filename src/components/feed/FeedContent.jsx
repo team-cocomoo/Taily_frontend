@@ -1,31 +1,46 @@
-import React from "react";
-import { Card } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import MyEditor from "../MyEditor"; // 에디터 컴포넌트 import
+// components/feed/FeedContent.jsx (수정)
 
-/**
- * 피드 작성 시 본문 내용을 입력하는 컴포넌트
- * @param {string} content - 현재 입력된 내용
- * @param {function} setContent - 상위 컴포넌트에서 전달된 setter (예: setValues)
- */
-const FeedContent = ({ content, setContent }) => {
-  // 에디터 입력이 변경될 때마다 상위로 값 전달
-  const handleEditorChange = (value) => {
-    setContent(value);
-  };
+import React from "react";
+import { Button } from "react-bootstrap";
+import { BsHeart, BsHeartFill, BsChatDots } from "react-icons/bs";
+
+function FeedContent({ feedData, onToggleLike }) {
+  const { writer, content, liked, likeCount, date } = feedData; // date 필드 추가 사용
 
   return (
-    <Card className="mb-4">
-      <Card.Header>내용</Card.Header>
-      <Card.Body>
-        <MyEditor
-          value={content}
-          onChange={handleEditorChange}
-          placeholder="피드 내용을 입력하세요."
-        />
-      </Card.Body>
-    </Card>
+    <div>
+      {/* 좋아요 및 댓글 버튼 섹션 */}
+      <div className="d-flex align-items-center mb-2">
+        {/* 좋아요 버튼 */}
+        <Button
+          variant="link"
+          className="p-0 me-2"
+          style={{ color: liked ? "red" : "gray" }}
+          onClick={onToggleLike}
+        >
+          {liked ? <BsHeartFill size={20} /> : <BsHeart size={20} />}
+        </Button>
+
+        {/* 댓글 버튼 */}
+        <Button variant="link" className="p-0 text-muted me-auto">
+          <BsChatDots size={20} />
+        </Button>
+      </div>
+
+      {/* 좋아요 수 및 글 내용 */}
+      <div className="mb-2">
+        <strong>좋아요 {likeCount}개</strong>
+      </div>
+
+      {/* 글 내용 및 작성자 닉네임 (피드 이미지 하단의 텍스트 형식) */}
+      <div className="d-flex justify-content-between align-items-end">
+        <span>
+          <strong>{writer}</strong> {content}
+        </span>
+        <small className="text-muted">{date}</small> {/* 날짜 표시 */}
+      </div>
+    </div>
   );
-};
+}
 
 export default FeedContent;
