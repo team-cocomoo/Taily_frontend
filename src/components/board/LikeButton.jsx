@@ -10,15 +10,34 @@ const LikeButton = ({ postId, tableTypeId }) => {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // 게시판 타입별로 경로 결정
+  const getBaseUrl = () => {
+    switch (tableTypeId) {
+      case 3:
+        return "api/feeds"; //피드 게시판
+      case 5:
+        return "api/taily-friends"; // 테일리프렌즈
+      case 6:
+        return "api/walk-paths"; // 산책 경로 게시판
+      default:
+        return "api/posts"; // 기본 경로
+    }
+  };
+
   // 초기 좋아요 상태와 개수 로딩
   useEffect(() => {
     const fetchLikeStatus = async () => {
       try {
         const token = localStorage.getItem("token");
+        const baseUrl = getBaseUrl();
+
         const res = await axios.get(
-          `http://localhost:8080/api/taily-friends/${postId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          `http://localhost:8080/${baseUrl}/${postId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
+
         setLikeCount(res.data.data.likeCount);
         setLiked(res.data.data.liked);
       } catch (err) {
@@ -28,7 +47,9 @@ const LikeButton = ({ postId, tableTypeId }) => {
       }
     };
     fetchLikeStatus();
-  }, [postId]);
+  }, [postId, tableTypeId]);
+
+  // 좋아요 클릭
   const handleLike = async () => {
     if (!user) {
       alert("로그인 후 이용해주세요.");
@@ -43,7 +64,6 @@ const LikeButton = ({ postId, tableTypeId }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // 서버 기준 상태로 업데이트
       const { liked: newLiked, likeCount: newLikeCount } = res.data.data;
       setLiked(newLiked);
       setLikeCount(newLikeCount);
