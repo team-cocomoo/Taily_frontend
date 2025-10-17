@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
@@ -8,6 +7,8 @@ import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorAlert from "../../components/common/ErrorAlert";
 import WalkPathDetailContent from "../../components/board/walkPath/WalkPathDetailContent";
 import WalkPathDetailCommentCard from "../../components/board/walkPath/WalkPathDetailCommentCard";
+import WalkPathImageBox from "../../components/board/walkPath/WalkPathImageBox";
+import WalkPathMap from "../../components/board/walkPath/WalkPathMap";
 
 const WalkPathDetailPage = () => {
   const { id } = useParams();
@@ -27,7 +28,10 @@ const WalkPathDetailPage = () => {
           api.get(`/api/walk-paths/${id}/comments`),
         ]);
 
-        if (postRes.data.success) setPost(postRes.data.data);
+        if (postRes.data.success) {
+          console.log("✅ postRes 구조 확인:", postRes.data);
+          setPost(postRes.data.data);
+        }
         if (commentRes.data.success) setComments(commentRes.data.data);
       } catch (error) {
         console.error("게시글 상세 조회 실패:", error);
@@ -41,13 +45,7 @@ const WalkPathDetailPage = () => {
   }, [id]);
 
   if (loading) return <LoadingSpinner message="게시글 불러오는 중..." />;
-  if (error)
-    return (
-      <ErrorAlert
-        message={error}
-        variant="danger"
-      />
-    );
+  if (error) return <ErrorAlert message={error} variant="danger" />;
   if (!post)
     return (
       <ErrorAlert
@@ -60,8 +58,14 @@ const WalkPathDetailPage = () => {
   return (
     <Row className="justify-content-center mt-4">
       <Col xs={12} md={10} lg={10}>
+        {/* 이미지 표시 */}
+        <WalkPathImageBox images={post.images || []} />
+
         {/* 게시글 상세 */}
         <WalkPathDetailContent post={post} />
+
+        {/* 지도 표시 */}
+        {/* <WalkPathMap/> */}
 
         {/* 하단 버튼 */}
         <div className="d-flex justify-content-end mt-1 mb-4">
@@ -81,7 +85,7 @@ const WalkPathDetailPage = () => {
           setComments={setComments}
         />
       </Col>
-    </Row>  
+    </Row>
   );
 };
 

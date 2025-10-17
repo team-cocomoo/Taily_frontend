@@ -14,7 +14,7 @@ const WalkPathMainPage = () => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false); // 더보기 버튼 표시
-  const [totalCount, setTotalCount] = useState(0); //전체 게시글 수
+  const [totalCount, setTotalCount] = useState(0); // 전체 게시글 수
   const size = 6; // 한 페이지 게시글 수
 
   const fetchPosts = async (pageNum = 1) => {
