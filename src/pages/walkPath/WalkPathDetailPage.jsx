@@ -17,6 +17,7 @@ const WalkPathDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  //게시글 + 댓글 조회
   useEffect(() => {
     const fetchPostAndComments = async () => {
       try {
