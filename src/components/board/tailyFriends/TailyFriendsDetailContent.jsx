@@ -104,7 +104,7 @@ const TailyFriendsDetailContent = ({ post }) => {
                   show={showReportModal}
                   handleClose={handleCloseReportModal}
                   reportedId={post.userId}
-                  path={window.location.href} 
+                  path={window.location.href}
                 />
                 <ShareModal
                   show={showShareModal}
@@ -128,12 +128,7 @@ const TailyFriendsDetailContent = ({ post }) => {
           </div>
 
           <div className="d-flex justify-content-center align-items-center mt-3">
-            <LikeButton
-              postId={post.id}
-              tableTypeId={5} // TailyFriend = 5
-              initialLikeCount={post.likeCount}
-              initialLiked={post.liked}
-            />
+            <LikeButton postId={post.id} tableTypeId={5} />
           </div>
         </Card.Body>
       </Card>
