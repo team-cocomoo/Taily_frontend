@@ -35,7 +35,7 @@ const WalkPathDetailContent = ({ post }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("게시글 삭제 완료!");
-      navigate("/taily-friends");
+      navigate("/walk-paths");
     } catch (err) {
       console.error(err);
       alert("게시글 삭제 실패");
@@ -76,7 +76,7 @@ const WalkPathDetailContent = ({ post }) => {
                     <>
                       <Dropdown.Item
                         onClick={() =>
-                          navigate(`/taily-friends/edit/${post.id}`)
+                          navigate(`/walk-paths/edit/${post.id}`)
                         }
                       >
                         수정하기
@@ -130,7 +130,7 @@ const WalkPathDetailContent = ({ post }) => {
           <div className="d-flex justify-content-center align-items-center mt-3">
             <LikeButton
               postId={post.id}
-              tableTypeId={5} // TailyFriend = 5
+              tableTypeId={6} // WalkPath = 6
               initialLikeCount={post.likeCount}
               initialLiked={post.liked}
             />

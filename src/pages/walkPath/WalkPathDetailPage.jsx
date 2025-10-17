@@ -28,7 +28,10 @@ const WalkPathDetailPage = () => {
           api.get(`/api/walk-paths/${id}/comments`),
         ]);
 
-        if (postRes.data.success) setPost(postRes.data.data);
+        if (postRes.data.success) {
+          console.log("✅ postRes 구조 확인:", postRes.data);
+          setPost(postRes.data.data);
+        }
         if (commentRes.data.success) setComments(commentRes.data.data);
       } catch (error) {
         console.error("게시글 상세 조회 실패:", error);
@@ -56,7 +59,7 @@ const WalkPathDetailPage = () => {
     <Row className="justify-content-center mt-4">
       <Col xs={12} md={10} lg={10}>
         {/* 이미지 표시 */}
-        <WalkPathImageBox />
+        <WalkPathImageBox images={post.images || []} />
 
         {/* 게시글 상세 */}
         <WalkPathDetailContent post={post} />

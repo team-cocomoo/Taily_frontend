@@ -1,103 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { Form, Card } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
+import { Card } from "react-bootstrap";
+import SecureImage from "@/components/common/SecureImage";
 
-import "../../styles/ImageBox.css";
-
-const ImageBox = ({ images: propImages = [], onImageChange }) => {
-  const [previews, setPreviews] = useState([]);
-
-  // propImages가 있을 때만 초기화
-  useEffect(() => {
-    if (!propImages || propImages.length === 0) return;
-
-    const newPreviews = propImages.map((img) => ({
-      id: img.id || crypto.randomUUID(),
-      type: img.type,
-      data: img.type === "url" ? img.data : URL.createObjectURL(img.data),
-      file: img.type === "file" ? img.data : null,
-    }));
-
-    setPreviews(newPreviews);
-  }, [propImages]); // propImages가 바뀔 때만 실행
-
-  const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    if (selectedFiles.length + previews.length > 3) {
-      alert("사진은 최대 3장까지 업로드할 수 있어요!");
-      return;
-    }
-
-    const newPreviews = selectedFiles.map((file) => ({
-      id: crypto.randomUUID(),
-      type: "file",
-      data: URL.createObjectURL(file),
-      file,
-    }));
-
-    const updatedPreviews = [...previews, ...newPreviews].slice(0, 3);
-    setPreviews(updatedPreviews);
-
-    if (onImageChange) {
-      const sendToParent = updatedPreviews.map((p) =>
-        p.type === "url"
-          ? { type: "url", data: p.data, id: p.id }
-          : { type: "file", data: p.file, id: p.id }
-      );
-      onImageChange(sendToParent);
-    }
-  };
-
-  const handleRemove = (id) => {
-    const updatedPreviews = previews.filter((p) => p.id !== id);
-    setPreviews(updatedPreviews);
-
-    if (onImageChange) {
-      const sendToParent = updatedPreviews.map((p) =>
-        p.type === "url"
-          ? { type: "url", data: p.data, id: p.id }
-          : { type: "file", data: p.file, id: p.id }
-      );
-      onImageChange(sendToParent);
-    }
-  };
+const WalkPathImageBox = ({ images = [] }) => {
+  if (!images || images.length === 0) {
+    return (
+      <Card className="mb-4 diary-box">
+        <Card.Body>
+          <p className="text-muted">등록된 사진이 없습니다.</p>
+        </Card.Body>
+      </Card>
+    );
+  }
 
   return (
     <Card className="mb-4 diary-box">
-      <Card.Header>
-        사진 첨부{" "}
-        <small className="text-muted px-2">산책하는 순간을 기록하세요</small>
-      </Card.Header>
-      <Card.Body className="d-flex align-items-center gap-2">
-        <Form.Label
-          htmlFor="photo"
-          className="upload-tile mb-0 d-flex justify-content-center align-items-center"
-        >
-          <span className="add-image">+</span>
-        </Form.Label>
+      <Card.Header>사진</Card.Header>
+      <Card.Body className="d-flex flex-wrap justify-content-start gap-3">
+        {images.map((img, index) => {
+          // ✅ 문자열이면 그대로, 객체면 filePath 사용
+          const src = typeof img === "string" ? img : img.filePath;
 
-        {previews.map((p) => (
-          <img
-            key={p.id}
-            src={p.data}
-            alt="preview"
-            onClick={() => handleRemove(p.id)}
-            className="image-preview"
-            title="클릭하면 삭제됩니다"
-          />
-        ))}
-
-        <Form.Control
-          type="file"
-          id="photo"
-          accept="image/*"
-          multiple
-          className="d-none"
-          onChange={handleFileChange}
-        />
+          return (
+            <SecureImage
+              key={index}
+              src={src}
+              alt={`사진 ${index + 1}`}
+              style={{
+                width: "250px",
+                height: "250px",
+                objectFit: "cover",
+              }}
+            />
+          );
+        })}
       </Card.Body>
     </Card>
   );
 };
 
-export default ImageBox;
+export default WalkPathImageBox;
