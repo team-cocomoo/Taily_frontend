@@ -1,0 +1,34 @@
+.alarm-dropdown {
+  position: absolute;
+  right: 0;
+  top: 35px;
+  width: 320px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+  animation: fadeIn 0.2s ease;
+}
+
+.unread {
+  font-weight: bold;
+  background-color: #fff8f8;
+}
+
+.read {
+  color: #555;
+}
+
+.empty {
+  padding: 15px;
+  text-align: center;
+  color: #999;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
