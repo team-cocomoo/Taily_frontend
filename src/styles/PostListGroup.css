@@ -1,12 +1,13 @@
 .page-container {
   display: flex;
   justify-content: flex-start; /* 왼쪽부터 배치 */
-  align-items: flex-start;     /* 위로 정렬 */
+  align-items: flex-start; /* 위로 정렬 */
 }
 
 .post-list-container {
-  width: 100%;       
-  margin-right: 20px;      
+  width: 100%;
+  margin-right: 20px;
+  margin-top: 40px;
 }
 /* 스크롤 가능한 영역 */
 .list-wrapper {
