@@ -1,0 +1,88 @@
+/* 전체 영역 */
+.userinfo-section {
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 25px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 테이블 스타일 */
+.userinfo-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: #333;
+}
+
+/* 테이블 행 구분선 */
+.userinfo-section tr {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* 마지막 행은 밑줄 제거 */
+.userinfo-section tr:last-child {
+  border-bottom: none;
+}
+
+/* 왼쪽 항목명 (th) */
+.userinfo-section th {
+  width: 20%;
+  text-align: left;
+  color: #555;
+  font-weight: 600;
+  padding: 10px 0;
+  background-color: transparent;
+  border: none;
+  vertical-align: middle;
+}
+
+/* 오른쪽 값 (td) */
+.userinfo-section td {
+  text-align: left;
+  color: #333;
+  padding: 10px 0;
+  border: none;
+  vertical-align: middle;
+}
+
+/* 버튼 정렬 */
+.userinfo-section .text-end {
+  text-align: right;
+  margin-top: 10px;
+}
+
+/* 수정하기 버튼 */
+.userinfo-section .btn-warning {
+  background-color: #ffb800;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ffffff;
+  padding: 8px 22px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* hover 시 버튼 강조 */
+.userinfo-section .btn-warning:hover {
+  background-color: #ffa600;
+  transform: translateY(-1px);
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .userinfo-section {
+    padding: 20px;
+  }
+
+  .userinfo-section th {
+    width: 30%;
+    font-size: 14px;
+  }
+
+  .userinfo-section td {
+    font-size: 14px;
+  }
+}
