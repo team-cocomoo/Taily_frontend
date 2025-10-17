@@ -16,7 +16,7 @@ export const sendMessageRest = (dto) => axios.post(`${API_BASE}/send`, dto);
 let stompClient;
 
 export const connectWebSocket = (roomId, onMessageReceived) => {
-  const socket = new SockJS("/ws"); // 백엔드 STOMP 엔드포인트
+  const socket = new SockJS("/ws-chat"); // 백엔드 STOMP 엔드포인트
   stompClient = new Client({
     webSocketFactory: () => socket,
     debug: (str) => console.log(str),
