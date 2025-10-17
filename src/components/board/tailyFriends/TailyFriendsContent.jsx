@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import MyEditor from "../../MyEditor";
+import MyEditor from "../../MyEditor.jsx";
 
 const TailyFriendsContent = ({ content, setContent }) => {
   return (
