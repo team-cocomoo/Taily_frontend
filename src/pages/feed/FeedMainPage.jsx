@@ -5,7 +5,7 @@ import FeedCard from "@/components/feed/FeedCard";
 import api from "@/config/apiConfig";
 import nofeed from "@/assets/image/nofeed.png";
 import WriteButton from "../../components/common/WriteButton";
-import "@/styles/feed/FeedMainPage.css"; // ✅ 스타일 추가
+import "@/styles/feed/FeedMainPage.css";
 
 export default function FeedMainPage() {
   const [feeds, setFeeds] = useState([]);
