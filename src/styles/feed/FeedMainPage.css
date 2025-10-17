@@ -1,0 +1,14 @@
+.feed-page-container {
+  display: flex;
+  flex-direction: column; /* 한 줄 정렬 */
+  align-items: center; /* 중앙 정렬 */
+  gap: 30px; /* 카드 사이 간격 */
+  padding-top: 30px;
+}
+
+/* FeedCard 자체는 이미 width: 600px 지정됨 (FeedCard.css 참고) */
+.feed-card {
+  width: 600px;
+  max-width: 90vw; /* 반응형 */
+  margin: 0 auto;
+}

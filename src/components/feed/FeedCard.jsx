@@ -5,6 +5,7 @@ import { toggleLike } from "@/api/FeedService";
 import UserInfoComponent from "./UserInfoComponent";
 import SecureImage from "./SecureImage";
 import FeedContent from "./FeedContent";
+import "@/styles/feed/FeedCard.css"; // ✅ 스타일 분리
 
 function FeedCard({ feedData, onUpdate }) {
   const {
@@ -32,42 +33,42 @@ function FeedCard({ feedData, onUpdate }) {
   };
 
   return (
-    <Card className="mb-4 shadow-sm border-0">
-      {/* 1️⃣ 작성자 정보 */}
-      <UserInfoComponent
-        writerName={writerName || "익명"}
-        profileImageUrl={null} // 추후 User 프로필 이미지 연결 시 수정
-      />
-
-      {/* 2️⃣ 이미지 표시 */}
-      {images.length > 0 &&
-        images.map((img, idx) => (
-          <SecureImage
-            key={idx}
-            src={img}
-            alt={`feed-${id}-${idx}`}
-            style={{
-              maxHeight: "600px",
-              objectFit: "cover",
-              width: "100%",
-              display: "block",
-            }}
-          />
-        ))}
-
-      {/* 3️⃣ 피드 내용 */}
-      <Card.Body className="p-3">
-        <FeedContent
-          feedData={{
-            content,
-            likeCount,
-            createdAt,
-            tags,
-          }}
-          onToggleLike={handleToggleLike}
+    <div className="feed-wrapper">
+      {" "}
+      {/* ✅ 중앙 정렬 + 고정 너비 */}
+      <Card className="feed-card shadow-sm border-0">
+        {/* 작성자 정보 */}
+        <UserInfoComponent
+          writerName={writerName || "익명"}
+          profileImageUrl={null}
         />
-      </Card.Body>
-    </Card>
+
+        {/* 이미지 표시 (contain으로 비율 유지 + 레터박스) */}
+        {images.length > 0 &&
+          images.map((img, idx) => (
+            <div key={idx} className="feed-image-wrapper">
+              <SecureImage
+                src={img}
+                alt={`feed-${id}-${idx}`}
+                className="feed-image"
+              />
+            </div>
+          ))}
+
+        {/* 본문 내용 */}
+        <Card.Body className="p-3">
+          <FeedContent
+            feedData={{
+              content,
+              likeCount,
+              createdAt,
+              tags,
+            }}
+            onToggleLike={handleToggleLike}
+          />
+        </Card.Body>
+      </Card>
+    </div>
   );
 }
 
