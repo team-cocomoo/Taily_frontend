@@ -1,0 +1,85 @@
+/* 전체 컨테이너: 헤더와 겹치지 않게 상단 여백 확보 */
+.main-content {
+  padding-top: 110px;
+  padding-bottom: 60px;
+}
+
+/* 제목 입력 */
+.title-box {
+  padding: 6px 0;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.title-box .form-control {
+  font-size: 16px;
+  padding: 10px;
+  min-height: 120px;
+  border-radius: 10px;
+}
+
+/* 내용 카드 */
+.content-box {
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 카드 헤더 */
+.card-header:first-child {
+  font-weight: bold;
+  background-color: rgba(254, 186, 23, 0.5);
+  border: none;
+  border-radius: 14px 14px 0 0;
+  border: 2px solid rgba(254, 186, 23, 0.5);
+}
+
+/* 버튼 스타일 */
+.feed-btn-cancel {
+  background-color: #6c757d;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 10px;
+}
+
+.feed-btn-upload {
+  background-color: #007bff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 10px;
+}
+
+/* 반응형 (모바일) */
+@media (max-width: 768px) {
+  .content-box {
+    margin: 0 0.5rem;
+    border-radius: 12px;
+  }
+
+  .card-header:first-child {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .feed-btn-cancel,
+  .feed-btn-upload {
+    flex: 1;
+    font-size: 0.9rem;
+    padding: 10px 0;
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 769px) {
+  .content-box {
+    margin-top: 1rem;
+  }
+
+  .feed-btn-cancel:hover {
+    background-color: #5a6268;
+  }
+
+  .feed-btn-upload:hover {
+    background-color: #0056b3;
+  }
+}
