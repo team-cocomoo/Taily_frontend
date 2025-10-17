@@ -35,7 +35,7 @@ function FeedCard({ feedData, onUpdate }) {
   return (
     <div className="feed-wrapper">
       {" "}
-      {/* ✅ 중앙 정렬 + 고정 너비 */}
+      {/* 중앙 정렬 + 고정 너비 */}
       <Card className="feed-card shadow-sm border-0">
         {/* 작성자 정보 */}
         <UserInfoComponent

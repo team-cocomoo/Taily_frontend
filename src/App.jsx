@@ -41,7 +41,6 @@ import FeedDetailPage from "./pages/feed/FeedDetailPage";
 import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 import FeedWritePage from "./pages/feed/FeedWritePage";
 
-
 // 관리자
 import AdminMainPage from "./pages/admin/AdminMainPage";
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
@@ -76,10 +75,9 @@ function App() {
 
             {/* 사용자 권한 필요 페이지 */}
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
-              <Route path="mypage/main" element={<MyPageUserInfo />} />
+              <Route path="/mypage/user" element={<MyPageUserInfo />} />
 
               {/* 펫스토리 페이지 */}
-              <Route path="/mypage/main" element={<MyPageUserInfo />} />
               <Route path="/petstory/feed" element={<FeedMainPage />} />
               <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
               <Route path="/petstory/feed/write" element={<FeedWritePage />} />
@@ -138,7 +136,6 @@ function App() {
                 element={<TailyFriendsDetailPage />}
               />
               <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
-
             </Route>
           </Route>
 

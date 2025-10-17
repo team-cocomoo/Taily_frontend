@@ -152,7 +152,7 @@ const HeaderNavbar = () => {
       {user ? (
         <>
           <span className="welcome-text">{user.nickname}님 환영합니다!</span>
-          <Link to="/mypage/main" onClick={() => setMenuOpen(false)}>
+          <Link to="/mypage/user" onClick={() => setMenuOpen(false)}>
             <button className="btn btn-outline-primary btn-sm btn-signup">
               My Page
             </button>
