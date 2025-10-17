@@ -43,7 +43,12 @@ const WalkPathWritePage = () => {
     );
 
     //이미지 추가
-    images.forEach((file) => formData.append("images", file));
+    images.forEach((img) => formData.append("images", img.data));
+
+    // 디버깅용 로그
+    for (let [key, value] of formData.entries()) {
+      console.log("FormData:", key, value);
+    }
 
     try {
       await axios.post("http://localhost:8080/api/walk-paths", formData, {
@@ -74,7 +79,7 @@ const WalkPathWritePage = () => {
           <WalkPathContent content={content} onChange={setContent} />
 
           {/* 사진 첨부 */}
-          <ImageBox images={images} setImages={setImages} />
+          <ImageBox images={images} onImageChange={setImages} />
 
           <div className="d-flex justify-content-center gap-2 mt-3">
             <Button variant="secondary" onClick={() => navigate("/walk-paths")}>

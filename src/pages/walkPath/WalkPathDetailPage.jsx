@@ -1,15 +1,15 @@
-// pages/board/PostDetailPage.jsx
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import api from "../../config/apiConfig";
-
+import { Row, Col } from "react-bootstrap";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorAlert from "../../components/common/ErrorAlert";
 import WalkPathDetailContent from "../../components/board/walkPath/WalkPathDetailContent";
-import PostCommentCard from "../../components/board/postDetail/PostDetailCommentCard";
+import WalkPathDetailCommentCard from "../../components/board/walkPath/WalkPathDetailCommentCard";
 
-const WalkPathsDetailPage = () => {
+const WalkPathDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -46,8 +46,6 @@ const WalkPathsDetailPage = () => {
       <ErrorAlert
         message={error}
         variant="danger"
-        onRetry={() => window.location.reload()}
-        onGoBack={() => navigate("/walk-paths")}
       />
     );
   if (!post)
@@ -63,21 +61,21 @@ const WalkPathsDetailPage = () => {
     <Row className="justify-content-center mt-4">
       <Col xs={12} md={10} lg={10}>
         {/* 게시글 상세 */}
-        <TailyFriendsDetailContent post={post} />
+        <WalkPathDetailContent post={post} />
 
         {/* 하단 버튼 */}
         <div className="d-flex justify-content-end mt-1 mb-4">
           <Button
             variant="outline-primary"
             size="sm"
-            onClick={() => navigate("/taily-friends")}
+            onClick={() => navigate("/walk-paths")}
           >
             목록으로
           </Button>
         </div>
 
         {/* 댓글 목록 */}
-        <PostDetailCommentCard
+        <WalkPathDetailCommentCard
           postId={id}
           comments={comments}
           setComments={setComments}
@@ -87,4 +85,4 @@ const WalkPathsDetailPage = () => {
   );
 };
 
-export default WalkPathsDetailPage;
+export default WalkPathDetailPage;
