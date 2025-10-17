@@ -90,7 +90,7 @@ const WalkDiardWritePage = () => {
 
       if (response.data.success) {
         alert("산책 일지가 작성되었습니다!");
-        navigate(`/api/walk-diaries`);
+        navigate(`/walk-diaries`);
       }
     } catch (error) {
       console.error("작성 중 오류: ", error);
