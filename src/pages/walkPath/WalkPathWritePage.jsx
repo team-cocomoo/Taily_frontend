@@ -73,7 +73,7 @@ const WalkPathWritePage = () => {
           <WalkPathTitle title={title} onChange={setTitle} />
 
           {/* 산책 경로 - 지도 API */}
-          <WalkPathMapInput onChange={setRoutes} />
+          <WalkPathMapInput mode="create" onChange={setRoutes} />
 
           {/*  내용 */}
           <WalkPathContent content={content} onChange={setContent} />
