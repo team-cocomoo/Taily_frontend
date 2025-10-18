@@ -1,59 +1,40 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import SockJS from 'sockjs-client';
-import { Client } from 'stompjs';
+import React, { useContext, useEffect, useState } from 'react';
 import AlarmBell from './AlarmBell';
 import AlarmDropdown from './AlarmDropdown';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { connectSocket, disconnectSocket } from '../../../config/socket';
 
 const AlarmSystem = () => {
     // 알림 전체 상태 관리 + WebSocket 연결
     const [alarms, setAlarms] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [showDropdown, setShowDropdown] = useState(false);
-    const { user } = useContext(AuthContext);
-    const clientRef = useRef(null);
-
+    const { user, loading  } = useContext(AuthContext);
     const token = localStorage.getItem("token");
 
-    // webSocket 연결
     useEffect(() => {
-        if (!user.id) return;
-        const socket = new SockJS(`http://localhost:8080/ws-chat`); // 백엔드 엔드포인트
-        const client = new Client({
-            webSocketFactory: () => socket,
-            reconnectDelay: 5000,   // 자동 재연결
-            debug: (str) => console.log("STOMP: ", str),
-            connectHeaders: {
-                Authorization: `Bearer ${token}`,
-            },
-            onConnect: () => {
-                console.log("Alarm WebSocket connected");
-                
-                client.subscribe(`/topic/alarm/${user.id}`, (message) => {
-                    const newAlarm = JSON.parse(message.body);
-                    console.log("📩 New Alarm:", newAlarm);
-
-                    setAlarms((prev) => [newAlarm, ...prev]);
-                    setUnreadCount((prev) => prev + 1);
-                    setShowDropdown(true); // 알림이 오면 자동으로 열기 (테스트용)
-
-                });
-            },
-            onWebSocketClose: () => console.warn("⚠️ WebSocket closed"),
-            onStompError: (frame) => console.error("❌ STOMP error:", frame),
+        console.log("🔍 [AlarmSystem] useEffect 실행", user?.publicId, token);
+        if (loading) return; // 아직 유저정보 로딩 중이면 대기
+        if (!user?.publicId || !token) return; // 로그인 안된 경우 차단
+        // webSocket 연결
+        connectSocket(token, user.publicId, (newAlarm) => {
+            console.log("📩 New Alarm:", newAlarm);
+            setAlarms((prev) => [newAlarm, ...prev]);
+            setUnreadCount((prev) => prev + 1);
+            setShowDropdown(true);
         });
 
-        client.activate();
-        clientRef.current = client;
-
+        // 언마운트 시 연결 해제
         return () => {
-            client.deactivate();
+            disconnectSocket();
         };
-    }, [user.id, token]);
+    }, [user?.publicId, loading, token]); // ✅ user.id, loading 변경 감지
 
     // 읽음 처리
     const handleAlarmClick = (id) => {
-        const updated = alarms.map((a) => (a.id === id ? { ...a, state: true } : a));
+        const updated = alarms.map((a) => 
+            (a.id === id ? { ...a, state: true } : a)
+        );
         setAlarms(updated);
         setUnreadCount(updated.filter((a) => !a.state).length);
     }
