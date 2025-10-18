@@ -1,25 +1,23 @@
-// components/feed/UserInfoComponent.jsx
-
 import React from "react";
-import { Image, Button } from "react-bootstrap";
-import { FaEllipsisV } from "react-icons/fa"; // 옵션 버튼 아이콘 (예시)
+import { Button } from "react-bootstrap";
+import { FaEllipsisV } from "react-icons/fa";
+import UserProfileImageFeed from "@/components/feed/UserProfileImageFeed"; // 추가 import
 
-// props: writerName, profileImageUrl
-function UserInfoComponent({ writerName, profileImageUrl }) {
-  // 프로필 이미지 URL이 없을 경우 사용할 기본 이미지 URL (가정)
-  const defaultProfile = "/path/to/default/profile.jpg";
-
+/**
+ * 피드 상단 유저 정보 컴포넌트
+ * - 내부에서 UserProfileImageFeed를 통해 로그인 유저의 프로필 이미지 자동 표시
+ *
+ * @param {string} writerName - 작성자 닉네임
+ */
+export default function UserInfoComponent({ writerName }) {
   return (
-    // p-3은 Bootstrap Padding Utility
     <div className="d-flex align-items-center justify-content-between p-3">
       <div className="d-flex align-items-center">
-        {/* 프로필 이미지 */}
-        <Image
-          src={profileImageUrl || defaultProfile}
-          alt={`${writerName} 프로필`}
-          roundedCircle
-          style={{ width: "40px", height: "40px", objectFit: "cover" }}
-          className="me-3"
+        {/* ✅ JWT 인증 프로필 이미지 */}
+        <UserProfileImageFeed
+          size={40}
+          alt={`${writerName} 프로필 이미지`}
+          style={{ marginRight: "12px" }}
         />
 
         {/* 작성자 닉네임 */}
@@ -33,5 +31,3 @@ function UserInfoComponent({ writerName, profileImageUrl }) {
     </div>
   );
 }
-
-export default UserInfoComponent;

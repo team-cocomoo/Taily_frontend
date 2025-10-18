@@ -45,7 +45,7 @@ export default function FeedWritePage() {
       setLoading(true);
       await createFeed(formData); // axios가 boundary 포함 헤더를 자동 설정
       alert("피드가 등록되었습니다!");
-      window.location.href = "/";
+      window.location.href = "/petstory/feed";
     } catch (err) {
       console.error("피드 등록 실패:", err);
       alert("등록 실패: 다시 시도해주세요.");
