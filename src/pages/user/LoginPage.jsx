@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/user/LoginPage.css";
 import tailylogo from "../../assets/image/tailylogo.svg";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setUser } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,7 +41,8 @@ const LoginPage = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const user = userRes.data.data; // UserProfileResponseDto 구조 확인 필요
+      const user = userRes.data; // 서버에서 받은 유저 정보
+      setUser(user); // AuthContext 상태 즉시 업데이트 (헤더 반영됨)
 
       // 로그인 성공 → 마이페이지 이동
       navigate("/");

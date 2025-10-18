@@ -28,8 +28,23 @@ const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  // 로그아웃 함수 추가
+  const logout = async () => {
+    try {
+      // 서버 로그아웃 (JWT 블랙리스트 등록)
+      await api.post("/api/users/logout");
+    } catch (err) {
+      console.warn("서버 로그아웃 실패:", err);
+    } finally {
+      // 로컬 토큰 삭제
+      localStorage.removeItem("token");
+      // 사용자 상태 초기화
+      setUser(null);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider value={{ user, setUser, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -14,19 +14,22 @@ const WalkPathMainPage = () => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false); // 더보기 버튼 표시
-  const [totalCount, setTotalCount] = useState(0); //전체 게시글 수
+  const [totalCount, setTotalCount] = useState(0); // 전체 게시글 수
   const size = 6; // 한 페이지 게시글 수
 
   const fetchPosts = async (pageNum = 1) => {
     try {
       setLoading(true);
-      const response = await api.get("/api/walk-paths", {
+      const response = await api.get("http://localhost:8080/api/walk-paths", {
         params: { page: pageNum, size },
       });
 
+      console.log("API 응답:", response.data);
+      console.log("게시글 목록:", response.data?.data);
+
       // 백엔드에서 totalCount와 data를 같이 내려줌
-      const data = response.data?.data?.data || [];
-      const total = response.data?.data?.totalCount || 0;
+      const data = response.data?.data || [];
+      const total = Array.isArray(data) ? data.length : 0;
 
       if (pageNum === 1) {
         setPosts(data);
@@ -78,6 +81,7 @@ const WalkPathMainPage = () => {
       <br />
       {/* 게시물을 리스트 형식으로 출력 */}
       <PostListGroup items={posts} onItemClick={handleItemClick} />
+
       {hasMore && (
         <div className="text-center my-4">
           <Button onClick={handleLoadMore}>더보기</Button>

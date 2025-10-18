@@ -6,6 +6,7 @@ import logo from "../../assets/image/tailylogo.png";
 import hamburgerIcon from "../../assets/image/hamburger-menu-icon.png";
 
 import "../../styles/HeaderNavbar.css";
+import AlarmSystem from "./alarm/AlarmSystem";
 
 const HeaderNavbar = () => {
   const location = useLocation();
@@ -150,7 +151,8 @@ const HeaderNavbar = () => {
     <div className="navbar-actions">
       {user ? (
         <>
-          <span className="welcome-text">{user.nickname}님 환영합니다!</span>
+          {/*<span className="welcome-text">{user.nickname}님 환영합니다!</span>*/}
+          <AlarmSystem />
           <Link to="/mypage/main" onClick={() => setMenuOpen(false)}>
             <button className="btn btn-outline-primary btn-sm btn-signup">
               My Page

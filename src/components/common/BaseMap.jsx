@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-const { kakao } = window;
 
 /**
  * BaseMapInput (공통 지도 컴포넌트)
@@ -12,16 +11,34 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const markersRef = useRef([]);
+  const kakaoApiKey = import.meta.env.VITE_KAKAO_API_KEY;
+
+  // ✅ Kakao SDK 동적 로드
+  useEffect(() => {
+    const existingScript = document.getElementById("kakao-map-sdk");
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.id = "kakao-map-sdk";
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoApiKey}&autoload=false&libraries=services`;
+      script.async = true;
+      document.head.appendChild(script);
+      script.onload = () => window.kakao.maps.load(initMap);
+    } else {
+      if (window.kakao?.maps) window.kakao.maps.load(initMap);
+    }
+  }, []);
 
   // ✅ 지도 초기화
-  useEffect(() => {
+  const initMap = () => {
     const container = mapRef.current;
-    const mapInstance = new kakao.maps.Map(container, {
-      center: new kakao.maps.LatLng(37.566826, 126.9786567), // 서울 시청 기준
+    if (!container || !window.kakao) return;
+
+    const mapInstance = new window.kakao.maps.Map(container, {
+      center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
       level: 4,
     });
     setMap(mapInstance);
-  }, []);
+  };
 
   // ✅ 마커 표시 로직
   useEffect(() => {
@@ -34,7 +51,7 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
     markersRef.current = [];
 
     const bounds = new kakao.maps.LatLngBounds();
-    let completed=0;
+    let completed = 0;
 
     markersData.forEach((item, idx) => {
       if (!item.address || item.address.trim() === "") return;
@@ -67,8 +84,8 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
         }
         // 모든 검색이 끝난 뒤 한번만 setBounds 실행
         completed++;
-        if(completed === markersData.length){
-          if(!bounds.isEmpty())map.setBounds(bounds);
+        if (completed === markersData.length) {
+          if (!bounds.isEmpty()) map.setBounds(bounds);
         }
       });
     });

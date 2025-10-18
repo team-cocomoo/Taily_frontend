@@ -1,15 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Card, Dropdown, Row, Col } from "react-bootstrap";
 import "../../../styles/walkDiary/WalkDiaryDetail.css";
 import { AuthContext } from "../../../contexts/AuthContext"
 import meatballIcon from "../../../assets/image/meatball-icon.png";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../config/apiConfig";
+import ShareModal from "../ShareModal";
 
 const WalkDiaryDetailContent = ({ walkDiary }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useContext(AuthContext);
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  const handleOpenShareModal = () => setShowShareModal(true);
+  const handleCloseShareModal = () => setShowShareModal(false);
 
   // 로그인 + 작성자 본인일 경우만 수정/삭제 노출
   const isOwner = user && user.username === walkDiary.username;
@@ -56,6 +61,8 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
             <h2>오늘의 산책 일지</h2>
           </Col>
           <Col className="d-flex justify-content-end">
+          {user && isOwner && (
+
             <Dropdown className="profile-dropdown">
               <Dropdown.Toggle
               variant="light"
@@ -65,13 +72,12 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
               >
                 <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
               </Dropdown.Toggle>
-              {/* 나중에 로그인 했을때는 수정,삭제가 뜨게 */}
               <Dropdown.Menu className="dropdown-menu">
-                {isOwner ? (
-                  <>
                     <Dropdown.Item
                     onClick={() => 
-                      navigate(`/walk-diaries/edit/${id}`, { state: { clickedDate: walkDiary.date } })
+                      navigate(`/walk-diaries/edit/${id}`, { 
+                        state: { clickedDate: walkDiary.date } 
+                      })
                     }
                     className="dropdown-item"
                     >
@@ -80,23 +86,21 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
                     <Dropdown.Item onClick={handleDelete}>
                       삭제
                     </Dropdown.Item>
-                  </>
-                ) : (
-                  <>
-                    <Dropdown.Item
-                      onClick={() => alert("신고")}
-                      className="dropdown-item"
-                    >
-                      신고
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={() => alert("공유")}>
+                    
+                    <Dropdown.Item onClick={handleOpenShareModal}>
                       공유
                     </Dropdown.Item>
-                  </>
-                )}
-                
               </Dropdown.Menu>
+
+              {/* 공유 모달 */}
+              <ShareModal 
+                show={showShareModal}
+                handleClose={handleCloseShareModal}
+                postTitle={walkDiary.title || "오늘의 산책 일지"}
+                postUrl={window.location.href}
+              />
             </Dropdown>
+          )}
           </Col>
         </Row>
       </Card.Header>
