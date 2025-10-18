@@ -7,6 +7,7 @@ import TailyFriendsTitle from "../../components/board/tailyFriends/TailyFriendsT
 import TailyFriendsWriteMap from "../../components/board/tailyFriends/TailyFriendsWriteMap";
 import TailyFriendsContent from "../../components/board/tailyFriends/TailyFriendsContent";
 import TailyFriendsImageBox from "../../components/board/tailyFriends/TailyFriendsImageBox";
+import ImageBox from "@/components/board/ImageBox.jsx";
 
 const TailyFriendsWritePage = () => {
   const navigate = useNavigate();
@@ -15,32 +16,41 @@ const TailyFriendsWritePage = () => {
   const [address, setAddress] = useState("");
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]); // 이미지 파일 리스트
-
+  const handleImageChange = (imgList) => setImages(imgList);
   const handleSubmit = async () => {
     if (!title.trim() || !address.trim() || !content.trim()) {
       alert("제목, 주소, 내용은 반드시 입력해야 합니다.");
       return;
     }
-    
-    const token = localStorage.getItem("token"); // 로그인 시 저장된 토큰
-    console.log("토큰: " + token);
+
+    const token = localStorage.getItem("token");
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("address", address);
-    formData.append("content", content);
-    images.forEach((file, idx) => formData.append(`images[${idx}]`, file));
+
+    // JSON 문자열 형태로 묶어서 보냄
+    const postData = {
+      title,
+      address,
+      content,
+      tableTypeId: 5,
+    };
+    formData.append(
+      "post",
+      new Blob([JSON.stringify(postData)], { type: "application/json" })
+    );
+
+    // 이미지 파일들 추가
+    images.forEach((file) => {
+      formData.append("images", file.data); // file.data에 실제 File 객체가 들어있음
+    });
 
     try {
-      axios.post(
+      const res = await axios.post(
         "http://localhost:8080/api/taily-friends",
-        {
-          title,
-          address,
-          content,
-        },
+        formData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -64,8 +74,7 @@ const TailyFriendsWritePage = () => {
       <TailyFriendsContent content={content} setContent={setContent} />
 
       {/* 사진 첨부 */}
-      <TailyFriendsImageBox images={images} setImages={setImages} />
-
+      <ImageBox images={[]} onImageChange={handleImageChange} />
       <div className="d-flex justify-content-center gap-2 mt-3">
         <Button variant="secondary" onClick={() => navigate("/taily-friends")}>
           목록
