@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 
-const ReportInfoModal = ({ show, handleClose, report, onSuspendUser }) => {
+const AdminReportModal = ({ show, handleClose, report, onSuspendUser }) => {
   const [days, setDays] = useState(1); // 기본 제재 일수 1일
 
   if (!report) return null;
@@ -68,4 +68,4 @@ const ReportInfoModal = ({ show, handleClose, report, onSuspendUser }) => {
   );
 };
 
-export default ReportInfoModal;
+export default AdminReportModal;
