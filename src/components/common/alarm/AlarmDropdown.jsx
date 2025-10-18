@@ -31,6 +31,7 @@ const AlarmDropdown = ({ alarms, onClickAlarm, setShowDropdown }) => {
                             className={alarm.state ? "read" : "unread"}
                         >
                             <strong>{alarm.sender}</strong> {alarm.content}
+                            <small>{alarm.createdAt}</small>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
