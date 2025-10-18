@@ -110,7 +110,13 @@ const HeaderNavbar = () => {
           </Link>
         </div>
       </div>
-
+      <Link
+        to="/facilities"
+        className="nav-link"
+        onClick={() => setMenuOpen(false)}
+      >
+        우리동네정보
+      </Link>
       <div className="dropdown">
         <span className="nav-link" onClick={() => toggleDropdown("center")}>
           고객센터
@@ -135,13 +141,6 @@ const HeaderNavbar = () => {
         </div>
       </div>
 
-      <Link
-        to="/facilities"
-        className="nav-link"
-        onClick={() => setMenuOpen(false)}
-      >
-        우리동네정보
-      </Link>
       <Link to="/event" className="nav-link" onClick={() => setMenuOpen(false)}>
         이벤트
       </Link>

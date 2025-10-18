@@ -46,14 +46,11 @@ const ChatRoomDetailPage = () => {
   useEffect(() => {
     if (!user) return;
 
-    const socket = new SockJS("/ws");
+    const socket = new SockJS(`http://localhost:8080/ws-chat?token=${token}`);
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       debug: (str) => console.log("STOMP:", str),
-      connectHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
     });
 
     client.onConnect = () => {

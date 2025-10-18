@@ -1,0 +1,23 @@
+.report-table {
+  width: 100%;
+  text-align: center;
+}
+
+.report-table td,
+.report-table th {
+  white-space: nowrap; /* 한 줄만 표시 */
+  overflow: hidden; /* 넘치는 부분 숨김 */
+  text-overflow: ellipsis; /* ... 표시 */
+  vertical-align: middle;
+  text-align: center;
+}
+
+.report-table td.truncate {
+  max-width: 300px; /* 내용 칸 너비 제한 */
+}
+
+.report-table td:nth-child(2),
+.report-table td:nth-child(3) {
+  max-width: 120px;
+}
+
