@@ -1,12 +1,18 @@
-import React from "react";
-import { Form, Card, Row, Col } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState, useEffect } from "react";
+import { Card } from "react-bootstrap";
 import MyEditor from "../../MyEditor";
 
-const WalkPathContent = ({ content, setContent }) => {
-  //에디터의 입력값이 바뀔때마다 상위로 값을 전달
+const WalkPathContent = ({ content, onChange }) => {
+  const [localValue, setLocalValue] = useState("");
+
+  // 처음 페이지 로드될 때 한 번만 초기화
+  useEffect(() => {
+    setLocalValue(content || ""); // 조건문 없이 한 번만
+  }, []); // ✅ dependency 없앰
+
   const handleEditorChange = (value) => {
-    setContent(value);
+    setLocalValue(value); // 내부 값 갱신
+    onChange(value); // 부모에도 전달
   };
 
   return (
@@ -14,10 +20,10 @@ const WalkPathContent = ({ content, setContent }) => {
       <Card.Header>내용</Card.Header>
       <Card.Body>
         <MyEditor
-          value={content} // 상위에서 내려준 값
-          onChange={handleEditorChange} // 상위로 다시 전달
+          value={localValue}
+          onChange={handleEditorChange}
           placeholder="내용을 적으세요"
-        />  
+        />
       </Card.Body>
     </Card>
   );

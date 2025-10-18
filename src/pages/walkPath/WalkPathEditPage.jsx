@@ -49,21 +49,44 @@ const WalkPathEditPage = () => {
     }
 
     const token = localStorage.getItem("token");
+    // ✅ FormData 객체 생성
+    const formData = new FormData();
+
+    // Json Data(requestDto) 추가
+    const requestDto = {
+      title,
+      content,
+      routes: routes.map((addr, idx) => ({
+        address: addr,
+        orderNo: idx + 1,
+      })),
+    };
+
+    // Blob으로 감싸서 JSON 형태로 추가
+    formData.append(
+      "requestDto",
+      new Blob([JSON.stringify(requestDto)], { type: "application/json" })
+    );
+
+    // ✅ 2) 새 이미지 파일 추가
+    // 만약 사용자가 새로운 이미지를 선택했다면
+    images.forEach((file) => {
+      if (file instanceof File) {
+        formData.append("newImages", file);
+      }
+    });
+
     try {
       await axios.patch(
         `http://localhost:8080/api/walk-paths/${id}`,
+        formData,
         {
-          title,
-          routes: routes.map((addr, idx) => ({
-            address: addr,
-            orderNo: idx + 1,
-          })),
-          content,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
+
       alert("게시글 수정 완료!");
       navigate(`/walk-paths/${id}`);
     } catch (err) {
@@ -76,7 +99,7 @@ const WalkPathEditPage = () => {
     <div className="row justify-content-center">
       <WalkPathTitle title={title} onChange={setTitle} />
       <WalkPathMapInput mode="edit" routes={routes} onChange={setRoutes} />
-      <WalkPathContent content={content} setContent={setContent} />
+      <WalkPathContent content={content} onChange={setContent} />
       <WalkPathImageBoxEdit images={images} setImages={setImages} />
 
       <div className="d-flex justify-content-center gap-2 mt-3">
