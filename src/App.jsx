@@ -17,6 +17,9 @@ import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/user/LoginPage";
 import RegisterPage from "./pages/user/RegisterPage";
 import MyPageUserInfo from "./pages/myPage/MyPageUserInfo";
+import PasswordVerifyPage from "@/pages/mypage/PasswordVerifyPage";
+import MyPageEdit from "@/pages/mypage/MyPageEdit";
+import AccountDeleteSuccessPage from "@/pages/mypage/AccountDeleteSuccessPage";
 
 import WalkDiaryCalendarPage from "./pages/walkDiary/WalkDiaryCalendarPage";
 import WalkDiaryWritePage from "./pages/walkDiary/WalkDiaryWritePage";
@@ -75,6 +78,15 @@ function App() {
             {/* 사용자 권한 필요 페이지 */}
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="/mypage/user" element={<MyPageUserInfo />} />
+              <Route path="/mypage/user/edit" element={<MyPageEdit />} />
+              <Route
+                path="/mypage/password-verify"
+                element={<PasswordVerifyPage />}
+              />
+              <Route
+                path="/mypage/delete-success"
+                element={<AccountDeleteSuccessPage />}
+              />
 
               {/* 펫스토리 페이지 */}
               <Route path="/petstory/feed" element={<FeedMainPage />} />

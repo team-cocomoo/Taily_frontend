@@ -1,8 +1,11 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
 import "@/styles/mypage/UserInfoSection.css";
+import { useNavigate } from "react-router-dom";
 
 const UserInfoSection = ({ userInfo }) => {
+  const navigate = useNavigate();
+
   if (!userInfo) return null; // 데이터 없을 때 안전 처리
 
   return (
@@ -45,7 +48,7 @@ const UserInfoSection = ({ userInfo }) => {
         <Button
           variant="warning"
           className="userinfo-edit-btn"
-          onClick={() => console.log("수정하기 클릭")}
+          onClick={() => navigate("/mypage/password-verify")}
         >
           수정하기
         </Button>
