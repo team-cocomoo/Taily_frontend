@@ -18,7 +18,7 @@ const AlarmSystem = () => {
     // webSocket 연결
     useEffect(() => {
         if (!user.id) return;
-        const socket = new SockJS("/ws-chat");  // 백엔드 엔드포인트
+        const socket = new SockJS(`http://localhost:8080/ws-chat`); // 백엔드 엔드포인트
         const client = new Client({
             webSocketFactory: () => socket,
             reconnectDelay: 5000,   // 자동 재연결
@@ -35,6 +35,8 @@ const AlarmSystem = () => {
 
                     setAlarms((prev) => [newAlarm, ...prev]);
                     setUnreadCount((prev) => prev + 1);
+                    setShowDropdown(true); // 알림이 오면 자동으로 열기 (테스트용)
+
                 });
             },
             onWebSocketClose: () => console.warn("⚠️ WebSocket closed"),

@@ -63,10 +63,12 @@ const LikeButton = ({ postId, tableTypeId }) => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      console.log("좋아요 응답:", res);
 
       const { liked: newLiked, likeCount: newLikeCount } = res.data.data;
       setLiked(newLiked);
       setLikeCount(newLikeCount);
+
     } catch (err) {
       console.error("좋아요 처리 실패:", err);
       alert("좋아요 처리 실패");
