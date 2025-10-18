@@ -48,7 +48,7 @@ const UserInfoSection = ({ userInfo }) => {
         <Button
           variant="warning"
           className="userinfo-edit-btn"
-          onClick={() => navigate("/mypage/user/verify")}
+          onClick={() => navigate("/mypage/password-verify")}
         >
           수정하기
         </Button>
