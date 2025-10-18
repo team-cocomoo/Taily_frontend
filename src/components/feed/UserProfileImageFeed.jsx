@@ -11,7 +11,7 @@ import SecureImage from "@/components/common/SecureImage"; // 기존 JWT 이미�
  * @param {string} alt - 대체 텍스트
  * @param {object} style - 추가 커스텀 스타일
  */
-export default function UserProfileImage({
+export default function UserProfileImageFeed({
   size = 120,
   alt = "프로필 이미지",
   style,
