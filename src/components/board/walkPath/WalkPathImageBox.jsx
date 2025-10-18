@@ -14,28 +14,28 @@ const WalkPathImageBox = ({ images = [] }) => {
   }
 
   return (
-    <Card className="mb-4 diary-box">
-      <Card.Header>사진</Card.Header>
-      <Card.Body className="d-flex flex-wrap justify-content-start gap-3">
-        {images.map((img, index) => {
-          // ✅ 문자열이면 그대로, 객체면 filePath 사용
-          const src = typeof img === "string" ? img : img.filePath;
-
-          return (
-            <SecureImage
-              key={index}
-              src={src}
-              alt={`사진 ${index + 1}`}
-              style={{
-                width: "250px",
-                height: "250px",
-                objectFit: "cover",
-              }}
-            />
-          );
-        })}
-      </Card.Body>
-    </Card>
+    <div>
+      {images.map((img, index) => {
+        // 문자열이면 그대로, 객체면 filePath 사용
+        const src = typeof img === "string" ? img : img.filePath;
+        return (
+          <SecureImage
+            key={index}
+            src={src}
+            alt={`사진 ${index + 1}`}
+            style={{
+              width: "40%", // 너비 비율 (반응형)
+              maxWidth: "800px", // 최대 너비 제한
+              height: "auto", // 비율 유지
+              borderRadius: "20px", // 둥근 모서리
+              display: "block",
+              margin: "0 auto", 
+              objectFit: "cover", // 잘리는 방식
+            }}
+          />
+        );
+      })}
+    </div>
   );
 };
 
