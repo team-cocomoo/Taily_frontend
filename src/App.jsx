@@ -50,7 +50,6 @@ import FaqPage from "./pages/cs/FaqPage";
 import AdminFaqPage from "./pages/admin/faq/AdminFaqPage";
 import AdminFaqDetailPage from "./pages/admin/faq/AdminFaqDetailPage";
 import { Users } from "lucide-react";
-import Reports from "./components/admin/Reports";
 
 // 테스트
 import SingleFeedUploader from "./tests/pages/SingleFeedUploader";

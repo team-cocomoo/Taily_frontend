@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Card, Table, Pagination } from "react-bootstrap";
 import api from "../../config/apiConfig";
 import UserSearchBar from "./UserSearchBar";
-import ReportInfoModal from "./ReportInfoModal";
+import ReportInfoModal from "./AdminReportModal";
+import "../../styles/admin/Reports.css";
 
-const Reports = () => {
+const AdminReportList = () => {
   const [reportList, setReportList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [keyword, setKeyword] = useState("");
@@ -100,19 +101,22 @@ const Reports = () => {
       <UserSearchBar value={keyword} onSearch={handleSearch} />
 
       <div className="report-list">
-        {reportList.length === 0 ? (
-          <p className="text-center">신고가 없습니다.</p>
-        ) : (
-          <Card className="p-3 w-100">
-            <Table hover responsive style={{ minWidth: "600px" }}>
+        <Card
+          className="p-3 w-100"
+          style={{ minWidth: "800px", minHeight: "300px" }}
+        >
+          {reportList.length === 0 ? (
+            <p className="text-center mb-0">신고가 없습니다.</p>
+          ) : (
+            <Table hover responsive className="report-table">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>신고자</th>
-                  <th>피신고자</th>
-                  <th>내용</th>
-                  <th>상태</th>
-                  <th>생성일</th>
+                  <th style={{ width: "5%" }}>#</th>
+                  <th style={{ width: "15%" }}>신고자</th>
+                  <th style={{ width: "15%" }}>피신고자</th>
+                  <th style={{ width: "40%" }}>내용</th>
+                  <th style={{ width: "10%" }}>상태</th>
+                  <th style={{ width: "15%" }}>생성일</th>
                 </tr>
               </thead>
               <tbody>
@@ -125,7 +129,7 @@ const Reports = () => {
                     <td>{index + 1}</td>
                     <td>{report.reporterNickname}</td>
                     <td>{report.reportedNickname}</td>
-                    <td>{report.content}</td>
+                    <td className="truncate">{report.content}</td>
                     <td>
                       {report.state === "PENDING"
                         ? "처리 전"
@@ -144,14 +148,14 @@ const Reports = () => {
                 ))}
               </tbody>
             </Table>
+          )}
 
-            {totalPages >= 1 && (
-              <Pagination className="justify-content-center mt-3">
-                {paginationItems}
-              </Pagination>
-            )}
-          </Card>
-        )}
+          {totalPages >= 1 && reportList.length > 0 && (
+            <Pagination className="justify-content-center mt-3">
+              {paginationItems}
+            </Pagination>
+          )}
+        </Card>
       </div>
 
       <ReportInfoModal
@@ -164,4 +168,4 @@ const Reports = () => {
   );
 };
 
-export default Reports;
+export default AdminReportList;

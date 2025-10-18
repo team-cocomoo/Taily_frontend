@@ -9,10 +9,10 @@ const AdminInquiryList = () => {
   const [inquiryList, setInquiryList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [keyword, setKeyword] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
-  const pageSize = 10;
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [selectedInquiry, setSelectedInquiry] = useState(null);
 
@@ -24,19 +24,15 @@ const AdminInquiryList = () => {
       if (searchKeyword.trim() !== "") params.keyword = searchKeyword.trim();
 
       const response = await api.get("/api/inquiries", { params });
+
+      // ASK(질문)만 필터링
       const allInquiries =
         response.data.data.inquiries || response.data.data.content || [];
 
-      // ASK(질문)만 필터링
       const filtered = allInquiries.filter((inq) => inq.type === "ASK");
 
-      // 페이징 적용 (프론트 단에서)
-      const startIndex = (page - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
-      const paginated = filtered.slice(startIndex, endIndex);
-
-      setInquiryList(paginated);
-      setTotalCount(filtered.length);
+      setInquiryList(filtered);
+      setTotalCount(filtered.length); // 전체 개수도 질문만 기준으로 표시
       setCurrentPage(page);
     } catch (error) {
       console.error("문의 리스트 조회 실패", error);
@@ -46,18 +42,27 @@ const AdminInquiryList = () => {
   };
 
   useEffect(() => {
-    fetchInquiries(keyword, currentPage);
-  }, [currentPage]);
+    fetchInquiries();
+  }, []);
 
   const handleSearch = (searchKeyword) => {
     setKeyword(searchKeyword);
     fetchInquiries(searchKeyword, 1);
   };
 
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber < 1 || pageNumber > Math.ceil(totalCount / pageSize)) return;
-    setCurrentPage(pageNumber);
-  };
+  const totalPages = Math.ceil(totalCount / pageSize);
+  const paginationItems = [];
+  for (let number = 1; number <= totalPages; number++) {
+    paginationItems.push(
+      <Pagination.Item
+        key={number}
+        active={number === currentPage}
+        onClick={() => fetchInquiries(keyword, number)}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
 
   const handleInquiryClick = (inquiry) => {
     setSelectedInquiry(inquiry);
@@ -68,8 +73,6 @@ const AdminInquiryList = () => {
     setShowModal(false);
     setSelectedInquiry(null);
   };
-
-  const totalPages = Math.ceil(totalCount / pageSize);
 
   if (loading) return <p>문의 리스트를 불러오는 중...</p>;
 
@@ -88,12 +91,12 @@ const AdminInquiryList = () => {
             <Table hover responsive className="inquiry-table">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>작성자</th>
-                  <th>제목</th>
-                  <th>내용</th>
-                  <th>상태</th>
-                  <th>작성일</th>
+                  <th style={{ width: "5%" }}>#</th>
+                  <th style={{ width: "15%" }}>작성자</th>
+                  <th style={{ width: "20%" }}>제목</th>
+                  <th style={{ width: "30%" }}>내용</th>
+                  <th style={{ width: "15%" }}>상태</th>
+                  <th style={{ width: "15%" }}>작성일</th>
                 </tr>
               </thead>
               <tbody>
@@ -103,7 +106,7 @@ const AdminInquiryList = () => {
                     onClick={() => handleInquiryClick(inquiry)}
                     style={{ cursor: "pointer" }}
                   >
-                    <td>{(currentPage - 1) * pageSize + index + 1}</td>
+                    <td>{index + 1}</td>
                     <td className="truncate">{inquiry.nickname}</td>
                     <td className="truncate">{inquiry.title}</td>
                     <td className="truncate">{inquiry.content}</td>
@@ -126,43 +129,17 @@ const AdminInquiryList = () => {
               </tbody>
             </Table>
           )}
-
-          {/* 페이지네이션 */}
-          {totalPages >= 1 && (
+          <AdminInquiryModal
+            show={showModal}
+            handleClose={handleCloseModal}
+            inquiry={selectedInquiry}
+          />
+          {totalPages >= 1 && inquiryList.length > 0 && (
             <Pagination className="justify-content-center mt-3">
-              <Pagination.Prev
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                Prev
-              </Pagination.Prev>
-
-              {[...Array(totalPages)].map((_, i) => (
-                <Pagination.Item
-                  key={i + 1}
-                  active={i + 1 === currentPage}
-                  onClick={() => handlePageChange(i + 1)}
-                >
-                  {i + 1}
-                </Pagination.Item>
-              ))}
-
-              <Pagination.Next
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                Next
-              </Pagination.Next>
+              {paginationItems}
             </Pagination>
           )}
         </Card>
-
-        {/* 문의 상세 모달 */}
-        <AdminInquiryModal
-          show={showModal}
-          handleClose={handleCloseModal}
-          inquiry={selectedInquiry}
-        />
       </div>
     </>
   );

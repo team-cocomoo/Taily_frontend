@@ -1,0 +1,25 @@
+.inquiry-table {
+  width: 100%;
+  text-align: center; 
+}
+.inquiry-table td,
+.inquiry-table th {
+  white-space: nowrap; /* 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 부분 숨김 */
+  text-overflow: ellipsis; /* ... 처리 */
+  vertical-align: middle;
+  text-align: center;
+}
+
+.inquiry-table td.truncate {
+  max-width: 250px; /* 긴 내용 제한 */
+}
+
+.inquiry-table td:nth-child(2),
+.inquiry-table td:nth-child(3) {
+  max-width: 150px;
+}
+
+.inquiry-table td:nth-child(4) {
+  max-width: 300px;
+}
