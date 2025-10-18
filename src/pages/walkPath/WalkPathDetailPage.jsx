@@ -8,11 +8,11 @@ import ErrorAlert from "../../components/common/ErrorAlert";
 import WalkPathDetailContent from "../../components/board/walkPath/WalkPathDetailContent";
 import WalkPathDetailCommentCard from "../../components/board/walkPath/WalkPathDetailCommentCard";
 import WalkPathImageBox from "../../components/board/walkPath/WalkPathImageBox";
-import WalkPathMap from "../../components/board/walkPath/WalkPathMap";
+import WalkPathMapView from "../../components/board/walkPath/WalkPathMapView";
 
 const WalkPathDetailPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,14 +58,9 @@ const WalkPathDetailPage = () => {
   return (
     <Row className="justify-content-center mt-4">
       <Col xs={12} md={10} lg={10}>
-        {/* 이미지 표시 */}
-        <WalkPathImageBox images={post.images || []} />
 
-        {/* 게시글 상세 */}
+        {/* 게시글 상세 (제목, 이미지, 내용, 지도, 좋아요)*/}
         <WalkPathDetailContent post={post} />
-
-        {/* 지도 표시 */}
-        {/* <WalkPathMap/> */}
 
         {/* 하단 버튼 */}
         <div className="d-flex justify-content-end mt-1 mb-4">

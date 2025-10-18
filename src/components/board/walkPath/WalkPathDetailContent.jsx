@@ -3,11 +3,13 @@ import { Card, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthContext";
+import WalkPathImageBox from "../../../components/board/walkPath/WalkPathImageBox";
+import WalkPathMapView from "../../../components/board/walkPath/WalkPathMapView";
 import "../../../styles/postDetail/PostDetailContentCard.css";
 
 import userIcon from "../../../assets/image/user-icon.png";
 import meatballIcon from "../../../assets/image/meatball-icon.png";
-import PostDetailMap from "../postDetail/PostDetailMap";  
+import PostDetailMap from "../postDetail/PostDetailMap";
 import UserPopover from "../../common/UserPopover";
 import LikeButton from "../LikeButton";
 import ReportModal from "../ReportModal";
@@ -75,9 +77,7 @@ const WalkPathDetailContent = ({ post }) => {
                   {isAuthor ? (
                     <>
                       <Dropdown.Item
-                        onClick={() =>
-                          navigate(`/walk-paths/edit/${post.id}`)
-                        }
+                        onClick={() => navigate(`/walk-paths/edit/${post.id}`)}
                       >
                         수정하기
                       </Dropdown.Item>
@@ -117,16 +117,18 @@ const WalkPathDetailContent = ({ post }) => {
           </div>
         </Card.Header>
         <Card.Body>
+          {/* 이미지 표시 */}
+          <WalkPathImageBox images={post.images || []} />
+          
+          {/* 게시글 내용 */}
           <div
             className="post-detail-content"
-            style={{ whiteSpace: "pre-wrap", minHeight: "200px" }}
             dangerouslySetInnerHTML={{ __html: post.content }}
           ></div>
-          <div className="post-detail-address">
-            <hr className="mx-auto w-50 mb-4" />
-            {post.address && <PostDetailMap addresses={post.address} />}
-          </div>
 
+          {/* 게시글 지도 */}
+          <WalkPathMapView routes={post.routes}/> 
+          
           <div className="d-flex justify-content-center align-items-center mt-3">
             <LikeButton
               postId={post.id}
