@@ -17,7 +17,7 @@ const AdminInquiryModal = ({ show, handleClose, inquiry }) => {
   // 이미 등록된 답변 조회
   const fetchReply = async (parentId) => {
     try {
-      const response = await api.get(`/api/inquiries/${parentId}/reply`);
+      const response = await api.get(`/api/admin/inquiries/${parentId}/reply`);
       setReply(response.data.data); // InquiryResponseDto 형태
     } catch (error) {
       // 404면 답변이 없는 경우
