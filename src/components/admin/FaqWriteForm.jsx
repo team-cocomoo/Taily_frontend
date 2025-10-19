@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import api from '../../config/apiConfig';
+import { useNavigate } from 'react-router-dom';
 
 const FaqWriteForm = ({ initialData, isEditMode, onSuccess }) => {
     const [loading, setLoading] = useState(false);
@@ -9,7 +10,8 @@ const FaqWriteForm = ({ initialData, isEditMode, onSuccess }) => {
         title: "",
         content: "",
     });
-    
+    const navigate = useNavigate();
+
     // 수정 모드일 경우 기존 데이터 채우기
     useEffect(() => {
         console.log("초기 데이터:", initialData);
@@ -63,38 +65,49 @@ const FaqWriteForm = ({ initialData, isEditMode, onSuccess }) => {
     }
     return (
         <>
-            <Form onSubmit={handleSubmit} className="p-4 bg-white shadow-sm rounded-3">
-                <Form.Group  className="mb-3" controlId="title">
-                    <Form.Label>제목</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        name="title"
-                        value={form.title} 
-                        onChange={handleChange} 
-                        placeholder='FAQ 제목을 입력하세요'
-                        required 
-                    />
+            <div className="p-4 bg-white shadow-sm rounded-3">
+            <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="title">
+                <Form.Label>제목</Form.Label>
+                <Form.Control
+                    type="text"
+                    name="title"
+                    value={form.title}
+                    onChange={handleChange}
+                    placeholder="FAQ 제목을 입력하세요"
+                    required
+                />
                 </Form.Group>
+
                 <Form.Group className="mb-3" controlId="content">
-                    <Form.Label>내용</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows={6}
-                        name="content"
-                        value={form.content}
-                        onChange={handleChange}
-                        placeholder="FAQ 내용을 입력하세요"
-                        required
-                    />
+                <Form.Label>내용</Form.Label>
+                <Form.Control
+                    as="textarea"
+                    rows={6}
+                    name="content"
+                    value={form.content}
+                    onChange={handleChange}
+                    placeholder="FAQ 내용을 입력하세요"
+                    required
+                />
                 </Form.Group>
 
                 {error && <p className="text-danger text-center mt-2">{error}</p>}
-
-                <Button variant="success" type="submit" disabled={loading}>
-                    {loading ? "처리 중..." : isEditMode ? "수정완료" : "작성완료"}
-                </Button>
             </Form>
-            
+            </div>
+
+            {/* ✅ 버튼을 카드(폼) 밖으로 분리 */}
+            <div className="d-flex justify-content-center gap-2 mt-4 mb-5">
+            <Button
+                variant="outline-secondary"
+                onClick={() => navigate("/admin/main/faqs")}
+            >
+                목록
+            </Button>
+            <Button variant="success" type="submit" disabled={loading} onClick={handleSubmit}>
+                {loading ? "처리 중..." : isEditMode ? "수정완료" : "작성완료"}
+            </Button>
+            </div>
         </>
     );
 };
