@@ -5,7 +5,7 @@ import MapIcon from "../../../assets/image/map-search-icon.png";
 const { kakao } = window;
 
 const TailyFriendsWriteMap = ({ address, setAddress }) => {
-  const mapRef = useRef(null);  
+  const mapRef = useRef(null);
   const markerRef = useRef(null);
   const overlayRef = useRef(null);
   const [map, setMap] = useState(null);
@@ -99,7 +99,7 @@ const TailyFriendsWriteMap = ({ address, setAddress }) => {
       overlayRef.current = new kakao.maps.CustomOverlay({
         position,
         content: overlayDiv,
-        yAnchor: 2.4,
+        yAnchor: 2.6,
       });
       overlayRef.current.setMap(map);
     }

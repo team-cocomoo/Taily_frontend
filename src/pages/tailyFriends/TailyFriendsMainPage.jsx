@@ -6,6 +6,7 @@ import WriteButton from "../../components/common/WriteButton";
 import api from "../../config/apiConfig";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import { Button } from "react-bootstrap";
+import TailyFriendsMainMap from "../../components/board/tailyFriends/TailyFriendsMainMap";
 
 const TailyFriendsMainPage = () => {
   const [posts, setPosts] = useState([]);
@@ -68,6 +69,7 @@ const TailyFriendsMainPage = () => {
   return (
     <div className="mt-4">
       <h2 className="page-title">테일리 프렌즈 게시판</h2>
+      <TailyFriendsMainMap />
       <SearchBar />
       <br />
       <PostCardGroup items={posts} onItemClick={handleItemClick} />
