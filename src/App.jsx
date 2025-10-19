@@ -17,6 +17,8 @@ import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/user/LoginPage";
 import RegisterPage from "./pages/user/RegisterPage";
 import MyPageUserInfo from "./pages/myPage/MyPageUserInfo";
+import MyTailyFriendsPage from "./pages/myPage/MyTailyFriendsPage";
+import MyFollowPage from "./pages/myPage/MyFollowPage";
 import PasswordVerifyPage from "@/pages/mypage/PasswordVerifyPage";
 import MyPageEdit from "@/pages/mypage/MyPageEdit";
 import AccountDeleteSuccessPage from "@/pages/mypage/AccountDeleteSuccessPage";
@@ -82,6 +84,14 @@ function App() {
               <Route path="/mypage/user" element={<MyPageUserInfo />} />
               <Route path="/mypage/user/edit" element={<MyPageEdit />} />
               <Route
+                path="/mypage/taily-friends"
+                element={<MyTailyFriendsPage />}
+              />
+              <Route
+                path="/mypage/follow-following"
+                element={<MyFollowPage />}
+              />
+              <Route
                 path="/mypage/password-verify"
                 element={<PasswordVerifyPage />}
               />
@@ -92,7 +102,6 @@ function App() {
 
               {/* 펫스토리 페이지 */}
               <Route path="/petstory/feed" element={<FeedMainPage />} />
-              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
               <Route path="/petstory/feed/write" element={<FeedWritePage />} />
               <Route
                 path="/petstory/feed/edit/:id"
@@ -119,9 +128,11 @@ function App() {
               {/* 산책경로 routes */}
               <Route path="walk-paths" element={<WalkPathMainPage />} />
               <Route path="walk-paths/write" element={<WalkPathWritePage />} />
-              <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
-              <Route path="walk-paths/edit/:id" element={<WalkPathEditPage />} />
 
+              <Route
+                path="walk-paths/edit/:id"
+                element={<WalkPathEditPage />}
+              />
 
               <Route path="facilities" element={<FacilityMainPage />} />
 
@@ -151,8 +162,8 @@ function App() {
                 path="taily-friends/:id"
                 element={<TailyFriendsDetailPage />}
               />
-
-
+              <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
+              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
             </Route>
           </Route>
 

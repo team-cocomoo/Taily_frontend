@@ -72,7 +72,7 @@
   background-color: #fdf9ee !important;
 }
 
-@media screen and (min-width: 993px) {
+@media screen and (min-width: 1151px) {
   .dropdown:hover .dropdown-menu {
     display: flex;
   }
@@ -137,7 +137,7 @@
   height: 30px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1150px) {
   .navbar {
     justify-content: center;
     position: fixed;

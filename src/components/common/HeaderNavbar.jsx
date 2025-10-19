@@ -17,11 +17,11 @@ const HeaderNavbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState({});
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1150);
 
   // 화면 크기 체크
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 992);
+    const handleResize = () => setIsMobile(window.innerWidth <= 1150);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
