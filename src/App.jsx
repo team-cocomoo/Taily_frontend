@@ -30,6 +30,8 @@ import WalkDiaryStatisticsPage from "./pages/walkDiary/WalkDiaryStatisticsPage";
 import WalkPathMainPage from "./pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "./pages/walkPath/WalkPathDetailPage";
 import WalkPathWritePage from "./pages/walkPath/WalkPathWritePage";
+import WalkPathEditPage from "./pages/walkPath/WalkPathEditPage";
+
 import TailyFriendsMainPage from "./pages/tailyFriends/TailyFriendsMainPage";
 import TailyFriendsDetailPage from "./pages/tailyFriends/TailyFriendsDetailPage";
 import TailyFriendsWritePage from "./pages/tailyFriends/TailyFriendsWritePage";
@@ -114,9 +116,12 @@ function App() {
                 path="walk-diaries/stats"
                 element={<WalkDiaryStatisticsPage />}
               />
+              {/* 산책경로 routes */}
               <Route path="walk-paths" element={<WalkPathMainPage />} />
-
               <Route path="walk-paths/write" element={<WalkPathWritePage />} />
+              <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
+              <Route path="walk-paths/edit/:id" element={<WalkPathEditPage />} />
+
 
               <Route path="facilities" element={<FacilityMainPage />} />
 
@@ -146,7 +151,8 @@ function App() {
                 path="taily-friends/:id"
                 element={<TailyFriendsDetailPage />}
               />
-              <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
+
+
             </Route>
           </Route>
 

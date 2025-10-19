@@ -107,10 +107,10 @@ const WalkDiaryUpdatePage = () => {
       <ImageBox images={images} onImageChange={setImages} />
 
       <div className="d-flex justify-content-center gap-2 mt-3">
-        <Button variant="secondary" onClick={() => navigate("/")}>
+        <Button variant="outline-secondary" onClick={() => navigate("/walk-diaries")}>
           목록
         </Button>
-        <Button variant="primary" onClick={handleSubmit} disabled={loading}>
+        <Button variant="outline-primary" onClick={handleSubmit} disabled={loading}>
           {loading ? "수정 중..." : "수정 완료"}
         </Button>
       </div>

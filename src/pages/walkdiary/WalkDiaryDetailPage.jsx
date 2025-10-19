@@ -87,7 +87,7 @@ const WalkDiaryDetailPage = () => {
             <Button
                 variant="outline-primary"
                 size="sm"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/walk-diaries")}
             >
                 목록
             </Button>

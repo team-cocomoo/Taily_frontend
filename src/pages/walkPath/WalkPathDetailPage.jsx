@@ -7,12 +7,10 @@ import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorAlert from "../../components/common/ErrorAlert";
 import WalkPathDetailContent from "../../components/board/walkPath/WalkPathDetailContent";
 import WalkPathDetailCommentCard from "../../components/board/walkPath/WalkPathDetailCommentCard";
-import WalkPathImageBox from "../../components/board/walkPath/WalkPathImageBox";
-import WalkPathMapView from "../../components/board/walkPath/WalkPathMapView";
 
 const WalkPathDetailPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +56,6 @@ const WalkPathDetailPage = () => {
   return (
     <Row className="justify-content-center mt-4">
       <Col xs={12} md={10} lg={10}>
-
         {/* 게시글 상세 (제목, 이미지, 내용, 지도, 좋아요)*/}
         <WalkPathDetailContent post={post} />
 
@@ -70,6 +67,16 @@ const WalkPathDetailPage = () => {
             onClick={() => navigate("/walk-paths")}
           >
             목록으로
+          </Button>
+          <Button
+            variant="outline-primary"
+            size="sm"
+            onClick={() => {
+              console.log("✅ navigate로 이동할 id:", id);
+              navigate(`/walk-paths/edit/${id}`);
+            }}
+          >
+            수정하기
           </Button>
         </div>
 
