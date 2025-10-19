@@ -25,7 +25,7 @@ const WalkPathEditPage = () => {
         const response = await axios.get(
           `http://localhost:8080/api/walk-paths/${id}`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${token}`,"Content-Type": "multipart/form-data" },
           }
         );
         const post = response.data.data;
