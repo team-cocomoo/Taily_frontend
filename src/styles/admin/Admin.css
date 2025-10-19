@@ -51,8 +51,8 @@ body {
 }
 
 .admin-loginbutton {
-  background-color: #fff;
-  border: 2px solid #586fc0;
+  background-color: #fff !important;
+  border: 2px solid #586fc0 !important;
   border-radius: 20px;
   color: #000;
   padding: 8px 0px;
@@ -64,8 +64,8 @@ body {
 }
 
 .admin-loginbutton:hover {
-  background-color: #586fc0;
-  color: #fff;
+  background-color: #586fc0 !important;
+  color: #fff !important;
 }
 
 /* 어드민 사이드 바 */

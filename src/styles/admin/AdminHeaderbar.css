@@ -1,7 +1,7 @@
 .admin-header-bar {
   width: 100%; /* 전체 화면 너비 */
   background-color: #1e40af;
-  color: white;
+  color: white !important;
   padding: 15px 30px;
   display: flex;
   align-items: center;
