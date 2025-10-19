@@ -23,7 +23,7 @@ const AdminInquiryList = () => {
       const params = { page, size: pageSize };
       if (searchKeyword.trim() !== "") params.keyword = searchKeyword.trim();
 
-      const response = await api.get("/api/inquiries", { params });
+      const response = await api.get("/api/admin/inquiries", { params });
 
       // ASK(질문)만 필터링
       const allInquiries =

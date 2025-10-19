@@ -1,0 +1,23 @@
+.main-tailyfriends-map-container {
+  max-width: 800px;
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
+  border: 2px solid #feb916;
+  overflow: hidden;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+/* 커스텀 오버레이 스타일 */
+.main-map-overlay {
+  padding: 5px 10px;
+  background-color: #feb916;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  cursor: pointer;
+}

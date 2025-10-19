@@ -78,7 +78,7 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
           white-space: nowrap;
         ">내 위치</div>
       `,
-      yAnchor: 2.2,
+      yAnchor: 2.6,
     });
     userOverlay.setMap(mapInstance);
   }, [kakaoLoaded, userLocation]);
@@ -120,7 +120,7 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
             white-space: nowrap;
           ">${item.title}</div>
         `,
-        yAnchor: 2.2,
+        yAnchor: 2.6,
       });
       overlay.setMap(map);
 

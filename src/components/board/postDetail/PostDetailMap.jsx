@@ -99,7 +99,7 @@ const PostDetailMap = ({ addresses }) => {
         const overlay = new kakao.maps.CustomOverlay({
           position: coords,
           content: overlayDiv,
-          yAnchor: 2.4,
+          yAnchor: 2.6,
         });
 
         overlay.setMap(map);

@@ -12,6 +12,7 @@ import UserPopover from "../../common/UserPopover";
 import LikeButton from "../LikeButton";
 import ReportModal from "../ReportModal";
 import ShareModal from "../ShareModal";
+import SecureImage from "../../common/SecureImage";
 
 const TailyFriendsDetailContent = ({ post }) => {
   const navigate = useNavigate();
@@ -117,9 +118,40 @@ const TailyFriendsDetailContent = ({ post }) => {
           </div>
         </Card.Header>
         <Card.Body>
+          {post.images && post.images.length > 0 && (
+            <div className="post-detail-images mb-3 d-flex justify-content-center flex-wrap gap-3">
+              {post.images && post.images.length > 0 && (
+                <div className="post-detail-images mb-3 d-flex justify-content-center flex-wrap gap-3">
+                  {post.images.map((img) => (
+                    <SecureImage
+                      key={img.id}
+                      src={img.filePath}
+                      alt="게시글 이미지"
+                      style={{
+                        width: "300px",
+                        height: "auto",
+                        borderRadius: "10px",
+                        objectFit: "cover",
+                        marginTop: "30px",
+                        boxShadow: "0 2px 6px rgba(0, 0, 0, 0.2)",
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           <div
             className="post-detail-content"
-            style={{ whiteSpace: "pre-wrap", minHeight: "200px" }}
+            style={{
+              whiteSpace: "pre-wrap",
+              minHeight:
+                post.images && post.images.length > 0 ? "0px" : "200px",
+              marginTop:
+                post.images && post.images.length > 0 ? "100px" : "0px",
+              marginBottom:
+                post.images && post.images.length > 0 ? "50px" : "0px",
+            }}
             dangerouslySetInnerHTML={{ __html: post.content }}
           ></div>
           <div className="post-detail-address">
