@@ -15,9 +15,16 @@ const MyTailyFriendsList = () => {
     const fetchMyTailyFriends = async () => {
       setLoading(true);
       try {
+        const token = localStorage.getItem("token");
         const response = await api.get(
-          `/api/mypage/mytaily-friends?page=${page}&size=${pageSize}`
+          `/api/mypage/mytaily-friends?page=${page}&size=${pageSize}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
+
         setPosts(response.data.data.content);
         setTotalPages(response.data.data.totalPages);
       } catch (err) {

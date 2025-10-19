@@ -19,7 +19,6 @@ const AdminMainPage = () => {
             <Route path='faqs/write' element={<AdminFaqWriteAndEditPgae />} />
             <Route path="faqs/:id" element={<AdminFaqDetailPage />} />
             <Route path="faqs" element={<AdminFaqPage />} />
-            {/* 필요하면 notices, inquiries 등 추가 */}
         </Routes>
         
     );
