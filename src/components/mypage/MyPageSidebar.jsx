@@ -27,7 +27,9 @@ const MyPageSidebar = () => {
         >
           내 테일리 프렌즈
         </ListGroup.Item>
-        <ListGroup.Item action>내 1:1 문의 내역</ListGroup.Item>
+        <ListGroup.Item action onClick={() => navigate("/mypage/inquiries")}>
+          내 1:1 문의 내역
+        </ListGroup.Item>
       </ListGroup>
     </div>
   );

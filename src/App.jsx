@@ -19,6 +19,7 @@ import RegisterPage from "./pages/user/RegisterPage";
 import MyPageUserInfo from "./pages/myPage/MyPageUserInfo";
 import MyTailyFriendsPage from "./pages/myPage/MyTailyFriendsPage";
 import MyFollowPage from "./pages/myPage/MyFollowPage";
+import MyInquiryPage from "./pages/myPage/MyInquiryPage";
 import PasswordVerifyPage from "@/pages/mypage/PasswordVerifyPage";
 import MyPageEdit from "@/pages/mypage/MyPageEdit";
 import AccountDeleteSuccessPage from "@/pages/mypage/AccountDeleteSuccessPage";
@@ -87,6 +88,7 @@ function App() {
                 path="/mypage/taily-friends"
                 element={<MyTailyFriendsPage />}
               />
+              <Route path="/mypage/inquiries" element={<MyInquiryPage />} />
               <Route
                 path="/mypage/follow-following"
                 element={<MyFollowPage />}
