@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import SummaryCards from '../../components/board/walkDiary/SummaryCards';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/walkdiary/WalkDiaryStatistics.css"
@@ -7,11 +7,13 @@ import WalkCharts from '../../components/board/walkDiary/WalkCharts';
 import ReminderCard from '../../components/board/walkDiary/ReminderCard';
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import api from '../../config/apiConfig';
+import { useNavigate } from 'react-router-dom';
 
 const WalkDiaryStatisticsPage = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // 서버에서 통계 데이터 가져오기
@@ -49,6 +51,9 @@ const WalkDiaryStatisticsPage = () => {
 
             {/* 동기 부여 메시지 */}
             <ReminderCard stats={stats} />
+            <Button variant="outline-secondary" onClick={() => navigate(-1)}>
+                취소
+            </Button>
         </div>
     );
 };
