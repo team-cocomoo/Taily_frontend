@@ -133,15 +133,30 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
         {/* 이미지 */}
         {walkDiary.images && walkDiary.images.length > 0 ? (
           <div className="d-flex justify-content-center flex-wrap mb-4 gap-3">
-            {walkDiary.images.map((img, idx) => (
-              <div key={idx} className="image-wrapper">
-                <img
-                  src={img.imageUrl || img.url || img.imagePath}
-                  alt={`산책일지-${idx}`}
-                  className="detail-image"
-                />
-              </div>
-            ))}
+            {walkDiary.images.map((img, idx) => {
+              // 서버에서 받은 경로가 '/uploads/...' 형태라면 도메인을 붙여준다
+              const imageUrl = img.startsWith("/uploads/")
+                ? `http://localhost:8080${img}`
+                : img;
+
+              return (
+                <div key={idx} className="image-wrapper">
+                  <img
+                    src={imageUrl}
+                    alt={`산책일지-${idx}`}
+                    className="detail-image"
+                    style={{
+                      width: "300px",
+                      height: "auto",
+                      borderRadius: "10px",
+                      objectFit: "cover",
+                      marginTop: "30px",
+                      boxShadow: "0 2px 6px rgba(0, 0, 0, 0.2)",
+                    }}
+                  />
+                </div>
+              );
+            })}
           </div>
         ) : (
           <div className="text-center text-muted mb-4">

@@ -44,6 +44,7 @@ const WalkDiaryUpdatePage = () => {
             endTime: data.endTime,
             content: data.content,
           });
+
           // 기존 이미지 URL을 type:url 객체로 변환
           const existingImages = (data.images || []).map((url) => ({
             type: "url",
@@ -53,6 +54,7 @@ const WalkDiaryUpdatePage = () => {
         } else {
           alert("일지를 불러오는데 실패했습니다.");
         }
+
       } catch (error) {
         console.error("기존 산책 일지 불러오기 실패:", error);
         alert("서버 오류로 일지를 불러올 수 없습니다.");
@@ -72,10 +74,43 @@ const WalkDiaryUpdatePage = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("accessToken");
-      const formDataToSend = new FormData();
-      Object.entries(formData).forEach(([key, val]) => formDataToSend.append(key, val));
-      images.forEach((file) => formDataToSend.append("images", file));
+      // 새로 추가된 파일만 업로드 (기존 URL 제외)
+      const newFiles = images.filter((img) => img.type === "file").map((img) => img.data);
+      let uploadedImageIds = [];
 
+      if (newFiles.length > 0) {
+        const uploadFormData = new FormData();
+        newFiles.forEach((file) => uploadFormData.append("files", file));
+
+        const uploadRes = await api.post(`/api/images/upload`, uploadFormData, {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+            "Content-Type": "multipart/form-data",
+          },
+          params: { tableTypesId: 4 }, // WALK_DIARY
+        });
+
+        uploadedImageIds = uploadRes.data.map((img) => img.id);
+      }
+
+      // 2️⃣ JSON 형태의 walkDiary 데이터 생성
+      const walkDiaryPayload = {
+        walkDiaryWeather: formData.walkDiaryWeather,
+        beginTime: formData.beginTime,
+        endTime: formData.endTime,
+        walkDiaryEmotion: formData.walkDiaryEmotion,
+        content: formData.content,
+        imageIds: uploadedImageIds, // ✅ 새로 업로드한 이미지 ID 연결
+      };
+
+      // 3️⃣ FormData로 감싸기 (JSON Blob)
+      const formDataToSend = new FormData();
+      formDataToSend.append(
+        "walkDiary",
+        new Blob([JSON.stringify(walkDiaryPayload)], { type: "application/json" })
+      );
+
+      // 4️⃣ PUT 요청 보내기
       await api.put(`/api/walk-diaries/${id}`, formDataToSend, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
@@ -98,7 +133,7 @@ const WalkDiaryUpdatePage = () => {
   return (
     <div className="row justify-content-center">
       {/* 산책 정보 */}
-      <WalkDiaryInfo values={formData} onChange={handleChange} />
+      <WalkDiaryInfo values={formData} onChange={handleChange} readOnlyDate />
 
       {/* 산책 내용 */}
       <WalkeDiaryContent values={formData} onChange={handleChange} />
