@@ -7,12 +7,14 @@ import AdminFaqDetailPage from './faq/AdminFaqDetailPage';
 import AdminFaqWriteAndEditPgae from './faq/AdminFaqWriteAndEditPgae';
 import AdminInquiryPage from './AdminInquiryPage';
 import AdminReportPage from './AdminReportPage';
+import AdminNoticeListPage from './notice/AdminNoticeListPage'
 
 const AdminMainPage = () => {
     
     return (
         <Routes>
             <Route path="users" element={<Users />} />
+            <Route path="Notices" element={<AdminNoticeListPage />} />
             <Route path="reports" element={<AdminReportPage />} />
             <Route path="inquiries" element={<AdminInquiryPage />} />
             <Route path='faqs/edit/:id' element={<AdminFaqWriteAndEditPgae />} />
