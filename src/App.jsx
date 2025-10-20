@@ -49,6 +49,10 @@ import FeedDetailPage from "./pages/feed/FeedDetailPage";
 import FeedEdtiPage from "./pages/feed/FeedEdtiPage";
 import FeedWritePage from "./pages/feed/FeedWritePage";
 
+// 공지사항
+import NoticeListPage from "./pages/cs/NoticeListPage";
+import NoticeDetailPage from "./pages/cs/NoticeDetailPage";
+
 // 관리자
 import AdminMainPage from "./pages/admin/AdminMainPage";
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
@@ -158,15 +162,16 @@ function App() {
               <Route path="faqs" element={<FaqPage />} />
             </Route>
             <Route
+              path="taily-friends/:id"
+              element={<TailyFriendsDetailPage />}
+            />
+            <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
+            <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
+            <Route path="/notices" element={<NoticeListPage />} />
+            <Route path="/notices/:id" element={<NoticeDetailPage />} />
+            {/* <Route
               element={<ProtectedLayout roles={["ROLE_USER", "ROLE_ADMIN"]} />}
-            >
-              <Route
-                path="taily-friends/:id"
-                element={<TailyFriendsDetailPage />}
-              />
-              <Route path="walk-paths/:id" element={<WalkPathDetailPage />} />
-              <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
-            </Route>
+            ></Route> */}
           </Route>
 
           {/* 관리자 레이아웃 */}
