@@ -7,7 +7,7 @@ import api from "@/config/apiConfig"; // axios 인스턴스
  * @param {string} alt - 이미지 대체 텍스트
  * @param {object} style - 추가 스타일
  */
-export default function SecureImage({ src, alt, style }) {
+export default function SecureImage({ src, alt, style, className }) {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -44,6 +44,11 @@ export default function SecureImage({ src, alt, style }) {
   if (error) return <p>이미지 로딩 실패</p>;
 
   return (
-    <img src={imageUrl} alt={alt} style={style} className="rounded mb-1" />
+    <img
+      src={imageUrl}
+      alt={alt}
+      style={style}
+      className={`rounded mb-1 ${className || ""}`}
+    />
   );
 }

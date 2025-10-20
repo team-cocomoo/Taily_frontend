@@ -44,13 +44,23 @@ const TailyFriendsDetailContent = ({ post }) => {
   };
   return (
     <div className="post-detail-body d-flex justify-content-center align-items-center">
-      <Card className="mb-4 shadow-sm post-card">
+      <Card className="mb-4 shadow post-card">
         <Card.Header className="card-header-section">
           <div className="card-header-title">
             <p>{post.title}</p>
           </div>
           <div className="d-flex align-items-center mt-2">
-            <img src={userIcon} alt="프로필" className="user-profile" />
+            {post.profileImage ? (
+              // ✅ 프로필 이미지 있을 때 : JWT 포함 이미지 요청
+              <SecureImage
+                src={post.profileImage}
+                alt="프로필 이미지"
+                className="user-profile"
+              />
+            ) : (
+              // ✅ 기본 이미지 (없을 때)
+              <img src={userIcon} alt="기본 프로필" className="user-profile" />
+            )}
 
             <div className="user-text">
               <div className="author-info">

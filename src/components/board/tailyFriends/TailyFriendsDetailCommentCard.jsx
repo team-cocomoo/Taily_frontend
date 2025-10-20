@@ -4,10 +4,11 @@ import messageIcon from "../../../assets/image/message-square.png";
 import userIcon from "../../../assets/image/user-icon.png";
 import "../../../styles/postDetail/PostDetailCommentCard.css";
 import api from "../../../config/apiConfig";
-import { AuthContext } from "../../../contexts/AuthContext"; // ✅ 추가
+import { AuthContext } from "../../../contexts/AuthContext";
+import SecureImage from "../../common/SecureImage";
 
 const PostDetailCommentCard = ({ postId }) => {
-  const { user } = useContext(AuthContext); // ✅ 로그인 유저 정보 가져오기
+  const { user } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [replyText, setReplyText] = useState({});
@@ -19,15 +20,14 @@ const PostDetailCommentCard = ({ postId }) => {
 
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
-  const currentUserNickname = user?.nickname; // ✅ AuthContext에서 닉네임 가져오기
+  const currentUserNickname = user?.nickname;
 
-  // 댓글 목록 가져오기
+  // ✅ 댓글 목록 가져오기
   const fetchComments = async (pageNum = 1) => {
     try {
       const res = await api.get(
         `/api/taily-friends/${postId}/comments?page=${pageNum}&size=5`
       );
-
       const data = res.data?.data;
       if (res.data.success && data) {
         setComments(data.content || []);
@@ -43,7 +43,7 @@ const PostDetailCommentCard = ({ postId }) => {
     fetchComments(page);
   }, [page, postId]);
 
-  // 댓글 작성
+  // ✅ 댓글 작성
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
@@ -51,39 +51,29 @@ const PostDetailCommentCard = ({ postId }) => {
       alert("로그인 후 댓글 작성이 가능합니다.");
       return;
     }
-
     try {
       const res = await api.post(`/api/taily-friends/${postId}/comments`, {
         content: newComment,
       });
-
       if (res.data.success) {
         setNewComment("");
         fetchComments(1);
       }
     } catch (err) {
       console.error("댓글 작성 실패:", err);
-      alert("댓글 작성 중 오류가 발생했습니다.");
     }
   };
 
-  // 답글 작성
+  // ✅ 답글 작성
   const handleAddReply = async (e, commentId) => {
     e.preventDefault();
     const text = replyText[commentId]?.trim();
     if (!text) return;
-
-    if (!isLoggedIn) {
-      alert("로그인 후 답글 작성이 가능합니다.");
-      return;
-    }
-
     try {
       const res = await api.post(
         `/api/taily-friends/${postId}/comments/${commentId}/reply`,
         { content: text }
       );
-
       if (res.data.success) {
         setReplyText((prev) => ({ ...prev, [commentId]: "" }));
         setShowReplyForm((prev) => ({ ...prev, [commentId]: false }));
@@ -94,17 +84,15 @@ const PostDetailCommentCard = ({ postId }) => {
     }
   };
 
-  // 댓글 수정
+  // ✅ 댓글/답글 수정
   const handleUpdateComment = async (commentId) => {
     try {
       const newContent = editText[commentId]?.trim();
       if (!newContent) return alert("내용을 입력해주세요.");
-
       const res = await api.patch(
         `/api/taily-friends/${postId}/comments/${commentId}`,
         { content: newContent }
       );
-
       if (res.data.success) {
         setEditMode((prev) => ({ ...prev, [commentId]: false }));
         fetchComments(page);
@@ -114,29 +102,27 @@ const PostDetailCommentCard = ({ postId }) => {
     }
   };
 
-  // 댓글 삭제
+  // ✅ 댓글/답글 삭제
   const handleDeleteComment = async (commentId) => {
-    if (!window.confirm("댓글을 삭제하시겠습니까?")) return;
-
+    if (!window.confirm("삭제하시겠습니까?")) return;
     try {
       const res = await api.delete(
         `/api/taily-friends/${postId}/comments/${commentId}`
       );
       if (res.data.success) {
-        alert("댓글이 삭제되었습니다.");
+        alert("삭제 완료되었습니다.");
         fetchComments(page);
       }
     } catch (err) {
-      console.error("댓글 삭제 실패:", err);
+      console.error("삭제 실패:", err);
     }
   };
 
-  const toggleReplyForm = (commentId) => {
+  const toggleReplyForm = (commentId) =>
     setShowReplyForm((prev) => ({
       ...prev,
       [commentId]: !prev[commentId],
     }));
-  };
 
   const toggleEditForm = (commentId, content) => {
     setEditMode((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
@@ -144,11 +130,10 @@ const PostDetailCommentCard = ({ postId }) => {
   };
 
   const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setPage(newPage);
-    }
+    if (newPage >= 1 && newPage <= totalPages) setPage(newPage);
   };
 
+  // ✅ 페이지네이션 렌더링
   const renderPagination = () =>
     comments &&
     comments.length > 0 && (
@@ -212,17 +197,30 @@ const PostDetailCommentCard = ({ postId }) => {
 
       {/* 댓글 리스트 */}
       <ListGroup variant="flush" className="comment-list">
-        {comments && comments.length > 0 ? (
+        {comments.length > 0 ? (
           comments.map((c) => (
             <ListGroup.Item
               key={c.id}
               className="d-flex"
               style={{ border: "none" }}
             >
-              <img src={userIcon} alt={c.nickname} className="user-profile" />
+              {c.profileImage ? (
+                <SecureImage
+                  src={c.profileImage}
+                  alt={c.nickname}
+                  className="user-profile"
+                />
+              ) : (
+                <img
+                  src={userIcon}
+                  alt="기본 프로필"
+                  className="user-profile"
+                />
+              )}
               <div className="flex-grow-1 d-flex flex-column">
                 <strong className="comment-nickname">{c.nickname}</strong>
 
+                {/* 부모 댓글 수정 모드 */}
                 {editMode[c.id] ? (
                   <>
                     <Form.Control
@@ -237,7 +235,6 @@ const PostDetailCommentCard = ({ postId }) => {
                       }
                       size="sm"
                       className="mt-1 mb-2"
-                      style={{ resize: "none" }}
                     />
                     <div className="d-flex gap-2">
                       <Button
@@ -296,6 +293,145 @@ const PostDetailCommentCard = ({ postId }) => {
                         {new Date(c.createdAt).toLocaleString()}
                       </div>
                     </div>
+
+                    {/* 답글 입력창 */}
+                    {showReplyForm[c.id] && (
+                      <Form
+                        className="mt-2"
+                        onSubmit={(e) => handleAddReply(e, c.id)}
+                      >
+                        <Form.Group className="mb-2">
+                          <Form.Control
+                            as="textarea"
+                            rows={2}
+                            placeholder="답글을 입력하세요."
+                            value={replyText[c.id] || ""}
+                            onChange={(e) =>
+                              setReplyText((prev) => ({
+                                ...prev,
+                                [c.id]: e.target.value,
+                              }))
+                            }
+                            size="sm"
+                            style={{ resize: "none" }}
+                          />
+                        </Form.Group>
+                        <div className="d-flex justify-content-end mt-3">
+                          <Button type="submit" size="sm" variant="primary">
+                            <img
+                              src={messageIcon}
+                              alt="message"
+                              style={{ width: 16, marginRight: 4 }}
+                            />
+                            답글 작성
+                          </Button>
+                        </div>
+                      </Form>
+                    )}
+
+                    {/* ✅ 답글 리스트 */}
+                    {c.replies?.length > 0 && (
+                      <ListGroup variant="flush" className="ms-4 mt-2">
+                        {c.replies.map((r) => (
+                          <ListGroup.Item
+                            key={r.id}
+                            className="d-flex"
+                            style={{ border: "none" }}
+                          >
+                            {r.profileImage ? (
+                              <SecureImage
+                                src={r.profileImage}
+                                alt={r.nickname}
+                                className="user-profile"
+                              />
+                            ) : (
+                              <img
+                                src={userIcon}
+                                alt="기본 프로필"
+                                className="user-profile"
+                              />
+                            )}
+                            <div className="flex-grow-1 d-flex flex-column">
+                              <strong className="comment-nickname">
+                                {r.nickname}
+                              </strong>
+
+                              {editMode[r.id] ? (
+                                <>
+                                  <Form.Control
+                                    as="textarea"
+                                    rows={2}
+                                    value={editText[r.id]}
+                                    onChange={(e) =>
+                                      setEditText((prev) => ({
+                                        ...prev,
+                                        [r.id]: e.target.value,
+                                      }))
+                                    }
+                                    size="sm"
+                                    className="mt-1 mb-2"
+                                  />
+                                  <div className="d-flex gap-2">
+                                    <Button
+                                      size="sm"
+                                      variant="primary"
+                                      onClick={() => handleUpdateComment(r.id)}
+                                    >
+                                      저장
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="outline-primary"
+                                      onClick={() =>
+                                        setEditMode((prev) => ({
+                                          ...prev,
+                                          [r.id]: false,
+                                        }))
+                                      }
+                                    >
+                                      취소
+                                    </Button>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div>{r.content}</div>
+                                  <div className="d-flex justify-content-between align-items-center mt-1">
+                                    {currentUserNickname === r.nickname && (
+                                      <div>
+                                        <Button
+                                          variant="link"
+                                          size="sm"
+                                          className="p-0 me-2 comment-edit-delete-button"
+                                          onClick={() =>
+                                            toggleEditForm(r.id, r.content)
+                                          }
+                                        >
+                                          수정
+                                        </Button>
+                                        <Button
+                                          variant="link"
+                                          size="sm"
+                                          className="p-0 comment-edit-delete-button"
+                                          onClick={() =>
+                                            handleDeleteComment(r.id)
+                                          }
+                                        >
+                                          삭제
+                                        </Button>
+                                      </div>
+                                    )}
+                                    <div className="text-muted small">
+                                      {new Date(r.createdAt).toLocaleString()}
+                                    </div>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </ListGroup.Item>
+                        ))}
+                      </ListGroup>
+                    )}
                   </>
                 )}
               </div>
@@ -307,7 +443,7 @@ const PostDetailCommentCard = ({ postId }) => {
       </ListGroup>
 
       {/* 페이지네이션 */}
-      {comments && comments.length > 0 && renderPagination()}
+      {comments.length > 0 && renderPagination()}
     </Card>
   );
 };
