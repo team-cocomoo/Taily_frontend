@@ -10,6 +10,11 @@ const LikeButton = ({ postId, tableTypeId }) => {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  //postId를 숫자로 강제 변환 (문자/undefined 방지)
+  const safePostId = typeof postId === "number" ? postId : Number(postId);
+  //변환 실패 시 UI/요청 막기
+  // const isInvalidId = Number.isNaN(safePostId) || safePostId === undefined || safePostId === null;
+
   // 게시판 타입별로 경로 결정
   const getBaseUrl = () => {
     switch (tableTypeId) {
@@ -27,12 +32,17 @@ const LikeButton = ({ postId, tableTypeId }) => {
   // 초기 좋아요 상태와 개수 로딩
   useEffect(() => {
     const fetchLikeStatus = async () => {
+//       if (isInvalidId) {
+//         console.error("좋아요 초기값 로딩 중단: 유효하지 않은 postId =", postId); 
+//         setLoading(false);
+//         return;
+// +      }
       try {
         const token = localStorage.getItem("token");
         const baseUrl = getBaseUrl();
 
         const res = await axios.get(
-          `http://localhost:8080/${baseUrl}/${postId}`,
+          `http://localhost:8080/${baseUrl}/${safePostId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -47,7 +57,7 @@ const LikeButton = ({ postId, tableTypeId }) => {
       }
     };
     fetchLikeStatus();
-  }, [postId, tableTypeId]);
+  }, [safePostId, tableTypeId]);
 
   // 좋아요 클릭
   const handleLike = async () => {
@@ -59,16 +69,14 @@ const LikeButton = ({ postId, tableTypeId }) => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `http://localhost:8080/api/likes/${tableTypeId}/${postId}`,
+        `http://localhost:8080/api/likes/${tableTypeId}/${safePostId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("좋아요 응답:", res);
-
       const { liked: newLiked, likeCount: newLikeCount } = res.data.data;
       setLiked(newLiked);
       setLikeCount(newLikeCount);
-
     } catch (err) {
       console.error("좋아요 처리 실패:", err);
       alert("좋아요 처리 실패");
