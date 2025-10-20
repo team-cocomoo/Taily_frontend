@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { InputGroup, Form, Card, Button } from "react-bootstrap";
 import MapIcon from "../../../assets/image/map-search-icon.png";
-import "../../../styles/facility/facilityMap.css"; // 기존 지도 스타일 재사용
-import BaseMap from "../../common/Basemap.jsx"; // 기본 지도 공통 로직 재사용 (default export: BaseMapInput)
-import { useEffect } from "react";
+import "../../../styles/facility/facilityMap.css";
+import BaseMap from "../../common/Basemap.jsx";
 
 const WalkPathMapInput = ({
   mode = "create",
   initialRoutes = [],
   onChange,
 }) => {
-  // 산책 장소 목록 (최대 3개) — 기존 로직 유지
+  // 산책 장소 목록 (최대 3개)
   const [places, setPlaces] = useState(
     initialRoutes.length > 0 ? initialRoutes : [""]
   );
 
   useEffect(() => {
     onChange(places);
-  }, [places]); //places가 바뀔 때마다 상위 전달
+  }, [places]);
 
-  // 입력 값 변경 핸들러
+  // 입력 값 변경
   const handlePlaceChange = (index, value) => {
     const updated = [...places];
     updated[index] = value;
@@ -31,11 +30,13 @@ const WalkPathMapInput = ({
     if (places.length >= 3) return;
     setPlaces([...places, ""]);
   };
+
   // 장소 삭제
   const removePlaceField = (index) => {
     setPlaces(places.filter((_, i) => i !== index));
   };
 
+  // 지도 마커 데이터
   const markersData = places.map((place, idx) => ({
     address: place,
     label: `산책 장소 ${idx + 1}`,
@@ -46,12 +47,24 @@ const WalkPathMapInput = ({
       <Card.Header>
         {mode === "edit" ? "산책 경로 수정" : "산책 경로 입력"}
       </Card.Header>
-      <Card.Body>
-        <Form>
-          <div className="map-container mb-4" style={{ width: "100%" }}>
-            <BaseMap markersData={markersData} mapHeight={400} />
-          </div>
 
+      <Card.Body
+        style={{
+          padding: "30px",
+          paddingBottom: "10px",
+          backgroundColor: "#fffef8", // 시각적으로 부드럽게
+        }}
+      >
+        {/* ✅ 지도 */}
+        <div className="map-wrapper">
+          <BaseMap markersData={markersData} mapHeight={340} />
+        </div>
+
+        {/* ✅ 지도 아래 자연스러운 간격 */}
+        <div style={{ height: "10px" }}></div>
+
+        {/* ✅ 입력 폼 */}
+        <Form>
           {places.map((place, idx) => (
             <Form.Group key={idx} className="mb-3">
               <InputGroup>
@@ -80,8 +93,12 @@ const WalkPathMapInput = ({
             </Form.Group>
           ))}
 
-          {places.length < 7 && (
-            <Button variant="outline-primary" onClick={addPlaceField}>
+          {places.length < 3 && (
+            <Button
+              variant="outline-primary"
+              onClick={addPlaceField}
+              className="mt-2"
+            >
               + 산책 장소 추가
             </Button>
           )}

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import "../../styles/postDetail/WalkPathMap.css";
 
 /**
  * BaseMapInput (공통 지도 컴포넌트)
@@ -35,7 +36,7 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
 
     const mapInstance = new window.kakao.maps.Map(container, {
       center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
-      level: 4,
+      level: 6,
     });
     setMap(mapInstance);
   };
@@ -94,12 +95,7 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
   return (
     <div
       ref={mapRef}
-      style={{
-        width: "100%",
-        height: `${mapHeight}px`,
-        borderRadius: "10px",
-        border: "1px solid #ccc",
-      }}
+      className="main-walkpath-map-container"
     />
   );
 };

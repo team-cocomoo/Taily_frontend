@@ -26,7 +26,7 @@ const WalkPathDetailContent = ({ post }) => {
   const handleCloseReportModal = () => setShowReportModal(false);
   if (!post) return null;
 
-  const isAuthor = user && user.nickname === post.nickname;
+  const isAuthor = user && user.nickname === post.authorName;
 
   const handleDelete = async () => {
     if (!window.confirm("정말 게시글을 삭제하시겠습니까?")) return;
@@ -59,8 +59,8 @@ const WalkPathDetailContent = ({ post }) => {
 
             <div className="user-text">
               <div className="author-info">
-                <UserPopover userId={post.userId} nickname={post.nickname}>
-                  {post.nickname}
+                <UserPopover userId={post.userId} nickname={post.authorName}>
+                  {post.authorName}
                 </UserPopover>
                 <small className="author-date">
                   {new Date(post.createdAt).toLocaleString()} 조회수:{" "}
