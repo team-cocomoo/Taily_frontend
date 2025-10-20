@@ -33,9 +33,13 @@ const WalkPathDetailContent = ({ post }) => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:8080/api/walk-paths/${post.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const effectiveId = post.id ?? post.postId;
+      await axios.delete(
+        `http://localhost:8080/api/walk-paths/${effectiveId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       alert("게시글 삭제 완료!");
       navigate("/walk-paths");
     } catch (err) {
@@ -77,7 +81,10 @@ const WalkPathDetailContent = ({ post }) => {
                   {isAuthor ? (
                     <>
                       <Dropdown.Item
-                        onClick={() => navigate(`/walk-paths/edit/${post.id}`)}
+                        onClick={() => {
+                          const effectiveId = post.id ?? post.postId;
+                          navigate(`/walk-paths/edit/${effectiveId}`);
+                        }}
                       >
                         수정하기
                       </Dropdown.Item>
@@ -119,7 +126,7 @@ const WalkPathDetailContent = ({ post }) => {
         <Card.Body>
           {/* 이미지 표시 */}
           <WalkPathImageBox images={post.images || []} />
-          
+
           {/* 게시글 내용 */}
           <div
             className="post-detail-content"
@@ -127,14 +134,13 @@ const WalkPathDetailContent = ({ post }) => {
           ></div>
 
           {/* 게시글 지도 */}
-          <WalkPathMapView routes={post.routes}/> 
-          
+          <WalkPathMapView routes={post.routes} />
+
+          {/* 게시글 좋아요 */}
           <div className="d-flex justify-content-center align-items-center mt-3">
             <LikeButton
-              postId={post.id}
+              postId={post.id ?? post.postId}
               tableTypeId={6} // WalkPath = 6
-              initialLikeCount={post.likeCount}
-              initialLiked={post.liked}
             />
           </div>
         </Card.Body>
