@@ -11,11 +11,13 @@ const ImageBox = ({ images: propImages = [], onImageChange }) => {
     useEffect(() => {
         if (!propImages || propImages.length === 0) return;
 
-        const newPreviews = propImages.map(img => ({
-            id: img.id || crypto.randomUUID(),
-            type: img.type,
-            data: img.type === "url" ? img.data : URL.createObjectURL(img.data),
-            file: img.type === "file" ? img.data : null
+        const newPreviews = propImages
+        .filter(img => img.type === "file") // 기존 URL 이미지는 미리보기에서 제외
+            .map(img => ({
+                id: img.id || crypto.randomUUID(),
+                type: "file",
+                data: URL.createObjectURL(img.data),
+                file: img.data
         }));
 
         setPreviews(newPreviews);
