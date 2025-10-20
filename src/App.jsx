@@ -65,6 +65,7 @@ import { Users } from "lucide-react";
 // 테스트
 import SingleFeedUploader from "./tests/pages/SingleFeedUploader";
 import MyLikePage from "./pages/myPage/MyLikePage";
+import MyPetPage from "./pages/myPage/MyPetPage";
 
 function App() {
   return (
@@ -89,6 +90,7 @@ function App() {
             <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
               <Route path="/mypage/user" element={<MyPageUserInfo />} />
               <Route path="/mypage/user/edit" element={<MyPageEdit />} />
+              <Route path="/mypage/pet" element={<MyPetPage />} />
               <Route path="/mypage/like" element={<MyLikePage />} />
               <Route
                 path="/mypage/taily-friends"
