@@ -46,6 +46,36 @@ const WalkPathMainPage = () => {
     }
   };
 
+  //추가 검색 기능
+  const handleSearch = async (keyword) => {
+    console.log("검색어:", keyword);
+    if (!keyword.trim()) {
+      // ⭐ [변경] 검색어가 없으면 전체 목록으로 복귀
+      fetchPosts(1);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      // 검색 API 호출
+      const response = await api.get(
+        "http://localhost:8080/api/walk-paths/search",
+        {
+          params: { keyword, page: 0, size },
+        }
+      );
+
+      console.log("검색 결과:", response.data);
+      const data = response.data?.data || [];
+      setPosts(data);
+      setHasMore(false); // 검색 시 더보기 비활성화
+    } catch (error) {
+      console.error("검색 실패:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchPosts(1);
   }, []);
@@ -77,7 +107,7 @@ const WalkPathMainPage = () => {
       <BaseMapInput />
       <br />
       {/* 검색창 출력 */}
-      <SearchBar />
+      <SearchBar onSearch={handleSearch}/>
       <br />
       {/* 게시물을 리스트 형식으로 출력 */}
       <PostListGroup items={posts} onItemClick={handleItemClick} />
