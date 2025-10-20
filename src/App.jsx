@@ -179,7 +179,7 @@ function App() {
           {/* 관리자 레이아웃 */}
           <Route path="admin" element={<AdminLayout />}>
             <Route path="login" element={<AdminLoginPage />} />
-            <Route element={<AdminProtectedLayout />}>
+            <Route element={<AdminProtectedLayout roles={["ROLE_ADMIN"]} />}>
               <Route path="main/*" element={<AdminMainPage />} />
             </Route>
           </Route>

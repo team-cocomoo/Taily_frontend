@@ -51,14 +51,12 @@ const TailyFriendsDetailContent = ({ post }) => {
           </div>
           <div className="d-flex align-items-center mt-2">
             {post.profileImage ? (
-              // ✅ 프로필 이미지 있을 때 : JWT 포함 이미지 요청
               <SecureImage
                 src={post.profileImage}
                 alt="프로필 이미지"
                 className="user-profile"
               />
             ) : (
-              // ✅ 기본 이미지 (없을 때)
               <img src={userIcon} alt="기본 프로필" className="user-profile" />
             )}
 
