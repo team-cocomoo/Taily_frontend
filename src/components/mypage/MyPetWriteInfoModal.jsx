@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import "../../styles/myPage/MyPetInfo.css";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import api from '../../config/apiConfig';
-// import { useNavigate } from 'react-router-dom';
+import "../../styles/myPage/MyPetInfo.css";
 
 const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu, pet, onSuccess }) => {
     const [loading, setLoading] = useState(false);
@@ -138,75 +138,112 @@ const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu, pet, onSucces
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
-                {/* 이름 */}
-                <Form.Group className="mb-3">
-                    <Form.Label>이름</Form.Label>
-                    <Form.Control type="text" value={name} onChange={e => setName(e.target.value)} required />
-                </Form.Group>
 
-                {/* 성별 */}
-                <Form.Group className="mb-3">
-                    <Form.Label>성별</Form.Label>
-                    <div>
-                    <Form.Check
-                        inline
-                        label="여자"
-                        name="gender"
-                        type="radio"
-                        value="FEMALE"
-                        checked={gender === "FEMALE"}
-                        onChange={handleGenderChange}
-                    />
-                    <Form.Check
-                        inline
-                        label="남자"
-                        name="gender"
-                        type="radio"
-                        value="MALE"
-                        checked={gender === "MALE"}
-                        onChange={handleGenderChange}
-                    />
-                    </div>
-                </Form.Group>
+  {/* 이름 */}
+  <Form.Group className="mb-3 form-row-inline">
+    <Form.Label>이름</Form.Label>
+    <Form.Control
+      type="text"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      required
+    />
+  </Form.Group>
 
-                {/* 나이 */}
-                <Form.Group className="mb-3">
-                    <Form.Label>나이</Form.Label>
-                    <Form.Control type="text" value={age} onChange={e => setAge(e.target.value)} required /> 살
-                </Form.Group>
+{/* 성별 */}
+<Form.Group className="mb-3 form-gender-inline">
+  <Form.Label>성별</Form.Label>
+  <div>
+    <Form.Check
+      inline
+      label="여자"
+      name="gender"
+      type="radio"
+      value="FEMALE"
+      checked={gender === "FEMALE"}
+      onChange={handleGenderChange}
+    />
+    <Form.Check
+      inline
+      label="남자"
+      name="gender"
+      type="radio"
+      value="MALE"
+      checked={gender === "MALE"}
+      onChange={handleGenderChange}
+    />
+  </div>
+</Form.Group>
 
-                {/* 취향 */}
-                <Form.Group className="mb-3">
-                    <Form.Label>취향</Form.Label>
-                    <Form.Control type="text" value={preference} onChange={e => setPreference(e.target.value)} placeholder="예: 개껌, 산책, 공놀이" />
-                    <Form.Text className="text-muted">쉼표(,)로 구분하여 입력</Form.Text>
-                </Form.Group>
+  {/* 나이 */}
+  <Form.Group className="mb-3 form-row-inline">
+    <Form.Label>나이</Form.Label>
+    <div className="d-flex align-items-center gap-2">
+      <Form.Control
+        type="number"
+        value={age}
+        onChange={(e) => setAge(e.target.value)}
+        required
+        style={{ width: "100px" }}
+      />
+      <span>살</span>
+    </div>
+  </Form.Group>
 
-                {/* 소개글 */}
-                <Form.Group className="mb-3">
-                    <Form.Label>소개글</Form.Label>
-                    <Form.Control as="textarea" rows={3} value={introduction} onChange={e => setIntroduction(e.target.value)} />
-                </Form.Group>
+  {/* 취향 */}
+  <Form.Group className="mb-3">
+    <Form.Label>취향</Form.Label>
+    <Form.Control
+      type="text"
+      value={preference}
+      onChange={(e) => setPreference(e.target.value)}
+      placeholder="예: 개껌, 산책, 공놀이"
+    />
+    <Form.Text className="text-muted">
+      쉼표(,)로 구분하여 입력
+    </Form.Text>
+  </Form.Group>
 
-                {/* 이미지 업로드 */}
-                <Form.Group className="mb-3">
-                    <Form.Label>이미지 업로드</Form.Label>
-                    <Form.Control type="file" accept="image/*" onChange={handleFileChange} />
-                </Form.Group>
+  {/* 소개글 */}
+  <Form.Group className="mb-3">
+    <Form.Label>소개글</Form.Label>
+    <Form.Control
+      as="textarea"
+      rows={3}
+      value={introduction}
+      onChange={(e) => setIntroduction(e.target.value)}
+    />
+  </Form.Group>
 
-                {/* 미리보기 */}
-                {
-                    file && <div className="mb-3">
-                        <img src={URL.createObjectURL(file)} alt="미리보기" style={{ width: "100px" }} />
-                    </div>
-                }
+  {/* 이미지 업로드 */}
+  <Form.Group className="mb-3">
+    <Form.Label>이미지 업로드</Form.Label>
+    <Form.Control
+      type="file"
+      accept="image/*"
+      onChange={handleFileChange}
+    />
+  </Form.Group>
 
-                {error && <p className="text-danger text-center mt-2">{error}</p>}
+  {/* 미리보기 */}
+  {file && (
+    <div className="mb-3">
+      <img
+        src={URL.createObjectURL(file)}
+        alt="미리보기"
+        className="pet-preview-img"
+      />
+    </div>
+  )}
 
-                <Button variant="success" type="submit" disabled={loading}>
-                    {loading ? "처리 중..." : pet ? "수정완료" : "작성완료"}
-                </Button>
-                </Form>
+  {error && <p className="text-danger text-center mt-2">{error}</p>}
+
+  <Button variant="success" type="submit" disabled={loading}>
+    {loading ? "처리 중..." : pet ? "수정완료" : "작성완료"}
+  </Button>
+
+</Form>
+
             </Modal.Body>
         </Modal>
     );

@@ -4,7 +4,6 @@ import meatballIcon from "../../assets/image/meatball-icon.png";
 import api from "../../config/apiConfig";
 import MyPetWriteInfoModal from "../../components/mypage/MyPetWriteInfoModal"; 
 import SecureImage from "../../components/common/SecureImage";
-
 import "../../styles/myPage/MyPetInfo.css";
 
 const MyPetInfoCard = ({ setSelectedMenu }) => {
@@ -97,13 +96,12 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
                     petList.map((pet, index) => (
                         <Card key={index} className="profile-box mt-4 p-3" style={{ maxWidth: "600px", margin: "auto" }}>
                             <Row>
-                                <Col sm={4} className="d-flex justify-content-center align-items-center">
+                                <Col sm={5} className="d-flex justify-content-center align-items-center">
                                     {/* ✅ SecureImage로 교체 */}
                                     {pet.imagePath ? (
                                         <SecureImage
                                             src={pet.imagePath}
                                             alt={pet.name}
-                                            style={{ width: "100%", borderRadius: "10px", objectFit: "cover" }}
                                         />
                                     ) : (
                                         <div
@@ -123,9 +121,10 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
                                     )}
                                 </Col>
 
-                                <Col sm={8} style={{ position: "relative" }}>
+                                <Col sm={7} style={{ position: "relative" }}>
                                     <Dropdown className="profile-dropdown mx-4" style={{ position: "absolute", top: 0, right: 0 }}>
-                                        <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm" className="no-caret">
+                                        <Dropdown.Toggle id="dropdown-basic" className="no-caret">
+
                                             <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
