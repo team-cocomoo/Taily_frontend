@@ -1,0 +1,167 @@
+.admin-faq-container {
+    margin-top: 40px;
+    padding-bottom: 50px;
+}
+
+.admin-faq-title {
+    font-weight: 700;
+    color: #212529;
+}
+
+.admin-faq-subtitle {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.admin-faq-card {
+    border: none;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    transition: box-shadow 0.3s ease;
+}
+
+.admin-faq-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.admin-faq-write-btn {
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+.admin-faq-write-btn:hover {
+    background-color: #343a40;
+}
+
+/* 리스트 디자인 */
+.admin-faq-list {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.admin-faq-table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed; 
+}
+
+.admin-faq-table thead {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.admin-faq-table th {
+    font-weight: 600;
+    color: #343a40;
+    text-align: center;
+    padding: 12px;
+}
+
+.admin-faq-table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px;
+    font-size: 0.95rem;
+    color: #495057;
+}
+
+.faq-title-cell {
+    text-align: left;
+    color: #0d6efd;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.faq-title-cell:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0a58ca;
+    border-color: #0a58ca;
+}
+
+.pagination .page-link {
+    color: #343a40;
+}
+
+.pagination .page-link:hover {
+    color: #0a58ca;
+}
+
+/* FAQ 상세 페이지 */
+.admin-faq-detail-wrapper {
+    width: 900px;            
+    margin: 60px auto;        
+    padding-bottom: 60px;
+}
+
+.admin-faq-detail-card {
+    border: none;
+    border-radius: 14px;
+    background-color: #fff;
+    padding: 30px 40px;
+    transition: box-shadow 0.3s ease;
+}
+
+.admin-faq-detail-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.admin-faq-detail-title {
+    font-weight: 700;
+    color: #212529;
+    flex: 1;
+    word-break: keep-all;
+    margin: 0;
+}
+
+.admin-faq-content-box {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 25px;
+    margin-top: 15px;
+}
+
+.admin-faq-content {
+    font-size: 1rem;
+    color: #495057;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.admin-faq-info-box {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.admin-faq-back-btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 8px 16px;
+}
+
+.admin-faq-back-btn:hover {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.dropdown-toggle::after {
+    display: none; /* 🔹 기본 삼각형 아이콘 제거 */
+}
+
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+

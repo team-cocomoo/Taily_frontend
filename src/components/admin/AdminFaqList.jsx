@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../../config/apiConfig';
 import { Pagination, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/admin/AdminFaq.css';
 
 const AdminFaqList = () => {
     const navigate = useNavigate();
@@ -53,14 +54,14 @@ const AdminFaqList = () => {
     if (!faqList.length) return <p className="text-center">등록된 FAQ가 없습니다.</p>;
 
     return (
-        <>
-            <Table hover responsive>
+        <div className="admin-faq-list">
+            <Table hover bordered className="admin-faq-table align-middle">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>제목</th>
-                        <th>작성일</th>
-                        <th>작성자</th>
+                        <th style={{ width: "8%" }}>#</th>
+                        <th style={{ width: "50%" }}>제목</th>
+                        <th style={{ width: "20%" }}>작성일</th>
+                        <th style={{ width: "22%" }}>작성자</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,9 +69,9 @@ const AdminFaqList = () => {
                         <tr key={faq.id || index}>
                             <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                             <td
-                                className="text-primary"
-                                style={{ cursor: "pointer" }}
-                                onClick={() => handleFaqClick(faq.id)}                            >
+                                className="faq-title-cell"
+                                onClick={() => handleFaqClick(faq.id)}
+                            >
                                 {faq.title}
                             </td>
                             <td>{new Date(faq.createdAt).toLocaleDateString()}</td>
@@ -80,14 +81,13 @@ const AdminFaqList = () => {
                 </tbody>
             </Table>
 
-
             {totalPages > 1 && (
-                <Pagination className="justify-content-center mt-3">
+                <Pagination className="justify-content-center mt-4">
                     <Pagination.Prev
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
-                        Prev
+                        이전
                     </Pagination.Prev>
 
                     {[...Array(totalPages)].map((_, i) => (
@@ -104,11 +104,11 @@ const AdminFaqList = () => {
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >
-                        Next
+                        다음
                     </Pagination.Next>
                 </Pagination>
             )}
-        </>
+        </div>
     );
 };
 

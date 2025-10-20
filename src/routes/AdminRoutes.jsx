@@ -9,6 +9,7 @@ import AdminLoginPage from "@/pages/admin/AdminLoginPage";
 import AdminMainPage from "@/pages/admin/AdminMainPage";
 import AdminFaqPage from "@/pages/admin/faq/AdminFaqPage";
 import AdminFaqDetailPage from "@/pages/admin/faq/AdminFaqDetailPage";
+import AdminFaqWriteAndEditPage from "@/pages/admin/faq/AdminFaqWriteAndEditPgae";
 import AdminReportPage from "@/pages/admin/AdminReportPage";
 import AdminInquiryPage from "@/pages/admin/AdminInquiryPage";
 import AdminNoticeListPage from "@/pages/admin/notice/AdminNoticeListPage";
@@ -34,6 +35,9 @@ const AdminRoutes = (
         <Route path="inquiries" element={<AdminInquiryPage />} />
         <Route path="faqs" element={<AdminFaqPage />} />
         <Route path="faqs/:id" element={<AdminFaqDetailPage />} />
+        <Route path="/admin/main/faqs/write" element={<AdminFaqWriteAndEditPage />} />
+        <Route path="/admin/main/faqs/edit/:id" element={<AdminFaqWriteAndEditPage />} />
+
       </Route>
     </Route>
   </Route>
