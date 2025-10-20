@@ -41,34 +41,71 @@ const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu, pet, onSucces
         setGender(event.target.value);
     };
 
-    if (loading) return <LoadingSpinner message="내 반려동물 프로필 불러오는 중..." />;
+    // 이미지 업로드
+    const uploadPetProfileImage = async (token) => {
+        if (!file) return null;
+        
+        const formData = new FormData();
+        formData.append("tableTypesId", 2);
+        formData.append("subFolder", "pet");
+        formData.append("files", file);
 
-    // 작성 처리
+        const response = await api.post("/api/images/upload", formData, {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return response.data[0]?.id || null;
+    };
+
+    // 프로필 등록/수정
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setLoading(true);
 
         const token = localStorage.getItem("accessToken");
+
         try {
-            const formData = new FormData();
-            formData.append("name", name);
-            formData.append("gender", gender);
-            formData.append("age", age);
-            formData.append("preference", preference);
-            formData.append("introduction", introduction);
-            if (file) formData.append("profile", file);
+            // 이미지 먼저 업로드
+            const imageId = await uploadPetProfileImage(token);
+
+            // 반려동물 프로필 JSON 데이터
+            const petData = {
+                name,
+                gender,
+                age,
+                preference,
+                introduction, 
+                imageId,    // 업로드한 이미지의 ID
+            }
+
+            // FormData 구성
+            const formDataToSend = new FormData();
+            formDataToSend.append(
+                "myPetProfile",
+                new Blob([JSON.stringify(petData)], { type: "application/json" })
+            );
     
             let response;
             if (pet?.petId) {
                 // 수정
-                response = await api.put(`/api/mypage/mypet/${pet.petId}`, formData, {
-                headers: { Authorization: token ? `Bearer ${token}` : "" },
+                response = await api.put(`/api/mypage/mypet/${pet.petId}`, formDataToSend, {
+                    headers: { Authorization: token ? `Bearer ${token}` : "" },
+                    transformRequest: [(data, headers) => {
+                        delete headers['Content-Type']; 
+                        return data;
+                    }],
                 });
             } else {
                 // 작성
-                response = await api.post(`/api/mypage/mypet`, formData, {
-                headers: { Authorization: token ? `Bearer ${token}` : "" },
+                response = await api.post(`/api/mypage/mypet`, formDataToSend, {
+                    headers: { Authorization: token ? `Bearer ${token}` : "" },
+                    transformRequest: [(data, headers) => {
+                        delete headers['Content-Type']; 
+                        return data;
+                    }],
                 });
             }
     
@@ -76,11 +113,10 @@ const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu, pet, onSucces
             if (response.data.success) {
                 alert(`프로필이 ${pet ? "수정" : "등록"}되었습니다!`);
                 // 부모 state 업데이트
-                if (onSuccess) {
-                onSuccess(response.data.data, pet?.petId);
-                }
+                if (onSuccess) onSuccess(response.data.data, pet?.petId);
 
                 handleClose();
+
                 if (setSelectedMenu) setSelectedMenu("my-pets");
             } else {
                 setError(`${pet ? "수정" : "등록"}에 실패했습니다.`);
@@ -92,6 +128,8 @@ const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu, pet, onSucces
             setLoading(false);
         }
     };
+
+    if (loading) return <LoadingSpinner message="내 반려동물 프로필 불러오는 중..." />;
 
     return (
         <Modal show={show} onHide={handleClose} size="lg">
@@ -134,7 +172,7 @@ const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu, pet, onSucces
                 {/* 나이 */}
                 <Form.Group className="mb-3">
                     <Form.Label>나이</Form.Label>
-                    <Form.Control type="text" value={age} onChange={e => setAge(e.target.value)} required />
+                    <Form.Control type="text" value={age} onChange={e => setAge(e.target.value)} required /> 살
                 </Form.Group>
 
                 {/* 취향 */}
@@ -157,7 +195,11 @@ const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu, pet, onSucces
                 </Form.Group>
 
                 {/* 미리보기 */}
-                {file && <div className="mb-3"><img src={URL.createObjectURL(file)} alt="미리보기" style={{ maxWidth: "100%" }} /></div>}
+                {
+                    file && <div className="mb-3">
+                        <img src={URL.createObjectURL(file)} alt="미리보기" style={{ width: "100px" }} />
+                    </div>
+                }
 
                 {error && <p className="text-danger text-center mt-2">{error}</p>}
 
