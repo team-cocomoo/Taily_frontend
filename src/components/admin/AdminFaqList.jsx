@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../config/apiConfig';
-import { Button, Pagination, Table } from 'react-bootstrap';
+import { Pagination, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { PencilFill } from 'react-bootstrap-icons';
 
 const AdminFaqList = () => {
     const navigate = useNavigate();
@@ -81,9 +80,6 @@ const AdminFaqList = () => {
                 </tbody>
             </Table>
 
-            <Button onClick={() => navigate("/admin/main/faqs/write")} variant="link" className="text-dark ms-2">
-                <PencilFill size={16} />
-            </Button>
 
             {totalPages > 1 && (
                 <Pagination className="justify-content-center mt-3">

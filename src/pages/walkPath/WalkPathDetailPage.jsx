@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import api from "../../config/apiConfig";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col,Modal } from "react-bootstrap";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorAlert from "../../components/common/ErrorAlert";
 import WalkPathDetailContent from "../../components/board/walkPath/WalkPathDetailContent";
@@ -15,6 +15,7 @@ const WalkPathDetailPage = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   //게시글 + 댓글 조회
   useEffect(() => {
@@ -42,6 +43,20 @@ const WalkPathDetailPage = () => {
     fetchPostAndComments();
   }, [id]);
 
+  //삭제 API 호출
+  const handleDelete = async () => {
+    try {
+      await api.delete(`/api/walk-paths/${id}`);
+      alert("게시글이 삭제되었습니다.");
+      navigate("/walk-paths");
+    } catch (error) {
+      console.error("게시글 삭제 실패:", error);
+      alert("삭제 중 오류가 발생했습니다.");
+    } finally {
+      setShowModal(false);
+    }
+  };
+
   if (loading) return <LoadingSpinner message="게시글 불러오는 중..." />;
   if (error) return <ErrorAlert message={error} variant="danger" />;
   if (!post)
@@ -52,6 +67,7 @@ const WalkPathDetailPage = () => {
         onGoBack={() => navigate("/walk-paths")}
       />
     );
+
 
   return (
     <Row className="justify-content-center mt-4">
@@ -72,13 +88,35 @@ const WalkPathDetailPage = () => {
             variant="outline-primary"
             size="sm"
             onClick={() => {
-              console.log("✅ navigate로 이동할 id:", id);
               navigate(`/walk-paths/edit/${id}`);
             }}
           >
             수정하기
           </Button>
+           <Button
+            variant="outline-primary"
+            size="sm"
+            onClick={() => setShowModal(true)}
+          >
+            삭제하기 
+          </Button>
         </div>
+
+        {/* ✅ 삭제 확인 모달 */}
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>게시글 삭제</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>정말 이 게시글을 삭제하시겠습니까?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              아니오
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              예
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
         {/* 댓글 목록 */}
         <WalkPathDetailCommentCard
