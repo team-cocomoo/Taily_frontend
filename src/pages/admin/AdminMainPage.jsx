@@ -1,5 +1,4 @@
 import React from "react";
-import Users from "../../components/admin/Users";
 import AdminFaqPage from "./faq/AdminFaqPage";
 import "../../styles/admin/Admin.css";
 import { Route, Routes } from "react-router-dom";
@@ -11,11 +10,12 @@ import AdminNoticeListPage from "./notice/AdminNoticeListPage";
 import AdminNoticeDetailPage from "./notice/AdminNoticeDetailPage";
 import AdminNoticeEditPage from "./notice/AdminNoticeEditPage";
 import AdminNoticeWritePage from "./notice/AdminNoticeWritePage";
+import AdminUsersPage from "./users/AdminUsersPage";
 
 const AdminMainPage = () => {
   return (
     <Routes>
-      <Route path="users" element={<Users />} />
+      <Route path="users" element={<AdminUsersPage />} />
       <Route path="notices" element={<AdminNoticeListPage />} />
       <Route path="notices/:id" element={<AdminNoticeDetailPage />} />
       <Route path="notices/edit/:id" element={<AdminNoticeEditPage />} />

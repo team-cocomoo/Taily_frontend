@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import FaqWriteForm from '../../../components/admin/FaqWriteForm';
-import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import api from '../../../config/apiConfig';
 import { useNavigate, useParams } from 'react-router-dom';
+import '../../../styles/admin/AdminFaq.css';
 
 const AdminFaqWriteAndEditPgae = () => {
     const { id } = useParams(); // url에 id가 있으면 수정 모드
@@ -37,16 +38,26 @@ const AdminFaqWriteAndEditPgae = () => {
     if (loading) return <p>"faq 기존 데이터 불러오는 중..."</p>;
 
     return (
-        <Container style={{ marginTop: "120px" }}>
-            <div className="mt-5 p-4">
-                <h4 style={{fontWeight:"bold"}}>FAQ</h4>
-            </div>
-            <FaqWriteForm
-                initialData={faqDetail}
-                isEditMode={!!id}
-                onSuccess={(savedFaq) => navigate(`/admin/main/faqs/${savedFaq.id}`)}
-            />
-        </Container>
+        <div className="admin-faq-detail-wrapper">
+            <Card className="admin-faq-detail-card shadow-sm">
+                <div className="mb-4">
+                    <h3 className="admin-faq-detail-title">
+                        {isEditMode ? "FAQ 수정" : "FAQ 작성"}
+                    </h3>
+                    <p className="text-muted mb-0">
+                        {isEditMode
+                            ? "기존 FAQ 내용을 수정하세요."
+                            : "새로운 FAQ를 등록하세요."}
+                    </p>
+                </div>
+
+                <FaqWriteForm
+                    initialData={faqDetail}
+                    isEditMode={isEditMode}
+                    onSuccess={(savedFaq) => navigate(`/admin/main/faqs/${savedFaq.id}`)}
+                />
+            </Card>
+        </div>
     );
 };
 

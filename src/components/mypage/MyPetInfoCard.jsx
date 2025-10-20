@@ -58,7 +58,7 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
     if (loading) return <p>반려동물 정보를 불러오는 중...</p>;
 
     return (
-<>
+        <>
             {/* 등록 버튼 */}
             <div className="text-center mt-3 mb-3">
                 <Button
