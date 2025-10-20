@@ -84,22 +84,6 @@ const WalkPathDetailPage = () => {
           >
             목록으로
           </Button>
-          <Button
-            variant="outline-primary"
-            size="sm"
-            onClick={() => {
-              navigate(`/walk-paths/edit/${id}`);
-            }}
-          >
-            수정하기
-          </Button>
-           <Button
-            variant="outline-primary"
-            size="sm"
-            onClick={() => setShowModal(true)}
-          >
-            삭제하기 
-          </Button>
         </div>
 
         {/* ✅ 삭제 확인 모달 */}

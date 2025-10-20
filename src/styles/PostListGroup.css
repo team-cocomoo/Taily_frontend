@@ -1,11 +1,11 @@
 .page-container {
   display: flex;
-  justify-content: flex-start; /* 왼쪽부터 배치 */
+  justify-content: center; 왼쪽부터 배치
   align-items: flex-start; /* 위로 정렬 */
 }
 
 .post-list-container {
-  width: 100%;
+  width: 70%;
   margin-right: 20px;
   margin-top: 40px;
 }
