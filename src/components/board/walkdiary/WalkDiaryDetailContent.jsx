@@ -6,6 +6,7 @@ import meatballIcon from "../../../assets/image/meatball-icon.png";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../config/apiConfig";
 import ShareModal from "../ShareModal";
+import SecureImage from "@/components/common/SecureImage";
 
 const WalkDiaryDetailContent = ({ walkDiary }) => {
   const navigate = useNavigate();
@@ -135,14 +136,15 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
           <div className="d-flex justify-content-center flex-wrap mb-4 gap-3">
             {walkDiary.images.map((img, idx) => {
               // 서버에서 받은 경로가 '/uploads/...' 형태라면 도메인을 붙여준다
-              const imageUrl = img.startsWith("/uploads/")
-                ? `http://localhost:8080${img}`
-                : img;
+              const imagePath =
+                typeof img === "string"
+                  ? img
+                  : img.filePath || img.url || "";
 
               return (
                 <div key={idx} className="image-wrapper">
-                  <img
-                    src={imageUrl}
+                  <SecureImage
+                    src={imagePath}
                     alt={`산책일지-${idx}`}
                     className="detail-image"
                     style={{

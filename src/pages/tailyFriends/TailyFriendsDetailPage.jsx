@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-
 import TailyFriendsDetailContent from "../../components/board/tailyFriends/TailyFriendsDetailContent";
 import TailyFriendsDetailCommentCard from "../../components/board/tailyFriends/TailyFriendsDetailCommentCard";
 import ErrorAlert from "../../components/common/ErrorAlert";
 
 const TailyFriendDetailPage = () => {
-  const { id } = useParams(); // 게시글 ID
+  const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]); // 댓글 리스트
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const fetchedRef = useRef(false); 
 
-  // 게시글 + 댓글 조회
   useEffect(() => {
+    if (fetchedRef.current) return; 
+    fetchedRef.current = true;
+
     const fetchDetail = async () => {
       try {
         setLoading(true);
@@ -49,15 +51,13 @@ const TailyFriendDetailPage = () => {
   }
 
   if (error) return <ErrorAlert message={error} variant="danger" />;
-
   if (!post) return <div className="text-center mt-5">게시글이 없습니다.</div>;
+
   return (
     <Row className="justify-content-center mt-4">
       <Col xs={12} md={10} lg={10}>
-        {/* 게시글 상세 */}
         <TailyFriendsDetailContent post={post} />
 
-        {/* 하단 버튼 */}
         <div className="d-flex justify-content-end mt-1 mb-4">
           <Button
             variant="outline-primary"
@@ -68,7 +68,6 @@ const TailyFriendDetailPage = () => {
           </Button>
         </div>
 
-        {/* 댓글 목록 */}
         <TailyFriendsDetailCommentCard
           postId={id}
           comments={comments}
