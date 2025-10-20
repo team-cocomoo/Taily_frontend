@@ -5,7 +5,7 @@ import { toggleLike } from "@/api/FeedService";
 import UserInfoComponent from "./UserInfoComponent";
 import SecureImage from "./SecureImage";
 import FeedContent from "./FeedContent";
-import "@/styles/feed/FeedCard.css"; // ✅ 스타일 분리
+import "@/styles/feed/FeedCard.css";
 
 function FeedCard({ feedData, onUpdate }) {
   const {
@@ -40,6 +40,8 @@ function FeedCard({ feedData, onUpdate }) {
         {/* 작성자 정보 */}
         <UserInfoComponent
           writerName={writerName || "익명"}
+          writerPublicId={feedData.writerPublicId}
+          feedId={id}
           profileImageUrl={null}
         />
 

@@ -1,65 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
-import { useParams, useNavigate } from "react-router-dom";
 import api from "@/config/apiConfig";
+import { useNavigate } from "react-router-dom";
 
-const AdminNoticeEditPage = () => {
-  const { id } = useParams();
+const AdminNoticeWritePage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
     content: "",
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  /** 기존 공지 불러오기 */
-  useEffect(() => {
-    const fetchNotice = async () => {
-      try {
-        const res = await api.get(`/api/notices/${id}`);
-        const data = res.data;
-        setFormData({
-          title: data.title || "",
-          content: data.content || "",
-        });
-      } catch (err) {
-        console.error("공지 불러오기 실패:", err);
-        setMessage("❌ 공지 정보를 불러오지 못했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchNotice();
-  }, [id]);
-
-  /** 입력값 변경 */
+  /** 입력값 변경 핸들러 */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /** 수정 요청 */
+  /** 공지 등록 */
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setMessage("");
+
     try {
-      await api.put(`/api/notices/${id}`, formData);
-      setMessage("✅ 공지가 성공적으로 수정되었습니다.");
-      setTimeout(() => navigate(`/admin/main/notices/${id}`), 1000);
+      await api.post("/api/notices", formData);
+      setMessage("✅ 공지가 성공적으로 등록되었습니다.");
+      setTimeout(() => navigate("/admin/main/notices"), 1000);
     } catch (err) {
-      console.error("공지 수정 실패:", err);
-      setMessage("❌ 수정 중 오류가 발생했습니다.");
+      console.error("공지 등록 실패:", err);
+      setMessage("❌ 등록 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (loading)
-    return <p className="text-center mt-5">공지 정보를 불러오는 중...</p>;
-
   return (
     <Card className="p-4 mt-4">
-      <h4 style={{ fontWeight: "bold" }}>공지 수정</h4>
+      <h4 style={{ fontWeight: "bold" }}>공지 등록</h4>
       <Form onSubmit={handleSubmit} className="mt-3">
         <Form.Group controlId="formTitle" className="mb-3">
           <Form.Label>제목</Form.Label>
@@ -68,6 +48,7 @@ const AdminNoticeEditPage = () => {
             name="title"
             value={formData.title}
             onChange={handleChange}
+            placeholder="공지 제목을 입력하세요"
             required
           />
         </Form.Group>
@@ -80,6 +61,7 @@ const AdminNoticeEditPage = () => {
             name="content"
             value={formData.content}
             onChange={handleChange}
+            placeholder="공지 내용을 입력하세요"
             required
           />
         </Form.Group>
@@ -102,7 +84,7 @@ const AdminNoticeEditPage = () => {
             취소
           </Button>
           <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? "수정 중..." : "수정하기"}
+            {loading ? "등록 중..." : "등록하기"}
           </Button>
         </div>
       </Form>
@@ -110,4 +92,4 @@ const AdminNoticeEditPage = () => {
   );
 };
 
-export default AdminNoticeEditPage;
+export default AdminNoticeWritePage;
