@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const WalkPathTitle = ({ value, onChange }) => {
   return (
     <Card className="mb-4 title-box">
+      <Card.Header>제목</Card.Header>
       <Card.Body>
-        
         <Form.Control
           type="text"
           placeholder="제목을 입력하세요"
