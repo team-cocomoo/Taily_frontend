@@ -20,7 +20,7 @@ const AdminLoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await api.post("/api/admin/login", formData, {
+      const response = await api.post("/api/auth/login/admin", formData, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -48,7 +48,10 @@ const AdminLoginPage = () => {
 
           <Form onSubmit={handleLogin} className="admin-login-form-vertical">
             {/* 아이디 */}
-            <Form.Group as={Row} className="mb-3 justify-content-center form-group-centered">
+            <Form.Group
+              as={Row}
+              className="mb-3 justify-content-center form-group-centered"
+            >
               <Form.Label column sm={2}>
                 아이디
               </Form.Label>
@@ -65,7 +68,10 @@ const AdminLoginPage = () => {
             </Form.Group>
 
             {/* 비밀번호 */}
-            <Form.Group as={Row} className="mb-3 justify-content-center form-group-centered">
+            <Form.Group
+              as={Row}
+              className="mb-3 justify-content-center form-group-centered"
+            >
               <Form.Label column sm={2}>
                 비밀번호
               </Form.Label>
