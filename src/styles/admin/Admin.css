@@ -41,16 +41,15 @@ body {
   align-items: center;
 }
 
-
 .admin-logininputfield {
   height: 40px;
-  border: 2px solid #586fc0;
-  border-radius: 20px;
+  border: 2px solid #586fc0 !important;
+  border-radius: 20px !important;
   padding: 0 15px;
   font-size: 16px;
 }
 
-.admin-loginbutton {
+.admin-loginformbox .admin-loginbutton {
   background-color: #fff !important;
   border: 2px solid #586fc0 !important;
   border-radius: 20px;
@@ -61,9 +60,11 @@ body {
   width: 550px;
   display: block;
   margin: 30px auto 0 auto;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-.admin-loginbutton:hover {
+.admin-loginformbox .admin-loginbutton:hover {
   background-color: #586fc0 !important;
   color: #fff !important;
 }
@@ -114,4 +115,3 @@ body {
   color: black !important;
   font-weight: bold;
 }
-

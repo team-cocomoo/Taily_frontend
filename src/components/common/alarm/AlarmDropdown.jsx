@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Stack, Badge } from 'react-bootstrap';
-import { Heart, MessageCircle, UserPlus } from 'lucide-react';
+import { Heart, MessageCircle, MessagesSquare, UserPlus } from 'lucide-react';
 import "../../../styles/AlarmDropdown.css";
 import { useNavigate } from 'react-router-dom';
 
@@ -43,6 +43,9 @@ const AlarmDropdown = ({ alarms, onClickAlarm, setShowDropdown }) => {
       case "FOLLOW":
         icon = <UserPlus size={22} color="#22c55e" />;
         break;
+      case "CHATTING":
+        icon = <MessagesSquare size={22} color="#e3c43dff" />;
+        break;
       default:
         icon = <Heart size={22} color="#aaa" />;
         break;
@@ -68,18 +71,22 @@ const AlarmDropdown = ({ alarms, onClickAlarm, setShowDropdown }) => {
             navigate(`/user-profile/${alarm.senderId}/profile`);
             setShowDropdown(false);
             return; // 여기서 끝내기
+        } else if (alarm.alarmCategory === "CHATTING") {
+            navigate(`/chats/${alarm.senderId}`);
+            setShowDropdown(false);
+            return; // 여기서 끝내기
         }
 
         const category = alarm.tableTypeCategory?.toLowerCase();
 
         if (category.includes("피드") || category.includes("feed")) {
-        navigate(`/petstory/feed/${alarm.postsId}`);
+          navigate(`/petstory/feed/${alarm.postsId}`);
         } else if (category.includes("다함께산책") || category.includes("walk")) {
-        navigate(`/walk-paths/${alarm.postsId}`);
+          navigate(`/walk-paths/${alarm.postsId}`);
         } else if (category.includes("테일리프렌즈") || category.includes("taily")) {
-        navigate(`/taily-friends/${alarm.postsId}`);
+          navigate(`/taily-friends/${alarm.postsId}`);
         } else {
-        navigate(`/posts/${alarm.postsId}`);
+          navigate(`/posts/${alarm.postsId}`);
         }
 
         setShowDropdown(false); // 이동 시 드롭다운 닫기
@@ -98,7 +105,7 @@ const AlarmDropdown = ({ alarms, onClickAlarm, setShowDropdown }) => {
             {alarms.length === 0 ? (
                 <div className='empty'>알림이 없습니다.</div>
             ) : (
-Object.entries(grouped).map(([group, items]) => (
+          Object.entries(grouped).map(([group, items]) => (
           <div key={group}>
             <div className="alarm-date">{group}</div>
             {items.map((alarm) => {

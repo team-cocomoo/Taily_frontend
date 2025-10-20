@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Spinner, Pagination } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
+import "../../styles/myPage/MyTailyFriends.css";
 
 const MyTailyFriendsList = () => {
   const [posts, setPosts] = useState([]);
@@ -75,13 +76,14 @@ const MyTailyFriendsList = () => {
 
   return (
     <>
-      <Table bordered hover responsive>
+      <Table borderless hover responsive className="text-center">
         <thead className="table">
-          <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>조회수</th>
-            <th>작성일</th>
+          <tr className="my-taily-friends-tr">
+            <th style={{ width: "10%" }}>번호</th>
+            <th style={{ width: "20%" }}>제목</th>
+            <th style={{ width: "35%" }}>내용</th>
+            <th style={{ width: "15%" }}>조회수</th>
+            <th style={{ width: "20%" }}>작성일</th>
           </tr>
         </thead>
         <tbody>
@@ -93,6 +95,7 @@ const MyTailyFriendsList = () => {
             >
               <td>{(page - 1) * pageSize + index + 1}</td>
               <td>{post.title}</td>
+              <td dangerouslySetInnerHTML={{ __html: post.content }}></td>
               <td>{post.view}</td>
               <td>{new Date(post.createdAt).toLocaleDateString()}</td>
             </tr>

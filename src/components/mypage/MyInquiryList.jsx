@@ -74,13 +74,14 @@ const MyInquiryList = () => {
 
   return (
     <>
-      <Table bordered hover responsive>
+      <Table borderless hover responsive className="text-center">
         <thead className="table">
-          <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>상태</th>
-            <th>작성일</th>
+          <tr className="my-taily-friends-tr">
+            <th style={{ width: "10%" }}>번호</th>
+            <th style={{ width: "20%" }}>제목</th>
+            <th style={{ width: "35%" }}>내용</th>
+            <th style={{ width: "15%" }}>상태</th>
+            <th style={{ width: "20%" }}>작성일</th>
           </tr>
         </thead>
         <tbody>
@@ -92,6 +93,7 @@ const MyInquiryList = () => {
             >
               <td>{(page - 1) * pageSize + index + 1}</td>
               <td>{inq.title}</td>
+              <td>{inq.content}</td>
               <td>{inq.state === "RESOLVED" ? "답변완료" : "대기중"}</td>
               <td>{new Date(inq.createdAt).toLocaleDateString()}</td>
             </tr>

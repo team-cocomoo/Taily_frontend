@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Card, Row, Col, Table, Dropdown, Button } from "react-bootstrap";
-import profileImage from "../../assets/image/calendar-paw.png";
 import meatballIcon from "../../assets/image/meatball-icon.png";
 import api from "../../config/apiConfig";
 import MyPetWriteInfoModal from "../../components/mypage/MyPetWriteInfoModal"; 
+import SecureImage from "../../components/common/SecureImage";
 
 import "../../styles/myPage/MyPetInfo.css";
 
@@ -58,93 +58,119 @@ const MyPetInfoCard = ({ setSelectedMenu }) => {
     if (loading) return <p>반려동물 정보를 불러오는 중...</p>;
 
     return (
-        <>
-        {/* 등록 버튼: 항상 표시 */}
-        <div className="text-center mt-3 mb-3">
-            <Button
-            variant="warning"
-            onClick={() => {
-                setSelectedPet(null); // 새 작성 모드
-                setShowModal(true);
-            }}
-            >
-            새로운 프로필 추가
-            </Button>
-        </div>
+<>
+            {/* 등록 버튼 */}
+            <div className="text-center mt-3 mb-3">
+                <Button
+                    variant="warning"
+                    onClick={() => {
+                        setSelectedPet(null);
+                        setShowModal(true);
+                    }}
+                >
+                    새로운 프로필 추가
+                </Button>
+            </div>
 
-        {/* 모달: 등록/수정 통합 */}
-        <MyPetWriteInfoModal
-            show={showModal}
-            handleClose={handleModalClose}
-            setSelectedMenu={setSelectedMenu}
-            pet={selectedPet} // null이면 등록, 객체면 수정
-            onSuccess={(updatedPet, petId) => {
-                // petId가 있으면 수정, 없으면 새로 추가
-                setPetList(prev => {
-                if (petId) {
-                    return prev.map(p => (p.petId === petId ? updatedPet : p));
-                } else {
-                    return [...prev, updatedPet];
-                }
-                });
-            }}
-        />
+            {/* 모달 */}
+            <MyPetWriteInfoModal
+                show={showModal}
+                handleClose={handleModalClose}
+                setSelectedMenu={setSelectedMenu}
+                pet={selectedPet}
+                onSuccess={(updatedPet, petId) => {
+                    setPetList(prev => {
+                        if (petId) {
+                            return prev.map(p => (p.petId === petId ? updatedPet : p));
+                        } else {
+                            return [...prev, updatedPet];
+                        }
+                    });
+                }}
+            />
 
-        <div className="profile-list-container">
-        {/* 프로필 리스트 */}
-        {petList.length === 0 ? (
-            <p className="text-center">아직 내 반려동물 프로필이 없어요.</p>
-        ) : (
-            petList.map((pet, index) => (
-            <Card key={index} className="profile-box mt-4 p-3" style={{ maxWidth: "600px", margin: "auto" }}>
-                <Row>
-                <Col sm={4} className="d-flex justify-content-center align-items-center">
-                    <img src={profileImage} alt="pet" style={{ width: "100%", borderRadius: "10px" }} />
-                </Col>
-                <Col sm={8} style={{ position: "relative" }}>
-                    <Dropdown className="profile-dropdown mx-4" style={{ position: "absolute", top: 0, right: 0 }}>
-                    <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm" className="no-caret">
-                        <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => {
-                            setSelectedPet(pet); // 수정할 반려동물 선택
-                            setShowModal(true);  // 모달 열기
-                        }}>수정</Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleDelete(pet.petId)}>삭제</Dropdown.Item>
-                    </Dropdown.Menu>
-                    </Dropdown>
+            {/* 프로필 리스트 */}
+            <div className="profile-list-container">
+                {petList.length === 0 ? (
+                    <p className="text-center">아직 내 반려동물 프로필이 없어요.</p>
+                ) : (
+                    petList.map((pet, index) => (
+                        <Card key={index} className="profile-box mt-4 p-3" style={{ maxWidth: "600px", margin: "auto" }}>
+                            <Row>
+                                <Col sm={4} className="d-flex justify-content-center align-items-center">
+                                    {/* ✅ SecureImage로 교체 */}
+                                    {pet.imagePath ? (
+                                        <SecureImage
+                                            src={pet.imagePath}
+                                            alt={pet.name}
+                                            style={{ width: "100%", borderRadius: "10px", objectFit: "cover" }}
+                                        />
+                                    ) : (
+                                        <div
+                                            style={{
+                                                width: "100%",
+                                                height: "150px",
+                                                backgroundColor: "#f0f0f0",
+                                                borderRadius: "10px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                color: "#aaa",
+                                            }}
+                                        >
+                                            이미지 없음
+                                        </div>
+                                    )}
+                                </Col>
 
-                    <Table borderless>
-                    <tbody>
-                        <tr>
-                        <td><strong>이름</strong></td>
-                        <td>{pet.name || "-"}</td>
-                        </tr>
-                        <tr>
-                        <td><strong>성별</strong></td>
-                        <td>{pet.gender || "-"}</td>
-                        </tr>
-                        <tr>
-                        <td><strong>나이</strong></td>
-                        <td>{pet.age || "-"}</td>
-                        </tr>
-                        <tr>
-                        <td><strong>취향</strong></td>
-                        <td>{Array.isArray(pet.preference) ? pet.preference.join(", ") : pet.preference || "-"}</td>
-                        </tr>
-                        <tr>
-                        <td><strong>소개글</strong></td>
-                        <td>{pet.introduction || "-"}</td>
-                        </tr>
-                    </tbody>
-                    </Table>
-                </Col>
-                </Row>
-            </Card>
-            ))
-        )}
-        </div>
+                                <Col sm={8} style={{ position: "relative" }}>
+                                    <Dropdown className="profile-dropdown mx-4" style={{ position: "absolute", top: 0, right: 0 }}>
+                                        <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm" className="no-caret">
+                                            <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item
+                                                onClick={() => {
+                                                    setSelectedPet(pet);
+                                                    setShowModal(true);
+                                                }}
+                                            >
+                                                수정
+                                            </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handleDelete(pet.petId)}>삭제</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+
+                                    <Table borderless>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>이름</strong></td>
+                                                <td>{pet.name || "-"}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>성별</strong></td>
+                                                <td>{pet.gender || "-"}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>나이</strong></td>
+                                                <td>{pet.age || "-"}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>취향</strong></td>
+                                                <td>{Array.isArray(pet.preference) ? pet.preference.join(", ") : pet.preference || "-"}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>소개글</strong></td>
+                                                <td>{pet.introduction || "-"}</td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                        </Card>
+                    ))
+                )}
+            </div>
         </>
     );
 };

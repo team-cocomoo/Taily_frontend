@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import api from "../../config/apiConfig";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
@@ -7,13 +7,14 @@ import "../../styles/chatroom/ChatRoomDetailPage.css";
 import userIcon from "../../assets/image/user-icon.png";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import SecureImage from "../../components/common/SecureImage";
 
 const ChatRoomDetailPage = () => {
   const { id: roomId } = useParams();
-  const { state } = useLocation();
   const { user } = useContext(AuthContext);
 
   const [messages, setMessages] = useState([]);
+  const [roomInfo, setRoomInfo] = useState(null); // ✅ 상대방 정보
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -22,31 +23,39 @@ const ChatRoomDetailPage = () => {
 
   const token = localStorage.getItem("token");
 
-  // 메시지 불러오기
+  // ✅ 채팅방 정보 + 메시지 불러오기
   useEffect(() => {
     if (!user) return;
 
-    const fetchMessages = async () => {
+    const fetchRoomDetail = async () => {
       try {
         const res = await api.get(`/api/chats/${roomId}/messages`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setMessages(res.data?.data || []);
+
+        const data = res.data?.data;
+        if (data) {
+          setMessages(data.messages || []);
+          setRoomInfo({
+            nickname: data.otherNickname,
+            profileImage: data.otherProfileImage,
+            username: data.otherUsername,
+          });
+        }
       } catch (err) {
-        console.error("메시지 조회 실패:", err);
+        console.error("❌ 채팅방 상세 조회 실패:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchMessages();
+    fetchRoomDetail();
   }, [user, roomId, token]);
 
-  // WebSocket 연결
   useEffect(() => {
     if (!user) return;
 
-    const socket = new SockJS(`http://localhost:8080/ws-chat?token=${token}`);
+    const socket = new SockJS(`http://localhost:8080/ws-chat`);
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -54,6 +63,7 @@ const ChatRoomDetailPage = () => {
     });
 
     client.onConnect = () => {
+      console.log("✅ WebSocket 연결 성공");
       client.subscribe(`/topic/chat/${roomId}`, (message) => {
         const msg = JSON.parse(message.body);
         setMessages((prev) => [...prev, msg]);
@@ -63,17 +73,13 @@ const ChatRoomDetailPage = () => {
     client.activate();
     stompClientRef.current = client;
 
-    return () => {
-      client.deactivate();
-    };
+    return () => client.deactivate();
   }, [user, roomId, token]);
 
-  // 스크롤 맨 아래 이동
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 메시지 전송
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -105,19 +111,15 @@ const ChatRoomDetailPage = () => {
     }
   };
 
-  // 날짜 포맷 함수
   const formatDate = (isoString) => {
     const date = new Date(isoString);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
-
     let hours = date.getHours();
     const minutes = String(date.getMinutes()).padStart(2, "0");
     const ampm = hours < 12 ? "오전" : "오후";
-    hours = hours % 12;
-    hours = hours === 0 ? 12 : hours;
-
+    hours = hours % 12 || 12;
     return `${year}.${month}.${day} ${ampm} ${hours}:${minutes}`;
   };
 
@@ -125,7 +127,9 @@ const ChatRoomDetailPage = () => {
 
   return (
     <div className="chat-room-page">
-      <h2 className="chat-room-title">{state?.otherUsername || "채팅방"}</h2>
+      <h2 className="chat-room-title">
+        {roomInfo?.nickname || "채팅방"}
+      </h2>
 
       <div className="chat-messages">
         {messages.length === 0 && (
@@ -137,13 +141,11 @@ const ChatRoomDetailPage = () => {
           return (
             <div
               key={msg.id}
-              className={`chat-message ${
-                isMine ? "my-message" : "other-message"
-              }`}
+              className={`chat-message ${isMine ? "my-message" : "other-message"}`}
             >
               {!isMine && (
-                <img
-                  src={state?.otherProfileImage || userIcon}
+                <SecureImage
+                  src={roomInfo?.profileImage || userIcon}
                   alt={msg.senderName}
                   className="chat-profile-image"
                 />

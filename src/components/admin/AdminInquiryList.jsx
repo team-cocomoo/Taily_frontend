@@ -20,10 +20,16 @@ const AdminInquiryList = () => {
   const fetchInquiries = async (searchKeyword = "", page = 1) => {
     setLoading(true);
     try {
+      const token = localStorage.getItem("token"); // ✅ 토큰 가져오기
       const params = { page, size: pageSize };
       if (searchKeyword.trim() !== "") params.keyword = searchKeyword.trim();
 
-      const response = await api.get("/api/admin/inquiries", { params });
+      const response = await api.get("/api/admin/inquiries", {
+        params,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       // ASK(질문)만 필터링
       const allInquiries =
@@ -35,7 +41,7 @@ const AdminInquiryList = () => {
       setTotalCount(filtered.length); // 전체 개수도 질문만 기준으로 표시
       setCurrentPage(page);
     } catch (error) {
-      console.error("문의 리스트 조회 실패", error);
+      console.error("문의 리스트 조회 실패:", error);
     } finally {
       setLoading(false);
     }

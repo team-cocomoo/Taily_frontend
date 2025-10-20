@@ -20,7 +20,7 @@ const WalkPathContent = ({ content, onChange }) => {
       <Card.Header>내용</Card.Header>
       <Card.Body>
         <MyEditor
-          value={localValue}
+          value={localValue}  
           onChange={handleEditorChange}
           placeholder="내용을 적으세요"
         />
