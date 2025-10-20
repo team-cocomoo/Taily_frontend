@@ -38,6 +38,12 @@ const UserInfoModal = ({ show, user, handleClose }) => {
                         <p>
                         <strong>제재 횟수:</strong> {user.sanctionCount}
                         </p>
+                        {user.sanctionCount > 0 && (
+                        <p>
+                            <strong>제재 기간:</strong>{" "}
+                            {user.penaltyStartDate ?? "-"} ~ {user.penaltyEndDate ?? "-"}
+                        </p>
+                        )}
 
                     </Col>
                 </Row>

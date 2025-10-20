@@ -102,23 +102,23 @@ const Users = () => {
                     <tbody>
                         {userList.map((user, index) => (
                         <tr
-      key={user.id || index}
-      onClick={() => handleUserClick(user)}
-      style={{
-        cursor: "pointer",
-        transition: "background-color 0.2s ease",
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f8f9fa")}
-      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
-    >
-      <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-      <td>{user.username}</td>
-      <td>{user.nickname}</td>
-      <td>{user.email}</td>
-      <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-      <td>{user.state}</td>
-      <td>{user.sanctionCount}</td>
-    </tr>
+                        key={user.id || index}
+                        onClick={() => handleUserClick(user)}
+                        style={{
+                            cursor: "pointer",
+                            transition: "background-color 0.2s ease",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f8f9fa")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
+                        >
+                        <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                        <td>{user.username}</td>
+                        <td>{user.nickname}</td>
+                        <td>{user.email}</td>
+                        <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                        <td>{user.state}</td>
+                        <td>{user.sanctionCount}</td>
+                        </tr>
                         ))}
                     </tbody>
                 </Table>
