@@ -6,6 +6,7 @@ import "../../../styles/postDetail/PostDetailCommentCard.css";
 import api from "../../../config/apiConfig";
 import { AuthContext } from "../../../contexts/AuthContext";
 import SecureImage from "../../common/SecureImage";
+import UserPopover from "../../common/UserPopover";
 
 const PostDetailCommentCard = ({ postId }) => {
   const { user } = useContext(AuthContext);
@@ -218,7 +219,9 @@ const PostDetailCommentCard = ({ postId }) => {
                 />
               )}
               <div className="flex-grow-1 d-flex flex-column">
-                <strong className="comment-nickname">{c.nickname}</strong>
+                <UserPopover userId={c.userId} nickname={c.nickname}>
+                  <strong className="comment-nickname">{c.nickname}</strong>
+                </UserPopover>
 
                 {/* 부모 댓글 수정 모드 */}
                 {editMode[c.id] ? (
@@ -352,9 +355,14 @@ const PostDetailCommentCard = ({ postId }) => {
                               />
                             )}
                             <div className="flex-grow-1 d-flex flex-column">
-                              <strong className="comment-nickname">
-                                {r.nickname}
-                              </strong>
+                              <UserPopover
+                                userId={r.userId}
+                                nickname={r.nickname}
+                              >
+                                <strong className="comment-nickname">
+                                  {r.nickname}
+                                </strong>
+                              </UserPopover>
 
                               {editMode[r.id] ? (
                                 <>
