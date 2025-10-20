@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../../styles/postDetail/WalkPathMap.css";
+//import "../../styles/postDetail/WalkPathMap.css";
 
 /**
  * BaseMapInput (공통 지도 컴포넌트)
