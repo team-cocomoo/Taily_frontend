@@ -36,3 +36,12 @@
   background-color: #feb916; /* 호버 시 색상 */
   color: white;
 }
+.comment-edit-delete-button{
+  color: #333;
+  text-decoration: none;
+}
+.comment-edit-delete-button:hover{
+  color: "#333" !important;
+  text-decoration: none;
+  
+}

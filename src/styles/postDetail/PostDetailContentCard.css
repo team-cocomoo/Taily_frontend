@@ -6,9 +6,7 @@
   overflow-x: auto;
 }
 .post-detail-content {
-  /* white-space: pre-wrap; */
   min-height: 50%;
-  text-align: center;
   margin-top: 40px; 
   margin-bottom: 10px;
   line-height: 1.7;
