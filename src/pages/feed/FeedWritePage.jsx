@@ -1,16 +1,22 @@
-// pages/feed/FeedWritePage.jsx
+// src/pages/feed/FeedWritePage.jsx
 import React, { useState } from "react";
 import { Container, Form, Button, Card, Spinner } from "react-bootstrap";
-import { createFeed } from "@/api/FeedService";
+import api from "@/config/apiConfig";
 import FeedTextInput from "@/components/feed/FeedTextInput";
 import FeedTagInput from "@/components/feed/FeedTagInput";
-import ImageBox from "@/components/board/ImageBox.jsx";
+import ImageBox from "@/components/board/ImageBox";
 import "@/styles/feed/FeedWritePage.css";
 
+/**
+ * FeedWritePage.jsx
+ *  피드 등록 먼저 (/api/feeds)
+ * 응답받은 feedId로 이미지 업로드 (/api/images/upload)
+ * 태그 및 이미지 연결
+ */
 export default function FeedWritePage() {
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]); // File 객체 배열
   const [loading, setLoading] = useState(false);
 
   const handleAddTag = (newTag) => setTags((prev) => [...prev, newTag]);
@@ -20,34 +26,42 @@ export default function FeedWritePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!content.trim()) {
-      alert("내용을 입력해주세요!");
-      return;
-    }
+    if (!content.trim()) return alert("내용을 입력해주세요!");
 
-    // ✅ 백엔드 @RequestPart("feed")에 맞춰 JSON 파트를 Blob으로 추가
-    const feedData = { content, tags };
-
-    const formData = new FormData();
-    formData.append(
-      "feed",
-      new Blob([JSON.stringify(feedData)], { type: "application/json" })
-    );
-
-    // 파일 파트(여러 장) 그대로 추가 (@RequestPart(value="images"))
-    images.forEach((img) => {
-      if (img.type === "file") {
-        formData.append("images", img.data);
-      }
-    });
-
+    setLoading(true);
     try {
-      setLoading(true);
-      await createFeed(formData); // axios가 boundary 포함 헤더를 자동 설정
+      // 피드 본문 먼저 등록 (이미지 없이)
+      const feedData = {
+        content,
+        tags,
+        tableTypeId: 3, // FEED
+      };
+
+      const feedRes = await api.post("/api/feeds", feedData, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const feedId = feedRes.data.id;
+      console.log(" 피드 등록 완료, feedId =", feedId);
+
+      // 이미지 업로드 (feedId 기반)
+      if (images.length > 0) {
+        const formData = new FormData();
+        images.forEach((img) => formData.append("files", img.data));
+        formData.append("tableTypesId", 3); // Feed용
+        formData.append("postsId", feedId); // 연관 피드 ID
+
+        const uploadRes = await api.post("/api/images/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        console.log(" 업로드된 이미지 목록:", uploadRes.data);
+      }
+
       alert("피드가 등록되었습니다!");
       window.location.href = "/petstory/feed";
     } catch (err) {
-      console.error("피드 등록 실패:", err);
+      console.error(" 피드 등록 실패:", err);
       alert("등록 실패: 다시 시도해주세요.");
     } finally {
       setLoading(false);
@@ -60,13 +74,18 @@ export default function FeedWritePage() {
 
       <Card className="p-3 shadow-sm">
         <Form onSubmit={handleSubmit}>
+          {/* 본문 입력 */}
           <FeedTextInput content={content} onChange={setContent} />
+
+          {/* 태그 입력 */}
           <FeedTagInput
             tags={tags}
             onAddTag={handleAddTag}
             onRemoveTag={handleRemoveTag}
           />
-          <ImageBox images={[]} onImageChange={handleImageChange} />
+
+          {/* 이미지 업로드 */}
+          <ImageBox images={images} onImageChange={handleImageChange} />
 
           <div className="text-center mt-4">
             <Button
