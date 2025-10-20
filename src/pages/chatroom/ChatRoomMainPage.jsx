@@ -7,6 +7,7 @@ import SearchBar from "../../components/common/SearchBar";
 import { ListGroup, Image } from "react-bootstrap";
 import userIcon from "../../assets/image/user-icon.png";
 import "../../styles/chatroom/ChatRoomMainPage.css";
+import SecureImage from "../../components/common/SecureImage";
 
 const ChatRoomMainPage = () => {
   const { user, loading: authLoading } = useContext(AuthContext);
@@ -127,7 +128,7 @@ const ChatRoomMainPage = () => {
                 className="chat-room-item"
                 onClick={() => handleUserClick(user)}
               >
-                <Image
+                <SecureImage
                   src={user.profileImage || userIcon}
                   roundedCircle
                   className="chatroom-image"
@@ -152,7 +153,7 @@ const ChatRoomMainPage = () => {
                   className="chat-room-item"
                   onClick={() => handleRoomClick(room)}
                 >
-                  <Image
+                  <SecureImage
                     src={room.otherProfileImage || userIcon}
                     roundedCircle
                     className="chatroom-image"

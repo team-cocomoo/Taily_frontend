@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Badge, Row, Col } from "react-bootstrap";
 import "../../styles/PostCardGroup.css";
 import SecureImage from "../common/SecureImage";
+import noPhoto from "../../assets/image/no-photo.jpg";
 
 const PostCardGroup = ({ items, onItemClick }) => {
   return (
@@ -23,14 +24,18 @@ const PostCardGroup = ({ items, onItemClick }) => {
                 onClick={() => onItemClick(item.id)}
                 style={{ cursor: "pointer" }}
               >
-                <div className="post-card-image-container">
+                <div>
                   {hasImage ? (
                     <SecureImage
                       src={item.images[0].filePath}
                       alt={item.title}
+                      className={"post-card-image-container"}
                     />
                   ) : (
-                    <div className="no-image-text">이미지가 없습니다.</div>
+                    <img
+                      src={noPhoto}
+                      className={"post-card-image-container"}
+                    />
                   )}
                 </div>
 

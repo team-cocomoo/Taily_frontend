@@ -5,29 +5,24 @@ import SecureImage from "@/components/common/SecureImage";
 
 import "../../../styles/ImageBox.css";
 
-const TailyFriendsImageBox = ({
-  existingImages = [],
-  newImages = [],
-  onImageChange,
-}) => {
-  const [previews, setPreviews] = useState([]);
+const TailyFriendsEditImageBox = ({ existingImages = [], onImageChange }) => {
+  const [previews, setPreviews] = useState([]); // 서버 + 새 이미지 미리보기
 
-  // ✅ 기존 서버 이미지 표시
+  // ✅ 기존 서버 이미지 초기화 (한 번만 실행)
   useEffect(() => {
     if (existingImages && existingImages.length > 0) {
-      const existingPreviews = existingImages.map((img) => ({
+      const mapped = existingImages.map((img) => ({
         id: img.id || crypto.randomUUID(),
         type: "url",
-        data: img.filePath, // SecureImage에서 JWT 포함 요청
+        data: img.filePath, // 서버에서 오는 경로 (예: /uploads/taily-friends/abc.jpg)
       }));
-      setPreviews(existingPreviews);
+      setPreviews(mapped);
     }
   }, [existingImages]);
 
-  // ✅ 파일 업로드 핸들러
+  // ✅ 파일 추가 시 새 미리보기 생성
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-
     if (files.length + previews.length > 3) {
       alert("사진은 최대 3장까지 업로드할 수 있어요!");
       return;
@@ -40,31 +35,32 @@ const TailyFriendsImageBox = ({
       file,
     }));
 
-    const updatedPreviews = [...previews, ...newPreviews].slice(0, 3);
-    setPreviews(updatedPreviews);
+    const updated = [...previews, ...newPreviews].slice(0, 3);
+    setPreviews(updated);
 
+    // 부모로 전달
     if (onImageChange) {
-      const sendToParent = updatedPreviews.map((p) =>
+      const formatted = updated.map((p) =>
         p.type === "file"
           ? { type: "file", data: p.file, id: p.id }
           : { type: "url", data: p.data, id: p.id }
       );
-      onImageChange(sendToParent);
+      onImageChange(formatted);
     }
   };
 
-  // ✅ 이미지 삭제
+  // ✅ 클릭 시 삭제
   const handleRemove = (id) => {
     const updated = previews.filter((p) => p.id !== id);
     setPreviews(updated);
 
     if (onImageChange) {
-      const sendToParent = updated.map((p) =>
+      const formatted = updated.map((p) =>
         p.type === "file"
           ? { type: "file", data: p.file, id: p.id }
           : { type: "url", data: p.data, id: p.id }
       );
-      onImageChange(sendToParent);
+      onImageChange(formatted);
     }
   };
 
@@ -74,7 +70,6 @@ const TailyFriendsImageBox = ({
         사진 첨부{" "}
         <small className="text-muted px-2">같이 산책할 공간을 올려주세요</small>
       </Card.Header>
-
       <Card.Body className="d-flex align-items-center gap-2 flex-wrap">
         {/* 업로드 버튼 */}
         <Form.Label
@@ -84,7 +79,7 @@ const TailyFriendsImageBox = ({
           <span className="add-image">+</span>
         </Form.Label>
 
-        {/* ✅ SecureImage로 서버 이미지 표시 */}
+        {/* ✅ 미리보기 (기존 서버 이미지 + 새 업로드 파일) */}
         {previews.map((p) =>
           p.type === "file" ? (
             <img
@@ -93,6 +88,7 @@ const TailyFriendsImageBox = ({
               alt="preview"
               className="image-preview"
               onClick={() => handleRemove(p.id)}
+              title="클릭하면 삭제됩니다"
             />
           ) : (
             <SecureImage
@@ -105,6 +101,7 @@ const TailyFriendsImageBox = ({
           )
         )}
 
+        {/* 파일 선택 */}
         <Form.Control
           type="file"
           id="photo"
@@ -118,4 +115,4 @@ const TailyFriendsImageBox = ({
   );
 };
 
-export default TailyFriendsImageBox;
+export default TailyFriendsEditImageBox;
