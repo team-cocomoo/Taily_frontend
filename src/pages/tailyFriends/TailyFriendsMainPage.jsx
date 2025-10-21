@@ -56,7 +56,6 @@ const TailyFriendsMainPage = () => {
 
   return (
     <div className="mt-4">
-      <h2 className="page-title">테일리 프렌즈 게시판</h2>
       <TailyFriendsMainMap />
       <SearchBar placeholder="제목, 내용, 작성자 검색" onSearch={handleSearch} />
       <br />

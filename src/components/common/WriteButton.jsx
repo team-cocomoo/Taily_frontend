@@ -1,6 +1,6 @@
 
 import "../../styles/WriteButton.css";
-import footprintImg from "../../assets/image/footprintImg.png"; // 발자국 이미지 경로
+import footprintImg from "../../assets/image/footprintImg.png"; 
 
 const WriteButton = ({onClick}) => {
 
