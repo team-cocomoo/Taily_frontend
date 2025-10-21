@@ -49,6 +49,7 @@ import SingleFeedUploader from "@/tests/pages/SingleFeedUploader";
 import MyLikePage from "@/pages/myPage/MyLikePage";
 import MyPetPage from "../pages/myPage/MyPetPage";
 import MyPageMyFeed from "../pages/myPage/MyPageMyFeed";
+import MyFeedPage from "../pages/myPage/MyFeedPage";
 
 const UserRoutes = (
   <Route element={<UserLayout />}>
@@ -65,6 +66,7 @@ const UserRoutes = (
     <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
       <Route path="/mypage/user" element={<MyPageUserInfo />} />
       <Route path="/mypage/user/edit" element={<MyPageEdit />} />
+      <Route path="/mypage/myfeed" element={<MyFeedPage/>} />
       <Route path="/mypage/pet" element={<MyPetPage />} />
       <Route path="/mypage/like" element={<MyLikePage />} />
       <Route path="/mypage/taily-friends" element={<MyTailyFriendsPage />} />

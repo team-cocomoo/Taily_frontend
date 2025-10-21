@@ -1,10 +1,13 @@
-// components/feed/FeedContent.jsx (리팩토링 완료)
-
 import React from "react";
 import { Button } from "react-bootstrap";
 import { BsHeart, BsHeartFill, BsChatDots } from "react-icons/bs";
 
-function FeedContent({ feedData, onToggleLike }) {
+/**
+ * FeedContent
+ * - 좋아요 및 댓글 버튼
+ * - 댓글 클릭 시 부모(FeedCard)에서 상세 모달 오픈
+ */
+function FeedContent({ feedData, onToggleLike, onShowDetail }) {
   const { writer, content, liked, likeCount, date } = feedData;
 
   return (
@@ -22,19 +25,26 @@ function FeedContent({ feedData, onToggleLike }) {
         </Button>
 
         {/* 댓글 버튼 */}
-        <Button variant="link" className="p-0 text-muted me-auto">
+        <Button
+          variant="link"
+          className="p-0 text-muted me-auto"
+          onClick={onShowDetail} // 상세 모달 열기 콜백
+        >
           <BsChatDots size={20} />
         </Button>
       </div>
 
       {/* 좋아요 수 */}
-      <div className="mb-2">
+      {/* <div className="mb-2">
         <strong>좋아요 {likeCount}개</strong>
-      </div>
+      </div> */}
 
       {/* 글 내용 및 작성자 */}
       <div className="d-flex justify-content-between align-items-end">
-        <div className="feed-content-text" style={{ flex: 1, whiteSpace: "pre-wrap" }}>
+        <div
+          className="feed-content-text"
+          style={{ flex: 1, whiteSpace: "pre-wrap" }}
+        >
           <strong>{writer}</strong>{" "}
           <span
             dangerouslySetInnerHTML={{ __html: content }}
