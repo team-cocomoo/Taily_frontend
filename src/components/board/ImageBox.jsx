@@ -6,7 +6,7 @@ import axios from "axios";
 import TailyFriendsTitle from "../../components/board/tailyFriends/TailyFriendsTitle";
 import TailyFriendsWriteMap from "../../components/board/tailyFriends/TailyFriendsWriteMap";
 import TailyFriendsContent from "../../components/board/tailyFriends/TailyFriendsContent";
-import ImageBox from "../../components/board/ImageBox"; 
+import ImageBox from "../../components/board/ImageBox";
 
 const TailyFriendsEditPage = () => {
   const navigate = useNavigate();
@@ -22,9 +22,12 @@ const TailyFriendsEditPage = () => {
     const fetchPost = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`http://localhost:8080/api/taily-friends/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `http://localhost:8080/api/taily-friends/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         const post = res.data.data;
         setTitle(post.title);
@@ -75,12 +78,16 @@ const TailyFriendsEditPage = () => {
       .forEach((img) => formData.append("images", img.data));
 
     try {
-      await axios.patch(`http://localhost:8080/api/taily-friends/${id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.patch(
+        `http://localhost:8080/api/taily-friends/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("게시글 수정 완료!");
       navigate(`/taily-friends/${id}`);
     } catch (err) {
