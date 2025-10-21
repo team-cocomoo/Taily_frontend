@@ -22,15 +22,13 @@ const AlarmSystem = () => {
             const alarmList = response.data.data || [];
             setAlarms(alarmList);
             setUnreadCount(alarmList.filter((a) => !a.state).length);
-            console.log("📜 기존 알람 로드:", alarmList.length, "건");
 
         } catch (error) {
-            console.error("❌ 알람 목록 불러오기 실패:", error);
+            console.error("알람 목록 불러오기 실패:", error);
         } 
     }
 
     useEffect(() => {
-        console.log("🔍 [AlarmSystem] useEffect 실행", user?.publicId, token);
         if (loading) return; // 아직 유저정보 로딩 중이면 대기
         if (!user?.publicId || !token) return; // 로그인 안된 경우 차단
 
@@ -39,7 +37,6 @@ const AlarmSystem = () => {
 
         // webSocket 연결
         connectSocket(token, user.publicId, (newAlarm) => {
-            console.log("📩 New Alarm:", newAlarm);
             setAlarms((prev) => [newAlarm, ...prev]);
             setUnreadCount((prev) => prev + 1);
             setShowDropdown(true);
@@ -69,11 +66,8 @@ const AlarmSystem = () => {
             );
             setAlarms(updated);
             setUnreadCount(updated.filter((a) => !a.state).length);
-
-            console.log("✅ 알람 읽음 처리 완료:", id);
-
         } catch (error) {
-            console.error("❌ 알람 읽음 처리 실패:", error);
+            console.error("알람 읽음 처리 실패:", error);
         }
     };
 
