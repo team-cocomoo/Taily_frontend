@@ -1,119 +1,101 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import { Form, Card } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../../styles/ImageBox.css";
 
-import TailyFriendsTitle from "../../components/board/tailyFriends/TailyFriendsTitle";
-import TailyFriendsWriteMap from "../../components/board/tailyFriends/TailyFriendsWriteMap";
-import TailyFriendsContent from "../../components/board/tailyFriends/TailyFriendsContent";
-import ImageBox from "../../components/board/ImageBox";
-
-const TailyFriendsEditPage = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-
-  const [title, setTitle] = useState("");
-  const [address, setAddress] = useState("");
-  const [content, setContent] = useState("");
-  const [images, setImages] = useState([]);
-
-  // 기존 게시글 데이터 불러오기
+const ImageBox = ({ images: propImages = [], onImageChange }) => {
+  const [previews, setPreviews] = useState([]);
+  // propImages가 있을 때만 초기화
   useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get(
-          `http://localhost:8080/api/taily-friends/${id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+    if (!propImages || propImages.length === 0) return;
 
-        const post = res.data.data;
-        setTitle(post.title);
-        setAddress(post.address);
-        setContent(post.content);
+    const newPreviews = propImages
+      .filter((img) => img.type === "file") // 기존 URL 이미지는 미리보기에서 제외
+      .map((img) => ({
+        id: img.id || crypto.randomUUID(),
+        type: "file",
+        data: URL.createObjectURL(img.data),
+        file: img.data,
+      }));
 
-        // ✅ 서버에서 받은 기존 이미지 → url 타입으로 변환
-        if (post.images && post.images.length > 0) {
-          const converted = post.images.map((img) => ({
-            id: img.id,
-            type: "url",
-            data: `http://localhost:8080${img.filePath}`,
-          }));
-          setImages(converted);
-        }
-      } catch (err) {
-        console.error(err);
-        alert("게시글 불러오기 실패");
-      }
-    };
-    fetchPost();
-  }, [id]);
+    setPreviews(newPreviews);
+  }, [propImages]); // propImages가 바뀔 때만 실행
 
-  // ✅ ImageBox에서 변경된 이미지 정보 받기
-  const handleImageChange = (updatedImages) => {
-    setImages(updatedImages);
-  };
-
-  // ✅ 수정 요청
-  const handleUpdate = async () => {
-    if (!title.trim() || !address.trim() || !content.trim()) {
-      alert("제목, 주소, 내용은 반드시 입력해야 합니다.");
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    if (selectedFiles.length + previews.length > 3) {
+      alert("사진은 최대 3장까지 업로드할 수 있어요!");
       return;
     }
 
-    const token = localStorage.getItem("token");
-    const formData = new FormData();
+    const newPreviews = selectedFiles.map((file) => ({
+      id: crypto.randomUUID(),
+      type: "file",
+      data: URL.createObjectURL(file),
+      file,
+    }));
 
-    const postData = { title, address, content };
-    formData.append(
-      "post",
-      new Blob([JSON.stringify(postData)], { type: "application/json" })
-    );
+    const updatedPreviews = [...previews, ...newPreviews].slice(0, 3);
+    setPreviews(updatedPreviews);
 
-    // ✅ 새 파일만 업로드 대상 (type === "file")
-    images
-      .filter((img) => img.type === "file")
-      .forEach((img) => formData.append("images", img.data));
-
-    try {
-      await axios.patch(
-        `http://localhost:8080/api/taily-friends/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
+    if (onImageChange) {
+      const sendToParent = updatedPreviews.map((p) =>
+        p.type === "url"
+          ? { type: "url", data: p.data, id: p.id }
+          : { type: "file", data: p.file, id: p.id }
       );
-      alert("게시글 수정 완료!");
-      navigate(`/taily-friends/${id}`);
-    } catch (err) {
-      console.error(err);
-      alert("게시글 수정 실패");
+      onImageChange(sendToParent);
+    }
+  };
+  const handleRemove = (id) => {
+    const updatedPreviews = previews.filter((p) => p.id !== id);
+    setPreviews(updatedPreviews);
+
+    if (onImageChange) {
+      const sendToParent = updatedPreviews.map((p) =>
+        p.type === "url"
+          ? { type: "url", data: p.data, id: p.id }
+          : { type: "file", data: p.file, id: p.id }
+      );
+      onImageChange(sendToParent);
     }
   };
 
   return (
-    <div className="row justify-content-center">
-      <TailyFriendsTitle title={title} setTitle={setTitle} />
-      <TailyFriendsWriteMap address={address} setAddress={setAddress} />
-      <TailyFriendsContent content={content} setContent={setContent} />
+    <Card className="mb-4 diary-box">
+      <Card.Header>
+        사진 첨부{" "}
+        <small className="text-muted px-2">산책하는 순간을 기록하세요</small>
+      </Card.Header>
+      <Card.Body className="d-flex align-items-center gap-2">
+        <Form.Label
+          htmlFor="photo"
+          className="upload-tile mb-0 d-flex justify-content-center align-items-center"
+        >
+          <span className="add-image">+</span>
+        </Form.Label>
 
-      <ImageBox images={images} onImageChange={handleImageChange} />
+        {previews.map((p) => (
+          <img
+            key={p.id}
+            src={p.data}
+            alt="preview"
+            onClick={() => handleRemove(p.id)}
+            className="image-preview"
+            title="클릭하면 삭제됩니다"
+          />
+        ))}
 
-      <div className="d-flex justify-content-center gap-2 mt-3">
-        <Button variant="secondary" onClick={() => navigate("/taily-friends")}>
-          목록
-        </Button>
-        <Button variant="primary" onClick={handleUpdate}>
-          수정 완료
-        </Button>
-      </div>
-    </div>
+        <Form.Control
+          type="file"
+          id="photo"
+          accept="image/*"
+          multiple
+          className="d-none"
+          onChange={handleFileChange}
+        />
+      </Card.Body>
+    </Card>
   );
 };
-
-export default TailyFriendsEditPage;
+export default ImageBox;
