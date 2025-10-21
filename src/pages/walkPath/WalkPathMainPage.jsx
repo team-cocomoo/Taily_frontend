@@ -118,6 +118,7 @@ const WalkPathMainPage = () => {
         </div>
       )}
       {/* 발자국 버튼 - 작성 페이지로 연결 */}
+      
       <WriteButton onClick={() => navigate("/walk-paths/write")} />
     </div>
   );
