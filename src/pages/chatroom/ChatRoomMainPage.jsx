@@ -134,7 +134,7 @@ const ChatRoomMainPage = () => {
                   className="chatroom-image"
                 />
                 <div className="info">
-                  <div className="username">{user.username}</div>
+                  <div className="username">{user.nickname}</div>
                 </div>
               </ListGroup.Item>
             ))}
