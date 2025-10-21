@@ -1,20 +1,19 @@
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
 import React from "react";
-import "../styles/MyEditor.css";
+import { Editor } from "@tinymce/tinymce-react";
 
-const MyEditor = ({ value = "", onChange, placeholder = "" }) => {
+export default function MyEditor({ value, onChange }) {
   return (
-    <CKEditor
-      editor={ClassicEditor}
-      data={value} // 항상 부모 state 기준
-      onChange={(event, editor) => {
-        const data = editor.getData();
-        if (onChange) onChange(data);
+    <Editor
+      apiKey="6wg12hmlrww8yissx66vxz0sjy9iflt2rdrlcw7wmjsqzr40"
+      value={value}
+      onEditorChange={onChange}
+      init={{
+        height: 400,
+        menubar: false,
+        plugins: ["link", "lists", "image", "code"],
+        toolbar:
+          "undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image",
       }}
-      config={{ placeholder }}
     />
   );
-};
-
-export default MyEditor;
+}
