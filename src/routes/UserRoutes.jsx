@@ -51,7 +51,7 @@ import MyPetPage from "../pages/myPage/MyPetPage";
 
 const UserRoutes = (
   <Route element={<UserLayout />}>
-    {/* ✅ 공용 페이지 (비회원 가능) */}
+    {/* 공용 페이지 (비회원 가능) */}
     <Route path="/" element={<MainPage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/register" element={<RegisterPage />} />
@@ -60,7 +60,7 @@ const UserRoutes = (
     <Route path="/faqs" element={<FaqPage />} />
     <Route path="/SingleFeedUploader" element={<SingleFeedUploader />} />
 
-    {/* ✅ 회원 전용 페이지 */}
+    {/* 회원 전용 페이지 */}
     <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
       <Route path="/mypage/user" element={<MyPageUserInfo />} />
       <Route path="/mypage/user/edit" element={<MyPageEdit />} />
@@ -114,6 +114,9 @@ const UserRoutes = (
         element={<OtherUserProfilePage />}
       />
     </Route>
+    <Route
+      element={<ProtectedLayout roles={["ROLE_USER", "ROLE_ADMIN"]} />}
+    ></Route>
   </Route>
 );
 
