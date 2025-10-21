@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Card, Table, Dropdown, Button } from 'react-bootstrap';
+import { Card, Container, Dropdown, Button } from 'react-bootstrap';
 import api from '../../../config/apiConfig';
 import meatballIcon from '../../../assets/image/meatball-icon.png';
+import '../../../styles/admin/AdminFaq.css';
 
 const AdminFaqDetailPage = () => {
     const navigate = useNavigate();
@@ -48,44 +49,53 @@ const AdminFaqDetailPage = () => {
     if (loading) return <p>FAQ 불러오는 중...</p>;
     if (!faq) return <p>FAQ 정보를 찾을 수 없습니다.</p>;
 
-    return (
-        <div style={{ maxWidth: "800px", margin: "auto" }}>
-            <Card className="p-4 mb-3 shadow-sm">
-                <Dropdown className="float-end">
-                <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
-                    <img src={meatballIcon} alt="메뉴" style={{ width: 20 }} />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => handleEdit(faq)}>수정</Dropdown.Item>
-                    <Dropdown.Item onClick={handleDelete}>삭제</Dropdown.Item>
-                </Dropdown.Menu>
-                </Dropdown>
+return (
+        <div className="admin-faq-detail-wrapper">
+            <Card className="admin-faq-detail-card shadow-sm">
+                <div className="d-flex justify-content-between align-items-start mb-4">
+                    <h3 className="admin-faq-detail-title">{faq.title}</h3>
+                    <Dropdown align="end">
+                        <Dropdown.Toggle
+                            variant="light"
+                            id="dropdown-basic"
+                            size="sm"
+                            className="border-0 bg-transparent"
+                        >
+                            <img
+                                src={meatballIcon}
+                                alt="메뉴"
+                                style={{ width: 20, opacity: 0.7 }}
+                            />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => handleEdit(faq)}>수정</Dropdown.Item>
+                            <Dropdown.Item onClick={handleDelete}>삭제</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
 
-                <h2>{faq.title}</h2>
-                <Table borderless>
-                <tbody>
-                    <tr>
-                    <td><strong>내용</strong></td>
-                    <td>{faq.content}</td>
-                    </tr>
-                    <tr>
-                    <td><strong>작성자</strong></td>
-                    <td>{faq.username}</td>
-                    </tr>
-                    <tr>
-                    <td><strong>작성일</strong></td>
-                    <td>{new Date(faq.createdAt).toLocaleDateString()}</td>
-                    </tr>
-                </tbody>
-                </Table>
+                <div className="admin-faq-content-box">
+                    <p className="admin-faq-content">{faq.content}</p>
+                </div>
+
+                <div className="admin-faq-info-box border-top mt-4 pt-3">
+                    <p>
+                        <strong>작성자:</strong> {faq.username}
+                    </p>
+                    <p>
+                        <strong>작성일:</strong>{" "}
+                        {new Date(faq.createdAt).toLocaleDateString()}
+                    </p>
+                </div>
             </Card>
 
-            <div className="d-flex justify-content-center mt-3 mb-5">
+            <div className="text-center mt-4">
                 <Button
-                variant="outline-secondary"
-                onClick={() => navigate("/admin/main/faqs")}
+                    variant="outline-secondary"
+                    className="admin-faq-back-btn"
+                    onClick={() => navigate("/admin/main/faqs")}
                 >
-                목록
+                    목록으로 돌아가기
                 </Button>
             </div>
         </div>
