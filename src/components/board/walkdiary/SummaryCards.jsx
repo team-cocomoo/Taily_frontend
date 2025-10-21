@@ -18,7 +18,7 @@ const SummaryCards = ({ stats }) => {
                 <Card className='box'>
                     <div className='chart-header'>평균 산책 시간</div>
                     <Card.Body>
-                        <h1>{stats.avgDurationMinutes}</h1> 분
+                        <h1>{stats.avgDurationMinutes ? Math.round(stats.avgDurationMinutes) : 0}</h1> 분
                     </Card.Body>
                 </Card>
             </Col>

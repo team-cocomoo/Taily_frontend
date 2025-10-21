@@ -51,8 +51,8 @@ const WalkDiaryStatisticsPage = () => {
 
             {/* 동기 부여 메시지 */}
             <ReminderCard stats={stats} />
-            <Button variant="outline-secondary" onClick={() => navigate(-1)}>
-                취소
+            <Button variant="outline-secondary" onClick={() => navigate(-1)} style={{width:"60px"}}>
+                뒤로
             </Button>
         </div>
     );
