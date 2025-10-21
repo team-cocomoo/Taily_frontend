@@ -39,7 +39,7 @@
 /* 테이블 스타일 동일 유지 */
 .admin-users-table {
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
     table-layout: fixed;
     font-size: 0.95rem;
 }
@@ -101,41 +101,41 @@
 }
 
 .user-profile-img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border: 3px solid #e9ecef;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid #e9ecef;
 }
 
 .info-card {
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  padding: 12px 18px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 12px 18px;
 }
 
 .info-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid #dee2e6;
-  font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.95rem;
 }
 
 .info-row:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 .info-row strong {
-  color: #343a40;
-  font-weight: 600;
+    color: #343a40;
+    font-weight: 600;
 }
 
 .info-row span {
-  color: #495057;
+    color: #495057;
 }
 
 .text-danger span {
-  color: #dc3545 !important;
+    color: #dc3545 !important;
 }
 
