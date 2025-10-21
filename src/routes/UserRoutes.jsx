@@ -48,6 +48,7 @@ import FaqPage from "@/pages/cs/FaqPage";
 import SingleFeedUploader from "@/tests/pages/SingleFeedUploader";
 import MyLikePage from "@/pages/myPage/MyLikePage";
 import MyPetPage from "../pages/myPage/MyPetPage";
+import MyPageMyFeed from "../pages/myPage/MyPageMyFeed";
 
 const UserRoutes = (
   <Route element={<UserLayout />}>
@@ -74,6 +75,7 @@ const UserRoutes = (
         path="/mypage/delete-success"
         element={<AccountDeleteSuccessPage />}
       />
+      <Route path="/mypage/myPagemyFeed" element={<MyPageMyFeed />} />
 
       {/* 펫스토리 */}
       <Route path="/petstory/feed" element={<FeedMainPage />} />
