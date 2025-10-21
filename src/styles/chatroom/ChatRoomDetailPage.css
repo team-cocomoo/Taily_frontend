@@ -48,7 +48,7 @@
 }
 
 .my-message .message-body {
-  background-color: #ffe100;
+  background-color: #feb916;
   padding: 8px 12px;
   border-radius: 12px;
   word-wrap: break-word;
@@ -119,9 +119,9 @@
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-  background-color: #ffd700; /* 스크롤 색상 */
+  background-color: #feb916; /* 스크롤 색상 */
   border-radius: 4px;
-  border: 2px solid #ffd700; /* 트랙과 경계 */
+  border: 2px solid #feb916; /* 트랙과 경계 */
 }
 /* Webkit 브라우저 (Chrome, Edge, Safari) */
 .chat-messages::-webkit-scrollbar {

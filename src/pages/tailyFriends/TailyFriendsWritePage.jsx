@@ -7,7 +7,6 @@ import TailyFriendsTitle from "../../components/board/tailyFriends/TailyFriendsT
 import TailyFriendsWriteMap from "../../components/board/tailyFriends/TailyFriendsWriteMap";
 import TailyFriendsContent from "../../components/board/tailyFriends/TailyFriendsContent";
 import TailyFriendsImageBox from "../../components/board/tailyFriends/TailyFriendsImageBox";
-import ImageBox from "@/components/board/ImageBox.jsx";
 
 const TailyFriendsWritePage = () => {
   const navigate = useNavigate();
@@ -74,7 +73,7 @@ const TailyFriendsWritePage = () => {
       <TailyFriendsContent content={content} setContent={setContent} />
 
       {/* 사진 첨부 */}
-      <ImageBox images={[]} onImageChange={handleImageChange} />
+      <TailyFriendsImageBox images={[]} onImageChange={handleImageChange} />
       <div className="d-flex justify-content-center gap-2 mt-3">
         <Button variant="secondary" onClick={() => navigate("/taily-friends")}>
           목록
