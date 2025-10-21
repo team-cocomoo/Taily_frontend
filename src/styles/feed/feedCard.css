@@ -6,7 +6,7 @@
 .feed-page-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* ✅ 카드들을 화면 중앙 정렬 */
+  align-items: center; /* 카드들을 화면 중앙 정렬 */
   gap: 30px;
   padding-top: 40px;
   padding-bottom: 80px;
@@ -25,8 +25,8 @@
 }
 
 .feed-card {
-  width: 600px; /* ✅ 고정 가로 폭 */
-  max-width: 90vw; /* ✅ 모바일 대응 */
+  width: 600px; /* 고정 가로 폭 */
+  max-width: 90vw; /* 모바일 대응 */
   border-radius: 12px;
   overflow: hidden;
   background-color: #ffffff;
@@ -34,30 +34,45 @@
 }
 
 /* ==============================
-   이미지 관련
+   인스타그램 스타일 이미지 영역
    ============================== */
 
+/* 이미지 컨테이너 */
+
 .feed-image-wrapper {
+  position: relative;
   width: 100%;
-  background-color: #f4f4f4; /* ✅ 여백색 (레터박스 효과용) */
+  aspect-ratio: 4 / 5; /* ✅ 인스타그램 비율 유지 (가로:세로 = 4:5) */
+  background-color: #000; /* 이미지 로딩 전 배경색 */
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 }
 
-/* ✅ 핵심 이미지 스타일 */
+/* 핵심 이미지 스타일 */
 .feed-image {
   width: 100%;
-  height: auto; /* ✅ 비율 유지 */
-  object-fit: contain; /* ✅ 여백 포함 비율 유지 */
+  height: 100%;
+  object-fit: cover; /* ✅ 프레임을 꽉 채우고 잘림 허용 */
+  object-position: center;
   display: block;
-  background-color: #f4f4f4;
+  transition: transform 0.3s ease;
+}
 
-  /* ✅ 너무 납작하거나 너무 긴 사진 방지 */
-  min-height: 300px; /* 세로 최소 300px */
-  max-height: 700px; /* 세로 최대 700px */
-  border-radius: 4px;
+.feed-image:hover {
+  transform: scale(1.02);
+}
+
+/* Carousel 화살표 색상 */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+/* 하단 점(인디케이터) 위치 */
+.carousel-indicators {
+  bottom: 5px;
 }
 
 /* ==============================
@@ -86,5 +101,8 @@
   .feed-image {
     min-height: 220px;
     max-height: 500px;
+  }
+    .feed-image-wrapper {
+    aspect-ratio: 4 / 5; /* 그대로 유지 */
   }
 }

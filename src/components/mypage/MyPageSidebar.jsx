@@ -10,7 +10,7 @@ const MyPageSidebar = () => {
   const menuItems = [
     { path: "/mypage/user", label: "마이페이지" },
     { path: "/mypage/pet", label: "내 반려동물" },
-    { path: "/mypage/feed", label: "내 피드" },
+    { path: "/mypage/myfeed", label: "내 피드" },
     { path: "/mypage/like", label: "내 좋아요" },
     { path: "/mypage/follow-following", label: "내 팔로워/팔로잉" },
     { path: "/mypage/walk", label: "내 산책 경로 글" },

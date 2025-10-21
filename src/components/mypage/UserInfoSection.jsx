@@ -36,10 +36,6 @@ const UserInfoSection = ({ userInfo }) => {
             <th>소개글</th>
             <td>{userInfo.introduction}</td>
           </tr>
-          <tr>
-            <th>회원 상태</th>
-            <td>{userInfo.state}</td>
-          </tr>
         </tbody>
       </Table>
 

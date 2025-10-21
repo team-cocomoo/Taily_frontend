@@ -96,6 +96,7 @@ export default function UserProfileImage({
       src={imagePath}
       alt={alt}
       style={{
+        marginLeft: "140px",
         width: size,
         height: size,
         borderRadius: "50%",
