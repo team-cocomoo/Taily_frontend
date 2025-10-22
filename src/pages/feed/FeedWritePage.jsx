@@ -114,9 +114,16 @@ export default function FeedWritePage() {
           {/* 등록 버튼 */}
           <div className="text-center mt-4">
             <Button
+              className="btn btn-outline-primary feed-write-cancel me-3"
+              onClick={() => {
+                navigate("/petstory/feed"); // 페이지 이동
+              }}
+            >
+              취소하기
+            </Button>
+            <Button
               type="submit"
               variant="primary"
-              size="lg"
               disabled={loading}
               className="px-5 rounded-pill"
             >
@@ -129,14 +136,7 @@ export default function FeedWritePage() {
                 "등록하기"
               )}
             </Button>
-            <Button
-              className="btn btn-outline-primary feed-write-cancel"
-              onClick={() => {
-                navigate("/petstory/feed"); // 페이지 이동
-              }}
-            >
-              취소하기
-            </Button>
+            
           </div>
         </Form>
       </Card>

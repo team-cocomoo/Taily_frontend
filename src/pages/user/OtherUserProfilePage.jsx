@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, Button, Row, Col, Image, Modal } from "react-bootstrap";
+import { Card, Button, Row, Col, Image, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import userIcon from "../../assets/image/user-icon.png";
 import "../../styles/user/OtherUserProfilePage.css";
 import api from "../../config/apiConfig";
+import SecureImage from "@/components/common/SecureImage";
+import noPhoto from "@/assets/image/no-photo.jpg";
 
 const OtherUserProfilePage = () => {
   const { id } = useParams(); // 프로필 대상 유저 ID
@@ -16,6 +18,8 @@ const OtherUserProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [feedImages, setFeedImages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
 
@@ -53,17 +57,30 @@ const OtherUserProfilePage = () => {
         console.error("팔로우 상태 확인 실패:", err);
       }
     };
+    const fetchMyFeedImages = async () => {
+      try {
+        const res = await api.get("/api/images/my-feeds", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFeedImages(res.data || []);
+      } catch (err) {
+        console.error("내 피드 이미지 불러오기 실패:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
     fetchProfile();
     fetchFollowState();
+    fetchMyFeedImages();
   }, [id, navigate, token]);
 
-  if (!profile) return <p>Loading...</p>;
-
-  const handleImageClick = (url) => {
-    setSelectedImage(url);
-    setShowModal(true);
-  };
+  if (loading || !profile)
+    return (
+      <div className="text-center mt-5">
+        <Spinner animation="border" variant="warning" />
+      </div>
+    );
 
   /** 메시지 버튼 클릭 */
   const handleMessage = async () => {
@@ -217,15 +234,17 @@ const OtherUserProfilePage = () => {
                   profile.pets.map((pet, idx) => (
                     <Col md={4} key={idx} className="mb-3">
                       <Card>
-                        <Card.Img
+                        <SecureImage
                           variant="top"
-                          src={pet.imageUrl || "/default-pet.png"}
-                          style={{ height: "200px", objectFit: "cover" }}
+                          src={pet.imageUrl || noPhoto}
+                          style={{ width:"100%", height: "200px", objectFit: "cover" }}
                         />
                         <Card.Body>
                           <Card.Title>
                             {pet.name} ({pet.gender})
                           </Card.Title>
+                          <Card.Text>나이: {pet.age}세</Card.Text>
+                          <Card.Text>취향: {pet.preference}</Card.Text>
                           <Card.Text>{pet.introduction}</Card.Text>
                         </Card.Body>
                       </Card>
@@ -248,7 +267,7 @@ const OtherUserProfilePage = () => {
       <Row className="mb-4">
         <Col md={12}>
           <Card className="mb-3 other-user-feed-card">
-            <Card.Header>게시물</Card.Header>
+            <Card.Header>내 피드 게시물</Card.Header>
             <Card.Body>
               <Row>
                 {profile.feeds && profile.feeds.length > 0 ? (
@@ -260,21 +279,27 @@ const OtherUserProfilePage = () => {
                         className="mb-3"
                       >
                         <Card>
-                          <Card.Img
-                            src={url}
-                            style={{
-                              height: "200px",
-                              objectFit: "cover",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => handleImageClick(url)}
-                          />
+                          <div
+                            style={{ cursor: "pointer" }}
+                            onClick={() =>
+                              navigate(`/petstory/feed/${feed.feedId}`)
+                            } 
+                          >
+                            <SecureImage
+                              src={url}
+                              style={{
+                                width: "100%",
+                                height: "180px",
+                                objectFit: "cover",
+                              }}
+                            />
+                          </div>
                         </Card>
                       </Col>
                     ))
                   )
                 ) : (
-                  <Col md={12} className="mb-3">
+                  <Col md={12}>
                     <Card className="text-center">
                       <Card.Body>등록한 피드가 없습니다.</Card.Body>
                     </Card>
