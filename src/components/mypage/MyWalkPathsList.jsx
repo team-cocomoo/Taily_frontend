@@ -72,6 +72,7 @@ const MyWalkPathsList = () => {
   if (loading) return <Spinner animation="border" />;
 
   if (!posts.length) return <p>작성한 게시글이 없습니다.</p>;
+  console.log("산책경로 게시글 수: ",posts.length);
 
   return (
     <>
