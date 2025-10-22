@@ -95,10 +95,16 @@ const NoticeListPage = () => {
       {/* 검색창 */}
       <SearchBar value={keyword} onSearch={handleSearch} />
 
-      {/* 공지 리스트 */}
-      <div className="mt-4">
-        <PostListGroup items={notices} onItemClick={handleItemClick} />
-      </div>
+{/* 공지 리스트 */}
+<div className="mt-4">
+  {notices.length === 0 && !loading ? (
+    <div className="text-center text-muted py-5">
+      등록된 공지사항이 없습니다.
+    </div>
+  ) : (
+    <PostListGroup items={notices} onItemClick={handleItemClick} />
+  )}
+</div>
 
       {/* 더보기 버튼 */}
       {hasMore && (
