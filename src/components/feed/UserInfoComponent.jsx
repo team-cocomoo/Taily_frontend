@@ -7,6 +7,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 import UserProfileImageFeed from "@/components/feed/UserProfileImageFeed";
 import FeedOptionUnit from "@/components/feed/FeedOptionUnit";
 import { deleteFeed } from "@/api/FeedService";
+import UserPopover from "@/components/common/UserPopover";
 
 export default function UserInfoComponent({
   writerName,
@@ -83,7 +84,11 @@ export default function UserInfoComponent({
           alt={`${writerName} 프로필 이미지`}
           style={{ marginRight: "12px" }}
         />
-        <strong className="text-dark">{writerName}</strong>
+        <UserPopover userPublicId={writerPublicId} nickname={writerName}>
+          <strong className="text-dark" style={{ cursor: "pointer" }}>
+            {writerName}
+          </strong>
+        </UserPopover>{" "}
       </div>
 
       {/* 옵션 버튼 (⋮) */}
