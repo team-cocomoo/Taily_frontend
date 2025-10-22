@@ -73,11 +73,17 @@ body {
 /* .sidebar-logo {
   background-color: #AEAEAE;
 } */
-
+.admin-sidebar-navbar .container-fluid {
+  padding: 0 !important;
+  margin: 0 !important;
+}
 .admin-sidebar-navbar {
+  background-color: #2036b3 !important;
   width: 220px;
   height: 100vh;
   position: fixed;
+  padding: 0 !important;
+  margin: 0 !important;
   top: 0;
   left: 0;
 }
@@ -94,12 +100,21 @@ body {
 }
 
 .admin-nav-list .nav-link:hover {
-  background-color: #1a2a8c;
+  background-color: #0d6efd;
+  color: #fff !important;
+}
+.nav-link-active {
+  background-color: #0d6efd !important;
   color: #fff !important;
 }
 
 .admin-logo {
-  width: 120px;
+  width: 100%;
+  font-size: 18px;
+  text-align: center;
+  background-color: #fff;
+  padding: 12px 0;
+  box-sizing: border-box;
 }
 
 .admin-offcanvas .offcanvas-body {
@@ -111,7 +126,7 @@ body {
 }
 
 .admin-offcanvas .nav-link.active {
-  background-color: #ffc107;
+  background-color: #0d6efd !important;
   color: black !important;
   font-weight: bold;
 }

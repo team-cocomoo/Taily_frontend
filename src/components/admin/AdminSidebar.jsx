@@ -42,13 +42,13 @@ const AdminSidebar = () => {
         expand="lg"
         className="flex-column align-items-start admin-sidebar-navbar"
       >
-        <Container fluid className="flex-column align-items-start p-0">
+        <Container fluid className="flex-column align-items-start p-0 container-fluid">
           {/* 로고 */}
           <div
-            className="w-100 text-center bg-light py-3 mb-2 admin-logo"
+            className="admin-logo"
             style={{ cursor: "pointer" }}
           >
-            <Link to="/admin/main" className="text-dark text-decoration-none">
+            <Link to="/admin/main/users" className="text-dark text-decoration-none">
               <span style={{ fontWeight: "600" }}>taily admin service</span>
             </Link>
           </div>
@@ -77,7 +77,7 @@ const AdminSidebar = () => {
                     to={item.path}
                     className={`nav-link my-1 py-2 rounded ${
                       active
-                        ? "bg-warning text-dark fw-bold"
+                        ? "text-dark fw-bold nav-link-active"
                         : "text-white text-decoration-none"
                     }`}
                   >
