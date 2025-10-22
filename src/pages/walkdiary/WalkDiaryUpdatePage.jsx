@@ -45,10 +45,11 @@ const WalkDiaryUpdatePage = () => {
             content: data.content,
           });
 
-          // 기존 이미지 URL을 type:url 객체로 변환
-          const existingImages = (data.images || []).map((url) => ({
-            type: "url",
-            data: url,
+          // ✅ 기존 이미지: 서버에서 받은 id + filePath 그대로 반영
+          const existingImages = (data.images || []).map((img) => ({
+            id: img.id,           // DB에서 받은 이미지 id
+            type: "url",          // 기존 서버 이미지
+            data: img.filePath,   // /uploads/walk_diary/... 형태
           }));
           setImages(existingImages);
         } else {
@@ -70,63 +71,72 @@ const WalkDiaryUpdatePage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      const token = localStorage.getItem("accessToken");
-      // 새로 추가된 파일만 업로드 (기존 URL 제외)
-      const newFiles = images.filter((img) => img.type === "file").map((img) => img.data);
-      let uploadedImageIds = [];
+const handleSubmit = async () => {
+  setLoading(true);
+  try {
+    const token = localStorage.getItem("accessToken");
 
-      if (newFiles.length > 0) {
-        const uploadFormData = new FormData();
-        newFiles.forEach((file) => uploadFormData.append("files", file));
+    // ✅ 새로 추가된 파일만 업로드
+    const newFiles = images.filter((img) => img.type === "file").map((img) => img.data);
+    let uploadedImageIds = [];
 
-        const uploadRes = await api.post(`/api/images/upload`, uploadFormData, {
-          headers: {
-            Authorization: token ? `Bearer ${token}` : "",
-            "Content-Type": "multipart/form-data",
-          },
-          params: { tableTypesId: 4 }, // WALK_DIARY
-        });
+    if (newFiles.length > 0) {
+      const uploadFormData = new FormData();
+      uploadFormData.append("tableTypesId", 4); // WALK_DIARY
+      uploadFormData.append("subFolder", "walk_diary");
 
-        uploadedImageIds = uploadRes.data.map((img) => img.id);
-      }
+      newFiles.forEach((file) => uploadFormData.append("files", file));
 
-      // 2️⃣ JSON 형태의 walkDiary 데이터 생성
-      const walkDiaryPayload = {
-        walkDiaryWeather: formData.walkDiaryWeather,
-        beginTime: formData.beginTime,
-        endTime: formData.endTime,
-        walkDiaryEmotion: formData.walkDiaryEmotion,
-        content: formData.content,
-        imageIds: uploadedImageIds, // ✅ 새로 업로드한 이미지 ID 연결
-      };
-
-      // 3️⃣ FormData로 감싸기 (JSON Blob)
-      const formDataToSend = new FormData();
-      formDataToSend.append(
-        "walkDiary",
-        new Blob([JSON.stringify(walkDiaryPayload)], { type: "application/json" })
-      );
-
-      // 4️⃣ PUT 요청 보내기
-      await api.put(`/api/walk-diaries/${id}`, formDataToSend, {
+      const uploadRes = await api.post(`/api/images/upload`, uploadFormData, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
           "Content-Type": "multipart/form-data",
         },
       });
 
-      alert("산책 일지가 수정되었습니다!");
-      navigate(`/walk-diaries/${id}`);
-    } catch (error) {
-      console.error("수정 실패:", error);
-      alert("산책 일지 수정에 실패했습니다.");
-    } finally {
-      setLoading(false);
+      uploadedImageIds = uploadRes.data.map((img) => img.id);
     }
-  };
+
+    // ✅ 기존 이미지 ID (삭제되지 않은 것만)
+    const existingImageIds = images
+      .filter((img) => img.type === "url" && img.id)
+      .map((img) => img.id);
+
+    // ✅ 최종 전송할 이미지 ID
+    const finalImageIds = [...existingImageIds, ...uploadedImageIds];
+
+    // ✅ walkDiaryPayload
+    const walkDiaryPayload = {
+      walkDiaryWeather: formData.walkDiaryWeather,
+      beginTime: formData.beginTime,
+      endTime: formData.endTime,
+      walkDiaryEmotion: formData.walkDiaryEmotion,
+      content: formData.content,
+      imageIds: finalImageIds, // ✅ 기존 + 새 이미지 모두 포함
+    };
+
+    const formDataToSend = new FormData();
+    formDataToSend.append(
+      "walkDiary",
+      new Blob([JSON.stringify(walkDiaryPayload)], { type: "application/json" })
+    );
+
+    await api.put(`/api/walk-diaries/${id}`, formDataToSend, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    alert("산책 일지가 수정되었습니다!");
+    navigate(`/walk-diaries/${id}`);
+  } catch (error) {
+    console.error("🚨 수정 실패:", error);
+    alert("산책 일지 수정 중 오류가 발생했습니다.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading) return <p>불러오는 중...</p>;
 

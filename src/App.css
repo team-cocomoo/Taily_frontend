@@ -4,6 +4,7 @@
   color: #fff !important;
   border-radius: 20px !important;
   padding: 5px 20px !important;
+  font-weight: 600;   
 }
 .btn-primary:active {
   background-color: #feb916 !important;
@@ -14,10 +15,11 @@
 }
 .btn-outline-primary {
   background-color: #fff !important;
-  border-color: #4f1f02 !important;
+  border: 1.5px solid #4f1f02 !important;
   color: #4f1f02 !important;
   border-radius: 20px !important;
   padding: 5px 20px !important;
+  font-weight: 600; 
 }
 .btn-outline-primary:hover {
   background-color: #4f1f02 !important;

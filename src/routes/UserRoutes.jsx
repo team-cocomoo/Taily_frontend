@@ -9,6 +9,7 @@ import MainPage from "@/pages/MainPage";
 import LoginPage from "@/pages/user/LoginPage";
 import RegisterPage from "@/pages/user/RegisterPage";
 import MyPageUserInfo from "@/pages/myPage/MyPageUserInfo";
+import MyWalkPathsPage from "../pages/myPage/MyWalkPathsPage";
 import MyTailyFriendsPage from "@/pages/myPage/MyTailyFriendsPage";
 import MyFollowPage from "@/pages/myPage/MyFollowPage";
 import MyInquiryPage from "@/pages/myPage/MyInquiryPage";
@@ -69,6 +70,7 @@ const UserRoutes = (
       <Route path="/mypage/myfeed" element={<MyFeedPage/>} />
       <Route path="/mypage/pet" element={<MyPetPage />} />
       <Route path="/mypage/like" element={<MyLikePage />} />
+      <Route path="/mypage/walk-paths" element={<MyWalkPathsPage />} />
       <Route path="/mypage/taily-friends" element={<MyTailyFriendsPage />} />
       <Route path="/mypage/inquiries" element={<MyInquiryPage />} />
       <Route path="/mypage/follow-following" element={<MyFollowPage />} />

@@ -15,12 +15,10 @@ const TailyFriendsEditPage = () => {
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [content, setContent] = useState("");
-
-  // ✅ 기존 이미지와 새 이미지 분리 관리
   const [existingImages, setExistingImages] = useState([]);
-  const [newImages, setNewImages] = useState([]);
+  const [images, setImages] = useState([]);
 
-  // ✅ 기존 게시글 불러오기
+  /** ✅ 게시글 불러오기 */
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -42,10 +40,12 @@ const TailyFriendsEditPage = () => {
     fetchPost();
   }, [id]);
 
+  /** ✅ 이미지 변경 콜백 */
   const handleImageChange = (updatedImages) => {
-    setNewImages(updatedImages);
+    setImages(updatedImages);
   };
 
+  /** ✅ 수정 요청 */
   const handleUpdate = async () => {
     if (!title.trim() || !address.trim() || !content.trim()) {
       alert("제목, 주소, 내용은 반드시 입력해야 합니다.");
@@ -54,17 +54,34 @@ const TailyFriendsEditPage = () => {
 
     const token = localStorage.getItem("token");
     const formData = new FormData();
-    const postData = { title, address, content };
+
+    // ✅ JSON 형태 데이터
+    const postData = {
+      title,
+      address,
+      content,
+      tableTypeId: 5,
+    };
 
     formData.append(
       "post",
       new Blob([JSON.stringify(postData)], { type: "application/json" })
     );
 
-    // 새로 추가된 이미지들만 업로드
-    newImages
+    // ✅ 새로 추가된 이미지 (File 객체)
+    images
       .filter((img) => img.type === "file")
-      .forEach((img) => formData.append("images", img.data));
+      .forEach((img) => formData.append("newImages", img.data));
+
+    // ✅ 기존 유지할 이미지 경로들 → JSON 문자열로 한 번에 전달
+    const existingPaths = images
+      .filter((img) => img.type === "url")
+      .map((img) => img.data);
+
+    formData.append(
+      "existingImagePaths",
+      new Blob([JSON.stringify(existingPaths)], { type: "application/json" })
+    );
 
     try {
       await axios.patch(`http://localhost:8080/api/taily-friends/${id}`, formData, {
@@ -73,6 +90,7 @@ const TailyFriendsEditPage = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+
       alert("게시글 수정 완료!");
       navigate(`/taily-friends/${id}`);
     } catch (err) {
@@ -81,19 +99,23 @@ const TailyFriendsEditPage = () => {
     }
   };
 
+  /** ✅ 렌더링 */
   return (
     <div className="row justify-content-center">
+      {/* 제목 */}
       <TailyFriendsTitle title={title} setTitle={setTitle} />
+
+      {/* 주소 */}
       <TailyFriendsWriteMap address={address} setAddress={setAddress} />
+
+      {/* 내용 */}
       <TailyFriendsContent content={content} setContent={setContent} />
 
-      <ImageBox
-        existingImages={existingImages}
-        onImageChange={handleImageChange}
-      />
+      {/* 이미지 */}
+      <ImageBox existingImages={existingImages} onImageChange={handleImageChange} />
 
       <div className="d-flex justify-content-center gap-2 mt-3">
-        <Button variant="secondary" onClick={() => navigate("/taily-friends")}>
+        <Button variant="outline-primary" onClick={() => navigate("/taily-friends")}>
           목록
         </Button>
         <Button variant="primary" onClick={handleUpdate}>

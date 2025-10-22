@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Card } from "react-bootstrap";
-
+import "../../../styles/facility/facilityMap.css";
 /**
  * Kakao Map 기반 시설 지도
  *
@@ -78,7 +78,7 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
           white-space: nowrap;
         ">내 위치</div>
       `,
-      yAnchor: 2.6,
+      yAnchor: 2.9,
     });
     userOverlay.setMap(mapInstance);
   }, [kakaoLoaded, userLocation]);
@@ -120,7 +120,7 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
             white-space: nowrap;
           ">${item.title}</div>
         `,
-        yAnchor: 2.6,
+        yAnchor: 2.8,
       });
       overlay.setMap(map);
 
@@ -159,16 +159,7 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
         marginBottom: "20px",
       }}
     >
-      <div
-        ref={mapRef}
-        style={{
-          width: "50%",
-          height: "400px",
-          borderRadius: "10px",
-          overflow: "hidden", // 지도 모서리 둥글게
-          boxShadow: "0 2px 10px rgba(0,0,0,0.1)", // 약간의 그림자 효과 (선택)
-        }}
-      />
+      <div ref={mapRef} className="map-container" />
     </div>
   );
 };

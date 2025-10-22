@@ -142,7 +142,7 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
                   : img.filePath || img.url || "";
 
               return (
-                <div key={idx} className="image-wrapper">
+                <div key={idx} className="image-wrapper mt-3">
                   <SecureImage
                     src={imagePath}
                     alt={`산책일지-${idx}`}
@@ -157,6 +157,7 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
                     }}
                   />
                 </div>
+                
               );
             })}
           </div>

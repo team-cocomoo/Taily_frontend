@@ -82,9 +82,7 @@ const HeaderNavbar = () => {
           펫스토리
         </span>
         <div
-          className={`dropdown-menu ${
-            openDropdowns["petstory"] ? "open" : ""
-          }`}
+          className={`dropdown-menu ${openDropdowns["petstory"] ? "open" : ""}`}
         >
           <Link
             to="/petstory/feed"
@@ -122,9 +120,7 @@ const HeaderNavbar = () => {
         >
           산책 공간
         </span>
-        <div
-          className={`dropdown-menu ${openDropdowns["walk"] ? "open" : ""}`}
-        >
+        <div className={`dropdown-menu ${openDropdowns["walk"] ? "open" : ""}`}>
           <Link
             to="/walk-diaries"
             className={`dropdown-item ${
@@ -160,18 +156,17 @@ const HeaderNavbar = () => {
           </Link>
         </div>
       </div>
-
-      <Link
-        to="/facilities"
-        className={`nav-link ${
-          location.pathname.startsWith("/facilities")
-            ? "nav-link-active"
-            : ""
-        }`}
-        onClick={() => setMenuOpen(false)}
-      >
-        우리동네정보
-      </Link>
+      <div className="no-dropdown">
+        <Link
+          to="/facilities"
+          className={`nav-link ${
+            location.pathname.startsWith("/facilities") ? "nav-link-active" : ""
+          }`}
+          onClick={() => setMenuOpen(false)}
+        >
+          우리동네정보
+        </Link>
+      </div>
 
       <div className="dropdown">
         <span
@@ -186,16 +181,12 @@ const HeaderNavbar = () => {
           고객센터
         </span>
         <div
-          className={`dropdown-menu ${
-            openDropdowns["center"] ? "open" : ""
-          }`}
+          className={`dropdown-menu ${openDropdowns["center"] ? "open" : ""}`}
         >
           <Link
             to="/notices"
             className={`dropdown-item ${
-              location.pathname.startsWith("/notices")
-                ? "nav-link-active"
-                : ""
+              location.pathname.startsWith("/notices") ? "nav-link-active" : ""
             }`}
             onClick={() => setMenuOpen(false)}
           >
@@ -212,16 +203,17 @@ const HeaderNavbar = () => {
           </Link>
         </div>
       </div>
-
-      <Link
-        to="/event"
-        className={`nav-link ${
-          location.pathname.startsWith("/event") ? "nav-link-active" : ""
-        }`}
-        onClick={() => setMenuOpen(false)}
-      >
-        이벤트
-      </Link>
+      <div className="no-dropdown">
+        <Link
+          to="/event"
+          className={`nav-link ${
+            location.pathname.startsWith("/event") ? "nav-link-active" : ""
+          }`}
+          onClick={() => setMenuOpen(false)}
+        >
+          이벤트
+        </Link>
+      </div>
     </>
   );
 

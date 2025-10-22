@@ -13,7 +13,7 @@ const MyPageSidebar = () => {
     { path: "/mypage/myfeed", label: "내 피드" },
     { path: "/mypage/like", label: "내 좋아요" },
     { path: "/mypage/follow-following", label: "내 팔로워/팔로잉" },
-    { path: "/mypage/walk", label: "내 산책 경로 글" },
+    { path: "/mypage/walk-paths", label: "내 산책 경로 글" },
     { path: "/mypage/taily-friends", label: "내 테일리 프렌즈" },
     { path: "/mypage/inquiries", label: "내 1:1 문의 내역" },
   ];
