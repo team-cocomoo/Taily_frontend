@@ -20,6 +20,8 @@ const AlarmSystem = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const alarmList = response.data.data || [];
+            console.log("💢💌alarmList : ", alarmList);
+            
             setAlarms(alarmList);
             setUnreadCount(alarmList.filter((a) => !a.state).length);
 

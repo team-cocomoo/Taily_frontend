@@ -9,6 +9,11 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [react()],
+  base: '/',
+  // 빌드 출력(결과물이 저장될) 디렉토리 (기본값: dist)
+  build: {
+    outDir: 'dist',
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"), // src 폴더를 @로 참조
@@ -30,6 +35,7 @@ export default defineConfig({
         secure: false,
       },
     },
+  
   },
   test: {
     globals: true,

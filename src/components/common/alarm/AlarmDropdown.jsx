@@ -74,7 +74,11 @@ const AlarmDropdown = ({ alarms, onClickAlarm, setShowDropdown }) => {
             setShowDropdown(false);
             return; // 여기서 끝내기
         } else if (alarm.alarmCategory === "CHATTING") {
-            navigate(`/chats/${alarm.senderId}`);
+            navigate(`/chats/${alarm.postsId}`);
+            setShowDropdown(false);
+            return; // 여기서 끝내기
+        } else if (alarm.alarmCategory === "LIKE") {
+            navigate(`/petstory/feed`);
             setShowDropdown(false);
             return; // 여기서 끝내기
         }
@@ -83,7 +87,7 @@ const AlarmDropdown = ({ alarms, onClickAlarm, setShowDropdown }) => {
 
         if (category.includes("피드") || category.includes("feed")) {
           navigate(`/petstory/feed/${alarm.postsId}`);
-        } else if (category.includes("다함께산책") || category.includes("walk")) {
+        } else if (category.includes("산책경로") || category.includes("walk")) {
           navigate(`/walk-paths/${alarm.postsId}`);
         } else if (category.includes("테일리프렌즈") || category.includes("taily")) {
           navigate(`/taily-friends/${alarm.postsId}`);

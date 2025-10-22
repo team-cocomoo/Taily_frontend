@@ -85,16 +85,6 @@ input.form-control:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* 버튼 */
-.feed-write-cancel {
-  width: 176px;
-  height: 50px;
-  background-color: #feb916;
-  border: none;
-  font-size: 20px;
-  border-radius: 50px !important;
-  color: #fff;
-}
 
 /* ================================
    전체 컨테이너
