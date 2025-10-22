@@ -12,7 +12,6 @@ const TailyFriendsMainMap = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  // ✅ 주소 불러오기
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
@@ -25,7 +24,6 @@ const TailyFriendsMainMap = () => {
     fetchAddresses();
   }, []);
 
-  // ✅ 사용자 위치 가져오기 (3초 타임아웃)
   useEffect(() => {
     if (!navigator.geolocation) {
       console.warn("브라우저가 위치 서비스를 지원하지 않습니다.");
@@ -54,7 +52,6 @@ const TailyFriendsMainMap = () => {
     );
   }, []);
 
-  // ✅ Kakao SDK 로드
   useEffect(() => {
     if (window.kakao?.maps) {
       setKakaoLoaded(true);
@@ -79,7 +76,6 @@ const TailyFriendsMainMap = () => {
     document.head.appendChild(script);
   }, []);
 
-  // ✅ 지도 생성 및 마커 표시
   useEffect(() => {
     if (
       !kakaoLoaded ||
@@ -95,11 +91,9 @@ const TailyFriendsMainMap = () => {
       level: 6,
     });
 
-    const geocoder = new kakao.maps.services.Geocoder();
+    const ps = new kakao.maps.services.Places(); 
     const bounds = new kakao.maps.LatLngBounds();
-    const cache = {}; // ✅ 주소 캐시
 
-    // ✅ 내 위치 표시
     const myPos = new kakao.maps.LatLng(userLocation.lat, userLocation.lng);
     new kakao.maps.Marker({ map, position: myPos });
     bounds.extend(myPos);
@@ -111,34 +105,27 @@ const TailyFriendsMainMap = () => {
     });
     userOverlay.setMap(map);
 
-    // ✅ 모든 주소 비동기 변환 후 한 번에 setBounds()
     const promises = addresses.map((item) => {
       return new Promise((resolve) => {
-        if (cache[item.address]) {
-          createMarker(cache[item.address], item);
+        ps.keywordSearch(item.address, (result, status) => {
+          if (status === kakao.maps.services.Status.OK && result.length > 0) {
+            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            createMarker(coords, item);
+            bounds.extend(coords);
+          } else {
+            console.warn("키워드 검색 실패:", item.address);
+          }
           resolve();
-        } else {
-          geocoder.addressSearch(item.address, (result, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-              const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-              cache[item.address] = coords;
-              createMarker(coords, item);
-              resolve();
-            } else {
-              console.warn("주소 변환 실패:", item.address);
-              resolve();
-            }
-          });
-        }
+        });
       });
     });
 
     Promise.all(promises).then(() => {
-      map.setBounds(bounds);
+      map.setCenter(new kakao.maps.LatLng(userLocation.lat, userLocation.lng));
+      map.setLevel(2); 
       setLoading(false);
     });
 
-    // ✅ 마커 생성 함수
     function createMarker(coords, item) {
       const marker = new kakao.maps.Marker({ map, position: coords });
 
@@ -152,7 +139,6 @@ const TailyFriendsMainMap = () => {
         yAnchor: 2.6,
       });
       overlay.setMap(map);
-      bounds.extend(coords);
 
       kakao.maps.event.addListener(marker, "click", () => {
         window.location.href = `/taily-friends/${item.id}`;
