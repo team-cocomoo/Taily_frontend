@@ -76,7 +76,7 @@ const MyTailyFriendsList = () => {
 
   return (
     <>
-      <Table borderless hover responsive className="text-center">
+      <Table borderless hover responsive className="text-center my-taily-table">
         <thead className="table">
           <tr className="my-taily-friends-tr">
             <th style={{ width: "10%" }}>번호</th>

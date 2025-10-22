@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import api from "@/config/apiConfig";
 
 import MyPageSidebar from "@/components/mypage/MyPageSidebar";
-import UserProfileHeader from "@/components/mypage/UserProfileHeader";
+import SecureImage from "@/components/common/SecureImage";
 
 const MyPageEdit = () => {
   const navigate = useNavigate();
@@ -47,13 +47,22 @@ const MyPageEdit = () => {
           address: res.data.address,
           introduction: res.data.introduction,
         });
-        if (res.data.profileImageUrl) {
-          setPreview(res.data.profileImageUrl);
+
+        const imgRes = await api.get("/api/images", {
+          params: { tableTypesId: 1 },
+        });
+
+        if (imgRes.data && imgRes.data.length > 0) {
+          setPreview(imgRes.data[0].filePath);
+        } else {
+          setPreview(null);
         }
-      } catch {
+      } catch (err) {
+        console.error("회원 정보 불러오기 실패:", err);
         setError("회원 정보를 불러오지 못했습니다.");
       }
     };
+
     fetchUserInfo();
   }, []);
 
@@ -126,26 +135,29 @@ const MyPageEdit = () => {
         </Col>
 
         <Col md={9}>
-          <UserProfileHeader title="내 정보 수정" />
-
           <Card className="p-4 shadow-sm mt-3" style={{ maxWidth: "600px" }}>
             {success && <Alert variant="success">{success}</Alert>}
             {error && <Alert variant="danger">{error}</Alert>}
 
             <Form onSubmit={handleSubmit}>
               {/* 프로필 이미지 */}
-              <Form.Group className="mb-3 text-center">
+              <Form.Group className="mb-3 text-center d-flex flex-column align-items-center text-center">
                 {preview ? (
-                  <img
+                  <SecureImage
                     src={preview}
                     alt="프로필 미리보기"
                     className="rounded-circle mb-3"
-                    width={120}
-                    height={120}
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      lineHeight: "120px",
+                      textAlign: "center",
+                      border: "1px solid #ddd",
+                    }}
                   />
                 ) : (
                   <div
-                    className="rounded-circle bg-light mb-3"
+                    className="rounded-circle bg-light mb-3 d-flex justify-content-center align-items-center"
                     style={{
                       width: "120px",
                       height: "120px",

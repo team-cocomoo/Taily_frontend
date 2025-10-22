@@ -7,8 +7,8 @@ import Inquiries from '../../components/cs/Inquiries';
 
 const FaqPage = () => {
     return (
-        <Container style={{ marginTop: "120px" }}>
-            <h1 className='faq-title mb-3'>자주 묻는 질문</h1>
+        <Container style={{ marginTop: "50px" }}>
+            <h1 className='faq-title mb-4'>자주 묻는 질문</h1>
             <FaqList />
             <Inquiries />
         </Container>
