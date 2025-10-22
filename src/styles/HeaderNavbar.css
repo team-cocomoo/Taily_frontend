@@ -40,6 +40,11 @@
   color: #feb916 !important;
   text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2) !important;
 }
+.no-dropdown .nav-link-active {
+  background-color: #fdf9ee !important;
+  color: #feb916 !important;
+  text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+}
 .nav-link:hover {
   color: #feb916;
 }
