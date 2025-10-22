@@ -35,6 +35,7 @@ const WalkTimeSelectBox = ({ item, value, onChange, parentStartTime }) => {
             ...provided,
             width: "16rem",
             fontWeight: "500",
+            zIndex: 9999,
         }),
         option: (provided, state) => ({
             ...provided,
@@ -57,9 +58,6 @@ const WalkTimeSelectBox = ({ item, value, onChange, parentStartTime }) => {
     // react-select 옵션
     const timeOptions = timeArray.map((t) => ({ value: t, label: t }));
 
-    // value와 onChange 연결
-    // const selectedOption = timeOptions.find((opt) => opt.value === value) || null;
-
     return (
         <Select
             name={item.name}
@@ -71,7 +69,11 @@ const WalkTimeSelectBox = ({ item, value, onChange, parentStartTime }) => {
                     : timeOptions
             }
             placeholder={item.defaultValue}
-            styles={customStyles}
+            styles={{
+                ...customStyles,
+                menuPortal: (base) => ({ ...base, zIndex: 9999 }) // 드롭다운을 최상단으로 올림
+            }}
+            menuPortalTarget={document.body} // body로 포털 렌더링
         />
     );
 };
