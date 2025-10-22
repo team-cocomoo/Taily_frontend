@@ -162,7 +162,7 @@ const TailyFriendsDetailContent = ({ post }) => {
             }}
             dangerouslySetInnerHTML={{ __html: post.content }}
           ></div>
-          <div className="post-detail-address ">
+          <div className="post-detail-address">
             <hr className="mx-auto w-50 mb-4" />
             {post.address && <PostDetailMap addresses={post.address} />}
           </div>

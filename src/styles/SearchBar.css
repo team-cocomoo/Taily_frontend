@@ -6,58 +6,34 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  border: 1px solid #ddd !important; /* ✅ Bootstrap 덮어쓰기 */
+  border: 1px solid #ddd;
   background-color: #fff;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-/* ✅ focus 시 노란색 보더 제거 */
-.search-bar:focus-within,
-.input-group:focus-within,
-.input-group:has(input:focus),
-.input-group:has(button:focus) {
-  border-color: #ddd !important;
-  box-shadow: none !important;
-  outline: none !important;
+  max-width: 500px; /* 적당히 길이 제한 */
+  margin: 0 auto;   /* 가운데 정렬 */
 }
 
 /* 입력창 */
-.search-bar input,
-.search-bar input.form-control {
-  border: none !important;
+.search-bar input {
+  border: none;
   flex: 1;
   padding: 12px 16px;
   font-size: 14px;
-  box-shadow: none !important;
-  outline: none !important;
+}
+
+.search-bar input:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 /* 버튼 (돋보기) */
-.search-bar .search-button {
-  border: none !important;
-  border-left: 1px solid #ddd !important;
-  background-color: #fff !important;
+.search-button {
+  border: none;
+  background-color: #fff;
   padding: 0 15px;
   cursor: pointer;
   font-size: 18px;
-  position: relative;
-}
-.search-bar input {
-  z-index: 1 !important;
-  position: relative;
-}
-/* 버튼 hover/focus/active 상태에서도 색 고정 */
-.search-bar .search-button:hover,
-.search-bar .search-button:focus,
-.search-bar .search-button:active {
-  border-left: 1px solid #ddd !important;
-  background-color: #fff !important;
-  outline: none !important;
-  box-shadow: none !important;
 }
 
-/* ✅ input에 포커스되어 있을 때 버튼 경계 유지 */
-.search-bar input:focus + .search-button {
-  border-left: 1px solid #ddd !important;
+.search-button:hover {
+  background-color: #f1f1f1;
 }
