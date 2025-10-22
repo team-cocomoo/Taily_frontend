@@ -75,7 +75,7 @@ const TailyFriendsWritePage = () => {
       {/* 사진 첨부 */}
       <TailyFriendsImageBox images={[]} onImageChange={handleImageChange} />
       <div className="d-flex justify-content-center gap-2 mt-3">
-        <Button variant="secondary" onClick={() => navigate("/taily-friends")}>
+        <Button variant="outline-primary" onClick={() => navigate("/taily-friends")}>
           목록
         </Button>
         <Button variant="primary" onClick={handleSubmit}>

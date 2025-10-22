@@ -35,9 +35,10 @@
   cursor: pointer;
 }
 
-.nav-link-active {
-  color: #feb916;
-  font-weight: bold;
+.dropdown .nav-link-active {
+  background-color: #fdf9ee !important;
+  color: #feb916 !important;
+  text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2) !important;
 }
 .nav-link:hover {
   color: #feb916;
@@ -88,37 +89,41 @@
   color: #4f1f02;
   font-size: 16px;
   font-weight: 500;
-  padding: 0.8rem 1.5rem;
+  padding: 8px 20px !important;
   border-radius: 20px;
 }
 .btn-signup:hover {
   background-color: #4f1f02;
   color: #fff;
   border-color: #4f1f02;
+  padding: 8px 20px !important;
 }
 .btn-signup:active {
   background-color: #4f1f02 !important;
   border-color: #4f1f02 !important;
+  padding: 8px 20px !important;
 }
 
 .btn-login {
-  line-height: 1;
+  line-height: 1 !important;
   border: 2px solid #feb916;
   background-color: #feb916;
   color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 0.8rem 1.5rem;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  padding: 8px 20px !important;
   border-radius: 20px;
 }
 .btn-login:hover {
   background-color: #feb916;
   color: #fff;
   border-color: #feb916;
+  padding: 8px 20px !important;
 }
 .btn-login:active {
   background-color: #feb916 !important;
   border-color: #feb916 !important;
+  padding: 8px 20px !important;
 }
 
 .header.visible {
