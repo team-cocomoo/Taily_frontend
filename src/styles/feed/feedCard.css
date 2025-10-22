@@ -1,23 +1,7 @@
 /* ==============================
-   FeedMainPage + FeedCard Layout
-   ============================== */
-
-/* 전체 피드 페이지 */
-.feed-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 카드들을 화면 중앙 정렬 */
-  gap: 30px;
-  padding-top: 40px;
-  padding-bottom: 80px;
-  background-color: #fffdf9;
-}
-
-/* ==============================
    FeedCard
    ============================== */
 
-/* 개별 피드 카드 */
 .feed-wrapper {
   display: flex;
   justify-content: center;
@@ -25,8 +9,8 @@
 }
 
 .feed-card {
-  width: 600px; /* 고정 가로 폭 */
-  max-width: 90vw; /* 모바일 대응 */
+  width: 600px;
+  max-width: 90vw;
   border-radius: 12px;
   overflow: hidden;
   background-color: #ffffff;
@@ -34,49 +18,50 @@
 }
 
 /* ==============================
-   인스타그램 스타일 이미지 영역
+   Carousel 이미지 영역
    ============================== */
 
-/* 이미지 컨테이너 */
-
-.feed-image-wrapper {
+/* 비율 유지 박스 (4:5) */
+.feed-image-box {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5; /* ✅ 인스타그램 비율 유지 (가로:세로 = 4:5) */
-  background-color: #000; /* 이미지 로딩 전 배경색 */
+  aspect-ratio: 4 / 5;
+  background-color: #000;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-/* 핵심 이미지 스타일 */
+/* 이미지 클릭 영역 */
+.image-hit-area {
+  position: absolute;  /* 변경 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: block;
+}
+
+/* 핵심 이미지: 프레임 꽉 채우기 */
 .feed-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* ✅ 프레임을 꽉 채우고 잘림 허용 */
-  object-position: center;
+  object-fit: cover; /* 비율 유지하며 꽉 채우기 */
+  object-position: center center;
   display: block;
   transition: transform 0.3s ease;
 }
 
+/* hover 효과 */
 .feed-image:hover {
-  transform: scale(1.02);
-}
-
-/* Carousel 화살표 색상 */
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  filter: invert(1);
-}
-
-/* 하단 점(인디케이터) 위치 */
-.carousel-indicators {
-  bottom: 5px;
+  transform: scale(1.03);
 }
 
 /* ==============================
-   Feed 본문, 좋아요 등
+   본문
    ============================== */
 
 .feed-card .card-body {
@@ -91,18 +76,11 @@
 }
 
 /* ==============================
-   반응형 처리
+   반응형
    ============================== */
 
 @media (max-width: 768px) {
   .feed-card {
     width: 90vw;
-  }
-  .feed-image {
-    min-height: 220px;
-    max-height: 500px;
-  }
-    .feed-image-wrapper {
-    aspect-ratio: 4 / 5; /* 그대로 유지 */
   }
 }

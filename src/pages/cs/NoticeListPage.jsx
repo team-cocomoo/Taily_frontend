@@ -91,7 +91,6 @@ const NoticeListPage = () => {
       <h2 className="mb-3" style={{ fontWeight: "bold" }}>
         공지사항
       </h2>
-
       {/* 검색창 */}
       <SearchBar value={keyword} onSearch={handleSearch} />
 
