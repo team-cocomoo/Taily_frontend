@@ -35,10 +35,13 @@
   cursor: pointer;
 }
 
-.dropdown .nav-link-active {
-  background-color: #fdf9ee !important;
+.navbar .nav-link.nav-link-active,
+.navbar .dropdown .nav-link.nav-link-active,
+.navbar .dropdown-item.nav-link-active {
   color: #feb916 !important;
-  text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2) !important;
+  background-color: transparent !important;
+  font-weight: 600;
+  text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25) !important;
 }
 .nav-link:hover {
   color: #feb916;

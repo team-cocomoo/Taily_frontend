@@ -196,7 +196,6 @@ const PostDetailCommentCard = ({ postId }) => {
         </div>
       )}
 
-      {/* 댓글 리스트 */}
       <ListGroup variant="flush" className="comment-list">
         {comments.length > 0 ? (
           comments.map((c) => (
@@ -223,7 +222,6 @@ const PostDetailCommentCard = ({ postId }) => {
                   <strong className="comment-nickname">{c.nickname}</strong>
                 </UserPopover>
 
-                {/* 부모 댓글 수정 모드 */}
                 {editMode[c.id] ? (
                   <>
                     <Form.Control
@@ -332,7 +330,6 @@ const PostDetailCommentCard = ({ postId }) => {
                       </Form>
                     )}
 
-                    {/* ✅ 답글 리스트 */}
                     {c.replies?.length > 0 && (
                       <ListGroup variant="flush" className="ms-4 mt-2">
                         {c.replies.map((r) => (
