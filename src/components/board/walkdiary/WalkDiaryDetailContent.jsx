@@ -143,8 +143,21 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
 
               return (
                 <div key={idx} className="image-wrapper mt-3">
-                  <SecureImage src={imagePath} alt={`산책일지-${idx}`} className="detail-image" />
+                  <SecureImage
+                    src={imagePath}
+                    alt={`산책일지-${idx}`}
+                    className="detail-image"
+                    style={{
+                      width: "300px",
+                      height: "auto",
+                      borderRadius: "10px",
+                      objectFit: "cover",
+                      marginTop: "30px",
+                      boxShadow: "0 2px 6px rgba(0, 0, 0, 0.2)",
+                    }}
+                  />
                 </div>
+                
               );
             })}
           </div>
