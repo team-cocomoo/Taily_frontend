@@ -18,7 +18,7 @@ export default function MyEditor({ value, onChange, placeholder }) {
   return (
     <Editor
       apiKey="6wg12hmlrww8yissx66vxz0sjy9iflt2rdrlcw7wmjsqzr40"
-      value={value || ""} // ✅ undefined 방지
+      value={value || ""} // undefined 방지
       onEditorChange={handleEditorChange}
       init={{
         height: 400,

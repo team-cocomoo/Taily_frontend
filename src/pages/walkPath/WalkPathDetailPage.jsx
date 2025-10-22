@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import api from "../../config/apiConfig";
-import { Row, Col,Modal } from "react-bootstrap";
+import { Row, Col, Modal } from "react-bootstrap";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorAlert from "../../components/common/ErrorAlert";
 import WalkPathDetailContent from "../../components/board/walkPath/WalkPathDetailContent";
@@ -28,7 +28,7 @@ const WalkPathDetailPage = () => {
         ]);
 
         if (postRes.data.success) {
-          console.log("✅ postRes 구조 확인:", postRes.data);
+          console.log("postRes 구조 확인:", postRes.data);
           setPost(postRes.data.data);
         }
         if (commentRes.data.success) setComments(commentRes.data.data);
@@ -67,7 +67,6 @@ const WalkPathDetailPage = () => {
         onGoBack={() => navigate("/walk-paths")}
       />
     );
-
 
   return (
     <Row className="justify-content-center mt-4">

@@ -1,16 +1,15 @@
 // src/config/socket.js
 import { Client } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
 
-const SOCKET_URL = "ws://localhost:8080/ws-chat";
+const SOCKET_URL = "ws://localhost:8080/ws-chat"; // ✅ ws:// 사용 (배포 시 wss://)
 
 let stompClient = null;
 
 export const connectSocket = (token, publicId, onMessageReceived) => {
-      console.log("🌐 [Socket] Handshake 요청 시도 →", `${SOCKET_URL}?token=${token}`);
+  console.log("🌐 [Socket] Handshake 요청 시도 →", `${SOCKET_URL}?token=${token}`);
 
   stompClient = new Client({
-    webSocketFactory: () => new WebSocket(`${SOCKET_URL}?token=${token}`),
+    brokerURL: `${SOCKET_URL}?token=${token}`, // ✅ SockJS 대신 brokerURL 사용
     reconnectDelay: 5000,
     debug: (str) => console.log("🐞 [STOMP DEBUG]", str),
 

@@ -13,7 +13,7 @@
   font-size: 1.05rem;
   color: #222;
   width: 80%;
-  margin-left: auto;
+  margin-left: 10px;
   margin-right: auto;
 }
 
@@ -67,7 +67,7 @@
   font-weight: bold;
 }
 .author-date {
-  color: #6c757d; /* Bootstrap text-muted 색상과 동일 */
+  color: #6c757d; 
 }
 .meatballIcon {
   width: 30px;
@@ -76,6 +76,13 @@
 }
 .address-line {
   width: 60%;
+}
+.post-detail-address{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 .heart {
   margin-left: 5px;

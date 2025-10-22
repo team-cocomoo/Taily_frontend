@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "@/config/apiConfig";
 import SecureImage from "@/components/common/SecureImage"; // 기존 JWT 이미지 로더 활용
+import defaultUserIcon from "@/assets/image/user-icon.png"; // 기본 이미지 import
 
 /**
  * 로그인된 사용자의 프로필 이미지를 자동으로 불러와 표시하는 컴포넌트
@@ -71,7 +72,7 @@ export default function UserProfileImageFeed({
     );
   }
 
-  // ✅ 에러 또는 이미지 없음
+  // 에러 또는 이미지 없음
   if (error || !imagePath) {
     return (
       <div
@@ -80,12 +81,19 @@ export default function UserProfileImageFeed({
           width: size,
           height: size,
           border: "1px solid #ddd",
-          fontSize: "0.9rem",
-          color: "#aaa",
+          overflow: "hidden", // ✅ 이미지가 원형 안에 꽉 차게
           ...style,
         }}
       >
-        기본 이미지
+        <img
+          src={defaultUserIcon}
+          alt="기본 프로필 이미지"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
       </div>
     );
   }

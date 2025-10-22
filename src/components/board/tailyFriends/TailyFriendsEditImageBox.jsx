@@ -6,21 +6,35 @@ import SecureImage from "@/components/common/SecureImage";
 import "../../../styles/ImageBox.css";
 
 const TailyFriendsEditImageBox = ({ existingImages = [], onImageChange }) => {
-  const [previews, setPreviews] = useState([]); // 서버 + 새 이미지 미리보기
+  const [previews, setPreviews] = useState([]);
 
-  // ✅ 기존 서버 이미지 초기화 (한 번만 실행)
+  /** ✅ existingImages가 변경될 때 초기 세팅 (처음 1회 + 게시글 로드 후 1회) */
   useEffect(() => {
-    if (existingImages && existingImages.length > 0) {
+    if (existingImages && existingImages.length > 0 && previews.length === 0) {
       const mapped = existingImages.map((img) => ({
         id: img.id || crypto.randomUUID(),
         type: "url",
-        data: img.filePath, // 서버에서 오는 경로 (예: /uploads/taily-friends/abc.jpg)
+        data: img.filePath?.startsWith("/uploads")
+          ? img.filePath
+          : img.filePath?.replace(/^.*\/uploads/, "/uploads"),
       }));
       setPreviews(mapped);
     }
-  }, [existingImages]);
+  }, [existingImages]); // ✅ props 변경 시 반영
 
-  // ✅ 파일 추가 시 새 미리보기 생성
+  /** ✅ previews 변경될 때 부모에게 전달 */
+  useEffect(() => {
+    if (onImageChange) {
+      const formatted = previews.map((p) =>
+        p.type === "file"
+          ? { type: "file", data: p.file, id: p.id }
+          : { type: "url", data: p.data, id: p.id }
+      );
+      onImageChange(formatted);
+    }
+  }, [previews]);
+
+  /** ✅ 파일 추가 */
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length + previews.length > 3) {
@@ -35,33 +49,16 @@ const TailyFriendsEditImageBox = ({ existingImages = [], onImageChange }) => {
       file,
     }));
 
-    const updated = [...previews, ...newPreviews].slice(0, 3);
-    setPreviews(updated);
-
-    // 부모로 전달
-    if (onImageChange) {
-      const formatted = updated.map((p) =>
-        p.type === "file"
-          ? { type: "file", data: p.file, id: p.id }
-          : { type: "url", data: p.data, id: p.id }
-      );
-      onImageChange(formatted);
-    }
+    setPreviews((prev) => [...prev, ...newPreviews]);
   };
 
-  // ✅ 클릭 시 삭제
+  /** ✅ 삭제 처리 */
   const handleRemove = (id) => {
-    const updated = previews.filter((p) => p.id !== id);
-    setPreviews(updated);
-
-    if (onImageChange) {
-      const formatted = updated.map((p) =>
-        p.type === "file"
-          ? { type: "file", data: p.file, id: p.id }
-          : { type: "url", data: p.data, id: p.id }
-      );
-      onImageChange(formatted);
+    const target = previews.find((p) => p.id === id);
+    if (target?.type === "file") {
+      URL.revokeObjectURL(target.data);
     }
+    setPreviews((prev) => prev.filter((p) => p.id !== id));
   };
 
   return (
@@ -71,7 +68,6 @@ const TailyFriendsEditImageBox = ({ existingImages = [], onImageChange }) => {
         <small className="text-muted px-2">같이 산책할 공간을 올려주세요</small>
       </Card.Header>
       <Card.Body className="d-flex align-items-center gap-2 flex-wrap">
-        {/* 업로드 버튼 */}
         <Form.Label
           htmlFor="photo"
           className="upload-tile mb-0 d-flex justify-content-center align-items-center"
@@ -79,29 +75,22 @@ const TailyFriendsEditImageBox = ({ existingImages = [], onImageChange }) => {
           <span className="add-image">+</span>
         </Form.Label>
 
-        {/* ✅ 미리보기 (기존 서버 이미지 + 새 업로드 파일) */}
-        {previews.map((p) =>
-          p.type === "file" ? (
-            <img
-              key={p.id}
-              src={p.data}
-              alt="preview"
-              className="image-preview"
-              onClick={() => handleRemove(p.id)}
-              title="클릭하면 삭제됩니다"
-            />
-          ) : (
-            <SecureImage
-              key={p.id}
-              src={p.data}
-              alt="server"
-              className="image-preview"
-              onClick={() => handleRemove(p.id)}
-            />
-          )
-        )}
+        {previews.map((p) => (
+          <div
+            key={p.id}
+            className="image-wrapper"
+            onClick={() => handleRemove(p.id)}
+            title="클릭하면 삭제됩니다"
+            style={{ cursor: "pointer", position: "relative" }}
+          >
+            {p.type === "file" ? (
+              <img src={p.data} alt="preview" className="image-preview" />
+            ) : (
+              <SecureImage src={p.data} alt="server" className="image-preview" />
+            )}
+          </div>
+        ))}
 
-        {/* 파일 선택 */}
         <Form.Control
           type="file"
           id="photo"

@@ -12,12 +12,14 @@ const AlarmDropdown = ({ alarms, onClickAlarm, setShowDropdown }) => {
     // 외부 클릭 시 드롭다운 닫기
     useEffect(() => {
         const handleClickOutside = (e) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-                setShowDropdown(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      // 알람 벨 클릭으로 인한 닫힘 방지
+      if (e.target.closest(".alarm-bell")) return;
+      setShowDropdown(false);
+    }
+  };
+  document.addEventListener("click", handleClickOutside);
+  return () => document.removeEventListener("click", handleClickOutside);
     }, [setShowDropdown]);
 
     // 날짜 포맷 함수
