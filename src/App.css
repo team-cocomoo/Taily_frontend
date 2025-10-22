@@ -1,28 +1,28 @@
 .btn-primary {
-  background-color: #feb916 !important;  
-  border-color: #feb916 !important;     
-  color: #fff !important;                
+  background-color: #feb916 !important;
+  border-color: #feb916 !important;
+  color: #fff !important;
   border-radius: 20px !important;
   padding: 5px 20px !important;
 }
 .btn-primary:active {
-  background-color: #feb916 !important;  
-  border-color: #feb916 !important;     
-  color: #fff !important;                
+  background-color: #feb916 !important;
+  border-color: #feb916 !important;
+  color: #fff !important;
   border-radius: 20px !important;
   padding: 5px 20px !important;
 }
-.btn-outline-primary{
-    background-color: #fff !important;  
-  border-color: #4f1f02 !important;     
-  color: #4f1f02 !important;                
+.btn-outline-primary {
+  background-color: #fff !important;
+  border-color: #4f1f02 !important;
+  color: #4f1f02 !important;
   border-radius: 20px !important;
   padding: 5px 20px !important;
 }
-.btn-outline-primary:hover{
-    background-color: #4f1f02 !important;  
-  border-color: #4f1f02 !important;     
-  color: #fff !important;                
+.btn-outline-primary:hover {
+  background-color: #4f1f02 !important;
+  border-color: #4f1f02 !important;
+  color: #fff !important;
   border-radius: 20px !important;
-  padding:5px 20px !important;
+  padding: 5px 20px !important;
 }
