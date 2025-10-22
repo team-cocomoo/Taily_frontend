@@ -13,7 +13,7 @@ const FaqList = () => {
     const fetchFaqs = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await api.get("/api/faq", {
+            const response = await api.get("/api/faqs", {
                 params: { page, size: itemsPerPage } // 백엔드 페이지 요청
             });
             const data = response.data?.data;
@@ -53,7 +53,7 @@ const FaqList = () => {
                 ))}
             </Accordion>
 
-            <Pagination className="mt-3 justify-content-center custom-pagination">
+            <Pagination className="mt-5 mb-5 justify-content-center custom-pagination">
                 <Pagination.Prev
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
