@@ -29,30 +29,23 @@ const AlarmSystem = () => {
     }
 
     useEffect(() => {
-        if (loading) return; // 아직 유저정보 로딩 중이면 대기
-        if (!user?.publicId || !token) return; // 로그인 안된 경우 차단
+        if (loading) return;
+        if (!user?.publicId || !token) return;
 
-        // DB에서 기존 알람 불러오기
+        console.log("🚀 유저 로딩 완료:", user.publicId);
         fetchAlarms();
 
-        // webSocket 연결
         connectSocket(token, user.publicId, (newAlarm) => {
+            console.log("📨 새로운 알람 수신:", newAlarm);
             setAlarms((prev) => [newAlarm, ...prev]);
             setUnreadCount((prev) => prev + 1);
             setShowDropdown(true);
         });
 
-        // 언마운트 시 연결 해제
         return () => {
             disconnectSocket();
         };
     }, [user?.publicId, loading, token]); // user.id, loading 변경 감지
-
-    useEffect(() => {
-        if (showDropdown) {
-            alarms.forEach((a) => !a.state && handleAlarmClick(a.id));
-        }
-    }, [showDropdown]); // showDropdown이 true로 바뀔 때만 실행됨
 
     // 읽음 처리
     const handleAlarmClick = async (id) => {
@@ -75,7 +68,10 @@ const AlarmSystem = () => {
         <div style={{ position: "relative" }}>
             <AlarmBell 
                 unreadCount={unreadCount}
-                onClick={() => setShowDropdown(!showDropdown)}
+                onClick={() => {
+                    console.log("🔔 종 클릭됨!");
+                    setShowDropdown(!showDropdown);
+                }}
             />
             {showDropdown && (
                 <AlarmDropdown 
