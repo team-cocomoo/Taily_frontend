@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-//import "../../styles/postDetail/WalkPathMap.css";
+import "../../styles/postDetail/PostDetailMap.css";
 
 /**
  * BaseMapInput (공통 지도 컴포넌트)
@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from "react";
  * - markersData: [{ address, label }] 형식의 배열
  * - mapHeight: 지도 높이 (기본값 400px)
  */
-const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
+const BaseMapInput = ({ markersData = [] }) => {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const markersRef = useRef([]);
@@ -95,7 +95,7 @@ const BaseMapInput = ({ markersData = [], mapHeight = 400 }) => {
   return (
     <div
       ref={mapRef}
-      className="main-walkpath-map-container"
+      className="post-detail-map-container"
     />
   );
 };

@@ -7,6 +7,7 @@ import { getFacilityData } from "../../api/FacilityService";
 
 const FacilityMainPage = () => {
   const [posts, setPosts] = useState([]); // 시설 데이터 저장
+  const [filteredPosts, setFilteredPosts] = useState([]); // 검색 필터용 데이터
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [selectedFacility, setSelectedFacility] = useState(null); // 카드 클릭 연결용
   const [userLocation, setUserLocation] = useState(null); // 유저 위치 상태
@@ -109,6 +110,8 @@ const FacilityMainPage = () => {
           .slice(0, 10);
 
         setPosts(nearest);
+        setFilteredPosts(nearest);
+
       } catch (error) {
         console.error("API 불러오기 실패:", error);
       } finally {
@@ -124,7 +127,22 @@ const FacilityMainPage = () => {
     setSelectedFacility(facility);
   };
 
-  //  4단계: 로딩 중 화면
+  // 4단계 : 검색 기능 추가
+  const handleSearch = (keyword) => {
+    if (!keyword.trim()) {
+      setFilteredPosts(posts); // 검색어 비었을 때 전체 복원
+      return;
+    }
+
+    const filtered = posts.filter(
+      (item) =>
+        item.title?.toLowerCase().includes(keyword.toLowerCase()) ||
+        item.address?.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setFilteredPosts(filtered);
+  };
+
+  //  5단계: 로딩 중 화면
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -134,14 +152,14 @@ const FacilityMainPage = () => {
     );
   }
 
-  // ✅ 5단계: 실제 렌더링
+  // ✅ 6단계: 실제 렌더링
   return (
-    <div className="mt-4" style={{ paddingTop: "160px" }}>
-      <h2 className="page-title">우리 동네 정보</h2>
+    <div className="mt-4" style={{ paddingTop: "5px" }}>
+      {/* <h2 className="page-title">우리 동네 정보</h2> */}
 
       {/* 지도 */}
       <FacilityMap
-        facilities={posts}
+        facilities={filteredPosts}
         selectedFacility={selectedFacility}
         userLocation={userLocation}
       />
@@ -149,12 +167,12 @@ const FacilityMainPage = () => {
       <br />
 
       {/* 검색바 */}
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
 
       <br />
 
       {/* 카드 목록 */}
-      <FacilityPostCard items={posts} onItemClick={handleCardClick} />
+      <FacilityPostCard items={filteredPosts} onItemClick={handleCardClick} />
     </div>
   );
 };
