@@ -83,7 +83,6 @@ const UserRoutes = (
       <Route path="/petstory/feed" element={<FeedMainPage />} />
       <Route path="/petstory/feed/write" element={<FeedWritePage />} />
       <Route path="/petstory/feed/edit/:id" element={<FeedEdtiPage />} />
-      <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
 
       {/* 산책 관련 */}
       <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
@@ -98,7 +97,6 @@ const UserRoutes = (
       <Route path="/walk-paths" element={<WalkPathMainPage />} />
       <Route path="/walk-paths/write" element={<WalkPathWritePage />} />
       <Route path="/walk-paths/edit/:id" element={<WalkPathEditPage />} />
-      <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
 
       {/* 커뮤니티 */}
       <Route path="/taily-friends" element={<TailyFriendsMainPage />} />
@@ -107,7 +105,6 @@ const UserRoutes = (
         path="/taily-friends/edit/:id"
         element={<TailyFriendsEditPage />}
       />
-      <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
 
       {/* 기타 */}
       <Route path="/facilities" element={<FacilityMainPage />} />
@@ -120,7 +117,11 @@ const UserRoutes = (
     </Route>
     <Route
       element={<ProtectedLayout roles={["ROLE_USER", "ROLE_ADMIN"]} />}
-    ></Route>
+    >
+      <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
+      <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
+      <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
+    </Route>
   </Route>
 );
 

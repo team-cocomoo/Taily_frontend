@@ -28,7 +28,7 @@ const AdminLoginPage = () => {
       if (!bearerToken) throw new Error("토큰이 존재하지 않습니다.");
 
       localStorage.setItem("token", bearerToken.replace("Bearer ", ""));
-      if (response.data.success) navigate("/admin/main");
+      if (response.data.success) navigate("/admin/main/users");
       else navigate("/admin/login");
     } catch (error) {
       console.error("로그인 실패:", error);
