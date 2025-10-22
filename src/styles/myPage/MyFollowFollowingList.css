@@ -33,6 +33,24 @@
   border-radius: 4px;
   border: 2px solid #ffd700; /* 트랙과 경계 */
 }
+.follow-btn-active {
+  background-color: #feb916;
+  border: #feb916;
+}
+.follow-btn-active:hover {
+  background-color: #feb916;
+  border: #feb916;
+}
+.follow-btn-inactive {
+  border: 2px solid #4f1f02;
+  background-color: #fff;
+  color: #4f1f02;
+}
+.follow-btn-inactive:hover {
+  border: 2px solid #4f1f02;
+  background-color: #4f1f02;
+  color: #fff;
+}
 
 .follow-img {
   width: 45px;

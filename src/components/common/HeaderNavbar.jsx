@@ -19,6 +19,17 @@ const HeaderNavbar = () => {
   const [openDropdowns, setOpenDropdowns] = useState({});
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1150);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".dropdown")) {
+        setOpenDropdowns({});
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   // 화면 크기 체크
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 1150);
@@ -50,31 +61,47 @@ const HeaderNavbar = () => {
   }, [lastScrollY]);
 
   const toggleDropdown = (name) => {
-    setOpenDropdowns((prev) => ({
-      ...prev,
-      [name]: !prev[name],
-    }));
+    setOpenDropdowns((prev) => {
+      const isOpen = !!prev[name];
+      return isOpen ? {} : { [name]: true };
+    });
   };
 
   const MenuLinks = () => (
     <>
       <div className="dropdown">
-        <span className="nav-link" onClick={() => toggleDropdown("petstory")}>
+        <span
+          className={`nav-link ${
+            location.pathname.startsWith("/petstory") ||
+            location.pathname.startsWith("/chats")
+              ? "nav-link-active"
+              : ""
+          }`}
+          onClick={() => toggleDropdown("petstory")}
+        >
           펫스토리
         </span>
         <div
-          className={`dropdown-menu ${openDropdowns["petstory"] ? "open" : ""}`}
+          className={`dropdown-menu ${
+            openDropdowns["petstory"] ? "open" : ""
+          }`}
         >
           <Link
             to="/petstory/feed"
-            className="dropdown-item"
+            className={`dropdown-item ${
+              location.pathname.startsWith("/petstory/feed")
+                ? "nav-link-active"
+                : ""
+            }`}
             onClick={() => setMenuOpen(false)}
           >
             피드
           </Link>
           <Link
             to="/chats"
-            className="dropdown-item"
+            className={`dropdown-item ${
+              location.pathname.startsWith("/chats") ? "nav-link-active" : ""
+            }`}
             onClick={() => setMenuOpen(false)}
           >
             대화방
@@ -83,57 +110,102 @@ const HeaderNavbar = () => {
       </div>
 
       <div className="dropdown">
-        <span className="nav-link" onClick={() => toggleDropdown("walk")}>
+        <span
+          className={`nav-link ${
+            location.pathname.startsWith("/walk-diaries") ||
+            location.pathname.startsWith("/taily-friends") ||
+            location.pathname.startsWith("/walk-paths")
+              ? "nav-link-active"
+              : ""
+          }`}
+          onClick={() => toggleDropdown("walk")}
+        >
           산책 공간
         </span>
-        <div className={`dropdown-menu ${openDropdowns["walk"] ? "open" : ""}`}>
+        <div
+          className={`dropdown-menu ${openDropdowns["walk"] ? "open" : ""}`}
+        >
           <Link
             to="/walk-diaries"
-            className="dropdown-item"
+            className={`dropdown-item ${
+              location.pathname.startsWith("/walk-diaries")
+                ? "nav-link-active"
+                : ""
+            }`}
             onClick={() => setMenuOpen(false)}
           >
             산책일지
           </Link>
           <Link
             to="/taily-friends"
-            className="dropdown-item"
+            className={`dropdown-item ${
+              location.pathname.startsWith("/taily-friends")
+                ? "nav-link-active"
+                : ""
+            }`}
             onClick={() => setMenuOpen(false)}
           >
             테일리프렌즈
           </Link>
           <Link
             to="/walk-paths"
-            className="dropdown-item"
+            className={`dropdown-item ${
+              location.pathname.startsWith("/walk-paths")
+                ? "nav-link-active"
+                : ""
+            }`}
             onClick={() => setMenuOpen(false)}
           >
             다함께산책
           </Link>
         </div>
       </div>
+
       <Link
         to="/facilities"
-        className="nav-link"
+        className={`nav-link ${
+          location.pathname.startsWith("/facilities")
+            ? "nav-link-active"
+            : ""
+        }`}
         onClick={() => setMenuOpen(false)}
       >
         우리동네정보
       </Link>
+
       <div className="dropdown">
-        <span className="nav-link" onClick={() => toggleDropdown("center")}>
+        <span
+          className={`nav-link ${
+            location.pathname.startsWith("/notices") ||
+            location.pathname.startsWith("/faqs")
+              ? "nav-link-active"
+              : ""
+          }`}
+          onClick={() => toggleDropdown("center")}
+        >
           고객센터
         </span>
         <div
-          className={`dropdown-menu ${openDropdowns["center"] ? "open" : ""}`}
+          className={`dropdown-menu ${
+            openDropdowns["center"] ? "open" : ""
+          }`}
         >
           <Link
             to="/notices"
-            className="dropdown-item"
+            className={`dropdown-item ${
+              location.pathname.startsWith("/notices")
+                ? "nav-link-active"
+                : ""
+            }`}
             onClick={() => setMenuOpen(false)}
           >
             공지사항
           </Link>
           <Link
             to="/faqs"
-            className="dropdown-item"
+            className={`dropdown-item ${
+              location.pathname.startsWith("/faqs") ? "nav-link-active" : ""
+            }`}
             onClick={() => setMenuOpen(false)}
           >
             FAQ
@@ -141,7 +213,13 @@ const HeaderNavbar = () => {
         </div>
       </div>
 
-      <Link to="/event" className="nav-link" onClick={() => setMenuOpen(false)}>
+      <Link
+        to="/event"
+        className={`nav-link ${
+          location.pathname.startsWith("/event") ? "nav-link-active" : ""
+        }`}
+        onClick={() => setMenuOpen(false)}
+      >
         이벤트
       </Link>
     </>
@@ -151,7 +229,6 @@ const HeaderNavbar = () => {
     <div className="navbar-actions">
       {user ? (
         <>
-          {/*<span className="welcome-text">{user.nickname}님 환영합니다!</span>*/}
           <AlarmSystem />
           <Link to="/mypage/user" onClick={() => setMenuOpen(false)}>
             <button className="btn btn-outline-primary btn-sm btn-signup">
