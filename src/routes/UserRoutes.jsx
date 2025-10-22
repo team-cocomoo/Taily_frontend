@@ -45,6 +45,7 @@ import FeedWritePage from "@/pages/feed/FeedWritePage";
 import NoticeListPage from "@/pages/cs/NoticeListPage";
 import NoticeDetailPage from "@/pages/cs/NoticeDetailPage";
 import FaqPage from "@/pages/cs/FaqPage";
+import EventPage from "@/pages/cs/EventPage";
 
 import SingleFeedUploader from "@/tests/pages/SingleFeedUploader";
 import MyLikePage from "@/pages/myPage/MyLikePage";
@@ -60,6 +61,7 @@ const UserRoutes = (
     <Route path="/register" element={<RegisterPage />} />
     <Route path="/notices" element={<NoticeListPage />} />
     <Route path="/notices/:id" element={<NoticeDetailPage />} />
+    <Route path="/event" element={<EventPage/>} />
     <Route path="/faqs" element={<FaqPage />} />
     <Route path="/SingleFeedUploader" element={<SingleFeedUploader />} />
 
