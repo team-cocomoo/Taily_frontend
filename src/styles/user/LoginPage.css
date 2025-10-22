@@ -21,7 +21,7 @@
   width: 300px;
   background-color: #feb916;
   border: none;
-  border-radius: 20px;
+  border-radius: 50px !important;
   color: #fff;
 }
 
@@ -29,7 +29,7 @@
   width: 185px;
   background-color: #ffffff;
   border: 2px solid #4f1f02;
-  border-radius: 20px;
+  border-radius: 20px !important;
   color: #4f1f02;
   font-weight: 700; /* 글씨 굵게 */
 }
