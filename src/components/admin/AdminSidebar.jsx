@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Container, Navbar, Offcanvas } from "react-bootstrap";
+import { Container, Navbar, Offcanvas, Button } from "react-bootstrap";
+import axios from "axios";
 import hamburgerIcon from "../../assets/image/hamburger-menu-icon.png";
 import "../../styles/admin/Admin.css";
 
@@ -32,6 +33,31 @@ const AdminSidebar = () => {
 
   // ✅ 모바일 메뉴 닫기
   const handleCloseMenu = () => setShowMenu(false);
+
+    // ✅ 로그아웃 처리
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        await axios.post(
+          "/api/auth/logout",
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+      }
+      // 토큰 제거
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+
+      alert("로그아웃되었습니다.");
+      navigate("/admin/login");
+    } catch (err) {
+      console.error("로그아웃 실패:", err);
+      alert("로그아웃 중 오류가 발생했습니다.");
+    }
+  };
 
   return (
     <>
@@ -68,6 +94,7 @@ const AdminSidebar = () => {
 
           {/* 데스크탑용 메뉴 */}
           {!isMobile && (
+            <>
             <nav className="flex-column w-100 px-3 admin-nav-list">
               {navItems.map((item) => {
                 const active = location.pathname.includes(item.path);
@@ -86,6 +113,18 @@ const AdminSidebar = () => {
                 );
               })}
             </nav>
+              <div className="w-100 px-3 mt-3">
+                <Button
+                  variant="outline-light"
+                  size="sm"
+                  className="w-100"
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </Button>
+              </div>
+            </>
+            
           )}
         </Container>
       </Navbar>
