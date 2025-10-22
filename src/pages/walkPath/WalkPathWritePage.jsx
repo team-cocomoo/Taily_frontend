@@ -19,7 +19,7 @@ const WalkPathWritePage = () => {
 
   const handleSubmit = async () => {
     console.log("현재 routes 상태:", routes);
-    if (!title.trim() || !routes.length === 0 || !content.trim()) {
+    if (!title.trim() || routes.length === 0 || !content.trim()) {
       alert("제목, 주소, 내용은 반드시 입력해야합니다");
       return;
     }

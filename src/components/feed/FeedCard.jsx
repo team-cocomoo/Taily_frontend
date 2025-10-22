@@ -1,11 +1,12 @@
-// components/feed/FeedCard.jsx
-import React from "react";
-import { Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { Card, Carousel } from "react-bootstrap";
 import { toggleLike } from "@/api/FeedService";
 import UserInfoComponent from "./UserInfoComponent";
 import SecureImage from "./SecureImage";
 import FeedContent from "./FeedContent";
 import "@/styles/feed/FeedCard.css";
+import FeedDetailModal from "../../pages/feed/FeedDetailModal"
+
 
 function FeedCard({ feedData, onUpdate }) {
   const {
@@ -17,6 +18,7 @@ function FeedCard({ feedData, onUpdate }) {
     createdAt,
     tags = [],
   } = feedData;
+  const [showDetail, setShowDetail] = useState(false);
 
   // 좋아요 토글
   const handleToggleLike = async () => {
@@ -33,9 +35,8 @@ function FeedCard({ feedData, onUpdate }) {
   };
 
   return (
+        <>
     <div className="feed-wrapper">
-      {" "}
-      {/* 중앙 정렬 + 고정 너비 */}
       <Card className="feed-card shadow-sm border-0">
         {/* 작성자 정보 */}
         <UserInfoComponent
@@ -45,32 +46,53 @@ function FeedCard({ feedData, onUpdate }) {
           profileImageUrl={null}
         />
 
-        {/* 이미지 표시 (contain으로 비율 유지 + 레터박스) */}
-        {images.length > 0 &&
-          images.map((img, idx) => (
-            <div key={idx} className="feed-image-wrapper">
-              <SecureImage
-                src={img}
-                alt={`feed-${id}-${idx}`}
-                className="feed-image"
-              />
-            </div>
-          ))}
+        {/* 이미지 캐러셀 */}
+        {images.length > 0 && (
+          <div className="feed-carousel-wrapper">
+            <Carousel
+              indicators={images.length > 1} // 하단 점 표시 여부
+              controls={images.length > 1} // 좌우 화살표 표시 여부
+              interval={null} // 자동 슬라이드 X
+              fade={false} // 부드럽게 전환
+            >
+              {images.map((img, idx) => (
+                <Carousel.Item key={idx}>
+                  <div className="feed-image-wrapper">
+                    <SecureImage
+                      src={img}
+                      alt={`feed-${id}-${idx}`}
+                      className="feed-image"
+                    />
+                  </div>
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </div>
+        )}
 
-        {/* 본문 내용 */}
-        <Card.Body className="p-3">
-          <FeedContent
-            feedData={{
-              content,
-              likeCount,
-              createdAt,
-              tags,
-            }}
-            onToggleLike={handleToggleLike}
-          />
-        </Card.Body>
+          {/* 본문 */}
+          <Card.Body className="p-3">
+            <FeedContent
+              feedData={{
+                writer: writerName,
+                content,
+                likeCount,
+                date: createdAt,
+              }}
+              onToggleLike={handleToggleLike}
+              onShowDetail={() => setShowDetail(true)} // 댓글 클릭 시 모달 열기
+            />
+          </Card.Body>
       </Card>
     </div>
+
+          {/* 피드 상세 모달 */}
+      <FeedDetailModal
+        feedId={id}
+        show={showDetail}
+        onHide={() => setShowDetail(false)}
+      />
+    </>
   );
 }
 

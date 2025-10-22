@@ -46,7 +46,7 @@ const MainPage = () => {
           className="main-video"
         />
         <div className="video-text-container">
-          <p className="text-white video-text">반려동물,나 그리고 우리</p>
+          <p className="text-white video-text">반려동물, 나 그리고 우리</p>
           <p className="text-white video-text">하나가 되는 이 곳, Taily</p>
         </div>
       </section>

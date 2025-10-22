@@ -71,7 +71,7 @@ export default function UserProfileImage({
     );
   }
 
-  // ✅ 에러 또는 이미지 없음
+  // 에러 또는 이미지 없음
   if (error || !imagePath) {
     return (
       <div
@@ -96,6 +96,7 @@ export default function UserProfileImage({
       src={imagePath}
       alt={alt}
       style={{
+        marginLeft: "140px",
         width: size,
         height: size,
         borderRadius: "50%",

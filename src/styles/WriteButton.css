@@ -1,7 +1,7 @@
 .write-button {
   position: fixed;
-  bottom: 350px;    /* 화면 하단 기준 위치 */
-  right: 100px;     /* 화면 오른쪽 기준 위치 */
+  bottom: 100px;    /* 화면 하단 기준 위치 */
+  right: 30px;     /* 화면 오른쪽 기준 위치 */
   width: 60px;     /* 버튼 크기 */
   height: 60px;    /* 버튼 크기 */
   cursor: pointer; /* 마우스 올리면 손 모양 */

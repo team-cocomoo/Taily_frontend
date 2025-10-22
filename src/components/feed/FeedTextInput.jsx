@@ -1,7 +1,7 @@
 // components/feed/FeedTextInput.jsx
 import React from "react";
 import { Card } from "react-bootstrap";
-import MyEditor from "@/components/MyEditor"; // 실제 MyEditor 경로로 수정
+import MyEditor from "@/components/MyEditor";
 
 /**
  * 글 작성 컴포넌트

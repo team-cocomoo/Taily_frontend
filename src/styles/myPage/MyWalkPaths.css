@@ -1,0 +1,12 @@
+.my-walk-paths-tr th{
+    border: 1px solid #000;
+}
+.my-walk-paths-tr th,
+.my-walk-paths-tr td {
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;      
+  overflow: hidden;         
+  text-overflow: ellipsis; 
+  max-width: 200px;         
+}

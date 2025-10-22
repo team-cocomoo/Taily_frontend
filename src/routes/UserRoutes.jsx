@@ -48,10 +48,12 @@ import FaqPage from "@/pages/cs/FaqPage";
 import SingleFeedUploader from "@/tests/pages/SingleFeedUploader";
 import MyLikePage from "@/pages/myPage/MyLikePage";
 import MyPetPage from "../pages/myPage/MyPetPage";
+import MyPageMyFeed from "../pages/myPage/MyPageMyFeed";
+import MyFeedPage from "../pages/myPage/MyFeedPage";
 
 const UserRoutes = (
   <Route element={<UserLayout />}>
-    {/* ✅ 공용 페이지 (비회원 가능) */}
+    {/* 공용 페이지 (비회원 가능) */}
     <Route path="/" element={<MainPage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/register" element={<RegisterPage />} />
@@ -60,10 +62,11 @@ const UserRoutes = (
     <Route path="/faqs" element={<FaqPage />} />
     <Route path="/SingleFeedUploader" element={<SingleFeedUploader />} />
 
-    {/* ✅ 회원 전용 페이지 */}
+    {/* 회원 전용 페이지 */}
     <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
       <Route path="/mypage/user" element={<MyPageUserInfo />} />
       <Route path="/mypage/user/edit" element={<MyPageEdit />} />
+      <Route path="/mypage/myfeed" element={<MyFeedPage/>} />
       <Route path="/mypage/pet" element={<MyPetPage />} />
       <Route path="/mypage/like" element={<MyLikePage />} />
       <Route path="/mypage/taily-friends" element={<MyTailyFriendsPage />} />
@@ -74,12 +77,12 @@ const UserRoutes = (
         path="/mypage/delete-success"
         element={<AccountDeleteSuccessPage />}
       />
+      <Route path="/mypage/myPagemyFeed" element={<MyPageMyFeed />} />
 
       {/* 펫스토리 */}
       <Route path="/petstory/feed" element={<FeedMainPage />} />
       <Route path="/petstory/feed/write" element={<FeedWritePage />} />
       <Route path="/petstory/feed/edit/:id" element={<FeedEdtiPage />} />
-      <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
 
       {/* 산책 관련 */}
       <Route path="/walk-diaries" element={<WalkDiaryCalendarPage />} />
@@ -94,7 +97,6 @@ const UserRoutes = (
       <Route path="/walk-paths" element={<WalkPathMainPage />} />
       <Route path="/walk-paths/write" element={<WalkPathWritePage />} />
       <Route path="/walk-paths/edit/:id" element={<WalkPathEditPage />} />
-      <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
 
       {/* 커뮤니티 */}
       <Route path="/taily-friends" element={<TailyFriendsMainPage />} />
@@ -103,7 +105,6 @@ const UserRoutes = (
         path="/taily-friends/edit/:id"
         element={<TailyFriendsEditPage />}
       />
-      <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
 
       {/* 기타 */}
       <Route path="/facilities" element={<FacilityMainPage />} />
@@ -113,6 +114,13 @@ const UserRoutes = (
         path="/user-profile/:id/profile"
         element={<OtherUserProfilePage />}
       />
+    </Route>
+    <Route
+      element={<ProtectedLayout roles={["ROLE_USER", "ROLE_ADMIN"]} />}
+    >
+      <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
+      <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
+      <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
     </Route>
   </Route>
 );

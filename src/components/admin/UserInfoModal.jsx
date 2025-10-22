@@ -6,7 +6,7 @@ import SecureImage from "@/components/common/SecureImage";
 
 const UserInfoModal = ({ show, user, handleClose }) => {
     if (!user) return null;
-    console.log("user", user);
+    console.log("선택된 user", user);
 
     return (
         <Modal show={show} onHide={handleClose} centered size="md" className="user-info-modal">
@@ -18,7 +18,7 @@ const UserInfoModal = ({ show, user, handleClose }) => {
                 <Col md={4} className="text-center">
                     {user.imagePath ? (
                         <SecureImage
-                            src={user.imagePath}
+                            src={user.imagePath.startsWith("http") ? user.imagePath : `http://localhost:8080${user.imagePath}`}
                             alt={`${user.nickname} 프로필`}
                             className="user-profile-img rounded-circle shadow-sm mb-3"
                             style={{ width: "100px", height: "100px", objectFit: "cover" }}

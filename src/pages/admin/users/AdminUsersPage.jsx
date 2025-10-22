@@ -27,7 +27,6 @@ const AdminUsersPage = () => {
 
             console.log("data : ", data);
             
-
             setUserList(Array.isArray(data?.data) ? data.data : []);
             setTotalCount(data?.totalCount || 0);
             setCurrentPage(page);
@@ -49,7 +48,20 @@ const AdminUsersPage = () => {
         fetchUsers(searchKeyword, 1);
     };
 
-    const handleUserClick = (user) => {
+    const handleUserClick = async (user) => {
+
+        try {
+            const response = await api.get(`/api/admin/${user.id}`);
+
+            if (response.data.success) {
+                const userData = response.data?.data;
+                setSelectedUser(userData);
+                setShowModal(true);
+            }
+        } catch (error) {
+            console.error("회원 상세 정보 조회 실패:", error);
+        }
+
         setSelectedUser(user);
         setShowModal(true);
     };

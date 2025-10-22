@@ -1,0 +1,285 @@
+/* ===============================
+   🔶 FeedDetailModal.css (최종 개선본)
+   - 댓글 UI 완전 리뉴얼
+   - 프로필, 버튼, 반응형 최적화
+================================ */
+
+/* 전체 모달 */
+.feed-detail-modal .modal-content {
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #fff;
+  max-height: 90vh;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 메인 컨테이너 */
+.feed-detail-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 80vh;
+}
+
+/* --------------------
+   왼쪽 이미지 영역
+--------------------- */
+.feed-detail-left {
+  flex: 1 1 55%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feed-detail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* --------------------
+   오른쪽 영역
+--------------------- */
+.feed-detail-right {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 25px;
+  overflow-y: auto;
+  background: #fff;
+}
+
+/* 작성자 영역 */
+.feed-writer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.writer-profile {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.feed-content {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* 좋아요 섹션 */
+.like-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.like-section span {
+  font-size: 14px;
+  color: #555;
+}
+
+/* --------------------
+   댓글 영역
+--------------------- */
+.feed-comments {
+  flex: 1;
+  margin-top: 18px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* 댓글 카드 */
+.comment-card {
+  background-color: #fffdf8;
+  border: 1px solid #f1e2b8;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.comment-card:hover {
+  background-color: #fff8e6;
+  transform: translateY(-1px);
+}
+
+/* 댓글 상단 - 프로필, 닉네임, 작성시간 */
+.comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comment-user img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-user strong {
+  font-size: 14px;
+  color: #333;
+}
+
+.comment-time {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 댓글 내용 */
+.comment-body {
+  margin-top: 6px;
+  margin-left: 36px; /* 프로필 들여쓰기 정렬 */
+}
+
+.comment-body p {
+  margin: 0;
+  color: #444;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+/* 댓글 하단 버튼 */
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+  margin-right: 2px;
+}
+
+.comment-actions button {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: #777;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 4px;
+  transition: color 0.2s ease;
+}
+
+.comment-actions button svg {
+  font-size: 14px;
+  margin-top: -1px;
+}
+
+.comment-actions button:hover {
+  color: #f0a500;
+}
+
+.comment-actions .text-danger:hover {
+  color: #dc3545 !important;
+}
+
+/* 대댓글 들여쓰기 */
+.comment-card.reply {
+  margin-left: 25px;
+  background-color: #fffefb;
+  border-color: #f6eccc;
+}
+
+/* --------------------
+   댓글 입력 폼
+--------------------- */
+.comment-form {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-form input {
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid #e0c96a;
+}
+
+.comment-form input:focus {
+  border-color: #f0a500;
+  box-shadow: 0 0 4px rgba(240, 165, 0, 0.3);
+}
+
+.comment-form button {
+  margin-top: 8px;
+  font-weight: 600;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  background-color: #f0a500;
+  color: #fff;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.comment-form button:hover {
+  background-color: #e59d00;
+}
+
+/* --------------------
+   스크롤바
+--------------------- */
+.feed-detail-right::-webkit-scrollbar {
+  width: 6px;
+}
+
+.feed-detail-right::-webkit-scrollbar-thumb {
+  background-color: #e0c96a;
+  border-radius: 10px;
+}
+
+.feed-detail-right::-webkit-scrollbar-track {
+  background-color: #fdf6dc;
+}
+
+/* --------------------
+   반응형
+--------------------- */
+@media (max-width: 768px) {
+  .feed-detail-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .feed-detail-left {
+    height: 280px;
+  }
+
+  .feed-detail-right {
+    padding: 15px;
+  }
+
+  .comment-card {
+    padding: 8px 10px;
+  }
+
+  .comment-user img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .comment-actions button {
+    font-size: 12px;
+  }
+
+  .comment-body {
+    margin-left: 30px;
+  }
+}

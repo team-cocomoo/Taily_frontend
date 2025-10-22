@@ -153,7 +153,7 @@ const ChatRoomDetailPage = () => {
 
               <div className="message-container">
                 {!isMine && (
-                  <div className="message-nickname">{msg.senderName}</div>
+                  <div className="message-nickname">{msg.senderNickName}</div>
                 )}
                 <div className="message-body">{msg.content}</div>
                 <div className="message-time">{formatDate(msg.createdAt)}</div>
