@@ -149,7 +149,7 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
                     className="detail-image"
                     style={{
                       width: "300px",
-                      height: "auto",
+                      height: "300px",
                       borderRadius: "10px",
                       objectFit: "cover",
                       marginTop: "30px",
