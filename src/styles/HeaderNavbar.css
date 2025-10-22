@@ -84,8 +84,7 @@
 }
 
 .btn-signup {
-  line-height: 1;
-  border: 2px solid #4f1f02;
+  border: 1.5px solid #4f1f02;
   color: #4f1f02;
   font-size: 16px;
   font-weight: 500;
@@ -105,14 +104,12 @@
 }
 
 .btn-login {
-  line-height: 1 !important;
   border: 2px solid #feb916;
   background-color: #feb916;
   color: #fff;
   font-size: 16px !important;
   font-weight: 500 !important;
   padding: 8px 20px !important;
-  border-radius: 20px;
 }
 .btn-login:hover {
   background-color: #feb916;
