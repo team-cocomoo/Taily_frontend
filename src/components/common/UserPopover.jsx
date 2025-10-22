@@ -6,7 +6,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import "../../styles/UserPopover.css";
 import userIcon from "../../assets/image/user-icon.png";
 
-const UserPopover = ({ userId, nickname, children }) => {
+const UserPopover = ({ userId, userPublicId, nickname, children }) => {
   const { user } = useContext(AuthContext); // 로그인 사용자 정보
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -18,12 +18,24 @@ const UserPopover = ({ userId, nickname, children }) => {
     if (userInfo) return; // 이미 로드된 경우 재호출 방지
     setLoading(true);
     try {
-      const res = await api.get(`/api/user-profile/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      let res;
+      if (userId) {
+        // PK(id) 기반 조회
+        res = await api.get(`/api/user-profile/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } else if (userPublicId) {
+        // publicId 기반 조회
+        res = await api.get(`/api/user-profile/public/${userPublicId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } else {
+        throw new Error("userId 또는 userPublicId가 필요합니다.");
+      }
+
       setUserInfo(res.data);
     } catch (err) {
-      console.error(err);
+      console.error("유저 정보 조회 실패:", err);
       setUserInfo({ error: "유저 정보를 불러올 수 없습니다." });
     } finally {
       setLoading(false);

@@ -85,26 +85,15 @@ input.form-control:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* ================================
-   등록 버튼
-================================ */
-button[type="submit"] {
-  background-color: #feba17 !important;
-  border: none !important;
-  color: #4f1f02 !important;
-  font-weight: 600;
-  box-shadow: 0 3px 8px rgba(254, 186, 23, 0.4);
-  transition: all 0.2s ease;
-}
-
-button[type="submit"]:hover {
-  background-color: #ffd45b !important;
-  transform: translateY(-2px);
-}
-
-button[type="submit"]:disabled {
-  opacity: 0.8;
-  cursor: not-allowed;
+/* 버튼 */
+.feed-write-cancel {
+  width: 176px;
+  height: 50px;
+  background-color: #feb916;
+  border: none;
+  font-size: 20px;
+  border-radius: 50px !important;
+  color: #fff;
 }
 
 /* ================================

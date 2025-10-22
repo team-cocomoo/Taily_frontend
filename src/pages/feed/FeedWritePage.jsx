@@ -129,6 +129,14 @@ export default function FeedWritePage() {
                 "등록하기"
               )}
             </Button>
+            <Button
+              className="btn btn-outline-primary feed-write-cancel"
+              onClick={() => {
+                navigate("/petstory/feed"); // 페이지 이동
+              }}
+            >
+              취소하기
+            </Button>
           </div>
         </Form>
       </Card>
