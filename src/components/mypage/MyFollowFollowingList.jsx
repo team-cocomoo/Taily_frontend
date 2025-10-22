@@ -111,13 +111,22 @@ const MyFollowFollowingList = () => {
       <div className="follow-tabs d-flex justify-content-center mb-3">
         <Button
           variant={activeTab === "followers" ? "primary" : "outline-primary"}
-          className="me-2"
+          className={
+            activeTab === "followers"
+              ? "follow-btn-active me-3"
+              : "follow-btn-inactive me-3"
+          }
           onClick={() => setActiveTab("followers")}
         >
           팔로워
         </Button>
         <Button
           variant={activeTab === "following" ? "primary" : "outline-primary"}
+          className={
+            activeTab === "following"
+              ? "follow-btn-active"
+              : "follow-btn-inactive"
+          }
           onClick={() => setActiveTab("following")}
         >
           팔로잉

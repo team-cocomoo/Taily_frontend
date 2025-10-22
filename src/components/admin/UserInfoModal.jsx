@@ -6,7 +6,6 @@ import SecureImage from "@/components/common/SecureImage";
 
 const UserInfoModal = ({ show, user, handleClose }) => {
     if (!user) return null;
-    console.log("선택된 user", user);
 
     return (
         <Modal show={show} onHide={handleClose} centered size="md" className="user-info-modal">
@@ -41,31 +40,31 @@ const UserInfoModal = ({ show, user, handleClose }) => {
                 <Card className="info-card shadow-sm border-0">
                 <Card.Body>
                     <div className="info-row">
-                    <strong>아이디</strong>
-                    <span>{user.username}</span>
+                        <strong>아이디</strong>
+                        <span>{user.username}</span>
                     </div>
                     <div className="info-row">
-                    <strong>닉네임</strong>
-                    <span>{user.nickname}</span>
+                        <strong>닉네임</strong>
+                        <span>{user.nickname}</span>
                     </div>
                     <div className="info-row">
-                    <strong>이메일</strong>
-                    <span>{user.email}</span>
+                        <strong>이메일</strong>
+                        <span>{user.email}</span>
                     </div>
                     <div className="info-row">
-                    <strong>가입일</strong>
-                    <span>{new Date(user.createdAt).toLocaleDateString()}</span>
+                        <strong>가입일</strong>
+                        <span>{new Date(user.createdAt).toLocaleDateString()}</span>
                     </div>
                     <div className="info-row">
-                    <strong>제재 횟수</strong>
-                    <span>{user.sanctionCount}</span>
+                        <strong>제재 횟수</strong>
+                        <span>{user.sanctionCount}</span>
                     </div>
 
                     {user.sanctionCount > 0 && (
-                    <div className="info-row text-danger">
+                    <div className="info-row text-danger flex-column align-items-start">
                         <strong>제재 기간</strong>
                         <span>
-                        {user.penaltyStartDate ?? "-"} ~ {user.penaltyEndDate ?? "-"}
+                        {new Date(user.penaltyStartDate).toLocaleDateString() ?? "-"} ~ {new Date(user.penaltyEndDate).toLocaleDateString() ?? "-"}
                         </span>
                     </div>
                     )}
