@@ -151,14 +151,25 @@ const FacilityMap = ({ facilities = [], selectedFacility, userLocation }) => {
   }, [selectedFacility, map]);
 
   return (
-    <Card className="mb-4 diary-box">
-      <Card.Body>
-        <div
-          ref={mapRef}
-          style={{ width: "100%", height: "400px", borderRadius: "10px" }}
-        />
-      </Card.Body>
-    </Card>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "20px",
+        marginBottom: "20px",
+      }}
+    >
+      <div
+        ref={mapRef}
+        style={{
+          width: "50%",
+          height: "400px",
+          borderRadius: "10px",
+          overflow: "hidden", // 지도 모서리 둥글게
+          boxShadow: "0 2px 10px rgba(0,0,0,0.1)", // 약간의 그림자 효과 (선택)
+        }}
+      />
+    </div>
   );
 };
 
