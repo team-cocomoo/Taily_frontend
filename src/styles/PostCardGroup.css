@@ -1,0 +1,39 @@
+.tailyfriend-card-container,
+.page-title {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  margin-bottom: 200px;
+}
+
+.page-title {
+  margin-bottom: 20px;
+}
+
+.post-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.author {
+  font-size: 0.8rem;
+}
+.post-card-image-container {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #f1f1f1;
+  border-radius: 10px;
+}

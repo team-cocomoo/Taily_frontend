@@ -1,0 +1,174 @@
+.faq-title {
+  color: #4f1f02;
+  font-weight: bolder;
+}
+
+/* 전체 아코디언 항목 여백 */
+.accordion-item {
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+
+.accordion-item:first-child {
+  border-radius: 20px 20px 0 0;
+}
+.accordion-item:last-child {
+  border-radius: 0 0 20px 20px;
+}
+
+/* 아코디언 헤더 버튼 스타일 */
+.accordion-button {
+  background-color: #fff !important;
+  color: #000 !important;
+  font-weight: 500;
+  border: none;
+  box-shadow: none !important;
+  padding: 12px 16px;
+  height: 60px;
+}
+
+/* 열릴 때(활성화된) 헤더 스타일 */
+.accordion-button:not(.collapsed) {
+  color: #000 !important;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+/* 화살표 색상 변경 */
+.accordion-button::after {
+  filter: brightness(0); /* 검정색으로 변경 */
+}
+
+/* 아코디언 바디 스타일 */
+.accordion-body {
+  background-color: #ffc107;
+  color: #fff;
+  padding: 12px 16px;
+  height: 100px;
+  border-top: 1px solid #ddd;
+  font-weight: bold;
+}
+
+/* hover 시 배경 살짝 회색 */
+.accordion-button:hover {
+  background-color: #f8f9fa !important;
+}
+
+.custom-pagination .page-item .page-link {
+  color: #444444; /* 글자 색상 */
+  background-color: white; /* 배경색 */
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #feb916; /* 클릭/활성화 시 배경색 */
+  border-color: #feb916; /* 활성화 테두리 색상 */
+}
+
+.custom-pagination .page-item:hover .page-link {
+  background-color: rgba(254, 186, 23, 0.5); /* 마우스 오버 배경 */
+  border-color: rgba(254, 186, 23, 0.5);
+  color: #4f1f02;
+}
+.inquiries-card {
+  border-radius: 20px;
+  background-color: #d1e2fa;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px; /* 텍스트와 이미지 사이 간격 */
+  border: none;
+}
+
+.inquiries-card h6 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  white-space: nowrap; /* 한 줄로 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.inquiry-btn {
+  background-color: transparent;
+  border: 1.5px solid #4f1f02;
+  border-radius: 20px;
+  color: #000;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.inquiry-btn:hover {
+  background-color: #4a2107d4;
+  color: white;
+  border-color: #4a2107d4;
+}
+.inquiry-btn:active {
+  background-color: #4a2107d4 !important;
+  color: white;
+  border-color: #4a2107d4 !important;
+}
+
+.image-area {
+  width: 150px;
+  height: auto;
+  display: block;
+}
+
+.contents-card {
+  gap: 10rem;
+}
+@media screen and (max-width: 1020px) {
+  .inquiries-card {
+    flex-direction: column; /* 세로로 배치 */
+    gap: 10px;
+    align-items: flex-start; /* 왼쪽 정렬 */
+  }
+  .inquiries-card-h6 {
+    width: 250px;
+  }
+  .inquiries-card h6 {
+    font-size: 20px; /* 글자 크기 줄이기 */
+    white-space: normal; /* 줄바꿈 허용 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .image-area {
+    align-self: flex-end; /* 이미지 오른쪽 정렬 */
+    max-width: 120px;
+    margin-bottom: 10px;
+  }
+
+  .inquiry-btn {
+    font-size: 14px;
+    width: 50%; /* 버튼 전체 너비 */
+  }
+  .contents-card {
+    gap: 4rem;
+  }
+}
+.custom-pagination .page-link {
+  color: #555;                    /* 글자색 */
+  border: 1px solid #dee2e6;      /* 기본 테두리 유지 */
+  background-color: #fff;
+}
+
+.custom-pagination .page-link:hover {
+  color: #ffb84d;                 /* 호버 시 색상 */
+  border-color: #ffb84d;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #ffb84d !important; /* 클릭(활성) 시 색상 */
+  border-color: #ffb84d !important;
+  color: #fff !important;
+}
+
+.custom-pagination .page-link:focus {
+  box-shadow: none !important;    /* 파란 포커스 효과 제거 */
+  outline: none !important;
+}
+

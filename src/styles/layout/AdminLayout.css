@@ -1,0 +1,29 @@
+/* 공통 레이아웃 */
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 화면 전체 최소 높이 */
+}
+
+.admin-content-wrapper {
+  display: flex;
+  flex: 1;
+}
+
+.admin-sidebar {
+  width: 240px;
+  background-color: #f8f9fa;
+  border-right: 1px solid #ddd;
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.admin-main {
+  flex: 1;
+  /* padding: 20px; */
+  overflow-y: auto;
+  margin-left: 220px;
+  padding: 40px;
+  min-height: 100vh;
+}

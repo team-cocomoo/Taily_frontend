@@ -1,0 +1,19 @@
+/* layout.css */
+
+/* 공통 레이아웃 */
+.user-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 화면 전체 최소 높이 */
+}
+
+/* 메인 콘텐츠 영역 */
+.user-container {
+  flex: 1; /* 남은 공간 모두 차지 */
+  padding: 20px;
+  margin-top: 150px;
+}
+.no-margin-top {
+  flex: 1; /* 남은 공간 모두 차지 */
+  margin-top: 0 !important;
+}

@@ -1,0 +1,94 @@
+.page-card-container, .page-title {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 15px;
+  margin-bottom: 200px;
+}
+
+.page-title  {
+  margin-bottom: 20px;
+}
+ 
+.facility-card {
+  border: none;  /* 카드 선 제거 */
+  border-radius: 12px;  /* 모서리 둥글게 */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  /* 기본 그림자 효과 */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;  /* hover 효과 부드럽게 */
+  cursor: pointer;
+}
+
+/* 카드 내 왼쪽 노란색 선 */
+.facility-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.4px;             
+  height: 70%;
+  border-radius: 10px; 
+  background-color: #feb91699;  
+}
+
+.post-card:hover {  
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.author {
+  font-size: 0.8rem;
+}
+
+/* ul 스타일 초기화 */
+.facility-meta {
+  list-style: none;   /* 불릿 점 제거 */
+  padding: 0;         /* 기본 padding 제거 */
+  margin: 0;          /* 기본 margin 제거 */
+}
+
+.facility-meta li {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+/* 제목 부분 */
+.facility-name {
+  font-size: 1.2rem;     /* 살짝 키움 */
+  font-weight: 700;      /* 굵게 */
+  margin-bottom: 10px;
+  color: #222;           /* 진한 검정 */
+}
+
+/* 라벨 부분 */
+.facility-meta .label {
+  font-weight: 300;
+  margin-right: 6px;
+  color: #222;
+}
+
+/* 스크롤 부분 */
+.list-container {
+  max-height: 400px;   /* 스크롤 높이 제한 */
+  overflow-y: auto;    /* 세로 스크롤 */
+  overflow-x: hidden;  /* 가로 스크롤 제거 */
+  padding-right: 8px;  /* 스크롤바와 카드 사이 간격 */
+}
+
+/* 스크롤바 스타일 */
+.list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background-color: #feb916;
+  border-radius: 10px;
+}
+
+.list-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}

@@ -1,0 +1,227 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 20px;
+  background-color: #fdf9ee;
+  color: #000;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-links {
+  margin-left: 250px;
+  display: flex;
+  font-size: 16px;
+  text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+  gap: 20px;
+  position: relative;
+}
+
+.navbar-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #000;
+  text-decoration: none;
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+.dropdown .nav-link-active {
+  background-color: #fdf9ee !important;
+  color: #feb916 !important;
+  text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2) !important;
+}
+.no-dropdown .nav-link-active {
+  background-color: #fdf9ee !important;
+  color: #feb916 !important;
+  text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+}
+.nav-link:hover {
+  color: #feb916;
+}
+
+.dropdown {
+  position: relative;
+}
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fdf9ee !important;
+  min-width: 120px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  flex-direction: column;
+  font-size: 14px;
+}
+.dropdown-menu.open {
+  background-color: #fdf9ee !important;
+  display: flex;
+}
+.dropdown-item {
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+  background-color: #fdf9ee !important;
+}
+.dropdown-item:hover {
+  color: #feb916;
+  background-color: #fdf9ee !important;
+}
+
+@media screen and (min-width: 1151px) {
+  .dropdown:hover .dropdown-menu {
+    display: flex;
+  }
+}
+
+.logo-link img {
+  height: 40px;
+}
+
+.btn-signup {
+  border: 1.5px solid #4f1f02;
+  color: #4f1f02;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 20px !important;
+  border-radius: 20px;
+}
+.btn-signup:hover {
+  background-color: #4f1f02;
+  color: #fff;
+  border-color: #4f1f02;
+  padding: 8px 20px !important;
+}
+.btn-signup:active {
+  background-color: #4f1f02 !important;
+  border-color: #4f1f02 !important;
+  padding: 8px 20px !important;
+}
+
+.btn-login {
+  border: 2px solid #feb916;
+  background-color: #feb916;
+  color: #fff;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  padding: 8px 20px !important;
+}
+.btn-login:hover {
+  background-color: #feb916;
+  color: #fff;
+  border-color: #feb916;
+  padding: 8px 20px !important;
+}
+.btn-login:active {
+  background-color: #feb916 !important;
+  border-color: #feb916 !important;
+  padding: 8px 20px !important;
+}
+
+.header.visible {
+  transform: translateY(0);
+}
+.header.hidden {
+  transform: translateY(-100%);
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+.hamburger-icon {
+  width: 30px;
+  height: 30px;
+}
+
+@media screen and (max-width: 1150px) {
+  .navbar {
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #fdf9ee;
+    z-index: 1000;
+  }
+
+  .hamburger {
+    display: block;
+    position: absolute;
+    right: 20px; /* 오른쪽 끝 */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1100;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px; /* navbar 높이만큼 아래 */
+    left: 0; /* 왼쪽 끝부터 시작 */
+    width: 100%; /* ✅ 전체 너비 차지 */
+    background-color: #fdf9ee;
+    padding: 15px 0; /* 위아래 여백 */
+    border-radius: 0; /* 혹시 둥근 모서리 제거 */
+    gap: 10px;
+    z-index: 1000;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 선택사항: 살짝 그림자 */
+  }
+
+  .mobile-menu .nav-link,
+  .mobile-menu .dropdown-item,
+  .mobile-menu .btn {
+    text-align: center;
+  }
+
+  .logo-link img {
+    height: 50px;
+    max-height: 50px;
+    object-fit: contain;
+  }
+
+  .navbar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .navbar-actions {
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .dropdown-menu {
+    position: relative;
+    top: 0;
+    box-shadow: none;
+    background-color: #fdf9ee !important; /* 기본 */
+  }
+
+  /* 모바일에서 열렸을 때 */
+  .dropdown-menu.open {
+    display: flex;
+    background-color: #fdf9ee !important;
+    border: none;
+  }
+
+  .dropdown-item {
+    background-color: #fdf9ee !important;
+  }
+
+  .dropdown-item:hover {
+    background-color: #fdf9ee;
+    color: #feb916 !important;
+  }
+}

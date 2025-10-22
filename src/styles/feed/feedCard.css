@@ -1,0 +1,108 @@
+/* ==============================
+   FeedMainPage + FeedCard Layout
+   ============================== */
+
+/* 전체 피드 페이지 */
+.feed-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 카드들을 화면 중앙 정렬 */
+  gap: 30px;
+  padding-top: 40px;
+  padding-bottom: 80px;
+  background-color: #fffdf9;
+}
+
+/* ==============================
+   FeedCard
+   ============================== */
+
+/* 개별 피드 카드 */
+.feed-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.feed-card {
+  width: 600px; /* 고정 가로 폭 */
+  max-width: 90vw; /* 모바일 대응 */
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* ==============================
+   인스타그램 스타일 이미지 영역
+   ============================== */
+
+/* 이미지 컨테이너 */
+
+.feed-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5; /* ✅ 인스타그램 비율 유지 (가로:세로 = 4:5) */
+  background-color: #000; /* 이미지 로딩 전 배경색 */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 핵심 이미지 스타일 */
+.feed-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ✅ 프레임을 꽉 채우고 잘림 허용 */
+  object-position: center;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.feed-image:hover {
+  transform: scale(1.02);
+}
+
+/* Carousel 화살표 색상 */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+/* 하단 점(인디케이터) 위치 */
+.carousel-indicators {
+  bottom: 5px;
+}
+
+/* ==============================
+   Feed 본문, 좋아요 등
+   ============================== */
+
+.feed-card .card-body {
+  padding: 16px 20px;
+  color: #333;
+}
+
+.feed-card .card-body p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ==============================
+   반응형 처리
+   ============================== */
+
+@media (max-width: 768px) {
+  .feed-card {
+    width: 90vw;
+  }
+  .feed-image {
+    min-height: 220px;
+    max-height: 500px;
+  }
+    .feed-image-wrapper {
+    aspect-ratio: 4 / 5; /* 그대로 유지 */
+  }
+}

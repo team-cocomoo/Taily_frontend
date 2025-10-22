@@ -1,0 +1,69 @@
+.chat-room-list {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 80px;
+}
+
+.chat-room-list h2 {
+  margin-bottom: 20px;
+}
+
+/* 고정 높이에 스크롤 적용 */
+.chat-room-list .list-wrapper {
+  min-height: 300px;
+  max-height: 600px; /* 원하는 고정 높이 */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #faf9f6;
+}
+
+/* 채팅방 아이템 */
+.chat-room-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #faf9f6;
+}
+
+.chatroom-image {
+  width: 50px;
+  height: 50px;
+  border: 1.5px solid #4f1f02;
+  margin-right: 15px;
+}
+
+.chat-room-item .info {
+  flex: 1;
+}
+
+.chat-room-item .info .username {
+  font-weight: bold;
+}
+
+.chat-room-item .info .last-message {
+  color: #555;
+}
+
+.chat-room-item .time {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* Webkit 브라우저 (Chrome, Edge, Safari) */
+.chat-room-list .list-wrapper::-webkit-scrollbar {
+  width: 8px; /* 스크롤 바 두께 */
+}
+
+.chat-room-list .list-wrapper::-webkit-scrollbar-track {
+  background: #f0f0f0; /* 스크롤 트랙 색상 */
+  border-radius: 4px;
+}
+
+.chat-room-list .list-wrapper::-webkit-scrollbar-thumb {
+  background-color: #ffd700; /* 스크롤 막대 색상 */
+  border-radius: 4px;
+  border: 2px solid #ffd700; /* 트랙과 경계 */
+}

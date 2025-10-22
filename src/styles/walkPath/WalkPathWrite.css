@@ -1,0 +1,52 @@
+/* 전체 컨테이너: 헤더와 겹치지 않게 상단 여백 확보 */
+.main-content {
+  padding-top: 110px; /* 헤더 높이에 맞게 조정 */
+  padding-bottom : 60px; /* 푸터 높이에 맞게 조정 */
+}
+
+/* 제목 카드 */
+.title-box {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 6px;   /* 상단 여백 최소화 */
+  padding-bottom: 6px;/* 하단 여백 최소화 */
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-height: 50px;   /* content보다 확실히 작게 */
+  margin-top: 10px;   /* 헤더와 겹치지 않게 */
+}
+
+/* 제목 input 전용 스타일 */
+.title-box input,
+.title-box .form-control {
+  height: 40px;       /* 한 줄 입력 크기 */
+  font-size: 16px;
+  padding: 6px 10px;
+  line-height: 1.4;
+}
+
+/* 내용 카드 */
+.content-box {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-height: 200px;  /* 에디터는 넉넉히 */
+}
+
+/* 각 카드별 헤더 */
+.card-header:first-child {
+  font-weight: bold;
+  background-color: rgba(254, 186, 23, 0.5);
+  border-bottom: none;
+  border-radius: 14px 14px 0 0;
+  border: 2px solid rgba(254, 186, 23, 0.5);
+}
+
+/* 사진 첨부 */
+.add-image {
+  color: #9a9a9a;
+  font-weight: lighter;
+}
