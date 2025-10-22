@@ -102,7 +102,7 @@ const WalkPathMainPage = () => {
 
   return (
     <div className="container mt-4">
-      <h2>산책 경로 게시판</h2>
+      {/* <h2>산책 경로 게시판</h2> */}
       {/* 지도 모듈 표시 */}
       <BaseMapInput />
       <br />

@@ -76,7 +76,7 @@ const WalkPathWritePage = () => {
           <WalkPathMapInput mode="create" onChange={setRoutes} />
 
           {/*  내용 */}
-          <WalkPathContent content={content} onChange={setContent} />
+          <WalkPathContent content={content} setContent={setContent} />
 
           {/* 사진 첨부 */}
           <ImageBox images={images} onImageChange={setImages} />
