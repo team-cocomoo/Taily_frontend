@@ -40,7 +40,7 @@ const LoginPage = () => {
       const userRes = await axios.get("http://localhost:8080/api/mypage/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+      //
       const user = userRes.data; // 서버에서 받은 유저 정보
       setUser(user); // AuthContext 상태 즉시 업데이트 (헤더 반영됨)
 
