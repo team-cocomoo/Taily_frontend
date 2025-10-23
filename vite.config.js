@@ -1,45 +1,45 @@
+/* eslint-env node */
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// __dirname 대체
+// __dirname 대체 (ESM용)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',
-  // 빌드 출력(결과물이 저장될) 디렉토리 (기본값: dist)
+  base: "./", // ✅ Amplify 정적 호스팅 안전 모드
   build: {
-    outDir: 'dist',
+    outDir: "dist",
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"), // src 폴더를 @로 참조
+      "@": path.resolve(__dirname, "./src"), // ✅ cross-platform 안전
     },
   },
-  define: {
-    global: {},
-  },
+  // define: { global: {} }, // ⚠️ 필요할 때만 사용
   server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:8080", // 백엔드 서버 주소
-        changeOrigin: true,
-        secure: false,
-      },
-      "/uploads": {
-        target: "http://localhost:8080",
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  
+    proxy:
+      process.env.NODE_ENV === "development"
+        ? {
+            "/api": {
+              target: "http://localhost:8080",
+              changeOrigin: true,
+              secure: false,
+            },
+            "/uploads": {
+              target: "http://localhost:8080",
+              changeOrigin: true,
+              secure: false,
+            },
+          }
+        : undefined,
   },
   test: {
     globals: true,
-    environment: "jsdom", // DOM 테스트용
+    environment: "jsdom",
     setupFiles: "./src/tests/setupTests.js",
   },
 });
