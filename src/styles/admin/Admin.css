@@ -1,4 +1,6 @@
-/* body/html 기본 flex 제거 */
+/* =========================================
+   기본 설정
+========================================= */
 html,
 body {
   height: 100%;
@@ -7,29 +9,34 @@ body {
   display: block;
 }
 
-/* 헤더 */
+/* =========================================
+   헤더
+========================================= */
 .admin-header {
-  background-color: #1e40af; /* 파란색 배경 */
+  background-color: #1e40af;
   color: white;
-  padding: 1rem 2rem; /* 상하 1rem, 좌우 2rem */
-  text-align: left; /* 왼쪽 정렬 */
+  padding: 1rem 2rem;
+  text-align: left;
   font-weight: 600;
   font-size: 1.25rem;
 }
 
 .admin-header-title {
-  margin: 0; /* 기본 여백 제거 */
+  margin: 0;
 }
 
+/* =========================================
+   로그인 페이지 스타일
+========================================= */
 .admin-login-page-container {
   display: flex;
-  justify-content: center; /* 수평 중앙 */
+  justify-content: center;
   background-color: #fff;
   margin-top: 180px;
 }
 
 .admin-loginformbox {
-  width: 1000px; /* 폼 가로 길이 */
+  width: 1000px;
   padding: 10px 10px;
   border: none;
 }
@@ -69,30 +76,48 @@ body {
   color: #fff !important;
 }
 
-/* 어드민 사이드 바 */
-/* .sidebar-logo {
-  background-color: #AEAEAE;
-} */
+/* =========================================
+   어드민 사이드바 (공통)
+========================================= */
 .admin-sidebar-navbar .container-fluid {
   padding: 0 !important;
   margin: 0 !important;
 }
+
+/* ✅ 사이드바 전체: flex로 수직 정렬 */
 .admin-sidebar-navbar {
   background-color: #2036b3 !important;
   width: 220px;
   height: 100vh;
   position: fixed;
-  padding: 0 !important;
-  margin: 0 !important;
   top: 0;
   left: 0;
-  z-index: 1000; /* 다른 요소 위에 오도록 */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden;
 }
 
+/* ✅ 로고 영역 */
+.admin-logo {
+  width: 100%;
+  font-size: 18px;
+  text-align: center;
+  background-color: #ced4da;
+  color: #fff !important;
+  padding: 12px 0;
+  box-sizing: border-box;
+}
+
+/* ✅ 메뉴(nav-list): 중간 스크롤 가능 */
 .admin-nav-list {
+  flex-grow: 1;
+  overflow-y: auto;
   background-color: #2036b3;
-  height: calc(100vh - 80px);
   padding-top: 10px;
+  margin-bottom: 0;
 }
 
 .admin-nav-list .nav-link {
@@ -104,21 +129,25 @@ body {
   background-color: #0d6efd;
   color: #fff !important;
 }
+
 .nav-link-active {
   background-color: #0d6efd !important;
   color: #fff !important;
 }
 
-.admin-logo {
-  width: 100%;
-  font-size: 18px;
-  text-align: center;
-  background-color: #ced4da;
-  color: #fff !important;
-  padding: 12px 0;
-  box-sizing: border-box;
+/* ✅ 로그아웃 버튼: 항상 하단 고정 */
+.admin-logout-section {
+  margin-top: auto;
+  padding: 10px 15px 20px 15px; /* 하단 여백 */
 }
 
+.admin-logout-section .btn {
+  width: 100%;
+}
+
+/* =========================================
+   모바일 Offcanvas 스타일
+========================================= */
 .admin-offcanvas .offcanvas-body {
   background-color: #2036b3;
 }
@@ -131,4 +160,20 @@ body {
   background-color: #0d6efd !important;
   color: black !important;
   font-weight: bold;
+}
+
+/* =========================================
+   스크롤 보정 및 시각적 안정성
+========================================= */
+.admin-sidebar-navbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-sidebar-navbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.admin-sidebar-navbar::-webkit-scrollbar-track {
+  background: transparent;
 }

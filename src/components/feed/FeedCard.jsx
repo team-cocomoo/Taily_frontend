@@ -42,6 +42,7 @@ function FeedCard({ feedData, onUpdate }) {
             writerPublicId={feedData.writerPublicId}
             feedId={id}
             profileImageUrl={null}
+            writerId={feedData.writerId}
           />
 
           {/* 이미지 캐러셀 */}

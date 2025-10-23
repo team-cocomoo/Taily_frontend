@@ -11,6 +11,7 @@ import {
   Col,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "@/styles/admin/AdminNotice.css";
 
 const AdminNoticeListPage = () => {
   const [notices, setNotices] = useState([]);
@@ -19,7 +20,6 @@ const AdminNoticeListPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const pageSize = 10;
-
   const navigate = useNavigate();
 
   /** 공지 목록 불러오기 */
@@ -28,7 +28,6 @@ const AdminNoticeListPage = () => {
     try {
       const params = { page, size: pageSize };
       if (searchKeyword.trim()) params.keyword = searchKeyword.trim();
-
       const res = await api.get("/api/notices", { params });
       const data = res.data;
 
@@ -63,24 +62,24 @@ const AdminNoticeListPage = () => {
   }, []);
 
   if (loading)
-    return <p className="text-center mt-5">공지사항을 불러오는 중...</p>;
+    return <p className="admin-notice-loading">공지사항을 불러오는 중...</p>;
 
   return (
-    <Card className="p-4 mt-4">
-      {/* 상단 헤더: 제목 + 글쓰기 버튼 */}
-      <Row className="align-items-center mb-3">
-        <Col>
-          <h4 style={{ fontWeight: "bold" }}>공지사항 관리</h4>
-        </Col>
-        <Col className="text-end">
-          <Button variant="success" onClick={handleWriteClick}>
-            글쓰기
-          </Button>
-        </Col>
-      </Row>
+    <Card className="admin-notice-container">
+      {/* 헤더 */}
+      <div className="admin-notice-header">
+        <h4 className="admin-notice-title">공지사항 관리</h4>
+        <Button
+          variant="success"
+          onClick={handleWriteClick}
+          className="admin-notice-write-btn"
+        >
+          글쓰기
+        </Button>
+      </div>
 
       {/* 검색창 */}
-      <InputGroup className="my-3">
+      <InputGroup className="admin-notice-search">
         <Form.Control
           type="text"
           placeholder="검색어를 입력하세요"
@@ -88,55 +87,45 @@ const AdminNoticeListPage = () => {
           onChange={(e) => setKeyword(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         />
-        <Button variant="primary" onClick={handleSearch}>
+        <Button variant="primary admin-notice-searchbutton" onClick={handleSearch}>
           검색
         </Button>
       </InputGroup>
 
       {/* 공지 테이블 */}
-      <Table hover responsive>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>등록일</th>
-            <th>조회수</th>
-          </tr>
-        </thead>
-        <tbody>
-          {notices.length === 0 ? (
+      <div className="admin-notice-table-wrapper">
+        <Table hover responsive className="admin-notice-table">
+          <thead>
             <tr>
-              <td colSpan="5" className="text-center">
-                등록된 공지사항이 없습니다.
-              </td>
+              <th style={{ width: "8%" }}>#</th>
+              <th>제목</th>
+              <th style={{ width: "18%" }}>작성일</th>
+              <th style={{ width: "15%" }}>작성자</th>
             </tr>
-          ) : (
-            notices.map((notice, idx) => (
-              <tr
-                key={notice.id || idx}
-                onClick={() => navigate(`/admin/main/notices/${notice.id}`)}
-                style={{
-                  cursor: "pointer",
-                  transition: "background-color 0.2s ease",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#f8f9fa")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = "")
-                }
-              >
-                <td>{pageSize * currentPage + idx + 1}</td>
-                <td>{notice.title}</td>
-                <td>{notice.authorName || "관리자"}</td>
-                <td>{new Date(notice.createdAt).toLocaleDateString()}</td>
-                <td>{notice.viewCount}</td>
+          </thead>
+          <tbody>
+            {notices.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center">
+                  등록된 공지사항이 없습니다.
+                </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+            ) : (
+              notices.map((notice, idx) => (
+                <tr
+                  key={notice.id || idx}
+                  onClick={() => navigate(`/admin/main/notices/${notice.id}`)}
+                >
+                  <td>{pageSize * currentPage + idx + 1}</td>
+                  <td className="admin-notice-title-cell">{notice.title}</td>
+                  <td>{new Date(notice.createdAt).toLocaleDateString()}</td>
+                  <td>{notice.authorName || "admin"}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
 
       {/* 페이지네이션 */}
       {totalPages > 1 && (
