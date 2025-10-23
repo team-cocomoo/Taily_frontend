@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
-import "../../styles/mypage/MyPetInfo.css";
-import LoadingSpinner from "../../components/common/LoadingSpinner";
-import api from '../../config/apiConfig';
-=======
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import "../../styles/mypage/MyPetInfo.css";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import api from "../../config/apiConfig";
->>>>>>> develop
 import "../../styles/mypage/MyPetInfo.css";
 
 const MyPetWriteInfoModal = ({
