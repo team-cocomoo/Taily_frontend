@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "@/config/apiConfig";
+import "@/styles/admin/AdminNotice.css";
 
 const AdminNoticeEditPage = () => {
   const { id } = useParams();
@@ -55,58 +56,69 @@ const AdminNoticeEditPage = () => {
   };
 
   if (loading)
-    return <p className="text-center mt-5">공지 정보를 불러오는 중...</p>;
+    return <p className="admin-notice-loading">공지 정보를 불러오는 중...</p>;
 
   return (
-    <Card className="p-4 mt-4">
-      <h4 style={{ fontWeight: "bold" }}>공지 수정</h4>
-      <Form onSubmit={handleSubmit} className="mt-3">
-        <Form.Group controlId="formTitle" className="mb-3">
-          <Form.Label>제목</Form.Label>
-          <Form.Control
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+    <div className="admin-notice-edit-wrapper">
+      <Card className="admin-notice-edit-card">
+        <h3 className="admin-notice-edit-title">공지 수정</h3>
 
-        <Form.Group controlId="formContent" className="mb-3">
-          <Form.Label>내용</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={10}
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+        <Form onSubmit={handleSubmit} className="mt-3">
+          <Form.Group controlId="formTitle" className="mb-3">
+            <Form.Label className="fw-semibold">제목</Form.Label>
+            <Form.Control
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="공지 제목을 입력하세요"
+              required
+            />
+          </Form.Group>
 
-        {message && (
-          <Alert
-            variant={message.startsWith("✅") ? "success" : "danger"}
-            className="mt-3"
-          >
-            {message}
-          </Alert>
-        )}
+          <Form.Group controlId="formContent" className="mb-3">
+            <Form.Label className="fw-semibold">내용</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={10}
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
+              placeholder="공지 내용을 입력하세요"
+              required
+            />
+          </Form.Group>
 
-        <div className="d-flex justify-content-end gap-2 mt-3">
-          <Button
-            variant="secondary"
-            onClick={() => navigate(-1)}
-            disabled={loading}
-          >
-            취소
-          </Button>
-          <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? "수정 중..." : "수정하기"}
-          </Button>
-        </div>
-      </Form>
-    </Card>
+          {message && (
+            <Alert
+              variant={message.startsWith("✅") ? "success" : "danger"}
+              className="mt-3 text-center"
+            >
+              {message}
+            </Alert>
+          )}
+
+          <div className="text-center mt-4">
+            <Button
+              variant="secondary"
+              className="me-2 admin-notice-cancel-btn"
+              onClick={() => navigate(-1)}
+              disabled={loading}
+            >
+              취소
+            </Button>
+            <Button
+              variant="warning"
+              type="submit"
+              className="admin-notice-submit-btn"
+              disabled={loading}
+            >
+              {loading ? "수정 중..." : "수정하기"}
+            </Button>
+          </div>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

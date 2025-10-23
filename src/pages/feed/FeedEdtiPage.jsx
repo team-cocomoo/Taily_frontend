@@ -6,6 +6,7 @@ import FeedTextInput from "@/components/feed/FeedTextInput";
 import FeedTagInput from "@/components/feed/FeedTagInput";
 import ImageBox from "@/components/feed/FeedImageBox";
 
+
 export default function FeedEditPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -147,9 +148,16 @@ export default function FeedEditPage() {
 
           <div className="text-center mt-4">
             <Button
+              className="btn btn-outline-primary feed-write-cancel me-3"
+              onClick={() => {
+                navigate("/petstory/feed"); // 페이지 이동
+              }}
+            >
+              취소하기
+            </Button>
+            <Button
               type="submit"
-              variant="success"
-              size="lg"
+              variant="primary"
               disabled={loading}
               className="px-5 rounded-pill"
             >

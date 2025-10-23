@@ -25,6 +25,7 @@ const WalkPathDetailContent = ({ post }) => {
   const handleOpenReportModal = () => setShowReportModal(true);
   const handleCloseReportModal = () => setShowReportModal(false);
   if (!post) return null;
+  console.log("post:", post);
 
   const isAuthor = user && user.nickname === post.authorName;
 
@@ -56,10 +57,9 @@ const WalkPathDetailContent = ({ post }) => {
           </div>
           <div className="d-flex align-items-center mt-2">
             <img src={userIcon} alt="프로필" className="user-profile" />
-
             <div className="user-text">
               <div className="author-info">
-                <UserPopover userId={post.userId} nickname={post.authorName}>
+                <UserPopover nickname={post.authorName}>
                   {post.authorName}
                 </UserPopover>
                 <small className="author-date">

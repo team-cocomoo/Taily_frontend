@@ -14,7 +14,7 @@ const AdminLayout = () => {
   const location = useLocation();
   const isLoginPage = location.pathname === "/admin/login";
 
-  // ✅ 로그인 페이지일 경우: 사이드바 없이 Outlet만 표시
+  // 로그인 페이지일 경우: 사이드바 없이 Outlet만 표시
   if (isLoginPage) {
     return (
       <div className="admin-login-layout">
@@ -26,7 +26,7 @@ const AdminLayout = () => {
     );
   }
 
-  // ✅ 일반 관리자 페이지 레이아웃
+  // 일반 관리자 페이지 레이아웃
   return (
     <div className="admin-layout">
       <div className="admin-content-wrapper">
