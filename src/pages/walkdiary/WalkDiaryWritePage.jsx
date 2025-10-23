@@ -133,10 +133,10 @@ const WalkDiaryWritePage = () => {
       {error && <p className="text-danger text-center mt-2">{error}</p>}
 
       <div className="d-flex justify-content-center gap-2 mt-3">
-        <Button variant="outline-secondary" onClick={() => navigate("/walk-diaries")}>
+        <Button variant="outline-primary" onClick={() => navigate("/walk-diaries")}>
           목록
         </Button>
-        <Button variant="outline-primary" onClick={handleSubmit} disabled={loading}>
+        <Button variant="primary" onClick={handleSubmit} disabled={loading}>
           {loading ? "작성 중..." : "작성완료"}
         </Button>
       </div>

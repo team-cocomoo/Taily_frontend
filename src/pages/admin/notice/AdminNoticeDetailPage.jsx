@@ -80,7 +80,7 @@ const AdminNoticeDetailPage = () => {
       {/* 목록 버튼 */}
       <div className="text-center mt-4">
         <Button
-          variant="warning"
+          variant="outline-primary"
           className="admin-notice-back-btn"
           onClick={() => navigate("/admin/main/notices")}
         >

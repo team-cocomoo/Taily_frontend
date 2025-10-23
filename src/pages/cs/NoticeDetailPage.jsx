@@ -63,7 +63,7 @@ const NoticeDetailPage = () => {
           {/* 하단 버튼 */}
           <div className="d-flex justify-content-end mt-4">
             <Button
-              variant="outline-secondary"
+              variant="outline-primary"
               size="sm"
               onClick={() => navigate("/notices")}
             >
