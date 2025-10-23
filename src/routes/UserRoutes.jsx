@@ -13,7 +13,7 @@ import MyWalkPathsPage from "../pages/myPage/MyWalkPathsPage";
 import MyTailyFriendsPage from "@/pages/myPage/MyTailyFriendsPage";
 import MyFollowPage from "@/pages/myPage/MyFollowPage";
 import MyInquiryPage from "@/pages/myPage/MyInquiryPage";
-import PasswordVerifyPage from "@/pages/mypage/PasswordVerifyPage";
+import PasswordVerifyPage from "@/pages/myPage/PasswordVerifyPage";
 import MyPageEdit from "@/pages/mypage/MyPageEdit";
 import AccountDeleteSuccessPage from "@/pages/mypage/AccountDeleteSuccessPage";
 
@@ -61,7 +61,7 @@ const UserRoutes = (
     <Route path="/register" element={<RegisterPage />} />
     <Route path="/notices" element={<NoticeListPage />} />
     <Route path="/notices/:id" element={<NoticeDetailPage />} />
-    <Route path="/event" element={<EventPage/>} />
+    <Route path="/event" element={<EventPage />} />
     <Route path="/faqs" element={<FaqPage />} />
     <Route path="/SingleFeedUploader" element={<SingleFeedUploader />} />
 
@@ -69,7 +69,7 @@ const UserRoutes = (
     <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
       <Route path="/mypage/user" element={<MyPageUserInfo />} />
       <Route path="/mypage/user/edit" element={<MyPageEdit />} />
-      <Route path="/mypage/myfeed" element={<MyFeedPage/>} />
+      <Route path="/mypage/myfeed" element={<MyFeedPage />} />
       <Route path="/mypage/pet" element={<MyPetPage />} />
       <Route path="/mypage/like" element={<MyLikePage />} />
       <Route path="/mypage/walk-paths" element={<MyWalkPathsPage />} />
@@ -119,9 +119,7 @@ const UserRoutes = (
         element={<OtherUserProfilePage />}
       />
     </Route>
-    <Route
-      element={<ProtectedLayout roles={["ROLE_USER", "ROLE_ADMIN"]} />}
-    >
+    <Route element={<ProtectedLayout roles={["ROLE_USER", "ROLE_ADMIN"]} />}>
       <Route path="/taily-friends/:id" element={<TailyFriendsDetailPage />} />
       <Route path="/petstory/feed/:id" element={<FeedDetailPage />} />
       <Route path="/walk-paths/:id" element={<WalkPathDetailPage />} />
