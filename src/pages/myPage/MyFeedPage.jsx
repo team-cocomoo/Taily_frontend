@@ -54,8 +54,8 @@ const MyFeedPage = () => {
   return (
     <div className="mypage-wrapper">
       {/* 상단 프로필 헤더 */}
-        <UserProfileImage />
-        {/* <h4 className="user-nickname">{userInfo?.nickname}</h4> */}
+      <UserProfileImage />
+      {/* <h4 className="user-nickname">{userInfo?.nickname}</h4> */}
 
       {/* 본문 영역 */}
       <Container className="mypage-container">

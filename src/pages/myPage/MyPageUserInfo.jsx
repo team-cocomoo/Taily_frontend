@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import api from "@/config/apiConfig";
 import "@/styles/mypage/MyPageUserInfo.css";
-import '@/styles/mypage/myLikes.css';
+import "@/styles/mypage/myLikes.css";
 import UserProfileImage from "@/components/mypage/UserProfileImage";
 import MyPageSidebar from "@/components/mypage/MyPageSidebar";
 import UserInfoSection from "@/components/mypage/UserInfoSection";
@@ -36,7 +36,6 @@ const MyPageUserInfo = () => {
 
   return (
     <div className="mypage-wrapper">
-
       {/* 상단 프로필 헤더 (이미지 + 닉네임) */}
       <UserProfileImage />
       {/* <h4 className="user-nickname">{userInfo?.nickname}</h4> */}
