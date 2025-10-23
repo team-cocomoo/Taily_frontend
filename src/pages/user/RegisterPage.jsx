@@ -165,6 +165,7 @@ const RegisterPage = () => {
                       <Button
                         type="button"
                         className="check-button-bordered"
+                        size="sm"
                         onClick={() => handleCheckDuplicate("username")}
                       >
                         중복확인
@@ -201,6 +202,7 @@ const RegisterPage = () => {
                       <Button
                         type="button"
                         className="check-button-bordered"
+                        size="sm"
                         onClick={() => handleCheckDuplicate("nickname")}
                       >
                         중복확인
@@ -314,6 +316,7 @@ const RegisterPage = () => {
                       <Button
                         type="button"
                         className="check-button-bordered"
+                        size="sm"
                         onClick={() => handleCheckDuplicate("email")}
                       >
                         중복확인

@@ -232,12 +232,12 @@ const MyPageEdit = () => {
                 />
               </Form.Group>
 
-              <Button variant="success" type="submit" className="w-100">
+              <Button variant="primary" type="submit" className="w-100">
                 저장하기
               </Button>
 
               <Button
-                variant="danger"
+                variant="outline-primary"
                 className="w-100 mt-3"
                 onClick={() => setShowDeleteModal(true)}
               >
@@ -272,10 +272,10 @@ const MyPageEdit = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+          <Button variant="outline-primary" onClick={() => setShowDeleteModal(false)}>
             취소
           </Button>
-          <Button variant="danger" onClick={handleDeleteAccount}>
+          <Button variant="primary" onClick={handleDeleteAccount}>
             탈퇴하기
           </Button>
         </Modal.Footer>

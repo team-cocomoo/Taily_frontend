@@ -136,7 +136,7 @@ const TailyFriendsDetailContent = ({ post }) => {
                       src={img.filePath}
                       alt="게시글 이미지"
                       style={{
-                        maxWidth:"500px",
+                        maxWidth:"800px",
                         height:"auto",
                         borderRadius: "10px",
                         objectFit: "cover",
