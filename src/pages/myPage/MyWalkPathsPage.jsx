@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row,Col,Card } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import "@/styles/mypage/MyPageUserInfo.css";
 import UserProfileImage from "@/components/mypage/UserProfileImage";
 import MyPageSidebar from "@/components/mypage/MyPageSidebar";
