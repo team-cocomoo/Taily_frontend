@@ -164,8 +164,8 @@ const OtherUserProfilePage = () => {
       <Card className="mb-4 other-user-profile-card mx-auto">
         <Card.Body>
           <div className="d-flex align-items-start">
-            <Image
-              src={profile.profileImage || userIcon}
+            <SecureImage
+              src={profile.profileImageUrl || userIcon}
               roundedCircle
               width={100}
               height={100}
@@ -237,7 +237,11 @@ const OtherUserProfilePage = () => {
                         <SecureImage
                           variant="top"
                           src={pet.imageUrl || noPhoto}
-                          style={{ width:"100%", height: "200px", objectFit: "cover" }}
+                          style={{
+                            width: "100%",
+                            height: "200px",
+                            objectFit: "cover",
+                          }}
                         />
                         <Card.Body>
                           <Card.Title>
@@ -283,7 +287,7 @@ const OtherUserProfilePage = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() =>
                               navigate(`/petstory/feed/${feed.feedId}`)
-                            } 
+                            }
                           >
                             <SecureImage
                               src={url}
