@@ -1,91 +1,43 @@
 import React, { useState, useEffect, useContext } from "react";
 import { OverlayTrigger, Popover, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import api from "../../config/apiConfig";
-import { AuthContext } from "../../contexts/AuthContext";
-import "../../styles/UserPopover.css";
-import userIcon from "../../assets/image/user-icon.png";
+import api from "@/config/apiConfig";
+import { AuthContext } from "@/contexts/AuthContext";
+import SecureImage from "@/components/common/SecureImage";
+import defaultUserIcon from "@/assets/image/user-icon.png";
+import "@/styles/UserPopover.css";
 
 const UserPopover = ({ userId, userPublicId, nickname, children }) => {
-  const { user } = useContext(AuthContext); // 로그인 사용자 정보
+  const { user } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState(null);
+  const [imagePath, setImagePath] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
-  // 유저 정보 가져오기
+  // 유저 정보 불러오기
   const fetchUserInfo = async () => {
-    if (userInfo) return; // 이미 로드된 경우 재호출 방지
+    if (userInfo) return;
     setLoading(true);
     try {
-      let res;
-      if (userId) {
-        // PK(id) 기반 조회
-        res = await api.get(`/api/user-profile/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } else if (userPublicId) {
-        // publicId 기반 조회
-        res = await api.get(`/api/user-profile/public/${userPublicId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } else {
-        throw new Error("userId 또는 userPublicId가 필요합니다.");
-      }
-
+      const res = userPublicId
+        ? await api.get(`/api/user-profile/public/${userPublicId}`)
+        : await api.get(`/api/user-profile/${userId}`);
       setUserInfo(res.data);
+
+      // ✅ 프로필 이미지 가져오기 (tableTypesId=1, usersId=유저 PK)
+      if (res.data?.id) {
+        const imgRes = await api.get("/api/images", {
+          params: { tableTypesId: 1, usersId: res.data.id },
+        });
+        if (imgRes.data?.length > 0) {
+          setImagePath(imgRes.data[0].filePath);
+        }
+      }
     } catch (err) {
       console.error("유저 정보 조회 실패:", err);
       setUserInfo({ error: "유저 정보를 불러올 수 없습니다." });
     } finally {
       setLoading(false);
-    }
-  };
-
-  // 메시지 버튼 클릭
-  const handleChatClick = async () => {
-    if (!user) {
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-      return;
-    }
-
-    try {
-      // 채팅방 존재 여부 확인
-      const res = await api.get(
-        `/api/chats/exists?senderPublicId=${user.publicId}&receiverPublicId=${userId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      const room = res.data?.data;
-
-      if (room) {
-        // 기존 채팅방으로 이동
-        navigate(`/chats/${room.roomId}`, {
-          state: {
-            otherUsername: nickname,
-            otherProfileImage: userIcon,
-          },
-        });
-      } else {
-        // 새 채팅방 생성 후 이동
-        const createRes = await api.post(
-          `/api/chats?senderPublicId=${user.publicId}&receiverPublicId=${userInfo.publicId}`,
-          {},
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        const newRoom = createRes.data?.data;
-
-        navigate(`/chats/${newRoom.roomId}`, {
-          state: {
-            otherUsername: nickname,
-            otherProfileImage: userIcon,
-          },
-        });
-      }
-    } catch (err) {
-      console.error("채팅방 이동 실패:", err);
-      alert("채팅방 이동 중 오류가 발생했습니다.");
     }
   };
 
@@ -95,9 +47,29 @@ const UserPopover = ({ userId, userPublicId, nickname, children }) => {
         as="h3"
         className="popover-header d-flex flex-column align-items-center"
       >
-        <img src={userIcon} alt="프로필" className="user-img" />
-        <p>{nickname}</p>
+        {/* ✅ SecureImage로 교체 */}
+        {imagePath ? (
+          <SecureImage
+            src={imagePath}
+            alt={`${nickname} 프로필`}
+            style={{
+              width: 70,
+              height: 70,
+              borderRadius: "50%",
+              objectFit: "cover",
+              border: "1px solid #ddd",
+            }}
+          />
+        ) : (
+          <img
+            src={defaultUserIcon}
+            alt="기본 프로필 이미지"
+            className="user-img"
+          />
+        )}
+        <p className="mt-2 mb-0">{nickname}</p>
       </Popover.Header>
+
       <Popover.Body className="popover-body">
         {loading ? (
           <div className="d-flex justify-content-center">
@@ -116,17 +88,9 @@ const UserPopover = ({ userId, userPublicId, nickname, children }) => {
                   variant="primary"
                   size="sm"
                   className="flex-fill"
-                  onClick={handleChatClick}
-                >
-                  메세지
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="flex-fill"
                   onClick={() => navigate(`/user-profile/${userId}/profile`)}
                 >
-                  프로필
+                  프로필 보기
                 </Button>
               </div>
             </>

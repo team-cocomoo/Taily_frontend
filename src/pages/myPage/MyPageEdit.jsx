@@ -143,15 +143,14 @@ const MyPageEdit = () => {
               {/* 프로필 이미지 */}
               <Form.Group className="mb-3 text-center d-flex flex-column align-items-center text-center">
                 {preview ? (
-                  <SecureImage
+                  <img
                     src={preview}
                     alt="프로필 미리보기"
                     className="rounded-circle mb-3"
                     style={{
                       width: "120px",
                       height: "120px",
-                      lineHeight: "120px",
-                      textAlign: "center",
+                      objectFit: "cover",
                       border: "1px solid #ddd",
                     }}
                   />
