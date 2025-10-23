@@ -99,12 +99,12 @@ const FaqWriteForm = ({ initialData, isEditMode, onSuccess }) => {
             {/* ✅ 버튼을 카드(폼) 밖으로 분리 */}
             <div className="d-flex justify-content-center gap-2 mt-4 mb-5">
             <Button
-                variant="outline-secondary"
+                variant="outline-primary"
                 onClick={() => navigate("/admin/main/faqs")}
             >
                 목록
             </Button>
-            <Button variant="success" type="submit" disabled={loading} onClick={handleSubmit}>
+            <Button variant="primary" type="submit" disabled={loading} onClick={handleSubmit}>
                 {loading ? "처리 중..." : isEditMode ? "수정완료" : "작성완료"}
             </Button>
             </div>

@@ -1,6 +1,5 @@
 import React from "react";
 
-// ✅ 이미지 직접 import
 import animal1 from "@/assets/image/반려동물1.png";
 import animal2 from "@/assets/image/반려동물2.png";
 import animal3 from "@/assets/image/반려동물3.png";
