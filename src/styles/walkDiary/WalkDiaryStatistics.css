@@ -1,0 +1,53 @@
+.stat-box {
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.card-header:first-child {
+    font-weight: bold;
+    background-color: rgba(254, 186, 23, 0.5);
+    border-bottom: none;
+    border-radius: 14px 14px 0 0;
+    border: 2px solid rgba(254, 186, 23, 0.5);
+}
+
+.box-container {
+    display: flex;
+    gap: 20px; /* 박스 사이 간격 */
+    /* justify-content: space-between; */
+    padding: 20px;
+}
+
+.box {
+    flex: 1; /* 같은 비율로 확장 */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    border: none;
+}
+
+/* 상단 평균 통계 */
+.chart-header {
+    font-weight: bold;
+    background-color: #fff;
+    border-bottom: none;
+    border: none;
+}
+
+/* 이모션 통계 박스 */
+.emotion-box {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 리마인더 박스 */
+.reminder-box {
+    background-color: #FDF9EE;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
