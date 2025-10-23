@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import WalkDiaryCalendar from "../../components/board/walkDiary/WalkDiaryCalendar.jsx";
+import WalkDiaryCalendar from "../../components/board/walkdiary/WalkDiaryCalendar.jsx";
 import api from "../../config/apiConfig.js";
 import LoadingSpinner from "../../components/common/LoadingSpinner.jsx";
 import "../../styles/walkdiary/WalkDiaryCalendar.css";

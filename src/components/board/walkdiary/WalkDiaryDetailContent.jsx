@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Card, Dropdown, Row, Col } from "react-bootstrap";
-import "../../../styles/walkDiary/WalkDiaryDetail.css";
-import { AuthContext } from "../../../contexts/AuthContext"
+import "../../../styles/walkdiary/WalkDiaryDetail.css";
+import { AuthContext } from "../../../contexts/AuthContext";
 import meatballIcon from "../../../assets/image/meatball-icon.png";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../config/apiConfig";
@@ -19,7 +19,7 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
 
   // 로그인 + 작성자 본인일 경우만 수정/삭제 노출
   const isOwner = user && user.username === walkDiary.username;
-  
+
   const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
     if (!window.confirm("정말 삭제하시겠습니까?")) return; // 확인창
@@ -37,7 +37,7 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
       alert("삭제에 실패했습니다.");
     }
   };
-  
+
   const weatherIcons = {
     SUNNY: "☀️",
     CLOUDY: "☁️",
@@ -62,46 +62,43 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
             <h2>오늘의 산책 일지</h2>
           </Col>
           <Col className="d-flex justify-content-end">
-          {user && isOwner && (
-
-            <Dropdown className="profile-dropdown">
-              <Dropdown.Toggle
-              variant="light"
-                id="dropdown-basic"
-                size="sm"
-                className="no-caret"
-              >
-                <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="dropdown-menu">
-                    <Dropdown.Item
-                    onClick={() => 
-                      navigate(`/walk-diaries/edit/${id}`, { 
-                        state: { clickedDate: walkDiary.date } 
+            {user && isOwner && (
+              <Dropdown className="profile-dropdown">
+                <Dropdown.Toggle
+                  variant="light"
+                  id="dropdown-basic"
+                  size="sm"
+                  className="no-caret"
+                >
+                  <img src={meatballIcon} alt="메뉴" className="meatballIcon" />
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="dropdown-menu">
+                  <Dropdown.Item
+                    onClick={() =>
+                      navigate(`/walk-diaries/edit/${id}`, {
+                        state: { clickedDate: walkDiary.date },
                       })
                     }
                     className="dropdown-item"
-                    >
+                  >
                     수정
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={handleDelete}>
-                      삭제
-                    </Dropdown.Item>
-                    
-                    <Dropdown.Item onClick={handleOpenShareModal}>
-                      공유
-                    </Dropdown.Item>
-              </Dropdown.Menu>
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={handleDelete}>삭제</Dropdown.Item>
 
-              {/* 공유 모달 */}
-              <ShareModal 
-                show={showShareModal}
-                handleClose={handleCloseShareModal}
-                postTitle={walkDiary.title || "오늘의 산책 일지"}
-                postUrl={window.location.href}
-              />
-            </Dropdown>
-          )}
+                  <Dropdown.Item onClick={handleOpenShareModal}>
+                    공유
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+
+                {/* 공유 모달 */}
+                <ShareModal
+                  show={showShareModal}
+                  handleClose={handleCloseShareModal}
+                  postTitle={walkDiary.title || "오늘의 산책 일지"}
+                  postUrl={window.location.href}
+                />
+              </Dropdown>
+            )}
           </Col>
         </Row>
       </Card.Header>
@@ -112,9 +109,7 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
         </Row>
         <Row className="mb-2">
           <Col sm={2}>날씨</Col>
-          <Col sm={10}>
-            {weatherIcons[walkDiary.walkDiaryWeather]}
-          </Col>
+          <Col sm={10}>{weatherIcons[walkDiary.walkDiaryWeather]}</Col>
         </Row>
         <Row className="mb-2">
           <Col sm={2}>산책 시간</Col>
@@ -124,9 +119,7 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
         </Row>
         <Row className="mb-2">
           <Col sm={2}>테일리의 기분</Col>
-          <Col sm={10}>
-            {emotionIcons[walkDiary.walkDiaryEmotion]}
-          </Col>
+          <Col sm={10}>{emotionIcons[walkDiary.walkDiaryEmotion]}</Col>
         </Row>
 
         <hr className="mx-auto w-50 mb-4" />
@@ -137,9 +130,7 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
             {walkDiary.images.map((img, idx) => {
               // 서버에서 받은 경로가 '/uploads/...' 형태라면 도메인을 붙여준다
               const imagePath =
-                typeof img === "string"
-                  ? img
-                  : img.filePath || img.url || "";
+                typeof img === "string" ? img : img.filePath || img.url || "";
 
               return (
                 <div key={idx} className="image-wrapper mt-3">
@@ -157,7 +148,6 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
                     }}
                   />
                 </div>
-                
               );
             })}
           </div>
@@ -172,12 +162,8 @@ const WalkDiaryDetailContent = ({ walkDiary }) => {
           style={{ whiteSpace: "pre-wrap", minHeight: "200px" }}
           dangerouslySetInnerHTML={{ __html: walkDiary.content }}
         />
-
-
       </Card.Body>
     </Card>
-    
-    
   );
 };
 

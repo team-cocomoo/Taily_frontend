@@ -17,11 +17,11 @@ import PasswordVerifyPage from "@/pages/mypage/PasswordVerifyPage";
 import MyPageEdit from "@/pages/mypage/MyPageEdit";
 import AccountDeleteSuccessPage from "@/pages/mypage/AccountDeleteSuccessPage";
 
-import WalkDiaryCalendarPage from "@/pages/walkDiary/WalkDiaryCalendarPage";
-import WalkDiaryWritePage from "@/pages/walkDiary/WalkDiaryWritePage";
-import WalkDiaryDetailPage from "@/pages/walkDiary/WalkDiaryDetailPage";
-import WalkDiaryUpdatePage from "@/pages/walkDiary/WalkDiaryUpdatePage";
-import WalkDiaryStatisticsPage from "@/pages/walkDiary/WalkDiaryStatisticsPage";
+import WalkDiaryCalendarPage from "@/pages/walkdiary/WalkDiaryCalendarPage";
+import WalkDiaryWritePage from "@/pages/walkdiary/WalkDiaryWritePage";
+import WalkDiaryDetailPage from "@/pages/walkdiary/WalkDiaryDetailPage";
+import WalkDiaryUpdatePage from "@/pages/walkdiary/WalkDiaryUpdatePage";
+import WalkDiaryStatisticsPage from "@/pages/walkdiary/WalkDiaryStatisticsPage";
 
 import WalkPathMainPage from "@/pages/walkPath/WalkPathMainPage";
 import WalkPathDetailPage from "@/pages/walkPath/WalkPathDetailPage";

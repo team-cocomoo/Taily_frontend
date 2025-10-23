@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
-import SummaryCards from "../../components/board/walkDiary/SummaryCards";
+import SummaryCards from "../../components/board/walkdiary/SummaryCards";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/walkdiary/WalkDiaryStatistics.css";
-import WalkCharts from "../../components/board/walkDiary/WalkCharts";
-import ReminderCard from "../../components/board/walkDiary/ReminderCard";
+import WalkCharts from "../../components/board/walkdiary/WalkCharts";
+import ReminderCard from "../../components/board/walkdiary/ReminderCard";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import api from "../../config/apiConfig";
 import { useNavigate } from "react-router-dom";
