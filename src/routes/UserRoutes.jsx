@@ -36,7 +36,7 @@ import ChatRoomMainPage from "@/pages/chatroom/ChatRoomMainPage";
 import ChatRoomDetailPage from "@/pages/chatroom/ChatRoomDetailPage";
 import FacilityMainPage from "@/pages/facilities/FacilitiesMainPage";
 import OtherUserProfilePage from "@/pages/user/OtherUserProfilePage";
-
+//
 import FeedMainPage from "@/pages/feed/FeedMainPage";
 import FeedDetailPage from "@/pages/feed/FeedDetailPage";
 import FeedEdtiPage from "@/pages/feed/FeedEdtiPage";
