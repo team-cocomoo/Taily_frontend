@@ -4,7 +4,7 @@ import meatballIcon from "../../assets/image/meatball-icon.png";
 import api from "../../config/apiConfig";
 import MyPetWriteInfoModal from "../../components/mypage/MyPetWriteInfoModal"; 
 import SecureImage from "../../components/common/SecureImage";
-import "../../styles/myPage/MyPetInfo.css";
+import "../../styles/mypage/MyPetInfo.css";
 
 const MyPetInfoCard = ({ setSelectedMenu }) => {
     const [petList, setPetList] = useState([]);

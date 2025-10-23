@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import "../../styles/myPage/MyPetInfo.css";
+import "../../styles/mypage/MyPetInfo.css";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import api from '../../config/apiConfig';
-import "../../styles/myPage/MyPetInfo.css";
+import "../../styles/mypage/MyPetInfo.css";
 
 const MyPetWriteInfoModal = ({ show, handleClose, setSelectedMenu, pet, onSuccess }) => {
     const [loading, setLoading] = useState(false);

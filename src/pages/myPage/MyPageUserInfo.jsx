@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import api from "@/config/apiConfig";
-import "@/styles/myPage/MyPageUserInfo.css";
-import '@/styles/myPage/myLikes.css';
+import "@/styles/mypage/MyPageUserInfo.css";
+import '@/styles/mypage/myLikes.css';
 import UserProfileImage from "@/components/mypage/UserProfileImage";
 import MyPageSidebar from "@/components/mypage/MyPageSidebar";
 import UserInfoSection from "@/components/mypage/UserInfoSection";

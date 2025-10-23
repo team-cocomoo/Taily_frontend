@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Spinner, Pagination } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
-import "../../styles/myPage/MyTailyFriends.css";
+import "../../styles/mypage/MyTailyFriends.css";
 
 const MyTailyFriendsList = () => {
   const [posts, setPosts] = useState([]);

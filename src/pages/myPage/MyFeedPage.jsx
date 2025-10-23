@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import api from "@/config/apiConfig";
-import "@/styles/myPage/MyFeedPage.css";
+import "@/styles/mypage/MyFeedPage.css";
 import UserProfileImage from "@/components/mypage/UserProfileImage";
 import MyPageSidebar from "@/components/mypage/MyPageSidebar";
 import SecureImage from "@/components/common/SecureImage";

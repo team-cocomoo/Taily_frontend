@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Spinner, Pagination } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
-import "../../styles/myPage/MyWalkPaths.css";
+import "../../styles/mypage/MyWalkPaths.css";
 
 const MyWalkPathsList = () => {
   const [posts, setPosts] = useState([]);

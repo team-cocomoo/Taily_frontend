@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "@/styles/mypage/MyPageUserInfo.css";
-import '@/styles/myPage/myLikes.css';
+import '@/styles/mypage/myLikes.css';
 import UserProfileImage from "@/components/mypage/UserProfileImage";
 import MyPageSidebar from "@/components/mypage/MyPageSidebar";
 import MyLikesList from "../../components/mypage/MyLikesList";
