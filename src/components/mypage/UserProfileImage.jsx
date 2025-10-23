@@ -30,7 +30,7 @@ export default function UserProfileImage({
         const res = await api.get("/api/images", {
           params: { tableTypesId: 1 },
         });
-        //
+
         if (!isMounted) return;
 
         if (res.data && res.data.length > 0) {
