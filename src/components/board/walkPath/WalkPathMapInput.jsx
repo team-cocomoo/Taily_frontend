@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { InputGroup, Form, Card, Button } from "react-bootstrap";
 import MapIcon from "../../../assets/image/map-search-icon.png";
 import "../../../styles/facility/facilityMap.css";
-import BaseMap from "../../common/Basemap.jsx";
+import BaseMap from "../../common/BaseMap.jsx";
 
 const WalkPathMapInput = ({
   mode = "create",

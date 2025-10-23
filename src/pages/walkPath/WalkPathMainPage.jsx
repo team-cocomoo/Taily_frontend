@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import { Button } from "react-bootstrap";
-import BaseMapInput from "../../components/common/Basemap";
+import BaseMapInput from "../../components/common/BaseMap";
 
 const WalkPathMainPage = () => {
   const [posts, setPosts] = useState([]);
@@ -107,7 +107,7 @@ const WalkPathMainPage = () => {
       <BaseMapInput />
       <br />
       {/* 검색창 출력 */}
-      <SearchBar onSearch={handleSearch}/>
+      <SearchBar onSearch={handleSearch} />
       <br />
       {/* 게시물을 리스트 형식으로 출력 */}
       <PostListGroup items={posts} onItemClick={handleItemClick} />
@@ -118,7 +118,7 @@ const WalkPathMainPage = () => {
         </div>
       )}
       {/* 발자국 버튼 - 작성 페이지로 연결 */}
-      
+
       <WriteButton onClick={() => navigate("/walk-paths/write")} />
     </div>
   );

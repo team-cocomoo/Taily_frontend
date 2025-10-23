@@ -1,5 +1,5 @@
 import React from "react";
-import BaseMapInput from "../../common/Basemap";
+import BaseMapInput from "../../common/BaseMap";
 
 /**
  * WalkPathMapView
