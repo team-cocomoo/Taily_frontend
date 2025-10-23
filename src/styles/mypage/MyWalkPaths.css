@@ -1,0 +1,15 @@
+.my-taily-friends-tr th{
+    border: 1px solid #000;
+}
+.my-taily-friends-tr th,
+.my-taily-friends-tr td {
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;      
+  overflow: hidden;         
+  text-overflow: ellipsis; 
+  max-width: 200px;         
+}
+.my-walk-table tbody tr td {
+  border-bottom: 1px solid #e5e5e5; /* 아주 연한 회색 */
+}

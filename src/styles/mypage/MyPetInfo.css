@@ -1,0 +1,277 @@
+/* =======================
+   리스트 및 카드 공통
+======================= */
+.profile-list-container {
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-width: none;
+}
+.profile-list-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* 카드 */
+.profile-box {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  margin-bottom: 20px;
+}
+.profile-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 이미지 */
+.profile-box img {
+  border-radius: 12px;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+.profile-box .no-image {
+  width: 150px;
+  height: 150px;
+  background-color: #f8f9fa;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  border: 1px dashed #ccc;
+}
+
+/* 테이블 */
+.profile-box table {
+  width: 100%;
+  margin-top: 8px;
+}
+.profile-box td {
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  color: #333;
+  vertical-align: middle;
+}
+.profile-box td:first-child {
+  font-weight: 600;
+  color: #444;
+  width: 90px;
+}
+
+/* 등록 버튼 */
+.text-center button {
+  background-color: #ffb347;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+.text-center button:hover {
+  background-color: #ff9f1c;
+}
+
+/* 반응형 */
+@media (max-width: 767px) {
+  .profile-box {
+    padding: 15px !important;
+  }
+  .profile-box img {
+    width: 120px;
+    height: 120px;
+  }
+  .profile-box td {
+    font-size: 0.85rem;
+  }
+}
+
+/* =======================
+   드롭다운 버튼
+======================= */
+.profile-dropdown .dropdown-toggle {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  width: 24px !important;
+  height: 24px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-dropdown .dropdown-toggle::after {
+  display: none !important;
+}
+.profile-dropdown img.meatballIcon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  cursor: pointer;
+}
+.profile-dropdown:hover .dropdown-menu {
+  display: none !important;
+}
+.profile-dropdown.show .dropdown-menu {
+  display: block !important;
+}
+
+/* ================================
+   🐾 반려동물 등록/수정 모달
+================================ */
+.modal-content {
+  border-radius: 20px !important;
+  border: none !important;
+  background-color: #fffaf5 !important;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 헤더 */
+.modal-header {
+  justify-content: center !important;
+  position: relative;
+  text-align: center;
+  background-color: #ffb347;
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+  border-bottom: none;
+}
+.modal-header .modal-title {
+  flex-grow: 1;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0 auto;
+}
+.modal-header .btn-close {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+.modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+/* 본문 */
+.modal-body {
+  padding: 30px 40px;
+}
+.modal-body .form-label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+}
+.modal-body .form-control {
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.modal-body .form-control:focus {
+  border-color: #ffb347;
+  box-shadow: 0 0 0 0.2rem rgba(255, 179, 71, 0.25);
+}
+.form-text {
+  font-size: 0.85rem;
+  color: #888;
+}
+.form-check-inline label {
+  font-weight: 500;
+  color: #555;
+}
+
+/* ===== 성별 한 줄 정렬 ===== */
+.form-gender-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-gender-inline label {
+  width: 80px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.form-gender-inline .form-check-inline {
+  margin-bottom: 0;
+}
+
+/* 미리보기 */
+.pet-preview-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  border: 2px solid #ffe0b2;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+.pet-preview-img:hover {
+  transform: scale(1.05);
+}
+
+/* 버튼 */
+.modal-body button[type="submit"] {
+  background-color: #ffb347;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-weight: 600;
+  color: white;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+.modal-body button[type="submit"]:hover {
+  background-color: #ff9f1c;
+  transform: translateY(-1px);
+}
+.text-danger {
+  font-weight: 500;
+  color: #e74c3c !important;
+}
+
+/* 한 줄 정렬 */
+.form-row-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.form-row-inline label {
+  width: 80px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+.form-row-inline input {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+}
+
+/* 중앙 위치 */
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .modal-body {
+    padding: 20px;
+  }
+  .form-row-inline {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .form-row-inline label {
+    width: 100%;
+  }
+}
