@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import api from "@/config/apiConfig";
-import SecureImage from "@/components/common/SecureImage"; // 기존 JWT 이미지 로더 활용
-import defaultUserIcon from "@/assets/image/user-icon.png"; // 기본 이미지 import
+import SecureImage from "@/components/common/SecureImage";
+import defaultUserIcon from "@/assets/image/user-icon.png";
 
 /**
- * 로그인된 사용자의 프로필 이미지를 자동으로 불러와 표시하는 컴포넌트
- * - tableTypesId=1 → USERS 기준
- * - 내부적으로 SecureImage를 사용해 JWT 포함 요청 처리
+ * UserProfileImageFeed
+ * - usersId가 있으면 해당 유저(피드 작성자) 이미지 표시
+ * - usersId가 없으면 로그인한 유저의 프로필 이미지 표시
  *
+ * @param {number|null} usersId - 작성자 ID (FeedResponseDto.writerId), 없으면 로그인 사용자
  * @param {number} size - 이미지 크기(px), 기본 120
  * @param {string} alt - 대체 텍스트
  * @param {object} style - 추가 커스텀 스타일
  */
 export default function UserProfileImageFeed({
+  usersId = null,
   size = 120,
   alt = "프로필 이미지",
   style,
@@ -27,15 +29,20 @@ export default function UserProfileImageFeed({
     const fetchProfileImage = async () => {
       try {
         setLoading(true);
-        // 프로필 이미지 조회 (최신 1개)
-        const res = await api.get("/api/images", {
-          params: { tableTypesId: 1 },
-        });
+
+        const params = { tableTypesId: 1 };
+        if (usersId) {
+          // ✅ 작성자 기준
+          params.usersId = usersId;
+        }
+        // usersId가 없으면 로그인 사용자 기준 (백엔드에서 자동 처리)
+
+        const res = await api.get("/api/images", { params });
 
         if (!isMounted) return;
 
         if (res.data && res.data.length > 0) {
-          setImagePath(res.data[0].filePath); // ex: "/uploads/users/uuid_filename.jpg"
+          setImagePath(res.data[0].filePath);
         } else {
           setImagePath(null);
         }
@@ -52,9 +59,9 @@ export default function UserProfileImageFeed({
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [usersId]);
 
-  // 로딩 상태
+  // 로딩 중
   if (loading) {
     return (
       <div
@@ -81,7 +88,7 @@ export default function UserProfileImageFeed({
           width: size,
           height: size,
           border: "1px solid #ddd",
-          overflow: "hidden", // ✅ 이미지가 원형 안에 꽉 차게
+          overflow: "hidden",
           ...style,
         }}
       >
@@ -98,7 +105,7 @@ export default function UserProfileImageFeed({
     );
   }
 
-  // 정상 이미지 표시 (SecureImage 활용)
+  // 정상 이미지 표시
   return (
     <SecureImage
       src={imagePath}
