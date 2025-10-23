@@ -1,0 +1,384 @@
+/* ==============================
+   공지사항 관리 페이지 스타일
+   ============================== */
+
+.admin-notice-container {
+  margin: 40px auto;
+  padding: 30px 40px;
+  border-radius: 14px;
+  background-color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  max-width: 1000px;
+}
+
+/* 헤더 */
+.admin-notice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.admin-notice-title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #212529;
+}
+
+.admin-notice-write-btn {
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 16px;
+  background-color: #212529;
+}
+
+/* 검색창 */
+.admin-notice-search {
+  margin-bottom: 24px;
+}
+
+.admin-notice-search input {
+  border-radius: 8px 0 0 8px;
+  font-size: 0.95rem;
+}
+
+.admin-notice-search button {
+  border-radius: 0 8px 8px 0;
+  font-weight: 500;
+}
+
+/* ==============================
+   테이블 스타일
+   ============================== */
+.admin-notice-table-wrapper {
+  width: 100%;
+  min-width: 900px; /* 강제로 최소 가로폭 지정 */
+  overflow-x: auto; /* 좁은 화면에서 스크롤 가능 */
+}
+.admin-notice-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  border: 1px solid #dee2e6;
+}
+
+.admin-notice-table thead {
+  background-color: #f8f9fa;
+}
+
+.admin-notice-table th {
+  font-weight: 700;
+  color: #212529;
+  padding: 14px 12px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.admin-notice-table td {
+  font-size: 0.95rem;
+  color: #495057;
+  padding: 14px 12px;
+  border-top: 1px solid #dee2e6;
+  vertical-align: middle;
+}
+
+/* hover 효과 */
+.admin-notice-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.admin-notice-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* 제목 강조 */
+.admin-notice-title-cell {
+  text-align: left;
+  color: #0d6efd;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.admin-notice-title-cell:hover {
+  color: #0a58ca;
+  text-decoration: underline;
+}
+
+/* 페이지네이션 */
+.pagination {
+  margin-top: 20px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0a58ca;
+  border-color: #0a58ca;
+}
+
+.pagination .page-link {
+  color: #343a40;
+}
+
+.pagination .page-link:hover {
+  color: #0a58ca;
+}
+
+/* 로딩 텍스트 */
+.admin-notice-loading {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 1.1rem;
+  color: #6c757d;
+}
+
+/* ==============================
+   공지사항 상세 페이지 스타일
+   ============================== */
+
+.admin-notice-detail-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  margin: 60px auto;
+  padding-bottom: 60px;
+}
+
+.admin-notice-detail-card {
+  width: 900px; /* ✅ 강제 가로 길이 고정 */
+  border: none;
+  border-radius: 14px;
+  background-color: #fff;
+  padding: 30px 40px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.admin-notice-detail-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 영역 */
+.admin-notice-detail-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #212529;
+  margin: 0;
+}
+
+.admin-notice-detail-more {
+  font-size: 1.4rem;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+/* 본문 박스 */
+.admin-notice-content-box {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 25px;
+  margin-top: 15px;
+}
+
+.admin-notice-content {
+  font-size: 1rem;
+  color: #495057;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* 작성자 정보 */
+.admin-notice-info {
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+.admin-notice-info p {
+  margin-bottom: 6px;
+}
+
+/* 목록 버튼 */
+.admin-notice-back-btn {
+  border-radius: 10px;
+  font-weight: 600;
+  color: #495057;
+  background-color: #ffb84d;
+  border: none;
+  padding: 10px 24px;
+  transition: background-color 0.2s ease;
+}
+
+.admin-notice-back-btn:hover {
+  background-color: #ffa928;
+  color: #fff;
+}
+
+/* ==============================
+   공지사항 등록 페이지 스타일
+   ============================== */
+
+.admin-notice-write-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  margin: 60px auto;
+  padding-bottom: 60px;
+}
+
+.admin-notice-write-card {
+  width: 900px; /* ✅ 상세와 동일한 고정폭 */
+  border: none;
+  border-radius: 14px;
+  background-color: #fff;
+  padding: 30px 40px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.admin-notice-write-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 */
+.admin-notice-write-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #212529;
+  margin-bottom: 20px;
+}
+
+/* 폼 요소 */
+.admin-notice-write-card .form-label {
+  font-weight: 600;
+  color: #343a40;
+}
+
+.admin-notice-write-card .form-control {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.admin-notice-write-card textarea.form-control {
+  resize: none;
+}
+
+/* 버튼 */
+.admin-notice-submit-btn {
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  background-color: #212529;
+  color: #495057;
+  transition: background-color 0.2s ease;
+}
+
+.admin-notice-submit-btn:hover {
+  background-color: #212529;
+  color: #fff;
+}
+
+.admin-notice-cancel-btn {
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 24px;
+}
+
+/* 반응형 */
+@media (max-width: 992px) {
+  .admin-notice-write-card {
+    width: 95%;
+    padding: 24px;
+  }
+}
+
+/* ==============================
+   공지사항 수정 페이지 스타일
+   ============================== */
+
+.admin-notice-edit-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  margin: 60px auto;
+  padding-bottom: 60px;
+}
+
+.admin-notice-edit-card {
+  width: 900px; /* 고정 가로폭 (상세/등록 동일) */
+  border: none;
+  border-radius: 14px;
+  background-color: #fff;
+  padding: 30px 40px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.admin-notice-edit-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 */
+.admin-notice-edit-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #212529;
+  margin-bottom: 20px;
+}
+
+/* 폼 요소 */
+.admin-notice-edit-card .form-label {
+  font-weight: 600;
+  color: #343a40;
+}
+
+.admin-notice-edit-card .form-control {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.admin-notice-edit-card textarea.form-control {
+  resize: none;
+}
+
+/* 버튼 (등록 페이지와 동일) */
+.admin-notice-submit-btn {
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  background-color: #212529;
+  color: #495057;
+  transition: background-color 0.2s ease;
+}
+
+.admin-notice-submit-btn:hover {
+  background-color: #ffa928;
+  color: #fff;
+}
+
+.admin-notice-cancel-btn {
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 24px;
+}
+
+.admin-notice-searchbutton {
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  background-color: #212529;
+  color: #495057;
+  transition: background-color 0.2s ease;
+}
+
+/* 반응형 */
+@media (max-width: 992px) {
+  .admin-notice-edit-card {
+    width: 95%;
+    padding: 24px;
+  }
+}
