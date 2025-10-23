@@ -49,9 +49,9 @@ import EventPage from "@/pages/cs/EventPage";
 
 import SingleFeedUploader from "@/tests/pages/SingleFeedUploader";
 import MyLikePage from "@/pages/mypage/MyLikePage";
-import MyPetPage from "../pages/mypage/MyPetPage";
-import MyPageMyFeed from "../pages/mypage/MyPageMyFeed";
-import MyFeedPage from "../pages/mypage/MyFeedPage";
+import MyPetPage from "@/pages/mypage/MyPetPage";
+import MyPageMyFeed from "@/pages/mypage/MyPageMyFeed";
+import MyFeedPage from "@/pages/mypage/MyFeedPage";
 
 const UserRoutes = (
   <Route element={<UserLayout />}>
