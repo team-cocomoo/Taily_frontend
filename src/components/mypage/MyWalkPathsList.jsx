@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Spinner, Pagination } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import api from "../../config/apiConfig";
-import "../../styles/myPage/MyWalkPaths.css";
+import "../../styles/mypage/MyWalkPaths.css";
 
 const MyWalkPathsList = () => {
   const [posts, setPosts] = useState([]);
@@ -72,7 +72,7 @@ const MyWalkPathsList = () => {
   if (loading) return <Spinner animation="border" />;
 
   if (!posts.length) return <p>작성한 게시글이 없습니다.</p>;
-  console.log("산책경로 게시글 수: ",posts.length);
+  console.log("산책경로 게시글 수: ", posts.length);
 
   return (
     <>
