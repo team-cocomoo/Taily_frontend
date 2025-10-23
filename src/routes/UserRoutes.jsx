@@ -8,12 +8,12 @@ import ProtectedLayout from "@/components/common/ProtectedLayout";
 import MainPage from "@/pages/MainPage";
 import LoginPage from "@/pages/user/LoginPage";
 import RegisterPage from "@/pages/user/RegisterPage";
-import MyPageUserInfo from "@/pages/myPage/MyPageUserInfo";
-import MyWalkPathsPage from "../pages/myPage/MyWalkPathsPage";
-import MyTailyFriendsPage from "@/pages/myPage/MyTailyFriendsPage";
-import MyFollowPage from "@/pages/myPage/MyFollowPage";
-import MyInquiryPage from "@/pages/myPage/MyInquiryPage";
-import PasswordVerifyPage from "@/pages/myPage/PasswordVerifyPage";
+import MyPageUserInfo from "@/pages/mypage/MyPageUserInfo";
+import MyWalkPathsPage from "../pages/mypage/MyWalkPathsPage";
+import MyTailyFriendsPage from "@/pages/mypage/MyTailyFriendsPage";
+import MyFollowPage from "@/pages/mypage/MyFollowPage";
+import MyInquiryPage from "@/pages/mypage/MyInquiryPage";
+import PasswordVerifyPage from "@/pages/mypage/PasswordVerifyPage";
 import MyPageEdit from "@/pages/mypage/MyPageEdit";
 import AccountDeleteSuccessPage from "@/pages/mypage/AccountDeleteSuccessPage";
 
@@ -48,10 +48,10 @@ import FaqPage from "@/pages/cs/FaqPage";
 import EventPage from "@/pages/cs/EventPage";
 
 import SingleFeedUploader from "@/tests/pages/SingleFeedUploader";
-import MyLikePage from "@/pages/myPage/MyLikePage";
-import MyPetPage from "../pages/myPage/MyPetPage";
-import MyPageMyFeed from "../pages/myPage/MyPageMyFeed";
-import MyFeedPage from "../pages/myPage/MyFeedPage";
+import MyLikePage from "@/pages/mypage/MyLikePage";
+import MyPetPage from "../pages/mypage/MyPetPage";
+import MyPageMyFeed from "../pages/mypage/MyPageMyFeed";
+import MyFeedPage from "../pages/mypage/MyFeedPage";
 
 const UserRoutes = (
   <Route element={<UserLayout />}>
