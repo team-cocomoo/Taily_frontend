@@ -9,7 +9,7 @@ import MainPage from "@/pages/MainPage";
 import LoginPage from "@/pages/user/LoginPage";
 import RegisterPage from "@/pages/user/RegisterPage";
 import MyPageUserInfo from "@/pages/mypage/MyPageUserInfo";
-import MyWalkPathsPage from "../pages/mypage/MyWalkPathsPage";
+import MyWalkPathsPage from "@/pages/mypage/MyWalkPathsPage";
 import MyTailyFriendsPage from "@/pages/mypage/MyTailyFriendsPage";
 import MyFollowPage from "@/pages/mypage/MyFollowPage";
 import MyInquiryPage from "@/pages/mypage/MyInquiryPage";
