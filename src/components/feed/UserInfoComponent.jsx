@@ -13,6 +13,7 @@ export default function UserInfoComponent({
   writerName,
   feedId,
   writerPublicId,
+  writerId,
 }) {
   const [showOptions, setShowOptions] = useState(false);
   const { user } = useContext(AuthContext); // 로그인한 사용자 정보 가져오기
@@ -83,6 +84,7 @@ export default function UserInfoComponent({
           size={40}
           alt={`${writerName} 프로필 이미지`}
           style={{ marginRight: "12px" }}
+          usersId={writerId}
         />
         <UserPopover userPublicId={writerPublicId} nickname={writerName}>
           <strong className="text-dark" style={{ cursor: "pointer" }}>
