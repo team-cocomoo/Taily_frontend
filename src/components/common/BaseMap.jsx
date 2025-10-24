@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../../styles/postDetail/PostDetailMap.css";
+import "../../styles/postdetail/PostDetailMap.css";
 
 /**
  * BaseMapInput (공통 지도 컴포넌트)
@@ -92,12 +92,7 @@ const BaseMapInput = ({ markersData = [] }) => {
     });
   }, [markersData, map]);
 
-  return (
-    <div
-      ref={mapRef}
-      className="post-detail-map-container"
-    />
-  );
+  return <div ref={mapRef} className="post-detail-map-container" />;
 };
 
 export default BaseMapInput;

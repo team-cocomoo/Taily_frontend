@@ -23,15 +23,15 @@ import WalkDiaryDetailPage from "@/pages/walkdiary/WalkDiaryDetailPage";
 import WalkDiaryUpdatePage from "@/pages/walkdiary/WalkDiaryUpdatePage";
 import WalkDiaryStatisticsPage from "@/pages/walkdiary/WalkDiaryStatisticsPage";
 
-import WalkPathMainPage from "@/pages/walkPath/WalkPathMainPage";
-import WalkPathDetailPage from "@/pages/walkPath/WalkPathDetailPage";
-import WalkPathWritePage from "@/pages/walkPath/WalkPathWritePage";
-import WalkPathEditPage from "@/pages/walkPath/WalkPathEditPage";
+import WalkPathMainPage from "@/pages/walkpath/WalkPathMainPage";
+import WalkPathDetailPage from "@/pages/walkpath/WalkPathDetailPage";
+import WalkPathWritePage from "@/pages/walkpath/WalkPathWritePage";
+import WalkPathEditPage from "@/pages/walkpath/WalkPathEditPage";
 
-import TailyFriendsMainPage from "@/pages/tailyFriends/TailyFriendsMainPage";
-import TailyFriendsDetailPage from "@/pages/tailyFriends/TailyFriendsDetailPage";
-import TailyFriendsWritePage from "@/pages/tailyFriends/TailyFriendsWritePage";
-import TailyFriendsEditPage from "@/pages/tailyFriends/TailyFriendsEditPage";
+import TailyFriendsMainPage from "@/pages/tailyfriends/TailyFriendsMainPage";
+import TailyFriendsDetailPage from "@/pages/tailyfriends/TailyFriendsDetailPage";
+import TailyFriendsWritePage from "@/pages/tailyfriends/TailyFriendsWritePage";
+import TailyFriendsEditPage from "@/pages/tailyfriends/TailyFriendsEditPage";
 import ChatRoomMainPage from "@/pages/chatroom/ChatRoomMainPage";
 import ChatRoomDetailPage from "@/pages/chatroom/ChatRoomDetailPage";
 import FacilityMainPage from "@/pages/facilities/FacilitiesMainPage";
@@ -81,7 +81,7 @@ const UserRoutes = (
         path="/mypage/delete-success"
         element={<AccountDeleteSuccessPage />}
       />
-      <Route path="/mypage/myPagemyFeed" element={<MyPageMyFeed />} />
+      <Route path="/mypage/MyPageMyFeed" element={<MyPageMyFeed />} />
 
       {/* 펫스토리 */}
       <Route path="/petstory/feed" element={<FeedMainPage />} />

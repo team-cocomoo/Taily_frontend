@@ -1,0 +1,111 @@
+.post-detail-body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+.post-detail-content {
+  min-height: 50%;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  color: #222;
+  width: 80%;
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+.post-card {
+  width: 100%;
+  max-width: 1440px;
+  padding: 30px;
+  transition: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.125) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+.post-card:hover {
+  transform: none !important;
+  transition: none !important;
+}
+
+.post-card .card-header-section {
+  background-color: #fff !important;
+  border: none !important;
+  border-bottom: 1px solid #000 !important;
+}
+.card-header-title {
+  text-align: left;
+  font-size: 30px;
+  font-weight: 500;
+}
+.user-profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50% !important;
+  color: #4f1f02;
+  border: 1.5px solid #4f1f02;
+  padding: 2px;
+  margin-right: 10px;
+  object-fit: cover !important;
+}
+.user-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+.author-name {
+  font-weight: bold;
+}
+.author-date {
+  color: #6c757d; 
+}
+.meatballIcon {
+  width: 30px;
+  color: #4f1f02;
+  cursor: pointer;
+}
+.address-line {
+  width: 60%;
+}
+.post-detail-address{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+.heart {
+  margin-left: 5px;
+}
+
+.like-area {
+  border: 1px solid #4f1f02;
+  border-radius: 20px;
+  padding: 0.25rem 1rem;
+}
+.dropdown-menu {
+  background-color: #fff;
+}
+.dropdown-item:hover {
+  background-color: #fff;
+}
+
+.no-caret::after {
+  display: none !important;
+}
+.no-caret,
+.no-caret:hover,
+.no-caret:active {
+  background-color: #fff;
+  border: none;
+}
