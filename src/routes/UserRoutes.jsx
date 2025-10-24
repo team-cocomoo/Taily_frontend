@@ -47,7 +47,6 @@ import NoticeDetailPage from "@/pages/cs/NoticeDetailPage";
 import FaqPage from "@/pages/cs/FaqPage";
 import EventPage from "@/pages/cs/EventPage";
 
-import SingleFeedUploader from "@/tests/pages/SingleFeedUploader";
 import MyLikePage from "@/pages/mypage/MyLikePage";
 import MyPetPage from "@/pages/mypage/MyPetPage";
 import MyPageMyFeed from "@/pages/mypage/MyPageMyFeed";
@@ -63,7 +62,6 @@ const UserRoutes = (
     <Route path="/notices/:id" element={<NoticeDetailPage />} />
     <Route path="/event" element={<EventPage />} />
     <Route path="/faqs" element={<FaqPage />} />
-    <Route path="/SingleFeedUploader" element={<SingleFeedUploader />} />
 
     {/* 회원 전용 페이지 */}
     <Route element={<ProtectedLayout roles={["ROLE_USER"]} />}>
