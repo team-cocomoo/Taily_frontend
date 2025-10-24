@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import FacilityPostCard from "../../components/board/facility/facilityPostCard";
 import SearchBar from "../../components/common/SearchBar";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-import FacilityMap from "../../components/board/facility/facilityMap";
+import FacilityMap from "../../components/board/facility/FacilityMap";
 import { getFacilityData } from "../../api/FacilityService";
 
 const FacilitiesMainPage = () => {
