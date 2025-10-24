@@ -6,7 +6,6 @@
   padding-top: 30px;
 }
 
-/* FeedCard 자체는 이미 width: 600px 지정됨 (FeedCard.css 참고) */
 .feed-card {
   width: 600px;
   max-width: 90vw; /* 반응형 */

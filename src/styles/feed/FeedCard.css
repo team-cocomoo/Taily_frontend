@@ -32,7 +32,7 @@
 
 /* 이미지 클릭 영역 */
 .image-hit-area {
-  position: absolute;  /* 변경 */
+  position: absolute; /* 변경 */
   top: 0;
   left: 0;
   width: 100%;
