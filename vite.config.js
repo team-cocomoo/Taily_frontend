@@ -25,12 +25,12 @@ export default defineConfig({
       process.env.NODE_ENV === "development"
         ? {
             "/api": {
-              target: "http://localhost:8080",
+              target: "https://taily24.store",
               changeOrigin: true,
               secure: false,
             },
             "/uploads": {
-              target: "http://localhost:8080",
+              target: "https://taily24.store",
               changeOrigin: true,
               secure: false,
             },
