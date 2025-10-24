@@ -5,7 +5,7 @@ import LoadingSpinner from "../../components/common/LoadingSpinner";
 import FacilityMap from "../../components/board/facility/facilityMap";
 import { getFacilityData } from "../../api/FacilityService";
 
-const FacilityMainPage = () => {
+const FacilitiesMainPage = () => {
   const [posts, setPosts] = useState([]); // 시설 데이터 저장
   const [filteredPosts, setFilteredPosts] = useState([]); // 검색 필터용 데이터
   const [loading, setLoading] = useState(true); // 로딩 상태
@@ -111,7 +111,6 @@ const FacilityMainPage = () => {
 
         setPosts(nearest);
         setFilteredPosts(nearest);
-
       } catch (error) {
         console.error("API 불러오기 실패:", error);
       } finally {
@@ -177,4 +176,4 @@ const FacilityMainPage = () => {
   );
 };
 
-export default FacilityMainPage;
+export default FacilitiesMainPage;

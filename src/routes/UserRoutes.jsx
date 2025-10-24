@@ -34,7 +34,7 @@ import TailyFriendsWritePage from "@/pages/tailyfriends/TailyFriendsWritePage";
 import TailyFriendsEditPage from "@/pages/tailyfriends/TailyFriendsEditPage";
 import ChatRoomMainPage from "@/pages/chatroom/ChatRoomMainPage";
 import ChatRoomDetailPage from "@/pages/chatroom/ChatRoomDetailPage";
-import FacilityMainPage from "@/pages/facilities/FacilitiesMainPage";
+import FacilitiesMainPage from "@/pages/facilities/FacilitiesMainPage";
 import OtherUserProfilePage from "@/pages/user/OtherUserProfilePage";
 //
 import FeedMainPage from "@/pages/feed/FeedMainPage";
@@ -111,7 +111,7 @@ const UserRoutes = (
       />
 
       {/* 기타 */}
-      <Route path="/facilities" element={<FacilityMainPage />} />
+      <Route path="/facilities" element={<FacilitiesMainPage />} />
       <Route path="/chats" element={<ChatRoomMainPage />} />
       <Route path="/chats/:id" element={<ChatRoomDetailPage />} />
       <Route
