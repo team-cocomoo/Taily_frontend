@@ -20,7 +20,7 @@ const WalkPathMainPage = () => {
   const fetchPosts = async (pageNum = 1) => {
     try {
       setLoading(true);
-      const response = await api.get("http://localhost:8080/api/walk-paths", {
+      const response = await api.get("https://taily24.store/api/walk-paths", {
         params: { page: pageNum, size },
       });
 
@@ -59,7 +59,7 @@ const WalkPathMainPage = () => {
       setLoading(true);
       // 검색 API 호출
       const response = await api.get(
-        "http://localhost:8080/api/walk-paths/search",
+        "https://taily24.store/api/walk-paths/search",
         {
           params: { keyword, page: 0, size },
         }

@@ -24,7 +24,7 @@ const TailyFriendsEditPage = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `http://localhost:8080/api/taily-friends/${id}`,
+          `https://taily24.store/api/taily-friends/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -88,7 +88,7 @@ const TailyFriendsEditPage = () => {
 
     try {
       await axios.patch(
-        `http://localhost:8080/api/taily-friends/${id}`,
+        `https://taily24.store/api/taily-friends/${id}`,
         formData,
         {
           headers: {

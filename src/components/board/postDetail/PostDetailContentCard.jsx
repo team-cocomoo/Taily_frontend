@@ -31,7 +31,7 @@ const PostDetailContentCard = ({ post }) => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:8080/api/taily-friends/${post.id}`, {
+      await axios.delete(`https://taily24.store/api/taily-friends/${post.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("게시글 삭제 완료!");

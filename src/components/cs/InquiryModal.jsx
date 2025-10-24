@@ -22,7 +22,7 @@ const InquiryModal = ({ show, handleClose }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/inquiries",
+        "https://taily24.store/api/inquiries",
         { title, content },
         {
           headers: {

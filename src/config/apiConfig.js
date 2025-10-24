@@ -12,7 +12,7 @@ import axios from "axios";
 
 // 1. axios 인스턴스 생성 및 설정
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://taily24.store",
   headers: { "Content-Type": "application/json" },
   withCredentials: true, // 쿠키/세션도 필요하면 유지
 });

@@ -13,7 +13,7 @@ const ReportModal = ({ show, handleClose, reportedId, path }) => {
 
       // axios POST 요청
       await axios.post(
-        "http://localhost:8080/api/reports",
+        "https://taily24.store/api/reports",
         {
           reportedId,
           path,
@@ -54,9 +54,9 @@ const ReportModal = ({ show, handleClose, reportedId, path }) => {
               onChange={(e) => setContent(e.target.value)}
               placeholder="신고 사유를 입력하세요"
               style={{
-                height: "100px", 
-                resize: "none", 
-                overflowY: "auto", 
+                height: "100px",
+                resize: "none",
+                overflowY: "auto",
               }}
             />
           </Form.Group>

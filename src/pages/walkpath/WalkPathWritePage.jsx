@@ -51,7 +51,7 @@ const WalkPathWritePage = () => {
     }
 
     try {
-      await axios.post("http://localhost:8080/api/walk-paths", formData, {
+      await axios.post("https://taily24.store/api/walk-paths", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

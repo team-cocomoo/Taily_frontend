@@ -55,7 +55,7 @@ const ChatRoomDetailPage = () => {
   useEffect(() => {
     if (!user) return;
 
-    const socket = new SockJS(`http://localhost:8080/ws-chat`);
+    const socket = new SockJS(`https://taily24.store/ws-chat`);
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -127,9 +127,7 @@ const ChatRoomDetailPage = () => {
 
   return (
     <div className="chat-room-page">
-      <h2 className="chat-room-title">
-        {roomInfo?.nickname || "채팅방"}
-      </h2>
+      <h2 className="chat-room-title">{roomInfo?.nickname || "채팅방"}</h2>
 
       <div className="chat-messages">
         {messages.length === 0 && (
@@ -141,7 +139,9 @@ const ChatRoomDetailPage = () => {
           return (
             <div
               key={msg.id}
-              className={`chat-message ${isMine ? "my-message" : "other-message"}`}
+              className={`chat-message ${
+                isMine ? "my-message" : "other-message"
+              }`}
             >
               {!isMine && (
                 <SecureImage

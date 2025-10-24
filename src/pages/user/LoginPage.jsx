@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/auth/login/user",
+        "https://taily24.store/api/auth/login/user",
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -37,7 +37,7 @@ const LoginPage = () => {
       localStorage.setItem("token", token);
 
       // 2. 사용자 정보 조회
-      const userRes = await axios.get("http://localhost:8080/api/mypage/me", {
+      const userRes = await axios.get("https://taily24.store/api/mypage/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       //

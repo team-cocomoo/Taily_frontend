@@ -32,17 +32,17 @@ const LikeButton = ({ postId, tableTypeId }) => {
   // 초기 좋아요 상태와 개수 로딩
   useEffect(() => {
     const fetchLikeStatus = async () => {
-//       if (isInvalidId) {
-//         console.error("좋아요 초기값 로딩 중단: 유효하지 않은 postId =", postId); 
-//         setLoading(false);
-//         return;
-// +      }
+      //       if (isInvalidId) {
+      //         console.error("좋아요 초기값 로딩 중단: 유효하지 않은 postId =", postId);
+      //         setLoading(false);
+      //         return;
+      // +      }
       try {
         const token = localStorage.getItem("token");
         const baseUrl = getBaseUrl();
 
         const res = await axios.get(
-          `http://localhost:8080/${baseUrl}/${safePostId}`,
+          `https://taily24.store/${baseUrl}/${safePostId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -69,7 +69,7 @@ const LikeButton = ({ postId, tableTypeId }) => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `http://localhost:8080/api/likes/${tableTypeId}/${safePostId}`,
+        `https://taily24.store/api/likes/${tableTypeId}/${safePostId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

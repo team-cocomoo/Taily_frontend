@@ -44,7 +44,7 @@ const TailyFriendsWritePage = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/taily-friends",
+        "https://taily24.store/api/taily-friends",
         formData,
         {
           headers: {

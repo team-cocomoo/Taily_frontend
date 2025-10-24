@@ -19,13 +19,13 @@ const MyFollowFollowingList = () => {
     try {
       const [followersRes, followingsRes] = await Promise.all([
         axios.get(
-          `http://localhost:8080/api/mypage/followers${
+          `https://taily24.store/api/mypage/followers${
             searchTerm ? `?nickname=${searchTerm}` : ""
           }`,
           { headers: { Authorization: `Bearer ${token}` } }
         ),
         axios.get(
-          `http://localhost:8080/api/mypage/following${
+          `https://taily24.store/api/mypage/following${
             searchTerm ? `?nickname=${searchTerm}` : ""
           }`,
           { headers: { Authorization: `Bearer ${token}` } }
@@ -59,7 +59,7 @@ const MyFollowFollowingList = () => {
 
     try {
       await axios.patch(
-        `http://localhost:8080/api/follows/${userId}/deactivate`,
+        `https://taily24.store/api/follows/${userId}/deactivate`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

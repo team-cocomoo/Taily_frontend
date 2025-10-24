@@ -32,7 +32,7 @@ function FeedContent({ feedData, onShowDetail }) {
         if (!token) return;
 
         const res = await axios.get(
-          `http://localhost:8080/api/likes/${tableTypeId}/${id}`,
+          `https://taily24.store/api/likes/${tableTypeId}/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -66,7 +66,7 @@ function FeedContent({ feedData, onShowDetail }) {
     try {
       // 서버 요청
       await axios.post(
-        `http://localhost:8080/api/likes/${tableTypeId}/${id}`,
+        `https://taily24.store/api/likes/${tableTypeId}/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

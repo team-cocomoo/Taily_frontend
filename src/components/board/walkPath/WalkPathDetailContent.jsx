@@ -36,7 +36,7 @@ const WalkPathDetailContent = ({ post }) => {
       const token = localStorage.getItem("token");
       const effectiveId = post.id ?? post.postId;
       await axios.delete(
-        `http://localhost:8080/api/walk-paths/${effectiveId}`,
+        `https://taily24.store/api/walk-paths/${effectiveId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

@@ -16,10 +16,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"), // ✅ cross-platform 안전
+      "@": path.resolve(__dirname, "./src"), // cross-platform 안전
     },
   },
-  // define: { global: {} }, // ⚠️ 필요할 때만 사용
+  // define: { global: {} }, // 필요할 때만 사용
   server: {
     proxy:
       process.env.NODE_ENV === "development"
